@@ -6,15 +6,6 @@
   },
   "references": [
     {
-      "path": "../../packages/mui-system/tsconfig.build.json"
-    },
-    {
-      "path": "../../packages/mui-base/tsconfig.build.json"
-    },
-    {
-      "path": "../../packages/mui-material/tsconfig.build.json"
-    },
-    {
       "path": "../../packages/pigment-css-react/tsconfig.json"
     }
   ]
