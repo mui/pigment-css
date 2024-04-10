@@ -1,181 +1,1111 @@
-<!-- markdownlint-disable-next-line -->
-<p align="center">
-  <a href="https://mui.com/core/" rel="noopener" target="_blank"><img width="150" height="133" src="https://mui.com/static/logo.svg" alt="MUI Core logo"></a>
-</p>
+# Pigment CSS
 
-<h1 align="center">MUI Core</h1>
+Pigment CSS is a zero-runtime CSS-in-JS library that extracts the colocated styles to their own CSS files at build time.
 
-**MUI Core** contains foundational React UI component libraries for shipping new features faster:
+- [Getting started](#getting-started)
+  - [Why this project exists?](#why-choose-pigment-css)
+  - [Start with Next.js](#start-with-nextjs)
+  - [Start with Vite](#start-with-vite)
+- [Basic usage](#basic-usage)
+  - [Creating styles](#creating-styles)
+  - [Creating components](#creating-components)
+    - [Styling based on props](#styling-based-on-props)
+    - [Styling based on runtime values](#styling-based-on-runtime-values)
+    - [Styled component as a CSS selector](#styled-component-as-a-css-selector)
+    - [Typing props](#typing-props)
+- [Theming](#theming)
+  - [Accessing theme values](#accessing-theme-values)
+  - [CSS variables support](#css-variables-support)
+  - [Color schemes](#color-schemes)
+  - [Switching color schemes](#switching-color-schemes)
+  - [TypeScript](#typescript)
+- [Right-to-left support](#right-to-left-support)
+- [How-to guides](#how-to-guides)
+  - [Coming from Emotion or styled-components](#coming-from-emotion-or-styled-components)
 
-- [Material UI](https://mui.com/material-ui/) is a comprehensive library of components that features our implementation of Google's [Material Design](https://m2.material.io/design/introduction/) system.
+## Getting started
 
-- [Joy UI](https://mui.com/joy-ui/getting-started/) is a library of beautifully designed React UI components built to spark joy.
+Pigment CSS supports Next.js and Vite with support for more bundlers in the future.
+You must install the corresponding plugin, as shown below.
 
-- [Base UI](https://mui.com/base-ui/) is a library of unstyled React UI components and hooks. With Base UI, you gain complete control over your app's CSS and accessibility features.
+### Why choose Pigment CSS
 
-- [MUI System](https://mui.com/system/getting-started/) is a collection of CSS utilities to help you rapidly lay out custom designs.
+Thanks to recent advancements in CSS (like CSS variables and `color-mix()`), "traditional" CSS-in-JS solutions that process styles at runtime are no longer required for unlocking features like color transformations and theme variables which are necessary for maintaining a sophisticated design system.
 
-<div align="center">
+Pigment CSS addresses the needs of the modern React developer by providing a zero-runtime CSS-in-JS styling solution as a successor to tools like Emotion and styled-components.
 
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mui/material-ui/blob/HEAD/LICENSE)
-[![npm latest package](https://img.shields.io/npm/v/@mui/material/latest.svg)](https://www.npmjs.com/package/@mui/material)
-[![npm next package](https://img.shields.io/npm/v/@mui/material/next.svg)](https://www.npmjs.com/package/@mui/material)
-[![npm downloads](https://img.shields.io/npm/dm/@mui/material.svg)](https://www.npmjs.com/package/@mui/material)
-[![CircleCI](https://circleci.com/gh/mui/material-ui/tree/master.svg?style=shield)](https://app.circleci.com/pipelines/github/mui/material-ui?branch=master)
-[![Coverage Status](https://img.shields.io/codecov/c/github/mui/material-ui/master.svg)](https://codecov.io/gh/mui/material-ui/branch/master)
-[![Follow on X](https://img.shields.io/twitter/follow/MUI_hq.svg?label=follow+MUI)](https://twitter.com/MUI_hq)
-[![Renovate status](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://github.com/mui/material-ui/issues/27062)
-[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/mui/material-ui.svg)](https://isitmaintained.com/project/mui/material-ui 'Average time to resolve an issue')
-[![Open Collective backers and sponsors](https://img.shields.io/opencollective/all/mui-org)](https://opencollective.com/mui-org)
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/1320/badge)](https://bestpractices.coreinfrastructure.org/projects/1320)
+Compared to its predecessors, Pigment CSS offers improved DX and runtime performance (though at the cost of increased build time) while also being compatible with React Server Components.
+Pigment CSS is built on top of [WyW-in-JS](https://wyw-in-js.dev/), enabling to provide the smoothest possible experience for Material UI users when migrating from Emotion in v5 to Pigment CSS in v6.
 
-</div>
+### Start with Next.js
 
-## Documentation
+#### Quickstart
 
-### Material UI
+Use the following commands to quickly create a new Next.js project with Pigment CSS set up:
 
-Visit [https://mui.com/material-ui/](https://mui.com/material-ui/) to view the full documentation.
+```bash
+curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2  material-ui-master/examples/pigment-css-nextjs-ts
+cd pigment-css-nextjs-ts
+```
 
-<details>
-  <summary>Older versions</summary>
+#### Manual installation
 
-- **[v4.x](https://v4.mui.com/)** ([Migration from v4 to v5](https://mui.com/material-ui/migration/migration-v4/))
-- **[v3.x](https://v3.mui.com/)** ([Migration from v3 to v4](https://mui.com/material-ui/migration/migration-v3/))
-- **[v0.x](https://v0.mui.com/)** ([Migration to v1](https://mui.com/material-ui/migration/migration-v0x/))
+```bash
+npm install @pigment-css/react@next
+npm install --save-dev @pigment-css/nextjs-plugin@next
+```
 
-</details>
+Then, in your `next.config.js` file, import the plugin and wrap the exported config object:
 
-**Note:** `@next` only points to pre-releases.
-Use `@latest` for the latest stable release.
+```js
+const { withPigment } = require('@pigment-css/nextjs-plugin');
 
-### Joy UI
+module.exports = withPigment({
+  // ... Your nextjs config.
+});
+```
 
-Visit [https://mui.com/joy-ui/getting-started/](https://mui.com/joy-ui/getting-started/) to view the full documentation.
+Finally, import the stylesheet in the root `layout.tsx` file:
 
-**Note**: Joy UI is still in beta.
-We are adding new components regularly and you're welcome to contribute!
+```diff
+ import type { Metadata } from 'next';
++import '@pigment-css/react/styles.css';
 
-### Base UI
+ export const metadata: Metadata = {
+   title: 'Create Next App',
+   description: 'Generated by create next app',
+ };
 
-Visit [https://mui.com/base-ui/](https://mui.com/base-ui/) to view the full documentation.
+ export default function RootLayout(props: { children: React.ReactNode }) {
+   return (
+     <html lang="en">
+       <body>{props.children}</body>
+     </html>
+   );
+ }
+```
 
-**Note**: Base UI is still in beta.
-We are adding new components regularly and you're welcome to contribute!
+### Start with Vite
 
-### MUI System
+#### Quickstart
 
-Visit [https://mui.com/system/getting-started/](https://mui.com/system/getting-started/) to view the full documentation.
+Use the following commands to quickly create a new Vite project with Pigment CSS set up:
 
-## Sponsors
+```bash
+curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2 material-ui-master/examples/pigment-css-vite-ts
+cd pigment-css-vite-ts
+```
 
-### Diamond 💎
+#### Manual installation
 
-<p>
-  <a href="https://octopus.com/?utm_source=MUI&utm_medium=referral&utm_content=readme" rel="noopener sponsored" target="_blank"><img height="128" width="128" src="https://mui.com/static/sponsors/octopus-square.svg" alt="octopus" title="Repeatable, reliable deployments" loading="lazy" /></a>
-  <a href="https://www.doit.com/flexsave/?utm_source=MUI&utm_medium=referral&utm_content=readme" rel="noopener sponsored" target="_blank"><img height="128" width="128" src="https://mui.com/static/sponsors/doit-square.svg" alt="doit" title="Management Platform for Google Cloud and AWS" loading="lazy" /></a>
-<a href="https://www.marblism.com/?utm_source=mui" rel="noopener sponsored" target="_blank"><img height="128" width="128" src="https://mui.com/static/sponsors/marblism-square.svg" alt="marblism" title="AI web app generation" loading="lazy" /></a>
-</p>
+```bash
+npm install @pigment-css/react@next
+npm install --save-dev @pigment-css/vite-plugin@next
+```
 
-Diamond sponsors are those who have pledged \$1,500/month or more to MUI.
+Then, in your Vite config file, import the plugin and pass it to the `plugins` array as shown:
 
-### Gold 🏆
+```js
+import { pigment } from '@pigment-css/vite-plugin';
 
-via [Open Collective](https://opencollective.com/mui-org) or via [Patreon](https://www.patreon.com/oliviertassinari)
+export default defineConfig({
+  plugins: [
+    pigment(),
+    // ... Your other plugins.
+  ],
+});
+```
 
-<p>
-  <a href="https://tidelift.com/subscription/pkg/npm-material-ui?utm_source=npm-material-ui&utm_medium=referral&utm_campaign=homepage" rel="noopener sponsored" target="_blank"><img height="96" width="96" src="https://avatars.githubusercontent.com/u/30204434?s=288" alt="tidelift.com" title="Tidelift: Enterprise-ready open-source software." loading="lazy" /></a>
-  <a href="https://open.spotify.com/?utm_source=MUI&utm_medium=referral&utm_content=readme" rel="noopener sponsored" target="_blank"><img height="96" width="96" src="https://avatars.githubusercontent.com/u/251374?s=288" alt="Spotify" title="Spotify: Music service for accessing millions of songs." loading="lazy" /></a>
-  <a href="https://icons8.com?utm_source=MUI&utm_medium=referral&utm_content=readme" rel="noopener sponsored" target="_blank"><img height="96" width="96" src="https://images.opencollective.com/icons8/7fa1641/logo/288.png" alt="Icons8" title="Icons8: API for icons, photos, illustrations, and music." loading="lazy"></a>
-  <a href="https://rxdb.info/?utm_source=sponsor&utm_medium=opencollective&utm_campaign=opencollective-mui" rel="noopener sponsored" target="_blank"><img height="96" width="96" src="https://rxdb.info/files/logo/logo_text.svg" alt="RxDB" title="RxDB: Local-first JavaScript database." loading="lazy" /></a>
-  <a href="https://www.text-em-all.com/?utm_source=MUI&utm_medium=referral&utm_content=readme" rel="noopener sponsored" target="_blank"><img src="https://avatars.githubusercontent.com/u/1262264?s=288" alt="text-em-all.com" title="Text-em-all: Mass text messaging and automated calling." height="96" width="96" loading="lazy"></a>
-  <a href="https://megafamous.com/?utm_source=MUI&utm_medium=referral&utm_content=readme" rel="noopener sponsored" target="_blank"><img height="96" width="96" src="https://mui.com/static/sponsors/megafamous.png" alt="megafamous.com" title="MegaFamous: Buy Instagram followers and likes." loading="lazy" /></a>
-  <a href="https://www.dialmycalls.com/?utm_source=MUI&utm_medium=referral&utm_content=readme" rel="noopener sponsored" target="_blank"><img height="96" width="96" src="https://images.opencollective.com/dialmycalls/f5ae9ab/avatar/288.png" alt="dialmycalls.com" title="DialMyCalls: Send text messages, calls, and emails." loading="lazy" /></a>
-  <a href="https://goread.io/?utm_source=MUI&utm_medium=referral&utm_content=readme" rel="noopener sponsored" target="_blank"><img height="96" width="96" src="https://images.opencollective.com/goread_io/eb6337d/logo/288.png" alt="goread.io" title="Goread.io: Instagram followers, likes, views, and comments." loading="lazy" /></a>
-</p>
+Finally, import the stylesheet in the root `main.tsx` file:
 
-Gold sponsors are those who have pledged \$500/month or more to MUI.
-
-### More backers
-
-See the full list of [our backers](https://mui.com/material-ui/discover-more/backers/).
-
-## Questions
-
-For how-to questions that don't involve making changes to the code base, please use [Stack Overflow](https://stackoverflow.com/questions/) instead of GitHub issues.
-
-## Examples
-
-Our documentation features [a collection of example projects](https://github.com/mui/material-ui/tree/master/examples).
-
-## Premium templates
-
-You can find complete templates and themes in the [MUI Store](https://mui.com/store/?utm_source=docs&utm_medium=referral&utm_campaign=readme-store).
-
-## Contributing
-
-Read the [contributing guide](/CONTRIBUTING.md) to learn about our development process, how to propose bug fixes and improvements, and how to build and test your changes.
-
-Contributing is about more than just issues and pull requests!
-There are many other ways to [support Material UI](https://mui.com/material-ui/getting-started/faq/#mui-is-awesome-how-can-i-support-the-project) beyond contributing to the code base.
-
-## Changelog
-
-The [changelog](https://github.com/mui/material-ui/releases) is regularly updated to reflect what's changed in each new release.
-
-## Roadmap
-
-Future plans and high-priority features and enhancements can be found in the [roadmap](https://mui.com/material-ui/discover-more/roadmap/).
-
-## License
-
-This project is licensed under the terms of the
-[MIT license](/LICENSE).
-
-## Security
-
-For details of supported versions and contact details for reporting security issues, please refer to the [security policy](https://github.com/mui/material-ui/security/policy).
-
-## Sponsoring services
-
-These great services sponsor MUI's core infrastructure:
-
-<div>
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://mui.com/static/readme/github-darkmode.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://mui.com/static/readme/github-lightmode.svg">
-  <img alt="GitHub logo" src="https://mui.com/static/readme/github-lightmode.svg" width="80" height="43">
-</picture>
-
-[GitHub](https://github.com/) lets us host the Git repository and coordinate contributions.
-
-</div>
-
-<div>
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://mui.com/static/readme/netlify-darkmode.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://mui.com/static/readme/netlify-lightmode.svg">
-  <img alt="Netlify logo" src="https://mui.com/static/readme/netlify-lightmode.svg" width="100" height="27">
-</picture>
-
-[Netlify](https://www.netlify.com/) lets us distribute the documentation.
-
-</div>
-
-<div>
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://mui.com/static/readme/browserstack-darkmode.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://mui.com/static/readme/browserstack-lightmode.svg">
-  <img alt="BrowserStack logo" src="https://mui.com/static/readme/browserstack-lightmode.svg" width="140" height="25">
-</picture>
-
-[BrowserStack](https://www.browserstack.com/) lets us test in real browsers.
-
-</div>
-
-<div>
-<img loading="lazy" alt="CodeCov logo" src="https://avatars.githubusercontent.com/u/8226205?s=105" width="35" height="35">
-
-[CodeCov](https://about.codecov.io/) lets us monitor test coverage.
-
-</div>
+```diff
+ import * as React from 'react';
+ import { createRoot } from 'react-dom/client';
++import '@pigment-css/react/styles.css';
+ import App from './App';
+
+ const rootElement = document.getElementById('root');
+ const root = createRoot(rootElement);
+
+ root.render(
+   <React.StrictMode>
+     <App />
+   </React.StrictMode>,
+ );
+```
+
+## Basic usage
+
+**You must configure Pigment CSS with [Next.js](#nextjs) or [Vite](#vite) first.**
+
+### Creating styles
+
+Use the `css` API to create reusable styles:
+
+```js
+import { css } from '@pigment-css/react';
+
+const visuallyHidden = css({
+  border: 0,
+  clip: 'rect(0 0 0 0)',
+  height: '1px',
+  margin: -1,
+  overflow: 'hidden',
+  padding: 0,
+  position: 'absolute',
+  whiteSpace: 'nowrap',
+  width: '1px',
+});
+
+function App() {
+  return <div className={visuallyHidden}>I am invisible</div>;
+}
+```
+
+The call to the `css` function is replaced with a unique string that represents the CSS class name for the generated styles.
+
+Use a callback function to get access to the [theme](#theming) values:
+
+```js
+const title = css(({ theme }) => ({
+  color: theme.colors.primary,
+  fontSize: theme.spacing.unit * 4,
+  fontFamily: theme.typography.fontFamily,
+}));
+```
+
+### Creating components
+
+Use the `styled` API to create a component by passing styles at the end. The usage should be familiar if you've worked with Emotion or styled-components:
+
+```js
+import { styled } from '@pigment-css/react';
+
+const Heading = styled('div')({
+  fontSize: '4rem',
+  fontWeight: 'bold',
+  padding: '10px 0px',
+});
+
+function App() {
+  return <Heading>Hello</Heading>;
+}
+```
+
+Pigment CSS differs from "standard" runtime CSS-in-JS libraries in a few ways:
+
+1. You never get direct access to props in your styled declarations. This is because prop values are only available at runtime, but the CSS is extracted at build time. See [Styling based on runtime values](#styling-based-on-runtime-values) for a workaround.
+2. Your styles must be declarative and must account for all combinations of props that you want to style.
+3. The theme lets you declare CSS tokens that become part of the CSS bundle after the build. Any other values and methods that it might have are only available during build time—not at runtime. This leads to smaller bundle sizes.
+
+#### Styling based on props
+
+> 💡 This approach is recommended when the value of the prop is known at build time (finite values).
+
+Use the `variants` key to define styles for a combination of the component's props.
+
+Each variant is an object with `props` and `style` keys. The styles are applied when the component's props match the `props` object.
+
+**Example 1** — A button component with `small` and `large` sizes:
+
+```tsx
+interface ButtonProps {
+  size?: 'small' | 'large';
+}
+
+const Button = styled('button')<ButtonProps>({
+  border: 'none',
+  padding: '0.75rem',
+  // ...other styles
+  variants: [
+    {
+      props: { size: 'large' },
+      style: { padding: '1rem' },
+    },
+    {
+      props: { size: 'small' },
+      style: { padding: '0.5rem' },
+    },
+  ],
+});
+
+<Button>Normal button</Button>; // padding: 0.75rem
+<Button size="large">Large button</Button>; // padding: 1rem
+<Button size="small">Small button</Button>; // padding: 0.5rem
+```
+
+**Example 2** — A button component with variants and colors:
+
+```jsx
+const Button = styled('button')({
+  border: 'none',
+  padding: '0.75rem',
+  // ...other base styles
+  variants: [
+    {
+      props: { variant: 'contained', color: 'primary' },
+      style: { backgroundColor: 'tomato', color: 'white' },
+    },
+  ],
+});
+
+// `backgroundColor: 'tomato', color: 'white'`
+<Button variant="contained" color="primary">
+  Submit
+</Button>;
+```
+
+**Example 3** — Apply styles based on a condition:
+
+The value of the `props` can be a function that returns a boolean. If the function returns `true`, the styles are applied.
+
+```jsx
+const Button = styled('button')({
+  border: 'none',
+  padding: '0.75rem',
+  // ...other base styles
+  variants: [
+    {
+      props: (props) => props.variant !== 'contained',
+      style: { backgroundColor: 'transparent' },
+    },
+  ],
+});
+```
+
+Note that the `props` function doesn't work if it is inside another closure, for example, inside an `array.map`:
+
+```jsx
+const Button = styled('button')({
+  border: 'none',
+  padding: '0.75rem',
+  // ...other base styles
+  variants: ['red', 'blue', 'green'].map((item) => ({
+    props: (props) => {
+      // ❌ Cannot access `item` in this closure
+      return props.color === item && !props.disabled;
+    },
+    style: { backgroundColor: 'tomato' },
+  })),
+});
+```
+
+Instead, use plain objects to define the variants:
+
+```jsx
+const Button = styled('button')({
+  border: 'none',
+  padding: '0.75rem',
+  // ...other base styles
+  variants: ['red', 'blue', 'green'].map((item) => ({
+    props: { color: item, disabled: false },
+    style: { backgroundColor: 'tomato' },
+  })),
+});
+```
+
+#### Styling based on runtime values
+
+> 💡 This approach is recommended when the value of a prop is **unknown** ahead of time or possibly unlimited values, for example styling based on the user's input.
+
+There are two ways to acheive this (both involve using a CSS variable):
+
+1. Declare a CSS variable directly in the styles and set its value using inline styles:
+
+```jsx
+const Heading = styled('h1')({
+  color: 'var(--color)',
+});
+
+function Heading() {
+  const [color, setColor] = React.useState('red');
+
+  return <Heading style={{ '--color': color }} />;
+}
+```
+
+2. Use a callback function as a value to create a dynamic style for the specific CSS property:
+
+```jsx
+const Heading = styled('h1')({
+  color: ({ isError }) => (isError ? 'red' : 'black'),
+});
+```
+
+Pigment CSS replaces the callback with a CSS variable and injects the value through inline styles. This makes it possible to create a static CSS file while still allowing dynamic styles.
+
+```css
+.Heading_class_akjsdfb {
+  color: var(--Heading_class_akjsdfb-0);
+}
+```
+
+```jsx
+<h1
+  style={{
+    '--Heading_class_akjsdfb-0': isError ? 'red' : 'black',
+  }}
+>
+  Hello
+</h1>
+```
+
+#### Styled component as a CSS selector
+
+All of the components that you create are also available as CSS selectors. For example, for the `Heading` component described in the previous section, you can target that component inside another styled component like this:
+
+```jsx
+const Wrapper = styled.div({
+  [`& ${Heading}`]: {
+    color: 'blue',
+  },
+});
+```
+
+This enables you to override the default `color` of the Heading component rendered inside the Wrapper:
+
+```tsx
+<Wrapper>
+  <Heading>Hello</Heading>
+</Wrapper>
+```
+
+You can also export any styled component you create and use it as the base for additional components:
+
+```jsx
+const ExtraHeading = styled(Heading)({
+  // ... overridden styled
+});
+```
+
+#### Media and Container queries
+
+Pigment CSS APIs have built-in support for writing media queries and container queries. Use the `@media` and `@container` keys to define styles for different screen and container sizes.
+
+```jsx
+import { css, styled } from '@pigment-css/react';
+
+const styles = css({
+  fontSize: '2rem',
+  '@media (min-width: 768px)': {
+    fontSize: '3rem',
+  },
+  '@container (max-width: 768px)': {
+    fontSize: '1.5rem',
+  },
+});
+
+const Heading = styled('h1')({
+  fontSize: '2rem',
+  '@media (min-width: 768px)': {
+    fontSize: '3rem',
+  },
+  '@container (max-width: 768px)': {
+    fontSize: '1.5rem',
+  },
+});
+```
+
+> 💡 **Good to know**:
+>
+> Pigment CSS uses Emotion behind the scenes for turning tagged templates and objects into CSS strings.
+
+#### Typing props
+
+If you use TypeScript, add the props typing before the styles to get the type checking:
+
+```tsx
+const Heading = styled('h1')<{ isError?: boolean }>({
+  color: ({ isError }) => (isError ? 'red' : 'black'),
+});
+```
+
+### Creating animation keyframes
+
+Use the `keyframes` API to create reusable [animation keyframes](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes):
+
+```js
+import { keyframes } from '@pigment-css/react';
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+function Example1() {
+  return <div style={{ animation: `${fadeIn} 0.5s` }}>I am invisible</div>;
+}
+```
+
+The call to the `keyframes` function is replaced with a unique string that represents the CSS animation name. It can be used with `css` or `styled` too.
+
+```js
+import { css, styled, keyframes } from '@pigment-css/react';
+
+const fadeIn = keyframes(...);
+
+const Example2 = styled('div')({
+  animation: `${fadeIn} 0.5s`,
+});
+
+function App() {
+  return (
+    <>
+      <Example1 />
+      <div
+        className={css`
+          animation: ${fadeIn} 0.5s;
+        `}
+      />
+    </>
+  )
+}
+```
+
+### Theming
+
+Theming is an **optional** feature that lets you reuse the same values, such as colors, spacing, and typography, across your application. It is a plain object of any structure that you can define in your config file.
+
+> **💡 Good to know**:
+>
+> The **theme** object is used at build time and does not exist in the final JavaScript bundle. This means that components created using Pigment CSS's `styled` can be used with React Server Components by default while still getting the benefits of theming.
+
+For example, in Next.js, you can define a theme in the `next.config.js` file like this:
+
+```js
+const { withPigment } = require('@pigment-css/nextjs-plugin');
+
+module.exports = withPigment(
+  {
+    // ...other nextConfig
+  },
+  {
+    theme: {
+      colors: {
+        primary: 'tomato',
+        secondary: 'cyan',
+      },
+      spacing: {
+        unit: 8,
+      },
+      typography: {
+        fontFamily: 'Inter, sans-serif',
+      },
+      // ...more keys and values, it's free style!
+    },
+  },
+);
+```
+
+#### Accessing theme values
+
+A callback can be used with **styled()** and **css()** APIs to access the theme values:
+
+```js
+const Heading = styled('h1')(({ theme }) => ({
+  color: theme.colors.primary,
+  fontSize: theme.spacing.unit * 4,
+  fontFamily: theme.typography.fontFamily,
+}));
+```
+
+#### CSS variables support
+
+Pigment CSS can generate CSS variables from the theme values when you wrap your theme with `extendTheme` utility. For example, in a `next.config.js` file:
+
+```js
+const { withPigment, extendTheme } = require('@pigment-css/nextjs-plugin');
+
+module.exports = withPigment(
+  {
+    // ...nextConfig
+  },
+  {
+    theme: extendTheme({
+      colors: {
+        primary: 'tomato',
+        secondary: 'cyan',
+      },
+      spacing: {
+        unit: 8,
+      },
+      typography: {
+        fontFamily: 'Inter, sans-serif',
+      },
+    }),
+  },
+);
+```
+
+The `extendTheme` utility goes through the theme and create a `vars` object which represents the tokens that refer to CSS variables.
+
+```jsx
+const theme = extendTheme({
+  colors: {
+    primary: 'tomato',
+    secondary: 'cyan',
+  },
+});
+
+console.log(theme.colors.primary); // 'tomato'
+console.log(theme.vars.colors.primary); // 'var(--colors-primary)'
+```
+
+#### Adding a prefix to CSS variables
+
+You can add a prefix to the generated CSS variables by providing a `cssVarPrefix` option to the `extendTheme` utility:
+
+```jsx
+extendTheme({
+  cssVarPrefix: 'pigment',
+});
+```
+
+The generated CSS variables has the `pigment` prefix:
+
+```css
+:root {
+  --pigment-colors-background: #f9f9f9;
+  --pigment-colors-foreground: #121212;
+}
+```
+
+#### Color schemes
+
+Some tokens, especially color-related tokens, can have different values for different scenarios. For example in a daylight condition, the background color might be white, but in a dark condition, it might be black.
+
+The `extendTheme` utility lets you define a theme with a special `colorSchemes` key:
+
+```jsx
+extendTheme({
+  colorSchemes: {
+    light: {
+      colors: {
+        background: '#f9f9f9',
+        foreground: '#121212',
+      },
+    },
+    dark: {
+      colors: {
+        background: '#212121',
+        foreground: '#fff',
+      },
+    },
+  },
+});
+```
+
+In the above example, `light` (default) and `dark` color schemes are defined. The structure of each color scheme must be a plain object with keys and values.
+
+#### Switching color schemes
+
+By default, when `colorSchemes` is defined, Pigment CSS uses the [`prefers-color-scheme`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme) media query to switch between color schemes based on the user's system settings.
+
+However, if you want to control the color scheme based on application logic, for example, using a button to switch between light and dark mode, you can customize the behavior by providing a `getSelector` function:
+
+```diff
+  extendTheme({
+    colorSchemes: {
+      light: { ... },
+      dark: { ... },
+    },
++   getSelector: (colorScheme) => colorScheme ? `.theme-${colorScheme}` : ':root',
+  });
+```
+
+Note that you need to add the logic to a button by yourself. Here is an example of how to do it:
+
+```jsx
+function App() {
+  return (
+    <button
+      onClick={() => {
+        document.documentElement.classList.toggle('theme-dark');
+      }}
+    >
+      Toggle color scheme
+    </button>
+  );
+}
+```
+
+#### Styling based on color scheme
+
+The `extendTheme` utility attaches a function called `applyStyles` to the theme object. It receives a color scheme as the first argument followed by a style object.
+It returns a proper CSS selector based on the theme configuration.
+
+```jsx
+const Heading = styled('h1')(({ theme }) => ({
+  color: theme.colors.primary,
+  fontSize: theme.spacing.unit * 4,
+  fontFamily: theme.typography.fontFamily,
+  ...theme.applyStyles('dark', {
+    color: theme.colors.primaryLight,
+  }),
+}));
+```
+
+#### TypeScript
+
+To get the type checking for the theme, you need to augment the theme type:
+
+```ts
+// any file that is included in your tsconfig.json
+import type { ExtendTheme } from '@pigment-css/react/theme';
+
+declare module '@pigment-css/react/theme' {
+  interface ThemeTokens {
+    // the structure of your theme
+  }
+
+  interface ThemeArgs {
+    theme: ExtendTheme<{
+      colorScheme: 'light' | 'dark';
+      tokens: ThemeTokens;
+    }>;
+  }
+}
+```
+
+## Right-to-left support
+
+To support right-to-left (RTL) languages, add the `dir="rtl"` attribute to your app's `<html>` element or any other equivalent top level container. Then, update your bundler config as follows to generate styles for both directions:
+
+### Next.js
+
+```js
+const { withPigment } = require('@pigment-css/nextjs-plugin');
+
+// ...
+module.exports = withPigment(nextConfig, {
+  theme: yourCustomTheme,
+  // CSS output option
+  css: {
+    // Specify your default CSS authoring direction
+    defaultDirection: 'ltr',
+    // Generate CSS for the opposite of the `defaultDirection`
+    // This is set to `false` by default
+    generateForBothDir: true,
+  },
+});
+```
+
+### Vite
+
+```js
+import { pigment } from '@pigment-css/vite-plugin';
+
+export default defineConfig({
+  plugins: [
+    pigment({
+      theme: yourTheme,
+      css: {
+        // Specify your default CSS authoring direction
+        defaultDirection: 'ltr',
+        // Generate CSS for the opposite of the `defaultDirection`
+        // This is set to `false` by default
+        generateForBothDir: true,
+      },
+    }),
+    // ... other plugins.
+  ],
+});
+```
+
+### Generated CSS
+
+For example, if you've specified `defaultDirection: 'ltr'` and `dir="rtl"`, and your authored CSS looks like this:
+
+```js
+import { css } from '@pigment-css/react';
+
+const className = css`
+  margin-left: 10px,
+  margin-right: 20px,
+  padding: '0 10px 20px 30px'
+`;
+```
+
+Then the actual CSS output would be:
+
+```css
+.cmip3v5 {
+  margin-left: 10px;
+  margin-right: 20px;
+  padding: 0 10px 20px 30px;
+}
+
+[dir='rtl'] .cmip3v5 {
+  margin-right: 10px;
+  margin-left: 20px;
+  padding: 0 30px 20px 10px;
+}
+```
+
+### Custom dir selector
+
+The default selector in the output CSS is `[dir=rtl]` or `[dir=ltr]`. You can customize it by passing an optional `getDirSelector` method to the `css` property in your bundler config:
+
+```js
+    css: {
+      getDirSelector(dir: string) {
+        // return a custom selector you'd like to use
+        return `:dir(${dir})`;
+      },
+    },
+```
+
+## How-to guides
+
+### Coming from Emotion or styled-components
+
+Emotion and styled-components are runtime CSS-in-JS libraries. What you write in your styles is what you get in the final bundle, which means the styles can be as dynamic as you want with bundle size and performance overhead trade-offs.
+
+On the other hand, Pigment CSS extracts CSS at build time and replaces the JavaScript code with hashed class names and some CSS variables. This means that it has to know all of the styles to be extracted ahead of time, so there are rules and limitations that you need to be aware of when using JavaScript callbacks or variables in Pigment CSS's APIs.
+
+Here are some common patterns and how to achieve them with Pigment CSS:
+
+1. **Fixed set of styles**
+
+In Emotion or styled-components, you can use props to create styles conditionally:
+
+```js
+const Flex = styled('div')((props) => ({
+  display: 'flex',
+  ...(props.vertical // ❌ Pigment CSS will throw an error
+    ? {
+        flexDirection: 'column',
+        paddingBlock: '1rem',
+      }
+    : {
+        paddingInline: '1rem',
+      }),
+}));
+```
+
+But in Pigment CSS, you need to define all of the styles ahead of time using the `variants` key:
+
+```js
+const Flex = styled('div')((props) => ({
+  display: 'flex',
+  variants: [
+    {
+      props: { vertical: true },
+      style: {
+        flexDirection: 'column',
+        paddingBlock: '1rem',
+      },
+    },
+    {
+      props: { vertical: false },
+      style: {
+        paddingInline: '1rem',
+      },
+    },
+  ],
+}));
+```
+
+> 💡 Keep in mind that the `variants` key is for fixed values of props, for example, a component's colors, sizes, and states.
+
+2. **Programatically generated styles**
+
+For Emotion and styled-components, the styles are different on each render and instance because the styles are generated at runtime:
+
+```js
+function randomBetween(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+function generateBubbleVars() {
+  return `
+    --x: ${randomBetween(10, 90)}%;
+    --y: ${randomBetween(15, 85)}%;
+  `;
+}
+
+function App() {
+  return (
+    <div>
+      {[...Array(10)].map((_, index) => (
+        <div key={index} className={css`${generateBubbleVars()}`} />
+      ))}
+    </div>
+  )
+}
+```
+
+However, in Pigment CSS with the same code as above, all instances have the same styles and won't change between renders because the styles are extracted at build time.
+
+To achieve the same result, you need to move the dynamic logic to props and pass the value to CSS variables instead:
+
+```js
+function randomBetween(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+const Bubble = styled('div')({
+  '--x': props => props.x,
+  '--y': props => props.y,
+});
+
+function App() {
+  return (
+    <div>
+      {[...Array(10)].map((_, index) => (
+        <Bubble key={index} x={`${randomBetween(10, 90)}%`} y={`${randomBetween(15, 85)}%`} />
+      ))}
+    </div>
+  )
+}
+```
+
+## Building reusable components for UI libraries
+
+The purpose of this guide is to demonstrate how to create reusable components for a UI library that can be shared across multiple projects and used to implement different design systems through custom theming.
+The approach outlined here is not necessary when constructing components to be consumed and themed in a single project.
+It's most relevant for developers who want to build a component library that could be published as a package to be consumed and themed by other developers.
+
+The steps below will walk you through how to create a statistics component that could serve as part of a reusable UI library built with Pigment CSS.
+This process has three parts:
+
+1. [Create component slots](#1-create-component-slots).
+2. [Compose slots to create the component](#2-create-the-component).
+3. [Style slots based on props](#3-style-slots-based-on-props).
+
+### 1. Create component slots
+
+Slots let the consumers customize each individual element of the component by targeting its respective name in the [theme's styleOverrides](#themeable-statistics-component).
+
+This statistics component is composed of three slots:
+
+- `root`: the container of the component
+- `value`: the number to be displayed
+- `unit`: the unit or description of the value
+
+> 💡 Though you can give these slots any names you prefer, we recommend using `root` for the outermost container element for consistency with the rest of the library.
+
+Use the `styled` API with `name` and `slot` parameters to create the slots, as shown below:
+
+```js
+// /path/to/Stat.js
+import * as React from 'react';
+import { styled } from '@pigment-css/react';
+
+const StatRoot = styled('div', {
+  name: 'PigmentStat', // The component name
+  slot: 'root', // The slot name
+})({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1rem',
+  padding: '0.75rem 1rem',
+  backgroundColor: '#f9f9f9',
+  borderRadius: '8px',
+  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  letterSpacing: '-0.025em',
+  fontWeight: 600,
+});
+
+const StatValue = styled('div', {
+  name: 'PigmentStat',
+  slot: 'value',
+})({
+  font: '1.2rem "Fira Sans", sans-serif',
+});
+
+const StatUnit = styled('div', {
+  name: 'PigmentStat',
+  slot: 'unit',
+})({
+  font: '0.875rem "Fira Sans", sans-serif',
+  color: '#121212',
+});
+```
+
+### 2. Create the component
+
+Assemble the component using the slots created in the previous step:
+
+```js
+// /path/to/Stat.js
+import * as React from 'react';
+
+// ...slot styled-components
+
+const Stat = React.forwardRef(function Stat(props, ref) {
+  const { value, unit, ...other } = props;
+
+  return (
+    <StatRoot ref={ref} {...other}>
+      <StatValue>{value}</StatValue>
+      <StatUnit>{unit}</StatUnit>
+    </StatRoot>
+  );
+});
+
+export default Stat;
+```
+
+### 3. Style slots based on props
+
+In this example, a prop named `variant` is defined to let consumers change the appearance of the `Stat` component.
+
+Pass down the `variant` prop to `<StatRoot>` to style the `root` slot, as shown below:
+
+```diff
+ const Stat = React.forwardRef(function Stat(props, ref) {
++  const { value, unit, variant, ...other } = props;
+
+   return (
+-     <StatRoot ref={ref} {...other}>
+-       <StatValue>{value}</StatValue>
+-       <StatUnit>{unit}</StatUnit>
+-     </StatRoot>
++     <StatRoot ref={ref} variant={variant} {...other}>
++       <StatValue>{value}</StatValue>
++       <StatUnit>{unit}</StatUnit>
++     </StatRoot>
+   );
+ });
+```
+
+Then you can use Pigment CSS variants API to style it when `variant` prop has a value of `outlined`:
+
+```diff
+ const StatRoot = styled('div', {
+   name: 'PigmentStat',
+   slot: 'root',
+ })({
+   display: 'flex',
+   flexDirection: 'column',
+   gap: '1rem',
+   padding: '0.75rem 1rem',
+   backgroundColor: '#f9f9f9',
+   borderRadius: '8px',
+   boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+   letterSpacing: '-0.025em',
+   fontWeight: 600,
++  variants: [
++    {
++      props: { variant: 'outlined' },
++      style: {
++        border: `2px solid #e9e9e9`,
++      },
++    },
++  ],
+ });
+```
+
+This completes the reusable statistics component.
+If this were a real UI library, the component would be ready to upload to a package registry so others could use it.
+
+### Consumer usage
+
+Developers using your component must first install your package as well as the Pigment CSS packages that correspond to the [framework](#start-with-nextjs) they're using.
+
+```bash
+npm install your-package-name @pigment-css/react
+npm install -D @pigment-css/nextjs-plugin
+```
+
+Next, they must set up Pigment CSS in their project:
+
+```js
+// framework config file, for example next.config.js
+const { withPigment } = require('@pigment-css/nextjs-plugin');
+
+module.exports = withPigment(
+  {
+    // ... Your nextjs config.
+  },
+  { transformLibraries: ['your-package-name'] },
+);
+```
+
+Finally, they must import the stylesheet in the root layout file:
+
+```js
+// index.tsx
+import '@pigment-css/react/styles.css';
+```
+
+Then they can use your component in their project:
+
+```jsx
+import Stat from 'your-package-name/Stat';
+
+function App() {
+  return <Stat value={42} unit="km/h" variant="outlined" />;
+}
+```
+
+### Consumer theming
+
+Developers can customize the component's styles using the theme's `styleOverrides` key and the component name and slots you defined in [step 2](#2-create-the-component).
+For example, the custom theme below sets the background color of the statistics component's root slot to `tomato`:
+
+```js
+module.exports = withPigment(
+  { ...nextConfig },
+  {
+    theme: {
+      styleOverrides: {
+        PigmentStat: {
+          root: {
+            backgroundColor: 'tomato',
+          },
+          value: {
+            color: 'white',
+          },
+          unit: {
+            color: 'white',
+          },
+        },
+      },
+    },
+  },
+);
+```
+
+Developers can also access theme values and apply styles based on the component's props using the `variants` key:
+
+```js
+module.exports = withPigment(
+  { ...nextConfig },
+  {
+    theme: {
+      // user defined colors
+      colors: {
+        primary: 'tomato',
+        primaryLight: 'lightcoral',
+      },
+      styleOverrides: {
+        PigmentStat: {
+          root: ({ theme }) => ({
+            backgroundColor: 'tomato',
+            variants: [
+              {
+                props: { variant: 'outlined' },
+                style: {
+                  border: `2px solid ${theme.colors.primary}`,
+                  backgroundColor: theme.colors.primaryLight,
+                },
+              },
+            ],
+          }),
+          value: {
+            color: 'white',
+          },
+          unit: {
+            color: 'white',
+          },
+        },
+      },
+    },
+  },
+);
+```
