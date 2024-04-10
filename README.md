@@ -44,15 +44,17 @@ Pigment CSS is built on top of [WyW-in-JS](https://wyw-in-js.dev/), enabling to
 Use the following commands to quickly create a new Next.js project with Pigment CSS set up:
 
 ```bash
-curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2  material-ui-master/examples/pigment-css-nextjs-ts
+curl https://codeload.github.com/mui/pigment-css/tar.gz/master | tar -xz --strip=2  pigment-css/examples/pigment-css-nextjs-ts
 cd pigment-css-nextjs-ts
 ```
 
 #### Manual installation
 
+<!-- #default-branch-switch -->
+
 ```bash
-npm install @pigment-css/react@next
-npm install --save-dev @pigment-css/nextjs-plugin@next
+npm install @pigment-css/react
+npm install --save-dev @pigment-css/nextjs-plugin
 ```
 
 Then, in your `next.config.js` file, import the plugin and wrap the exported config object:
@@ -92,7 +94,7 @@ Finally, import the stylesheet in the root `layout.tsx` file:
 Use the following commands to quickly create a new Vite project with Pigment CSS set up:
 
 ```bash
-curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2 material-ui-master/examples/pigment-css-vite-ts
+curl https://codeload.github.com/mui/pigment-css/tar.gz/master | tar -xz --strip=2 pigment-css/examples/pigment-css-vite-ts
 cd pigment-css-vite-ts
 ```
 

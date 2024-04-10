@@ -15753,7 +15753,7 @@ packages:
     dev: true
 
   '@pkg.csb.dev/mui/material-ui/commit/fb183624/@mui/internal-test-utils(@babel/core@7.24.4)(@types/react@18.2.75)(react-dom@18.2.0)(react@18.2.0)':
-    resolution: {registry: https://registry.npmjs.org/, tarball: https://pkg.csb.dev/mui/material-ui/commit/fb183624/@mui/internal-test-utils}
+    resolution: {tarball: https://pkg.csb.dev/mui/material-ui/commit/fb183624/@mui/internal-test-utils}
     id: '@pkg.csb.dev/mui/material-ui/commit/fb183624/@mui/internal-test-utils'
     name: '@mui/internal-test-utils'
     version: 1.0.0

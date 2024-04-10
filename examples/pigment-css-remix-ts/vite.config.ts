@@ -6,7 +6,7 @@ import { pigment, extendTheme } from '@pigment-css/vite-plugin';
 
 installGlobals();
 
-// To learn more about theming, visit https://github.com/mui/material-ui/blob/master/packages/zero-runtime/README.md#theming
+// To learn more about theming, visit https://github.com/mui/pigment-css/blob/master/README.md#theming
 const theme = extendTheme({
   colorSchemes: {
     light: {

@@ -175,7 +175,7 @@ export default function Home() {
         })}
       >
         <Link
-          href="https://github.com/mui/material-ui/blob/master/packages/pigment-css-react/README.md"
+          href="https://github.com/mui/pigment-css/blob/master/README.md"
           target="_blank"
           rel="noopener noreferrer"
         >

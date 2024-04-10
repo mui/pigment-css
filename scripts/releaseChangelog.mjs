@@ -195,12 +195,12 @@ yargs(process.argv.slice(2))
         })
         .option('release', {
           // #default-branch-switch
-          default: 'next',
+          default: 'master',
           describe: 'Ref which we want to release',
           type: 'string',
         })
         .option('repo', {
-          default: 'material-ui',
+          default: 'pigment-css',
           describe: 'Repository to generate a changelog for',
           type: 'string',
         });

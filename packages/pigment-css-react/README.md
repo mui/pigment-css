@@ -17,9 +17,13 @@ Pigment CSS is built on top of [WyW-in-JS](https://wyw-in-js.dev/), enabling to
 
 ### Installation
 
+<!-- #default-branch-switch -->
+
 ```bash
-npm install @pigment-css/react@next
-npm install --save-dev @pigment-css/nextjs-plugin@next
+npm install @pigment-css/react
+npm install --save-dev @pigment-css/nextjs-plugin
 ```
+
 <!-- Replace this with the documentation link once it is available. -->
+
 For more information and getting started guide, check the [repository README.md](https://github.com/mui/pigment-css).

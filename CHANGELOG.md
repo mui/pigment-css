@@ -22,8 +22,6 @@ This release was mostly about 🐛 bug fixes and 📚 documentation improvements
 
 - &#8203;<!-- 06 -->[pigment-css] Fix README typo (#41808) @aarongarciah
 - &#8203;<!-- 05 -->[pigment-css] Fix output on dynamic styles example (#41805) @aarongarciah
-- &#8203;<!-- 07 -->[material-ui] Fix Material 3 message typo (#41821) @aarongarciah
-- &#8203;<!-- 08 -->[material-ui] Add stray design tweaks to free templates (#41696) @zanivan
 
 ### Core
 
@@ -167,4 +165,4 @@ This is the first public release of the zero-runtime CSS-in-JS library, Pigment�
 
 - &#8203;<!-- 19 -->[pigment-css] Add a Why section on the README (#41284) @danilo-leal
 
-All contributors of this release in alphabetical order: @brijeshb42,  @danilo-leal, @siriwatknp
+All contributors of this release in alphabetical order: @brijeshb42, @danilo-leal, @siriwatknp

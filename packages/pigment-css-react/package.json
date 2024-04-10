@@ -8,14 +8,14 @@
   "description": "A zero-runtime CSS-in-JS library.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mui/material-ui.git",
+    "url": "https://github.com/mui/pigment-css.git",
     "directory": "packages/pigment-css-react"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mui/material-ui/issues"
+    "url": "https://github.com/mui/pigment-css/issues"
   },
-  "homepage": "https://github.com/mui/material-ui/tree/master/packages/pigment-css-react",
+  "homepage": "https://github.com/mui/pigment-css/tree/master/README.md",
   "funding": {
     "type": "opencollective",
     "url": "https://opencollective.com/mui-org"

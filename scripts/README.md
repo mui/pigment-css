@@ -27,7 +27,7 @@ The following steps must be proposed as a pull request.
    `pnpm release:changelog --help` for more information. If your GitHub token is not in your env, pass it as `--githubToken <my-token>` to the above command.
 
 2. Clean the generated changelog:
-   1. Match the format of https://github.com/mui/material-ui/releases.
+   1. Match the format of https://github.com/mui/pigment-css/releases.
    2. Change the packages names casing to be lowercase if applicable
 3. Update the root `/package.json`'s version
 4. Run `pnpm release:version`. Keep the package versions of stable public packages the same as the root `package.json` version.
@@ -42,6 +42,8 @@ The following steps must be proposed as a pull request.
 4. `pnpm release:tag` (push the newly created tag)
 
 ### Documentation
+
+NOTE: We currently use the README.md as a documentation, so this step should be skipped.
 
 `pnpm docs:deploy` to deploy the documentation (it lives at https://material-ui.netlify.app/) with the latest changes.
 Force push if necessary.

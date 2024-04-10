@@ -20,11 +20,11 @@ function execDry(command, options) {
 }
 
 /**
- * Find the remote pointing to mui/material-ui.
+ * Find the remote pointing to mui/pigment-css.
  *
  * Conventionally this should be named `upstream` but some collaborators might've used a different naming scheme.
  */
-async function findMuiOrgRemote() {
+async function findMuiOrgPigmentCSSRemote() {
   const { stdout } = await execActual(['git', 'remote', '-v'].join(' '));
   const remoteLines = stdout.trim().split(/\r?\n/);
 
@@ -36,11 +36,11 @@ async function findMuiOrgRemote() {
     .find((remote) => {
       // test: https://regex101.com/r/fBVJUX/1
       // matching:
-      // - https://github.com/mui/material-ui
-      // - git@github.com:mui/material-ui.git
+      // - https://github.com/mui/pigment-css
+      // - git@github.com:mui/pigment-css.git
       // but not:
       // - git@github.com:mui/material-ui-docs.git
-      return /mui\/material-ui(\.git)?$/.test(remote.url) && remote.method === '(push)';
+      return /mui\/pigment-css(\.git)?$/.test(remote.url) && remote.method === '(push)';
     });
 }
 
@@ -59,11 +59,11 @@ async function main(argv) {
   // eslint-disable-next-line no-console -- verbose logging
   console.log(`Created tag '${tag}'. To remove enter 'git tag -d ${tag}'`);
 
-  const muiOrgRemote = await findMuiOrgRemote();
+  const muiOrgRemote = await findMuiOrgPigmentCSSRemote();
   if (muiOrgRemote === undefined) {
     throw new TypeError(
-      'Unable to find the upstream remote. It should be a remote pointing to "mui/material-ui". ' +
-        'Did you forget to add it via `git remote add upstream git@github.com:mui/material-ui.git`? ' +
+      'Unable to find the upstream remote. It should be a remote pointing to "mui/pigment-css". ' +
+        'Did you forget to add it via `git remote add upstream git@github.com:mui/pigment-css.git`? ' +
         'If you think this is a bug please include `git remote -v` in your report.',
     );
   }
@@ -79,7 +79,7 @@ async function main(argv) {
 yargs(process.argv.slice(2))
   .command({
     command: '$0',
-    description: 'Tags the current release and pushes these changes to mui/material-ui.',
+    description: 'Tags the current release and pushes these changes to mui/pigment-css.',
     builder: (command) => {
       return command.option('dryRun', {
         default: false,

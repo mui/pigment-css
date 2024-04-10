@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { pigment, extendTheme } from '@pigment-css/vite-plugin';
 
-// To learn more about theming, visit https://github.com/mui/material-ui/blob/master/packages/zero-runtime/README.md#theming
+// To learn more about theming, visit https://github.com/mui/pigment-css/blob/master/README.md#theming
 const theme = extendTheme({
   colorSchemes: {
     light: {
