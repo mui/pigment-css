@@ -399,9 +399,3 @@ workflows:
     jobs:
       - test_types_next:
           <<: *default-context
-  benchmark:
-    when:
-      equal: [benchmark, << pipeline.parameters.workflow >>]
-    jobs:
-      - test_benchmark:
-          <<: *default-context
