@@ -1,9 +1,9 @@
 import '@mui/internal-test-utils/init';
 import '@mui/internal-test-utils/setupKarma';
 
-const baseUiUnitContext = require.context(
-  '../packages/mui-base/src/',
+const pigmentCssContext = require.context(
+  '../packages/pigment-css-react/src/',
   true,
   /\.test\.(js|ts|tsx)$/,
 );
-baseUiUnitContext.keys().forEach(baseUiUnitContext);
+pigmentCssContext.keys().forEach(pigmentCssContext);
