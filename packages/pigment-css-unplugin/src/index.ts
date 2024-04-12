@@ -232,7 +232,9 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
             babelOptions: {
               ...rest.babelOptions,
               plugins: [
-                `${process.env.RUNTIME_PACKAGE_NAME}/exports/remove-prop-types-plugin`,
+                require.resolve(
+                  `${process.env.RUNTIME_PACKAGE_NAME}/exports/remove-prop-types-plugin`,
+                ),
                 'babel-plugin-define-var', // A fix for undefined variables in the eval phase of wyw-in-js, more details on https://github.com/siriwatknp/babel-plugin-define-var?tab=readme-ov-file#problem
                 ...(rest.babelOptions?.plugins ?? []),
               ],

@@ -8,14 +8,14 @@
   "description": "A zero-runtime CSS-in-JS library.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mui/material-ui.git",
+    "url": "https://github.com/mui/pigment-css.git",
     "directory": "packages/pigment-css-react"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mui/material-ui/issues"
+    "url": "https://github.com/mui/pigment-css/issues"
   },
-  "homepage": "https://github.com/mui/material-ui/tree/master/packages/pigment-css-react",
+  "homepage": "https://github.com/mui/pigment-css/tree/master/README.md",
   "funding": {
     "type": "opencollective",
     "url": "https://opencollective.com/mui-org"
@@ -41,7 +41,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/serialize": "^1.1.4",
     "@emotion/styled": "^11.11.5",
-    "@mui/system": "workspace:^",
+    "@mui/system": "^6.0.0-alpha.1",
     "@wyw-in-js/processor-utils": "^0.5.0",
     "@wyw-in-js/shared": "^0.5.0",
     "@wyw-in-js/transform": "^0.5.0",

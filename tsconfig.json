@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es5",
+    "lib": ["es2020", "dom"],
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noEmit": true,
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "allowSyntheticDefaultImports": true,
+    "noErrorTruncation": false,
+    "allowJs": true,
+    "paths": {
+      "@pigment-css/nextjs-plugin": ["./packages/pigment-css-nextjs-plugin/src"],
+      "@pigment-css/nextjs-plugin/*": ["./packages/pigment-css-nextjs-plugin/src/*"],
+      "@pigment-css/react": ["./packages/pigment-css-react/src"],
+      "@pigment-css/react/*": ["./packages/pigment-css-react/src/*"],
+      "@pigment-css/vite-plugin": ["./packages/pigment-css-vite-plugin/src"],
+      "@pigment-css/vite-plugin/*": ["./packages/pigment-css-vite-plugin/src/*"],
+    },
+    // Otherwise we get react-native typings which conflict with dom.lib.
+    "types": ["node", "react"]
+  },
+  "exclude": ["**/.*/", "**/build", "**/node_modules", "docs/export"]
+}
