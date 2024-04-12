@@ -220,6 +220,9 @@ importers:
       eslint-plugin-jsx-a11y:
         specifier: ^6.8.0
         version: 6.8.0(eslint@8.57.0)
+      eslint-plugin-material-ui:
+        specifier: workspace:^
+        version: link:packages/eslint-plugin-material-ui
       eslint-plugin-mocha:
         specifier: ^10.4.1
         version: 10.4.1(eslint@8.57.0)

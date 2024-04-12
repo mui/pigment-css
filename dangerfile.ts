@@ -2,7 +2,9 @@
 // danger has to be the first thing required!
 import { danger, markdown } from 'danger';
 import { exec } from 'child_process';
+// eslint-disable-next-line import/extensions
 import { loadComparison } from './scripts/sizeSnapshot';
+// eslint-disable-next-line import/extensions
 import replaceUrl from './packages/api-docs-builder/utils/replaceUrl';
 
 const circleCIBuildNumber = process.env.CIRCLE_BUILD_NUM;
