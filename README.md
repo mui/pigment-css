@@ -310,7 +310,7 @@ const Button = styled('button')({
 
 > 💡 This approach is recommended when the value of a prop is **unknown** ahead of time or possibly unlimited values, for example styling based on the user's input.
 
-There are two ways to acheive this (both involve using a CSS variable):
+There are two ways to achieve this (both involve using a CSS variable):
 
 1. Declare a CSS variable directly in the styles and set its value using inline styles:
 
@@ -543,7 +543,7 @@ module.exports = withPigment(
 );
 ```
 
-The `extendTheme` utility goes through the theme and create a `vars` object which represents the tokens that refer to CSS variables.
+The `extendTheme` utility goes through the theme and creates a `vars` object which represents the tokens that refer to CSS variables.
 
 ```jsx
 const theme = extendTheme({
@@ -567,7 +567,7 @@ extendTheme({
 });
 ```
 
-The generated CSS variables has the `pigment` prefix:
+The generated CSS variables have the `pigment` prefix:
 
 ```css
 :root {
