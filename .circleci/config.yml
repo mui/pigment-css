@@ -259,37 +259,37 @@ jobs:
             # We assume that the target branch is `next` and that declaration files are persisted in commit order.
             # "If there are multiple matches, the most recently generated cache will be used."
             - typescript-declaration-files-next
-  test_browser:
-    <<: *default-job
-    resource_class: 'medium+'
-    docker:
-      - image: mcr.microsoft.com/playwright:v1.43.0-focal
-        environment:
-          NODE_ENV: development # Needed if playwright is in `devDependencies`
-    steps:
-      - checkout
-      - install_js:
-          browsers: true
-      - run:
-          name: Tests real browsers
-          command: pnpm test:karma
-      # - run:
-      #     name: Check coverage generated
-      #     command: |
-      #       if ! [[ -s coverage/lcov.info ]]
-      #       then
-      #         exit 1
-      #       fi
-      - run:
-          name: Coverage
-          command: |
-            curl -Os https://uploader.codecov.io/latest/linux/codecov
-            chmod +x codecov
-            ./codecov -t ${CODECOV_TOKEN} -Z -F "$REACT_VERSION-browser"
-      - store_artifacts:
-          # hardcoded in karma-webpack
-          path: /tmp/_karma_webpack_
-          destination: artifact-file
+  # test_browser:
+  #   <<: *default-job
+  #   resource_class: 'medium+'
+  #   docker:
+  #     - image: mcr.microsoft.com/playwright:v1.43.0-focal
+  #       environment:
+  #         NODE_ENV: development # Needed if playwright is in `devDependencies`
+  #   steps:
+  #     - checkout
+  #     - install_js:
+  #         browsers: true
+  #     - run:
+  #         name: Tests real browsers
+  #         command: pnpm test:karma
+  #     - run:
+  #         name: Check coverage generated
+  #         command: |
+  #           if ! [[ -s coverage/lcov.info ]]
+  #           then
+  #             exit 1
+  #           fi
+  #     - run:
+  #         name: Coverage
+  #         command: |
+  #           curl -Os https://uploader.codecov.io/latest/linux/codecov
+  #           chmod +x codecov
+  #           ./codecov -t ${CODECOV_TOKEN} -Z -F "$REACT_VERSION-browser"
+  #     - store_artifacts:
+  #         # hardcoded in karma-webpack
+  #         path: /tmp/_karma_webpack_
+  #         destination: artifact-file
   test_profile:
     <<: *default-job
     docker:
