@@ -529,6 +529,9 @@ importers:
       '@babel/parser':
         specifier: ^7.24.4
         version: 7.24.4
+      '@babel/runtime':
+        specifier: ^7.24.4
+        version: 7.24.4
       '@babel/types':
         specifier: ^7.24.0
         version: 7.24.0
@@ -15921,6 +15924,7 @@ packages:
       '@babel/helper-module-imports': 7.24.3
       '@babel/helper-plugin-utils': 7.24.0
       '@babel/parser': 7.24.4
+      '@babel/runtime': 7.24.4
       '@babel/types': 7.24.0
       '@emotion/css': 11.11.2
       '@emotion/is-prop-valid': 1.2.2
