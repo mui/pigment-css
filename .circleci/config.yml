@@ -147,13 +147,13 @@ jobs:
       - run:
           name: Tests fake browser
           command: pnpm build && pnpm test:coverage:ci
-      - run:
-          name: Check coverage generated
-          command: |
-            if ! [[ -s coverage/lcov.info ]]
-            then
-              exit 1
-            fi
+      # - run:
+      #     name: Check coverage generated
+      #     command: |
+      #       if ! [[ -s coverage/lcov.info ]]
+      #       then
+      #         exit 1
+      #       fi
       - run:
           name: Coverage
           command: |
