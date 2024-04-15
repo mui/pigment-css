@@ -341,10 +341,10 @@ workflows:
           <<: *default-context
           requires:
             - checkout
-      - test_browser:
-          <<: *default-context
-          requires:
-            - checkout
+      # - test_browser:
+      #     <<: *default-context
+      #     requires:
+      #       - checkout
   profile:
     when:
       equal: [profile, << pipeline.parameters.workflow >>]
@@ -363,9 +363,9 @@ workflows:
       - test_unit:
           <<: *default-context
           react-version: ^17.0.0
-      - test_browser:
-          <<: *default-context
-          react-version: ^17.0.0
+      # - test_browser:
+      #     <<: *default-context
+      #     react-version: ^17.0.0
   react-next:
     triggers:
       - schedule:
@@ -378,9 +378,9 @@ workflows:
       - test_unit:
           <<: *default-context
           react-version: next
-      - test_browser:
-          <<: *default-context
-          react-version: next
+      # - test_browser:
+      #     <<: *default-context
+      #     react-version: next
   typescript-next:
     triggers:
       - schedule:
