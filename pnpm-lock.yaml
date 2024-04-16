@@ -15928,6 +15928,7 @@ packages:
       '@emotion/serialize': 1.1.4
       '@emotion/styled': 11.11.5(@emotion/react@11.11.4)(@types/react@18.2.75)(react@18.2.0)
       '@mui/system': 6.0.0-alpha.1(@emotion/react@11.11.4)(@emotion/styled@11.11.5)(@types/react@18.2.75)(react@18.2.0)
+      '@mui/utils': 6.0.0-alpha.1(@types/react@18.2.75)(react@18.2.0)
       '@wyw-in-js/processor-utils': 0.5.0
       '@wyw-in-js/shared': 0.5.0
       '@wyw-in-js/transform': 0.5.0(typescript@5.4.4)

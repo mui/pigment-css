@@ -7,14 +7,8 @@
     "composite": true,
     "noEmit": false,
     "resolveJsonModule": true,
-    "paths": {
-      "@mui/system": ["./packages/mui-system/src"],
-      "@mui/system/*": ["./packages/mui-system/src/*"],
-      "@mui/utils": ["./packages/mui-utils/src"],
-      "@mui/utils/*": ["./packages/mui-utils/src/*"]
-    },
     "types": ["node", "mocha"]
   },
-  "include": ["src/**/*.tsx", "src/**/*.js"],
+  "include": ["src/**/*.tsx", "src/**/*.ts", "src/**/*.jsx", "src/**/*.js", "src/Box/Box.ts"],
   "exclude": ["./tsup.config.ts"]
 }
