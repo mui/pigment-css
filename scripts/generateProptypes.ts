@@ -40,13 +40,6 @@ const useExternalDocumentation: Record<string, '*' | readonly string[]> = {
  */
 const ignoreExternalDocumentation: Record<string, readonly string[]> = {};
 
-function sortBreakpointsLiteralByViewportAscending(a: ts.LiteralType, b: ts.LiteralType) {
-  // default breakpoints ordered by their size ascending
-  const breakpointOrder: readonly unknown[] = ['"xs"', '"sm"', '"md"', '"lg"', '"xl"'];
-
-  return breakpointOrder.indexOf(a.value) - breakpointOrder.indexOf(b.value);
-}
-
 function sortSizeByScaleAscending(a: ts.LiteralType, b: ts.LiteralType) {
   const sizeOrder: readonly unknown[] = ['"small"', '"medium"', '"large"'];
   return sizeOrder.indexOf(a.value) - sizeOrder.indexOf(b.value);

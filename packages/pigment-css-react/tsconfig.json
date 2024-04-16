@@ -9,6 +9,6 @@
     "resolveJsonModule": true,
     "types": ["node", "mocha"]
   },
-  "include": ["src/**/*.tsx", "src/**/*.ts", "src/**/*.jsx", "src/**/*.js", "src/Box/Box.ts"],
+  "include": ["src/**/*.tsx", "src/index.ts", "src/**/*.jsx", "src/**/*.js", "src/Box/Box.ts"],
   "exclude": ["./tsup.config.ts"]
 }
