@@ -8,12 +8,6 @@
     "packages/pigment-css-nextjs-plugin",
     "packages/pigment-css-vite-plugin"
   ],
-  "publishDirectory": {
-    "@pigment-css/react": "packages/pigment-css-react/build",
-    "@pigment-css/unplugin": "packages/pigment-css-unplugin/build",
-    "@pigment-css/nextjs-plugin": "packages/pigment-css-nextjs-plugin/build",
-    "@pigment-css/vite-plugin": "packages/pigment-css-vite-plugin/build"
-  },
   "sandboxes": [
     "/examples/pigment-css-nextjs-ts",
     "/examples/pigment-css-remix-ts",
