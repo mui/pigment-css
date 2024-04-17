@@ -554,14 +554,14 @@ importers:
         specifier: ^6.0.0-alpha.1
         version: 6.0.0-alpha.1(@types/react@18.2.75)(react@18.2.0)
       '@wyw-in-js/processor-utils':
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.5.1
+        version: 0.5.1
       '@wyw-in-js/shared':
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.5.1
+        version: 0.5.1
       '@wyw-in-js/transform':
-        specifier: ^0.5.0
-        version: 0.5.0(typescript@5.4.4)
+        specifier: ^0.5.1
+        version: 0.5.1(typescript@5.4.4)
       clsx:
         specifier: ^2.1.0
         version: 2.1.0
@@ -636,11 +636,11 @@ importers:
         specifier: workspace:^
         version: link:../pigment-css-react
       '@wyw-in-js/shared':
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.5.1
+        version: 0.5.1
       '@wyw-in-js/transform':
-        specifier: ^0.5.0
-        version: 0.5.0(typescript@5.4.4)
+        specifier: ^0.5.1
+        version: 0.5.1(typescript@5.4.4)
       babel-plugin-define-var:
         specifier: ^0.1.0
         version: 0.1.0
@@ -673,11 +673,11 @@ importers:
         specifier: workspace:^
         version: link:../pigment-css-react
       '@wyw-in-js/shared':
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.5.1
+        version: 0.5.1
       '@wyw-in-js/transform':
-        specifier: ^0.5.0
-        version: 0.5.0(typescript@5.4.4)
+        specifier: ^0.5.1
+        version: 0.5.1(typescript@5.4.4)
       babel-plugin-define-var:
         specifier: ^0.1.0
         version: 0.1.0
@@ -5397,18 +5397,18 @@ packages:
       webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.1)(webpack@5.91.0)
     dev: true
 
-  /@wyw-in-js/processor-utils@0.5.0:
-    resolution: {integrity: sha512-3sRwuDTMy2GmD+44bhCTcBasCrjBexzYRzhxkmMrX49cpVDmQOH+4O7kX5OMRbmzMXe6Z5MsnxIlDlm3bJlcww==}
+  /@wyw-in-js/processor-utils@0.5.1:
+    resolution: {integrity: sha512-02kE/J+yABu7P+7djqcHyCkBiZV/SW7wgK65yikVVn/t5FNF9u6rZxIKWjrioeeODy5kKWFGzGyFFa3utPZoIA==}
     engines: {node: '>=16.0.0'}
     dependencies:
       '@babel/generator': 7.24.4
-      '@wyw-in-js/shared': 0.5.0
+      '@wyw-in-js/shared': 0.5.1
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@wyw-in-js/shared@0.5.0:
-    resolution: {integrity: sha512-W6Uic3cqRs75XZfXGOYH/0fADbl3Wz/kqnNaowgyNTdTN7/9vdlqk/D/gMT5WGolj4t418+rYe2FHHs0LdlmvA==}
+  /@wyw-in-js/shared@0.5.1:
+    resolution: {integrity: sha512-EXMP8oxXwAR4SMGgGcii8H/vahExT/e89ctm71KDbTNjG+AlQwzC3unyhMmxB5Jj2a0qnS8QTl4UuyHZ3HZeoQ==}
     engines: {node: '>=16.0.0'}
     dependencies:
       debug: 4.3.4(supports-color@8.1.1)
@@ -5418,8 +5418,8 @@ packages:
       - supports-color
     dev: false
 
-  /@wyw-in-js/transform@0.5.0(typescript@5.4.4):
-    resolution: {integrity: sha512-tpa2/FsB30fdXB1E+9MmfxQYbRgLv/+VMKzpBKNraDH39zwnA2eGGAEho5gpqK40cEV7NH6zhVbaBcEnV0HQyw==}
+  /@wyw-in-js/transform@0.5.1(typescript@5.4.4):
+    resolution: {integrity: sha512-ob0iORbQbRJgRiDvU4bYDvPrKbJ+rFW2+V+pz9gpaf2VWrO+fTF0jIB3SnPB14XYCHs6bMWhfH6kzlDjaj8whg==}
     engines: {node: '>=16.0.0'}
     dependencies:
       '@babel/core': 7.24.4
@@ -5429,8 +5429,8 @@ packages:
       '@babel/template': 7.24.0
       '@babel/traverse': 7.24.1
       '@babel/types': 7.24.0
-      '@wyw-in-js/processor-utils': 0.5.0
-      '@wyw-in-js/shared': 0.5.0
+      '@wyw-in-js/processor-utils': 0.5.1
+      '@wyw-in-js/shared': 0.5.1
       babel-merge: 3.0.0(@babel/core@7.24.4)
       cosmiconfig: 8.3.6(typescript@5.4.4)
       happy-dom: 12.10.3
@@ -15932,9 +15932,9 @@ packages:
       '@emotion/styled': 11.11.5(@emotion/react@11.11.4)(@types/react@18.2.75)(react@18.2.0)
       '@mui/system': 6.0.0-alpha.1(@emotion/react@11.11.4)(@emotion/styled@11.11.5)(@types/react@18.2.75)(react@18.2.0)
       '@mui/utils': 6.0.0-alpha.1(@types/react@18.2.75)(react@18.2.0)
-      '@wyw-in-js/processor-utils': 0.5.0
-      '@wyw-in-js/shared': 0.5.0
-      '@wyw-in-js/transform': 0.5.0(typescript@5.4.4)
+      '@wyw-in-js/processor-utils': 0.5.1
+      '@wyw-in-js/shared': 0.5.1
+      '@wyw-in-js/transform': 0.5.1(typescript@5.4.4)
       clsx: 2.1.0
       cssesc: 3.0.0
       csstype: 3.1.3
