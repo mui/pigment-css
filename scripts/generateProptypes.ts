@@ -27,9 +27,7 @@ import PIGMENT_CSS_TYPESCRIPT_PROJECTS from './pigmentCssTypeScriptProjects';
  * of dynamically loading them. At that point this list should be removed.
  * TODO: typecheck values
  */
-const useExternalDocumentation: Record<string, '*' | readonly string[]> = {
-  Box: ['component', 'as'],
-};
+const useExternalDocumentation: Record<string, '*' | readonly string[]> = {};
 
 /**
  * These are components that use props implemented by external components.
@@ -143,6 +141,11 @@ async function generateProptypes(
           throw new Error(
             `Unused \`@typescript-to-proptypes-ignore\` directive for prop '${prop.name}'.`,
           );
+        }
+
+        if (prop.name === 'component' || prop.name === 'as') {
+          // Use a shorter representation of the elementType
+          return 'PropTypes.elementType';
         }
 
         if (usedCustomValidator || ignoreGenerated) {
