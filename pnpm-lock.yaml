@@ -550,6 +550,9 @@ importers:
       '@mui/system':
         specifier: ^6.0.0-alpha.1
         version: 6.0.0-alpha.1(@emotion/react@11.11.4)(@emotion/styled@11.11.5)(@types/react@18.2.75)(react@18.2.0)
+      '@mui/utils':
+        specifier: ^6.0.0-alpha.1
+        version: 6.0.0-alpha.1(@types/react@18.2.75)(react@18.2.0)
       '@wyw-in-js/processor-utils':
         specifier: ^0.5.0
         version: 0.5.0

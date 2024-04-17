@@ -20,8 +20,6 @@ Open [http://localhost:3000](http://localhost:3000) to see the app running live.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-If you encounter an error that says "package `@pigment-css/react` not found," add it as a peer dependency in the `package.json` for `@mui/material`, then run `pnpm build` and `pnpm install` again. Make sure to not push this change to git.
-
 ### Note
 
 If you're testing changes in Pigment CSS-related packages while also running this demo app, run the watch command in a separate terminal to watch and build Pigment CSS package files as they change:
