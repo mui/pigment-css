@@ -11,6 +11,10 @@ module.exports = {
     alias: {
       '@pigment-css/react': path.resolve(__dirname, './packages/pigment-css-react/src'),
       docs: path.resolve(__dirname, './docs'),
+      '@mui-internal/api-docs-builder': path.resolve(
+        __dirname,
+        './node_modules/@mui/monorepo/packages/api-docs-builder',
+      ),
     },
     extensions: ['.js', '.ts', '.tsx', '.d.ts'],
   },

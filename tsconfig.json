@@ -20,6 +20,10 @@
       "@pigment-css/react/*": ["./packages/pigment-css-react/src/*"],
       "@pigment-css/vite-plugin": ["./packages/pigment-css-vite-plugin/src"],
       "@pigment-css/vite-plugin/*": ["./packages/pigment-css-vite-plugin/src/*"],
+      "@mui-internal/api-docs-builder": ["./node_modules/@mui/monorepo/packages/api-docs-builder"],
+      "@mui-internal/api-docs-builder/*": [
+        "./node_modules/@mui/monorepo/packages/api-docs-builder/*"
+      ]
     },
     // Otherwise we get react-native typings which conflict with dom.lib.
     "types": ["node", "react"]

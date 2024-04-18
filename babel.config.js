@@ -19,6 +19,9 @@ module.exports = function getBabelConfig(api) {
     '@pigment-css/react': resolveAliasPath('./packages/pigment-css-react/src'),
     docs: resolveAliasPath('./docs'),
     test: resolveAliasPath('./test'),
+    '@mui-internal/api-docs-builder': resolveAliasPath(
+      './node_modules/@mui/monorepo/packages/api-docs-builder',
+    ),
   };
 
   const presets = [
