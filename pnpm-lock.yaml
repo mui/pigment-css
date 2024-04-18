@@ -608,6 +608,9 @@ importers:
       '@types/node':
         specifier: ^18.19.30
         version: 18.19.31
+      '@types/prop-types':
+        specifier: ^15.7.12
+        version: 15.7.12
       '@types/react':
         specifier: ^18.2.74
         version: 18.2.75

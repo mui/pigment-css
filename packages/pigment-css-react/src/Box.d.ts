@@ -8,9 +8,24 @@ export type PolymorphicComponentProps<
     ? React.ComponentPropsWithRef<AsTarget>
     : BaseDefaultProps,
 > = NoInfer<Omit<Substitute<BaseProps, AsTargetProps>, 'as' | 'component'>> & {
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   * Replacement for the emotion's `as` prop.
+   */
   as?: AsTarget;
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   */
   component?: AsTarget;
+  /**
+   * The style extension prop that allows defining system overrides as well as additional CSS styles.
+   */
   sx?: SxProp;
+  /**
+   * The content of the component.
+   */
   children?: React.ReactNode;
 };
 

@@ -221,6 +221,12 @@ jobs:
           command: |
             pnpm extract-error-codes
             git add -A && git diff --exit-code --staged
+      - run:
+          name: Generate PropTypes
+          command: pnpm proptypes
+      - run:
+          name: '`pnpm proptypes` changes committed?'
+          command: git add -A && git diff --exit-code --staged
   test_types:
     <<: *default-job
     resource_class: 'medium+'
