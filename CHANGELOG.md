@@ -1,5 +1,26 @@
 # [Versions](https://mui.com/versions/)
 
+## v0.0.7
+
+<!-- generated comparing v6.0.0-alpha.2..next -->
+
+_Apr 17, 2024_
+
+A big thanks to the 3 contributors who made this release possible. Here is the highlight of this release ✨:
+
+- 🚀 Updated the sx transformation to also support components created with emotion
+
+### `@pigment-css/react@0.0.7`
+
+- Patch WyW's WeakRef usage (#41909) @DiegoAndai
+- Implement sx transform for system components (#41861) @brijeshb42
+
+### Docs
+
+- [pigment-css] Fixed README typos (#41870) @MohammadShehadeh
+
+All contributors of this release in alphabetical order: @brijeshb42, @DiegoAndai, @MohammadShehadeh
+
 ## v0.0.6
 
 <!-- generated comparing v6.0.0-alpha.1..next -->
@@ -11,21 +32,21 @@ This release was mostly about 🐛 bug fixes and 📚 documentation improvements
 
 ### `@pigment-css/react@0.0.6`
 
-- &#8203;<!-- 12 -->[core] Remove `muiName` during eval phase (#41811) @brijeshb42
+- [core] Remove `muiName` during eval phase (#41811) @brijeshb42
 
 ### `@pigment-css/nextjs-plugin@0.0.6`
 
-- &#8203;<!-- 02 -->[nextjs] Handle file references passed through imports (#41817) @brijeshb42
-- &#8203;<!-- 01 -->[nextjs] Allow usage of url() CSS function (#41758) @brijeshb42
+- [nextjs] Handle file references passed through imports (#41817) @brijeshb42
+- [nextjs] Allow usage of url() CSS function (#41758) @brijeshb42
 
 ### Docs
 
-- &#8203;<!-- 06 -->[pigment-css] Fix README typo (#41808) @aarongarciah
-- &#8203;<!-- 05 -->[pigment-css] Fix output on dynamic styles example (#41805) @aarongarciah
+- [pigment-css] Fix README typo (#41808) @aarongarciah
+- [pigment-css] Fix output on dynamic styles example (#41805) @aarongarciah
 
 ### Core
 
-- &#8203;<!-- 13 -->[core] Remove unused files (#41818) @mnajdova
+- [core] Remove unused files (#41818) @mnajdova
 
 All contributors of this release in alphabetical order: @aarongarciah, @brijeshb42, @zanivan
 
@@ -97,17 +118,17 @@ This release was mostly about 🐛 bug fixes and 📚 documentation improvements
 
 ### `@pigment-css/react@0.0.3`
 
-- &#8203;<!-- 03 -->Add Box component (#41451) @brijeshb42
+- Add Box component (#41451) @brijeshb42
 
 ### `pigment-css/nextjs-plugin@0.0.3`
 
-- &#8203;<!-- 04 -->Fix alias resolver (#41494) @brijeshb42
-- &#8203;<!-- 05 -->Follow-up to #41494 (#41502) @brijeshb42
+- Fix alias resolver (#41494) @brijeshb42
+- Follow-up to #41494 (#41502) @brijeshb42
 
 ### Docs
 
-- &#8203;<!-- 11 -->[pigment-css] Add media query guide (#41473) @siriwatknp
-- &#8203;<!-- 10 -->[pigment-css] Fixing location of the ExtendTheme type in the docs (#41499) @jherr
+- [pigment-css] Add media query guide (#41473) @siriwatknp
+- [pigment-css] Fixing location of the ExtendTheme type in the docs (#41499) @jherr
 
 All contributors of this release in alphabetical order: @brijeshb42, @jherr, @siriwatknp
 
@@ -155,14 +176,14 @@ This is the first public release of the zero-runtime CSS-in-JS library, Pigment�
 
 ### `@pigment-css/react@0.0.1`, `@pigment-css/nextjs-plugin@0.0.1`, `@pigment-css/vite-plugin@0.0.1`, & `@pigment-css/unplugin@0.0.1`
 
-- &#8203;<!-- 06 -->[pigment-css] Add support for styled tagged-template literals (#41268) @brijeshb42
-- &#8203;<!-- 04 -->[pigment-css] Move extendTheme to already existing @pigment-css/react/utils (#41254) @brijeshb42
-- &#8203;<!-- 03 -->[pigment-css] Remove `object` intersection from CSS Fallback (#41271) @siriwatknp
-- &#8203;<!-- 02 -->[pigment-css] Minor wording changes in README (#41253) @brijeshb42
-- &#8203;<!-- 01 -->[pigment-css] Prepare zero-runtime packages for public release (#41226) @brijeshb42
+- [pigment-css] Add support for styled tagged-template literals (#41268) @brijeshb42
+- [pigment-css] Move extendTheme to already existing @pigment-css/react/utils (#41254) @brijeshb42
+- [pigment-css] Remove `object` intersection from CSS Fallback (#41271) @siriwatknp
+- [pigment-css] Minor wording changes in README (#41253) @brijeshb42
+- [pigment-css] Prepare zero-runtime packages for public release (#41226) @brijeshb42
 
 ### Docs
 
-- &#8203;<!-- 19 -->[pigment-css] Add a Why section on the README (#41284) @danilo-leal
+- [pigment-css] Add a Why section on the README (#41284) @danilo-leal
 
 All contributors of this release in alphabetical order: @brijeshb42, @danilo-leal, @siriwatknp
