@@ -24,7 +24,7 @@ function convertJsxMemberExpressionToMemberExpression(
   );
 }
 
-function wrapWithSxComponent(
+function wrapWithJsxElement(
   t: typeof Types,
   tagNamePath: NodePath<Types.JSXIdentifier | Types.JSXMemberExpression | Types.JSXNamespacedName>,
   sxComponentName: string,
@@ -71,6 +71,34 @@ function wrapWithSxComponent(
   jsxElement.replaceWith(newElement);
 }
 
+function wrapWithJsxCall(
+  t: typeof Types,
+  tagNamePath: NodePath<Types.Identifier | Types.MemberExpression>,
+  sxComponentName: string,
+) {
+  const sxComponent = addNamed(
+    tagNamePath,
+    sxComponentName,
+    `${process.env.PACKAGE_NAME}/private-runtime`,
+  );
+  const jsxCall = tagNamePath.findParent((p) => p.isCallExpression());
+  if (!jsxCall?.isCallExpression()) {
+    return;
+  }
+  const originalTag = tagNamePath.node;
+  const callArgs = jsxCall.get('arguments');
+  callArgs[0].replaceWith(sxComponent);
+  const props = callArgs[1];
+  if (props.isObjectExpression()) {
+    const properties = props.get('properties');
+    const newProps = t.objectExpression([
+      t.objectProperty(t.identifier('sxComponent'), originalTag),
+      ...properties.map((p) => p.node),
+    ]);
+    props.replaceWith(newProps);
+  }
+}
+
 function replaceNodePath(
   expressionPath: NodePath<Types.Expression>,
   namePath: NodePath<Types.JSXIdentifier | Types.Identifier>,
@@ -101,7 +129,9 @@ function replaceNodePath(
 
   if (wasSxTransformed) {
     if (tagNamePath.isJSXIdentifier() || tagNamePath.isJSXMemberExpression()) {
-      wrapWithSxComponent(t, tagNamePath, sxComponentName);
+      wrapWithJsxElement(t, tagNamePath, sxComponentName);
+    } else if (tagNamePath.isIdentifier() || tagNamePath.isMemberExpression()) {
+      wrapWithJsxCall(t, tagNamePath, sxComponentName);
     }
   }
 }
