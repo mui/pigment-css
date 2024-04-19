@@ -1,6 +1,6 @@
 # [Versions](https://mui.com/versions/)
 
-## v0.0.7
+## v0.0.8
 
 <!-- generated comparing v6.0.0-alpha.2..next -->
 
