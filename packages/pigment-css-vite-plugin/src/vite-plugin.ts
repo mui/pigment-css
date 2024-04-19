@@ -186,6 +186,11 @@ export default function wywVitePlugin({
               preprocessor,
               pluginOptions: {
                 ...rest,
+                features: {
+                  useWeakRefInEval: false,
+                  // If users know what they are doing, let them override to true
+                  ...rest.features,
+                },
                 babelOptions: {
                   ...rest.babelOptions,
                   plugins: [
