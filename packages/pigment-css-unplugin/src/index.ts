@@ -210,6 +210,11 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
             themeArgs: {
               theme,
             },
+            features: {
+              useWeakRefInEval: false,
+              // If users know what they are doing, let them override to true
+              ...rest.features,
+            },
             overrideContext(context: Record<string, unknown>, filename: string) {
               if (overrideContext) {
                 return overrideContext(context, filename);

@@ -10,4 +10,13 @@ describe('Pigment CSS - Box', () => {
     expect(output.js).to.equal(fixture.js);
     expect(output.css).to.equal(fixture.css);
   });
+
+  it('should transform and render sx prop for jsx calls', async () => {
+    const { output, fixture } = await runTransformation(
+      path.join(__dirname, 'fixtures/box-jsx.input.js'),
+    );
+
+    expect(output.js).to.equal(fixture.js);
+    expect(output.css).to.equal(fixture.css);
+  });
 });
