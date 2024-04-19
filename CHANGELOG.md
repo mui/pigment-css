@@ -2,8 +2,6 @@
 
 ## v0.0.8
 
-<!-- generated comparing v6.0.0-alpha.2..next -->
-
 _Apr 19, 2024_
 
 A big thanks to the 3 contributors who made this release possible.
@@ -34,8 +32,6 @@ All contributors of this release in alphabetical order: @brijeshb42, @mnajdova, 
 
 ## v0.0.7
 
-<!-- generated comparing v6.0.0-alpha.2..next -->
-
 _Apr 17, 2024_
 
 A big thanks to the 2 contributors who made this release possible. Here is the highlight of this release ✨:
@@ -53,8 +49,6 @@ A big thanks to the 2 contributors who made this release possible. Here is the h
 All contributors of this release in alphabetical order: @brijeshb42, @MohammadShehadeh
 
 ## v0.0.6
-
-<!-- generated comparing v6.0.0-alpha.1..next -->
 
 _Apr 9, 2024_
 
