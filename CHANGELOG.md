@@ -6,20 +6,19 @@
 
 _Apr 17, 2024_
 
-A big thanks to the 3 contributors who made this release possible. Here is the highlight of this release ✨:
+A big thanks to the 2 contributors who made this release possible. Here is the highlight of this release ✨:
 
 - 🚀 Updated the sx transformation to also support components created with emotion
 
 ### `@pigment-css/react@0.0.7`
 
-- Patch WyW's WeakRef usage (#41909) @DiegoAndai
 - Implement sx transform for system components (#41861) @brijeshb42
 
 ### Docs
 
 - [pigment-css] Fixed README typos (#41870) @MohammadShehadeh
 
-All contributors of this release in alphabetical order: @brijeshb42, @DiegoAndai, @MohammadShehadeh
+All contributors of this release in alphabetical order: @brijeshb42, @MohammadShehadeh
 
 ## v0.0.6
 
