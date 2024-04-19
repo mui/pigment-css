@@ -4,6 +4,38 @@
 
 <!-- generated comparing v6.0.0-alpha.2..next -->
 
+_Apr 19, 2024_
+
+A big thanks to the 3 contributors who made this release possible.
+This release is mostly around infrastructure work related to moving the project to its own repository.
+Starting with this release, all packages are going to be released under the `latest` tag, instead of `next`, in order to simplify the installation process.
+
+### `@pigment-css/react@0.0.8`
+
+- [core][enhancement] Disable WeakRef usage in WyW modulate evaluation (#25) @brijeshb42
+- [core] Add support for sx replacement in transformed jsx calls (#22) @brijeshb42
+
+### Docs
+
+- [react] Add How Pigment CSS works guide (#18) @brijeshb42
+- Update creating a new issue link (#20) @ZeeshanTamboli
+- Fix wrong header hash in the README.md (#26) @mnajdova
+
+### Core
+
+- Create Circle CI config (#4) @mnajdova
+- Enable the CI (#12) @mnajdova
+- Enable ci/sandbox (#14) @mnajdova
+- Remove paths associated with the @mui packages (#15) @mnajdova
+- Add GitHub workflows (#19) @mnajdova
+- Add build:ci script (#23) @mnajdova
+
+All contributors of this release in alphabetical order: @brijeshb42, @mnajdova, @ZeeshanTamboli
+
+## v0.0.7
+
+<!-- generated comparing v6.0.0-alpha.2..next -->
+
 _Apr 17, 2024_
 
 A big thanks to the 2 contributors who made this release possible. Here is the highlight of this release ✨:
