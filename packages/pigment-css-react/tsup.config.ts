@@ -1,7 +1,15 @@
 import { Options, defineConfig } from 'tsup';
 import config from '../../tsup.config';
 
-const processors = ['styled', 'sx', 'keyframes', 'generateAtomics', 'css', 'createUseThemeProps'];
+const processors = [
+  'styled',
+  'sx',
+  'keyframes',
+  'generateAtomics',
+  'css',
+  'createUseThemeProps',
+  'globalCss',
+];
 const external = ['react', 'react-is', 'prop-types'];
 
 const baseConfig: Options = {
