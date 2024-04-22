@@ -91,6 +91,7 @@
   "files": [
     "build",
     "exports",
+    "private-runtime",
     "processors",
     "theme",
     "utils",
