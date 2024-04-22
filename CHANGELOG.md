@@ -1,5 +1,24 @@
 # [Versions](https://mui.com/versions/)
 
+## v0.0.9
+
+<!-- generated comparing v0.0.8..master -->
+
+_Apr 22, 2024_
+
+A big thanks to the 2 contributors who made this release possible.
+
+### `@pigment-css/react@0.0.9`
+
+- [fix] Use wildcard for exports instead of individual paths (#28) @brijeshb42
+- [fix] Add `private-runtime` directory in the package.json (#33) @mnajdova
+
+### Core
+
+- Enable release:changelog in CI (#30) @mnajdova
+
+All contributors of this release in alphabetical order: @brijeshb42, @mnajdova
+
 ## v0.0.8
 
 _Apr 19, 2024_
