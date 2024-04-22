@@ -11,6 +11,7 @@ A big thanks to the 2 contributors who made this release possible.
 ### `@pigment-css/react@0.0.9`
 
 - [fix] Use wildcard for exports instead of individual paths (#28) @brijeshb42
+- [fix] Add `private-runtime` directory in the package.json (#33) @mnajdova
 
 ### Core
 
