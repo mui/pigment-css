@@ -1,5 +1,5 @@
 import type { Element } from 'stylis';
-import { serialize, compile, stringify, middleware, namespace } from 'stylis';
+import { serialize, compile, stringify, middleware } from 'stylis';
 import rtlPlugin from 'stylis-plugin-rtl';
 import { type PluginCustomOptions } from './cssFnValueToVariable';
 
@@ -21,9 +21,9 @@ function globalSelector(element: Element) {
 
 function getSerializer(includeRtl?: boolean) {
   if (!includeRtl) {
-    return middleware([globalSelector, namespace, stringify]);
+    return middleware([globalSelector, stringify]);
   }
-  return middleware([globalSelector, namespace, rtlPlugin, stringify]);
+  return middleware([globalSelector, rtlPlugin, stringify]);
 }
 
 const serializer = getSerializer();
