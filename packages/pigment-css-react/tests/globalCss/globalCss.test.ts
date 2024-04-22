@@ -2,7 +2,7 @@ import path from 'node:path';
 import { runTransformation, expect } from '../testUtils';
 
 describe('Pigment CSS - globalCss', () => {
-  it.only('basics', async () => {
+  it('basics', async () => {
     const { output, fixture } = await runTransformation(
       path.join(__dirname, 'fixtures/globalCss.input.js'),
     );
