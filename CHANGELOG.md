@@ -10,11 +10,11 @@ A big thanks to the 2 contributors who made this release possible.
 
 ### `@pigment-css/react@0.0.9`
 
-- [core] Enable release:changelog in CI (#30) @mnajdova
+- [fix] Use wildcard for exports instead of individual paths (#28) @brijeshb42
 
 ### Core
 
-- [fix] Use wildcard for exports instead of individual paths (#28) @brijeshb42
+- [core] Enable release:changelog in CI (#30) @mnajdova
 
 All contributors of this release in alphabetical order: @brijeshb42, @mnajdova
 
