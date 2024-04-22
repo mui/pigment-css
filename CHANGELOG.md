@@ -14,7 +14,7 @@ A big thanks to the 2 contributors who made this release possible.
 
 ### Core
 
-- [core] Enable release:changelog in CI (#30) @mnajdova
+- Enable release:changelog in CI (#30) @mnajdova
 
 All contributors of this release in alphabetical order: @brijeshb42, @mnajdova
 
