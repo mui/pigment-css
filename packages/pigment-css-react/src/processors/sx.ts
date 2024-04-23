@@ -123,6 +123,7 @@ export class SxProcessor extends BaseProcessor {
     if (this.artifacts.length === 0) {
       return;
     }
+    let result = this.value;
     if (this.collectedVariables.length) {
       const varProperties: ReturnType<typeof t.objectProperty>[] = this.collectedVariables.map(
         ([variableId, expression, isUnitLess]) => {
@@ -156,10 +157,50 @@ export class SxProcessor extends BaseProcessor {
         t.objectProperty(t.identifier('className'), t.stringLiteral(this.className)),
         t.objectProperty(t.identifier('vars'), t.objectExpression(varProperties)),
       ]);
-      this.replacer(obj, false);
-    } else {
-      this.replacer(this.value, false);
+      result = obj;
     }
+
+    this.replacer(
+      // @ts-ignore
+      (tagPath) => {
+        let depth = 0;
+        let jsxElement = tagPath;
+        while (jsxElement.type !== 'JSXOpeningElement' && depth < 5) {
+          jsxElement = jsxElement.parentPath;
+          depth += 1;
+        }
+
+        if (jsxElement.isJSXOpeningElement()) {
+          const attributes: any[] = [];
+          let sxAttribute: any;
+          jsxElement.get('attributes').forEach((attr: any) => {
+            if (attr.isJSXAttribute() && attr.node.name.name === 'sx') {
+              sxAttribute = attr;
+              attr.remove();
+            } else if (attr.isJSXSpreadAttribute()) {
+              attributes.push(t.spreadElement(attr.node.argument));
+            } else if (
+              attr.isJSXAttribute() &&
+              (attr.node.name.name === 'className' || attr.node.name.name === 'style')
+            ) {
+              attributes.push(
+                t.objectProperty(
+                  t.identifier(attr.node.name.name),
+                  attr.node.value.type === 'JSXExpressionContainer'
+                    ? attr.node.value.expression
+                    : attr.node.value,
+                ),
+              );
+            }
+          });
+          if (sxAttribute) {
+            tagPath.node.arguments = [result, t.objectExpression(attributes)];
+            jsxElement.node.attributes.push(t.jsxSpreadAttribute(tagPath.node));
+          }
+        }
+      },
+      false,
+    );
   }
 
   get asSelector(): string {
