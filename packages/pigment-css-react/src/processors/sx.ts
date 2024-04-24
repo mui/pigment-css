@@ -1,5 +1,12 @@
 import type { NodePath } from '@babel/core';
-import type { Expression, JSXAttribute, JSXOpeningElement } from '@babel/types';
+import type {
+  CallExpression,
+  Expression,
+  JSXAttribute,
+  JSXOpeningElement,
+  ObjectExpression,
+  ObjectProperty,
+} from '@babel/types';
 import {
   validateParams,
   type Params,
@@ -129,9 +136,30 @@ export class SxProcessor extends BaseProcessor {
       result = obj;
     }
 
+    /**
+     * Replace the sx call with the transformed result. It works for both JSX and non-JSX calls.
+     *
+     * For example:
+     * <Component sx={_sx({ color: 'red' })} /> to <Component sx={_sx('sd5jss7')} />
+     * <Component sx={_sx({ bgcolor: 'red', color: props.color })} /> to <Component sx={_sx({ className: 'bc1d15y', vars: { 'bc1d15y-0': [props.color, false], }})} />
+     */
     this.replacer(
       // @ts-ignore
-      (tagPath: NodePath) => {
+      (tagPath: NodePath<CallExpression>) => {
+        return t.callExpression(tagPath.get('callee').node, [result]);
+      },
+      false,
+    );
+
+    /**
+     * For JSX calls, replace the sx prop with runtime sx
+     */
+    this.replacer(
+      // @ts-ignore
+      (tagPath: NodePath<CallExpression>) => {
+        if (!tagPath.parentPath.isJSXExpressionContainer()) {
+          return tagPath.node;
+        }
         const jsxElement = tagPath.findParent((p) =>
           p.isJSXOpeningElement(),
         ) as NodePath<JSXOpeningElement>;
@@ -185,11 +213,65 @@ export class SxProcessor extends BaseProcessor {
           }
           sxAttribute.remove();
         }
-        const newNode = {
-          ...tagPath.node,
-          arguments: [result, t.objectExpression(attributes)],
-        };
-        return newNode;
+        tagPath.node.arguments.push(t.objectExpression(attributes));
+        return tagPath.node;
+      },
+      false,
+    );
+
+    // For non-JSX calls, replace the sx prop with runtime sx
+    this.replacer(
+      // @ts-ignore
+      (tagPath: NodePath<CallExpression>) => {
+        if (!tagPath.parentPath.isObjectProperty()) {
+          return tagPath.node;
+        }
+        const objExpression = tagPath.findParent((p) =>
+          p.isObjectExpression(),
+        ) as NodePath<ObjectExpression>;
+        if (!objExpression) {
+          return tagPath.node;
+        }
+
+        const properties: any[] = [];
+        let sxProperty: undefined | NodePath<ObjectProperty>;
+        (objExpression.get('properties') as NodePath[]).forEach((prop) => {
+          if (
+            prop.isObjectProperty() &&
+            prop.node.key.type === 'Identifier' &&
+            prop.node.key.name === 'sx'
+          ) {
+            sxProperty = prop;
+          } else if (prop.isSpreadElement()) {
+            let containRuntimeSx = false;
+            prop.traverse({
+              CallExpression(path) {
+                const callee = path.get('callee');
+                if (callee.isIdentifier() && callee.node.name.startsWith('_sx')) {
+                  containRuntimeSx = true;
+                }
+              },
+            });
+            if (!containRuntimeSx) {
+              properties.push(t.spreadElement(prop.node.argument));
+            }
+          } else if (
+            prop.isObjectProperty() &&
+            prop.node.key.type === 'Identifier' &&
+            (prop.node.key.name === 'className' || prop.node.key.name === 'style')
+          ) {
+            properties.push(
+              t.objectProperty(t.identifier(prop.node.key.name), prop.node.value as any),
+            );
+          }
+        });
+        if (sxProperty) {
+          const expression = sxProperty.get('value');
+          objExpression.node.properties.push(t.spreadElement(expression.node as CallExpression));
+          sxProperty.remove();
+        }
+        tagPath.node.arguments.push(t.objectExpression(properties));
+        return tagPath.node;
       },
       false,
     );

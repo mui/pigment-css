@@ -1,12 +1,11 @@
-import { ForwardSx as _ForwardSx } from '@pigment-css/react/private-runtime';
+import { sx as _sx } from '@pigment-css/react';
 import Box from '@pigment-css/react/Box';
 import { jsx as _jsx } from 'react/jsx-runtime';
 export function App(props) {
-  return /*#__PURE__*/ _jsx(_ForwardSx, {
-    sxComponent: Box,
+  return /*#__PURE__*/ _jsx(Box, {
     as: 'ul',
     'aria-label': props.label,
-    sx: 'sd5jss7',
     children: 'Hello Box',
+    ..._sx('sd5jss7', {}),
   });
 }

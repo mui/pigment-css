@@ -558,7 +558,7 @@ importers:
         version: 0.5.1
       '@wyw-in-js/transform':
         specifier: ^0.5.1
-        version: 0.5.1(typescript@5.4.4)
+        version: link:../../../wyw-in-js/packages/transform
       clsx:
         specifier: ^2.1.0
         version: 2.1.0
