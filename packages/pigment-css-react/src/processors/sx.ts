@@ -1,4 +1,5 @@
-import type { Expression } from '@babel/types';
+import type { NodePath } from '@babel/core';
+import type { Expression, JSXAttribute, JSXOpeningElement } from '@babel/types';
 import {
   validateParams,
   type Params,
@@ -10,31 +11,6 @@ import type { IOptions } from './styled';
 import { processCssObject } from '../utils/processCssObject';
 import { cssFnValueToVariable } from '../utils/cssFnValueToVariable';
 import BaseProcessor from './base-processor';
-
-// @TODO: Maybe figure out a better way allow imports.
-const allowedSxTransformImports = [`${process.env.PACKAGE_NAME}/Box`];
-
-/**
- * Specifically looks for whether the sx prop should be transformed or not.
- * If it's a Pigment CSS styled component, the value of `argumentValue` will
- * be a string className starting with "."
- * In other cases, it explicitly checks if the import is allowed for sx transformation.
- */
-function allowSxTransform(argumentExpression: ExpressionValue, argumentValue?: string) {
-  if (!argumentExpression) {
-    return false;
-  }
-  if (
-    argumentExpression.kind === ValueType.LAZY &&
-    argumentExpression.importedFrom?.some((i) => allowedSxTransformImports.includes(i))
-  ) {
-    return true;
-  }
-  if (argumentValue && argumentValue[0] === '.') {
-    return true;
-  }
-  return false;
-}
 
 export class SxProcessor extends BaseProcessor {
   sxArguments: ExpressionValue[] = [];
@@ -66,10 +42,6 @@ export class SxProcessor extends BaseProcessor {
       }
     }
 
-    if (!allowSxTransform(elementClassExpression, this.elementClassName)) {
-      return;
-    }
-
     let cssText: string = '';
     if (sxStyle.kind === ValueType.CONST) {
       if (sxStyle.ex.type === 'StringLiteral') {
@@ -79,16 +51,13 @@ export class SxProcessor extends BaseProcessor {
       const styleObjOrFn = values.get(sxStyle.ex.name);
       cssText = this.processCss(styleObjOrFn, sxStyle);
     }
-    const selector = this.elementClassName
-      ? `${this.elementClassName}${this.asSelector}`
-      : this.asSelector;
 
     if (!cssText) {
       return;
     }
 
     const rules: Rules = {
-      [selector]: {
+      [this.asSelector]: {
         className: this.className,
         cssText,
         displayName: this.displayName,
@@ -162,42 +131,65 @@ export class SxProcessor extends BaseProcessor {
 
     this.replacer(
       // @ts-ignore
-      (tagPath) => {
-        let depth = 0;
-        let jsxElement = tagPath;
-        while (jsxElement.type !== 'JSXOpeningElement' && depth < 5) {
-          jsxElement = jsxElement.parentPath;
-          depth += 1;
+      (tagPath: NodePath) => {
+        const jsxElement = tagPath.findParent((p) =>
+          p.isJSXOpeningElement(),
+        ) as NodePath<JSXOpeningElement>;
+        if (!jsxElement) {
+          return tagPath.node;
         }
 
-        if (jsxElement.isJSXOpeningElement()) {
-          const attributes: any[] = [];
-          let sxAttribute: any;
-          jsxElement.get('attributes').forEach((attr: any) => {
-            if (attr.isJSXAttribute() && attr.node.name.name === 'sx') {
-              sxAttribute = attr;
-              attr.remove();
-            } else if (attr.isJSXSpreadAttribute()) {
+        const attributes: any[] = [];
+        let sxAttribute: undefined | NodePath<JSXAttribute>;
+        (jsxElement.get('attributes') as NodePath[]).forEach((attr) => {
+          if (attr.isJSXAttribute() && attr.node.name.name === 'sx') {
+            sxAttribute = attr;
+          } else if (attr.isJSXSpreadAttribute()) {
+            let containRuntimeSx = false;
+            attr.traverse({
+              CallExpression(path) {
+                const callee = path.get('callee');
+                if (callee.isIdentifier() && callee.node.name.startsWith('_sx')) {
+                  containRuntimeSx = true;
+                }
+              },
+            });
+            if (!containRuntimeSx) {
               attributes.push(t.spreadElement(attr.node.argument));
-            } else if (
-              attr.isJSXAttribute() &&
-              (attr.node.name.name === 'className' || attr.node.name.name === 'style')
-            ) {
+            }
+          } else if (
+            attr.isJSXAttribute() &&
+            (attr.node.name.name === 'className' || attr.node.name.name === 'style')
+          ) {
+            const value = attr.get('value');
+            if (value.isJSXExpressionContainer()) {
               attributes.push(
                 t.objectProperty(
                   t.identifier(attr.node.name.name),
-                  attr.node.value.type === 'JSXExpressionContainer'
-                    ? attr.node.value.expression
-                    : attr.node.value,
+                  value.get('expression').node as any,
                 ),
               );
+            } else {
+              attributes.push(
+                t.objectProperty(t.identifier(attr.node.name.name), attr.node.value as any),
+              );
             }
-          });
-          if (sxAttribute) {
-            tagPath.node.arguments = [result, t.objectExpression(attributes)];
-            jsxElement.node.attributes.push(t.jsxSpreadAttribute(tagPath.node));
           }
+        });
+        if (sxAttribute) {
+          const expContainer = sxAttribute.get('value');
+          if (expContainer.isJSXExpressionContainer()) {
+            jsxElement.node.attributes.push(
+              t.jsxSpreadAttribute(expContainer.node.expression as Expression),
+            );
+          }
+          sxAttribute.remove();
         }
+        const newNode = {
+          ...tagPath.node,
+          arguments: [result, t.objectExpression(attributes)],
+        };
+        return newNode;
       },
       false,
     );
