@@ -1,5 +1,10 @@
-import { styled as _styled } from '@pigment-css/react';
-import { sx as _sx, sx as _sx2, sx as _sx3, sx as _sx4 } from '@pigment-css/react';
+import {
+  sx as _sx,
+  sx as _sx2,
+  sx as _sx3,
+  sx as _sx4,
+  styled as _styled,
+} from '@pigment-css/react';
 export const SliderRail = /*#__PURE__*/ _styled('span', {
   name: 'MuiSlider',
   slot: 'Rail',
