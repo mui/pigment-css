@@ -91,7 +91,11 @@ export const babelPlugin = declare<{
           return;
         }
         const valuePath = path.get('value');
-        if (!valuePath.isObjectExpression() && !valuePath.isArrowFunctionExpression()) {
+        if (
+          !valuePath.isArrowFunctionExpression() &&
+          !valuePath.isConditionalExpression() &&
+          !valuePath.isLogicalExpression()
+        ) {
           return;
         }
         const parentJsxCall = path.findParent((p) => p.isCallExpression());

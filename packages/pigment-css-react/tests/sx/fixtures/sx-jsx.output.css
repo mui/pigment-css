@@ -1,11 +1,17 @@
 .s5molx8 {
-  display: flex;
-  flex-direction: column;
+  color: red;
+}
+@media (prefers-color-scheme: dark) {
+  .s5molx8 {
+    color: white;
+  }
 }
 .s7fszdm {
-  display: flex;
-  flex-direction: column;
+  opacity: 0.4;
 }
 .s2bbd3t {
   color: red;
+}
+.s1ou6jyi {
+  color: var(--s1ou6jyi-0);
 }

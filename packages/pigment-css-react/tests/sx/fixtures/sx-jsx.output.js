@@ -3,8 +3,15 @@ function App() {
   return /*#__PURE__*/ _jsx(
     'div',
     {
+      sx: {
+        display: 'flex',
+        flexDirection: 'column',
+      },
       children: 'Test',
-      ..._sx('s5molx8', {}),
+      className: 'foo',
+      style: {
+        textAlign: 'center',
+      },
     },
     void 0,
     false,
@@ -16,32 +23,50 @@ function App() {
     this,
   );
 }
-function App2() {
+function App2(props) {
   return /*#__PURE__*/ _jsx('div', {
+    sx: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    className: props.className,
+    style: props.style,
     children: /*#__PURE__*/ _jsx('p', {
       children: 'Test',
-      ..._sx3('s2bbd3t', {}),
+      ..._sx('s5molx8', {}),
     }),
-    ..._sx2('s7fszdm', {}),
   });
 }
 function App3(props) {
   return /*#__PURE__*/ _jsx('div', {
-    sx: props.disabled
-      ? {
-          opacity: 0.4,
-        }
-      : {
-          color: 'red',
-        },
     children: 'test',
+    ...props,
+    ...(props.disabled
+      ? _sx2('s7fszdm', {
+          ...props,
+        })
+      : _sx2('s2bbd3t', {
+          ...props,
+        })),
   });
 }
 function App4(props) {
   return /*#__PURE__*/ _jsx('div', {
-    sx: props.variant === 'secondary' && {
-      color: props.isRed ? 'red' : 'blue',
-    },
+    className: `foo ${props.className}`,
+    ...props,
     children: 'test',
+    ...(props.variant === 'secondary' &&
+      _sx3(
+        {
+          className: 's1ou6jyi',
+          vars: {
+            's1ou6jyi-0': [props.isRed ? 'red' : 'blue', false],
+          },
+        },
+        {
+          className: `foo ${props.className}`,
+          ...props,
+        },
+      )),
   });
 }
