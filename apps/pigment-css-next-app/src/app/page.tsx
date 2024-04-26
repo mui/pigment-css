@@ -1,6 +1,16 @@
 import Image from 'next/image';
 import { styled, css } from '@pigment-css/react';
+import Button from '@mui/material/Button';
 import styles from './page.module.css';
+
+declare global {
+  namespace React {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    interface HTMLAttributes<T> {
+      sx?: any;
+    }
+  }
+}
 
 const visuallyHidden = css({
   border: 0,
@@ -93,8 +103,16 @@ export default function Home() {
   return (
     <Main>
       <div className={visuallyHidden}>I am invisible</div>
-      <Description>
-        <p>
+      <Description
+        sx={{
+          '&::before': {
+            content: '"🚀"',
+            display: 'inline-block',
+            border: '1px solid',
+          },
+        }}
+      >
+        <p sx={{ boxShadow: '0 0 4px 0 rgba(0 0 0 / 0.12)' }}>
           Get started by editing&nbsp;
           <code className={styles.code}>src/app/page.tsx</code>
         </p>
@@ -117,7 +135,12 @@ export default function Home() {
         </div>
       </Description>
 
-      <div className={styles.center}>
+      <div
+        className={styles.center}
+        sx={{
+          border: '1px solid',
+        }}
+      >
         <Image
           className={styles.logo}
           src="/next.svg"
@@ -176,6 +199,18 @@ export default function Home() {
           </h2>
           <p>Instantly deploy your Next.js site to a shareable URL with Vercel.</p>
         </a>
+        <Button
+          sx={{
+            color: 'red',
+            backgroundColor: 'blue',
+            '&:hover': {
+              color: 'blue',
+              backgroundColor: 'red',
+            },
+          }}
+        >
+          Hello
+        </Button>
       </div>
     </Main>
   );
