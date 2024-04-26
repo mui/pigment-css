@@ -33,6 +33,9 @@ importers:
       '@googleapis/sheets':
         specifier: ^5.0.5
         version: 5.0.5
+      '@pigment-css/react':
+        specifier: workspace:^
+        version: link:packages/pigment-css-react
       '@slack/bolt':
         specifier: ^3.17.1
         version: 3.17.1
