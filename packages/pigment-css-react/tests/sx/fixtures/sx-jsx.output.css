@@ -1,17 +1,25 @@
 .s5molx8 {
-  color: red;
-}
-@media (prefers-color-scheme: dark) {
-  .s5molx8 {
-    color: white;
-  }
+  display: flex;
+  flex-direction: column;
 }
 .s7fszdm {
-  opacity: 0.4;
+  display: flex;
+  flex-direction: column;
 }
 .s2bbd3t {
   color: red;
 }
+@media (prefers-color-scheme: dark) {
+  .s2bbd3t {
+    color: white;
+  }
+}
 .s1ou6jyi {
-  color: var(--s1ou6jyi-0);
+  opacity: 0.4;
+}
+.s1lqy6hu {
+  color: red;
+}
+.swssabr {
+  color: var(--swssabr-0);
 }

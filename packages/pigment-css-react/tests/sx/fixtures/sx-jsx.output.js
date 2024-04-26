@@ -1,17 +1,19 @@
-import { sx as _sx, sx as _sx2, sx as _sx3 } from '@pigment-css/react';
+import { sx as _sx, sx as _sx2, sx as _sx3, sx as _sx4, sx as _sx5 } from '@pigment-css/react';
 function App() {
   return /*#__PURE__*/ _jsx(
     'div',
     {
-      sx: {
-        display: 'flex',
-        flexDirection: 'column',
-      },
       children: 'Test',
       className: 'foo',
       style: {
         textAlign: 'center',
       },
+      ..._sx('s5molx8', {
+        className: 'foo',
+        style: {
+          textAlign: 'center',
+        },
+      }),
     },
     void 0,
     false,
@@ -25,15 +27,15 @@ function App() {
 }
 function App2(props) {
   return /*#__PURE__*/ _jsx('div', {
-    sx: {
-      display: 'flex',
-      flexDirection: 'column',
-    },
     className: props.className,
     style: props.style,
     children: /*#__PURE__*/ _jsx('p', {
       children: 'Test',
-      ..._sx('s5molx8', {}),
+      ..._sx3('s2bbd3t', {}),
+    }),
+    ..._sx2('s7fszdm', {
+      className: props.className,
+      style: props.style,
     }),
   });
 }
@@ -42,10 +44,10 @@ function App3(props) {
     children: 'test',
     ...props,
     ...(props.disabled
-      ? _sx2('s7fszdm', {
+      ? _sx4('s1ou6jyi', {
           ...props,
         })
-      : _sx2('s2bbd3t', {
+      : _sx4('s1lqy6hu', {
           ...props,
         })),
   });
@@ -56,11 +58,11 @@ function App4(props) {
     ...props,
     children: 'test',
     ...(props.variant === 'secondary' &&
-      _sx3(
+      _sx5(
         {
-          className: 's1ou6jyi',
+          className: 'swssabr',
           vars: {
-            's1ou6jyi-0': [props.isRed ? 'red' : 'blue', false],
+            'swssabr-0': [props.isRed ? 'red' : 'blue', false],
           },
         },
         {

@@ -92,6 +92,7 @@ export const babelPlugin = declare<{
         }
         const valuePath = path.get('value');
         if (
+          !valuePath.isObjectExpression() &&
           !valuePath.isArrowFunctionExpression() &&
           !valuePath.isConditionalExpression() &&
           !valuePath.isLogicalExpression()
