@@ -1,12 +1,5 @@
 import type { NodePath } from '@babel/core';
-import type {
-  CallExpression,
-  Expression,
-  JSXAttribute,
-  JSXOpeningElement,
-  ObjectExpression,
-  ObjectProperty,
-} from '@babel/types';
+import type { CallExpression, Expression } from '@babel/types';
 import {
   validateParams,
   type Params,
@@ -18,6 +11,7 @@ import type { IOptions } from './styled';
 import { processCssObject } from '../utils/processCssObject';
 import { cssFnValueToVariable } from '../utils/cssFnValueToVariable';
 import BaseProcessor from './base-processor';
+import spreadSxProp from '../utils/spreadSxProp';
 
 export class SxProcessor extends BaseProcessor {
   sxArguments: ExpressionValue[] = [];
@@ -153,103 +147,10 @@ export class SxProcessor extends BaseProcessor {
      */
     this.replacer((_tagPath) => {
       const tagPath = _tagPath as NodePath<CallExpression>;
-      const target = tagPath.findParent(
-        (p) => p.isJSXOpeningElement() || p.isObjectExpression(),
-      ) as NodePath<JSXOpeningElement> | NodePath<ObjectExpression> | null;
 
-      if (target?.isJSXOpeningElement()) {
-        const attributes: any[] = [];
-        let sxAttribute: undefined | NodePath<JSXAttribute>;
-        (target.get('attributes') as NodePath[]).forEach((attr) => {
-          if (attr.isJSXAttribute() && attr.node.name.name === 'sx') {
-            sxAttribute = attr;
-          } else if (attr.isJSXSpreadAttribute()) {
-            let containRuntimeSx = false;
-            attr.traverse({
-              CallExpression(path) {
-                const callee = path.get('callee');
-                if (callee.isIdentifier() && callee.node.name.startsWith('_sx')) {
-                  containRuntimeSx = true;
-                }
-              },
-            });
-            if (!containRuntimeSx) {
-              attributes.push(t.spreadElement(attr.node.argument));
-            }
-          } else if (
-            attr.isJSXAttribute() &&
-            (attr.node.name.name === 'className' || attr.node.name.name === 'style')
-          ) {
-            const value = attr.get('value');
-            if (value.isJSXExpressionContainer()) {
-              attributes.push(
-                t.objectProperty(
-                  t.identifier(attr.node.name.name),
-                  value.get('expression').node as any,
-                ),
-              );
-            } else {
-              attributes.push(
-                t.objectProperty(t.identifier(attr.node.name.name), attr.node.value as any),
-              );
-            }
-          }
-        });
-        if (sxAttribute) {
-          const expContainer = sxAttribute.get('value');
-          if (expContainer.isJSXExpressionContainer()) {
-            target.node.attributes.push(
-              t.jsxSpreadAttribute(expContainer.node.expression as Expression),
-            );
-          }
-          sxAttribute.remove();
-        }
-        tagPath.node.arguments.push(t.objectExpression(attributes));
-        return tagPath.node;
-      }
+      spreadSxProp(tagPath);
 
-      if (target?.isObjectExpression()) {
-        const properties: any[] = [];
-        let sxProperty: undefined | NodePath<ObjectProperty>;
-        (target.get('properties') as NodePath[]).forEach((prop) => {
-          if (
-            prop.isObjectProperty() &&
-            prop.node.key.type === 'Identifier' &&
-            prop.node.key.name === 'sx'
-          ) {
-            sxProperty = prop;
-          } else if (prop.isSpreadElement()) {
-            let containRuntimeSx = false;
-            prop.traverse({
-              CallExpression(path) {
-                const callee = path.get('callee');
-                if (callee.isIdentifier() && callee.node.name.startsWith('_sx')) {
-                  containRuntimeSx = true;
-                }
-              },
-            });
-            if (!containRuntimeSx) {
-              properties.push(t.spreadElement(prop.node.argument));
-            }
-          } else if (
-            prop.isObjectProperty() &&
-            prop.node.key.type === 'Identifier' &&
-            (prop.node.key.name === 'className' || prop.node.key.name === 'style')
-          ) {
-            properties.push(
-              t.objectProperty(t.identifier(prop.node.key.name), prop.node.value as any),
-            );
-          }
-        });
-        if (sxProperty) {
-          const expression = sxProperty.get('value');
-          target.node.properties.push(t.spreadElement(expression.node as CallExpression));
-          sxProperty.remove();
-        }
-        tagPath.node.arguments.push(t.objectExpression(properties));
-        return tagPath.node;
-      }
-      throw tagPath.buildCodeFrameError('`sx` prop must be used with a JSX element or an object.');
+      return tagPath.node;
     }, false);
   }
 
