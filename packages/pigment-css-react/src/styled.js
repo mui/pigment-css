@@ -26,7 +26,7 @@ function isHtmlTag(tag) {
   );
 }
 
-const slotShouldForwardProp = (key) => key !== 'sx' && key !== 'as' && key !== 'ownerState';
+const slotShouldForwardProp = (key) => key !== 'as' && key !== 'ownerState';
 const rootShouldForwardProp = (key) => slotShouldForwardProp(key) && key !== 'classes';
 
 /**
@@ -80,7 +80,7 @@ export default function styled(tag, componentMeta = {}) {
     const { displayName, classes = [], vars: cssVars = {}, variants = [] } = options;
 
     const StyledComponent = React.forwardRef(function StyledComponent(inProps, ref) {
-      const { as, className, sx, style, ownerState, ...props } = inProps;
+      const { as, className, style, ownerState, ...props } = inProps;
       const Component = (shouldUseAs && as) || tag;
       const varStyles = Object.entries(cssVars).reduce(
         (acc, [cssVariable, [variableFunction, isUnitLess]]) => {
@@ -97,25 +97,8 @@ export default function styled(tag, componentMeta = {}) {
         },
         {},
       );
-      const sxClass = typeof sx === 'string' ? sx : sx?.className;
-      const sxVars = sx && typeof sx !== 'string' ? sx.vars : undefined;
 
-      if (sxVars) {
-        Object.entries(sxVars).forEach(([cssVariable, [value, isUnitLess]]) => {
-          if (typeof value === 'string' || isUnitLess) {
-            varStyles[`--${cssVariable}`] = value;
-          } else {
-            varStyles[`--${cssVariable}`] = `${value}px`;
-          }
-        });
-      }
-
-      const finalClassName = clsx(
-        classes,
-        sxClass,
-        className,
-        getVariantClasses(inProps, variants),
-      );
+      const finalClassName = clsx(classes, className, getVariantClasses(inProps, variants));
 
       const newProps = {};
       // eslint-disable-next-line no-restricted-syntax
