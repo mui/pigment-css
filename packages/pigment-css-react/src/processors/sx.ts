@@ -143,13 +143,10 @@ export class SxProcessor extends BaseProcessor {
      * <Component sx={_sx({ color: 'red' })} /> to <Component sx={_sx('sd5jss7')} />
      * <Component sx={_sx({ bgcolor: 'red', color: props.color })} /> to <Component sx={_sx({ className: 'bc1d15y', vars: { 'bc1d15y-0': [props.color, false], }})} />
      */
-    this.replacer(
-      // @ts-ignore
-      (tagPath: NodePath<CallExpression>) => {
-        return t.callExpression(tagPath.get('callee').node, [result]);
-      },
-      false,
-    );
+    this.replacer((_tagPath) => {
+      const tagPath = _tagPath as NodePath<CallExpression>;
+      return t.callExpression(tagPath.get('callee').node, [result]);
+    }, false);
 
     /**
      * For JSX calls, replace the sx prop with runtime sx
