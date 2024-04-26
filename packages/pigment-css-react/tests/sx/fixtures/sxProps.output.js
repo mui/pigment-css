@@ -31,36 +31,48 @@ function App2(props) {
   return (
     <SliderRail
       {...props}
-      sx={
-        props.variant === 'secondary'
-          ? _sx2({
+      {...(props.variant === 'secondary'
+        ? _sx2(
+            {
               className: 's1xbsywq',
               vars: {
                 's1xbsywq-0': [props.isRed ? 'red' : 'blue', false],
               },
-            })
-          : _sx2('s1wnk6s5')
-      }
+            },
+            {
+              ...props,
+            },
+          )
+        : _sx2('s1wnk6s5', {
+            ...props,
+          }))}
     />
   );
 }
 function App3(props) {
   return (
     <SliderRail
-      sx={
-        props.variant === 'secondary' &&
-        _sx3({
-          className: 'stzaibv',
-          vars: {
-            'stzaibv-0': [props.isRed ? 'red' : 'blue', false],
-          },
-        })
-      }
       className={`foo ${props.className}`}
       style={{
         color: 'red',
         ...props.style,
       }}
+      {...(props.variant === 'secondary' &&
+        _sx3(
+          {
+            className: 'stzaibv',
+            vars: {
+              'stzaibv-0': [props.isRed ? 'red' : 'blue', false],
+            },
+          },
+          {
+            className: `foo ${props.className}`,
+            style: {
+              color: 'red',
+              ...props.style,
+            },
+          },
+        ))}
     />
   );
 }

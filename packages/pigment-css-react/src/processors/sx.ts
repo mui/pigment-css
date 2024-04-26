@@ -156,9 +156,6 @@ export class SxProcessor extends BaseProcessor {
      */
     this.replacer((_tagPath) => {
       const tagPath = _tagPath as NodePath<CallExpression>;
-      if (!tagPath.parentPath.isJSXExpressionContainer()) {
-        return tagPath.node;
-      }
       const jsxElement = tagPath.findParent((p) =>
         p.isJSXOpeningElement(),
       ) as NodePath<JSXOpeningElement>;
@@ -219,9 +216,6 @@ export class SxProcessor extends BaseProcessor {
     // For non-JSX calls, replace the sx prop with runtime sx
     this.replacer((_tagPath) => {
       const tagPath = _tagPath as NodePath<CallExpression>;
-      if (!tagPath.parentPath.isObjectProperty()) {
-        return tagPath.node;
-      }
       const objExpression = tagPath.findParent((p) =>
         p.isObjectExpression(),
       ) as NodePath<ObjectExpression>;
