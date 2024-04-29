@@ -287,7 +287,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
           const data = `${meta.placeholderCssFile}?${encodeURIComponent(
             JSON.stringify({
               filename: id.split('/').pop(),
-              source: cssText,
+              source: cssText.replaceAll('!important', '__IMP__'),
             }),
           )}`;
           return {
