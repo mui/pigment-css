@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { styled, css } from '@pigment-css/react';
-import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
 import styles from './page.module.css';
 
 declare global {
@@ -199,7 +199,7 @@ export default function Home() {
           </h2>
           <p>Instantly deploy your Next.js site to a shareable URL with Vercel.</p>
         </a>
-        <Button
+        <Chip
           sx={{
             color: 'red',
             backgroundColor: 'blue',
@@ -208,9 +208,8 @@ export default function Home() {
               backgroundColor: 'red',
             },
           }}
-        >
-          Hello
-        </Button>
+          label="Hello"
+        />
       </div>
     </Main>
   );
