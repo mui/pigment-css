@@ -251,5 +251,135 @@ describe('props filtering', () => {
       const { container } = render(<StyledParent as="div" ownerState={{ width: 300 }} />);
       expect(container.firstChild).to.have.style('--foo', '300px');
     });
+
+    it('should forward `as` prop', () => {
+      // The components below is a simplified version of the `NativeSelect` component from Material UI.
+
+      const InputBaseRoot = styled('div', { name: 'MuiInputBase', slot: 'Root' })({
+        classes: ['InputBase-root'],
+      });
+
+      const InputBaseInput = styled('input', { name: 'MuiInputBase', slot: 'Input' })({
+        classes: ['InputBase-input'],
+      });
+
+      const InputBase = ({
+        inputComponent = 'input',
+        slots = {},
+        slotProps = {},
+        inputProps: inputPropsProp = {},
+      }) => {
+        const Root = slots.root || InputBaseRoot;
+        const rootProps = slotProps.root || {};
+
+        let InputComponent = inputComponent;
+        let inputProps = inputPropsProp;
+
+        const Input = slots.input || InputBaseInput;
+        inputProps = { ...inputProps, ...slotProps.input };
+        return (
+          <Root
+            {...rootProps}
+            {...(typeof Root !== 'string' && {
+              ownerState: rootProps.ownerState,
+            })}
+          >
+            <Input
+              {...inputProps}
+              {...(typeof Input !== 'string' && {
+                as: InputComponent,
+                ownerState: inputProps.ownerState,
+              })}
+            />
+          </Root>
+        );
+      };
+
+      const InputRoot = styled(InputBaseRoot, { name: 'MuiInput', slot: 'Root' })({
+        classes: ['Input-root'],
+      });
+      const InputInput = styled(InputBaseInput, { name: 'MuiInput', slot: 'Input' })({
+        classes: ['Input-input'],
+      });
+      const Input = ({
+        inputComponent = 'input',
+        multiline = false,
+        slotProps,
+        slots = {},
+        type,
+        ...other
+      }) => {
+        const RootSlot = slots.root ?? InputRoot;
+        const InputSlot = slots.input ?? InputInput;
+        return (
+          <InputBase
+            slots={{ root: RootSlot, input: InputSlot }}
+            slotProps={slotProps}
+            inputComponent={inputComponent}
+            multiline={multiline}
+            type={type}
+            {...other}
+          />
+        );
+      };
+
+      const defaultInput = <Input />;
+      const NativeSelectSelect = styled('select', {
+        name: 'MuiNativeSelect',
+        slot: 'Select',
+      })({
+        classes: ['NativeSelect-select'],
+      });
+      const NativeSelectInput = (props) => {
+        const { className, disabled, error, variant = 'standard', ...other } = props;
+
+        const ownerState = {
+          ...props,
+          disabled,
+          variant,
+          error,
+        };
+
+        return (
+          <NativeSelectSelect
+            ownerState={ownerState}
+            className={className}
+            disabled={disabled}
+            {...other}
+          />
+        );
+      };
+      const NativeSelect = ({
+        className,
+        children,
+        input = defaultInput,
+        inputProps,
+        ...other
+      }) => {
+        return React.cloneElement(input, {
+          inputComponent: NativeSelectInput,
+          inputProps: {
+            children,
+            type: undefined, // We render a select. We can ignore the type provided by the `Input`.
+            ...inputProps,
+            ...(input ? input.props.inputProps : {}),
+          },
+          ...other,
+          className: `${input.props.className} ${className}`,
+        });
+      };
+
+      const { container } = render(
+        <NativeSelect>
+          <option value="foo">Foo</option>
+          <option value="bar">Bar</option>
+        </NativeSelect>,
+      );
+      expect(container.firstChild).to.have.tagName('div');
+      expect(container.firstChild).to.have.class('InputBase-root', 'Input-root');
+
+      expect(container.firstChild.firstChild).to.have.tagName('select');
+      expect(container.firstChild.firstChild).to.have.class('InputBase-input', 'Input-input');
+    });
   });
 });

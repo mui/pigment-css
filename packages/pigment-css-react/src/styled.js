@@ -86,11 +86,11 @@ export default function styled(tag, componentMeta = {}) {
     const { displayName, classes = [], vars: cssVars = {}, variants = [] } = options;
 
     const StyledComponent = React.forwardRef(function StyledComponent(inProps, ref) {
-      const { as, className, sx, style, ownerState, ...props } = inProps;
-      const Component = (shouldUseAs && as) || tag;
+      const { className, sx, style, ownerState, ...props } = inProps;
+      const Component = (shouldUseAs && inProps.as) || tag;
       const varStyles = Object.entries(cssVars).reduce(
         (acc, [cssVariable, [variableFunction, isUnitLess]]) => {
-          const value = variableFunction({ ownerState, ...props });
+          const value = variableFunction(inProps);
           if (typeof value === 'undefined') {
             return acc;
           }
@@ -130,7 +130,7 @@ export default function styled(tag, componentMeta = {}) {
           continue;
         }
 
-        if (finalShouldForwardProp(key)) {
+        if (finalShouldForwardProp(key) || (!shouldUseAs && key === 'as')) {
           newProps[key] = props[key];
         }
       }
