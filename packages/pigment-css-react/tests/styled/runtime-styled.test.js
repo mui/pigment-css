@@ -202,4 +202,54 @@ describe('props filtering', () => {
       expect(container.firstChild).to.have.class('root-123');
     });
   });
+
+  describe('as', () => {
+    it("child's classes still propagate to its parent", () => {
+      const StyledChild = styled('span')({
+        classes: ['child'],
+      });
+
+      const StyledParent = styled(StyledChild)({
+        classes: ['parent'],
+      });
+
+      const { container } = render(<StyledParent as="div" />);
+      expect(container.firstChild).to.have.class('child');
+    });
+
+    it("child's variants still propagate to its parent", () => {
+      const StyledChild = styled('span')({
+        classes: ['child'],
+        variants: [
+          {
+            props: ({ ownerState }) => ownerState.multiline,
+            className: 'multiline',
+          },
+        ],
+      });
+
+      const StyledParent = styled(StyledChild)({
+        classes: ['parent'],
+      });
+
+      const { container } = render(<StyledParent as="div" ownerState={{ multiline: true }} />);
+      expect(container.firstChild).to.have.class('multiline');
+    });
+
+    it("child's vars still propagate to its parent", () => {
+      const StyledChild = styled('span')({
+        classes: ['child'],
+        vars: {
+          foo: [(props) => props.ownerState.width, false],
+        },
+      });
+
+      const StyledParent = styled(StyledChild)({
+        classes: ['parent'],
+      });
+
+      const { container } = render(<StyledParent as="div" ownerState={{ width: 300 }} />);
+      expect(container.firstChild).to.have.style('--foo', '300px');
+    });
+  });
 });

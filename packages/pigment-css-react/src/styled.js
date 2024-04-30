@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import clsx from 'clsx';
 import isPropValid from '@emotion/is-prop-valid';
@@ -58,7 +60,12 @@ export default function styled(tag, componentMeta = {}) {
       finalShouldForwardProp = slotShouldForwardProp;
     }
   }
-  const shouldUseAs = !finalShouldForwardProp('as');
+  let shouldUseAs = !finalShouldForwardProp('as');
+  if (typeof tag !== 'string' && tag.__styled_by_pigment_css) {
+    // If the tag is a Pigment styled component,
+    // render the styled component and pass the `as` prop down
+    shouldUseAs = false;
+  }
   /**
    * This is the runtime `styled` function that finally renders the component
    * after transpilation through WyW-in-JS. It makes sure to add the base classes,
@@ -80,7 +87,7 @@ export default function styled(tag, componentMeta = {}) {
     const { displayName, classes = [], vars: cssVars = {}, variants = [] } = options;
 
     const StyledComponent = React.forwardRef(function StyledComponent(inProps, ref) {
-      const { as, className, sx, style, ownerState, ...props } = inProps;
+      const { as, className, sx, style, ...props } = inProps;
       const Component = (shouldUseAs && as) || tag;
       const varStyles = Object.entries(cssVars).reduce(
         (acc, [cssVariable, [variableFunction, isUnitLess]]) => {
@@ -133,8 +140,7 @@ export default function styled(tag, componentMeta = {}) {
         <Component
           {...newProps}
           // pass down `ownerState` to nested styled components
-          // eslint-disable-next-line no-underscore-dangle
-          {...(Component.__styled_by_pigment_css && { ownerState })}
+          {...(Component.__styled_by_pigment_css && { ownerState: props.ownerState })}
           ref={ref}
           className={finalClassName}
           style={{
