@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable react/prop-types */
 import * as React from 'react';
 import clsx from 'clsx';
 import isPropValid from '@emotion/is-prop-valid';
