@@ -263,37 +263,36 @@ describe('props filtering', () => {
         classes: ['InputBase-input'],
       });
 
-      const InputBase = ({
+      function InputBase({
         inputComponent = 'input',
         slots = {},
         slotProps = {},
         inputProps: inputPropsProp = {},
-      }) => {
-        const Root = slots.root || InputBaseRoot;
+      }) {
+        const RootSlot = slots.root || InputBaseRoot;
         const rootProps = slotProps.root || {};
 
-        let InputComponent = inputComponent;
-        let inputProps = inputPropsProp;
+        const InputComponent = inputComponent;
 
-        const Input = slots.input || InputBaseInput;
-        inputProps = { ...inputProps, ...slotProps.input };
+        const InputSlot = slots.input || InputBaseInput;
+        const inputProps = { ...inputPropsProp, ...slotProps.input };
         return (
-          <Root
+          <RootSlot
             {...rootProps}
             {...(typeof Root !== 'string' && {
               ownerState: rootProps.ownerState,
             })}
           >
-            <Input
+            <InputSlot
               {...inputProps}
               {...(typeof Input !== 'string' && {
                 as: InputComponent,
                 ownerState: inputProps.ownerState,
               })}
             />
-          </Root>
+          </RootSlot>
         );
-      };
+      }
 
       const InputRoot = styled(InputBaseRoot, { name: 'MuiInput', slot: 'Root' })({
         classes: ['Input-root'],
@@ -301,14 +300,14 @@ describe('props filtering', () => {
       const InputInput = styled(InputBaseInput, { name: 'MuiInput', slot: 'Input' })({
         classes: ['Input-input'],
       });
-      const Input = ({
+      function Input({
         inputComponent = 'input',
         multiline = false,
         slotProps,
         slots = {},
         type,
         ...other
-      }) => {
+      }) {
         const RootSlot = slots.root ?? InputRoot;
         const InputSlot = slots.input ?? InputInput;
         return (
@@ -321,7 +320,7 @@ describe('props filtering', () => {
             {...other}
           />
         );
-      };
+      }
 
       const defaultInput = <Input />;
       const NativeSelectSelect = styled('select', {
@@ -330,7 +329,7 @@ describe('props filtering', () => {
       })({
         classes: ['NativeSelect-select'],
       });
-      const NativeSelectInput = (props) => {
+      function NativeSelectInput(props) {
         const { className, disabled, error, variant = 'standard', ...other } = props;
 
         const ownerState = {
@@ -348,14 +347,8 @@ describe('props filtering', () => {
             {...other}
           />
         );
-      };
-      const NativeSelect = ({
-        className,
-        children,
-        input = defaultInput,
-        inputProps,
-        ...other
-      }) => {
+      }
+      function NativeSelect({ className, children, input = defaultInput, inputProps, ...other }) {
         return React.cloneElement(input, {
           inputComponent: NativeSelectInput,
           inputProps: {
@@ -367,7 +360,7 @@ describe('props filtering', () => {
           ...other,
           className: `${input.props.className} ${className}`,
         });
-      };
+      }
 
       const { container } = render(
         <NativeSelect>
