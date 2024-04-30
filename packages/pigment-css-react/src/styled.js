@@ -123,6 +123,17 @@ export default function styled(tag, componentMeta = {}) {
         getVariantClasses(inProps, variants),
       );
 
+      if (shouldUseAs && !shouldForwardProp) {
+        // Reassign `shouldForwardProp` based on the incoming `as` prop
+        if (isHtmlTag(Component)) {
+          finalShouldForwardProp = isPropValid;
+        } else if (slot === 'Root' || slot === 'root') {
+          finalShouldForwardProp = rootShouldForwardProp;
+        } else {
+          finalShouldForwardProp = slotShouldForwardProp;
+        }
+      }
+
       const newProps = {};
       // eslint-disable-next-line no-restricted-syntax
       for (const key in props) {
