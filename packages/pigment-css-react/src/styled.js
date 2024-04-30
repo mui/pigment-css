@@ -87,11 +87,11 @@ export default function styled(tag, componentMeta = {}) {
     const { displayName, classes = [], vars: cssVars = {}, variants = [] } = options;
 
     const StyledComponent = React.forwardRef(function StyledComponent(inProps, ref) {
-      const { as, className, sx, style, ...props } = inProps;
+      const { as, className, sx, style, ownerState, ...props } = inProps;
       const Component = (shouldUseAs && as) || tag;
       const varStyles = Object.entries(cssVars).reduce(
         (acc, [cssVariable, [variableFunction, isUnitLess]]) => {
-          const value = variableFunction(props);
+          const value = variableFunction({ ownerState, ...props });
           if (typeof value === 'undefined') {
             return acc;
           }
@@ -140,7 +140,7 @@ export default function styled(tag, componentMeta = {}) {
         <Component
           {...newProps}
           // pass down `ownerState` to nested styled components
-          {...(Component.__styled_by_pigment_css && { ownerState: props.ownerState })}
+          {...(Component.__styled_by_pigment_css && { ownerState })}
           ref={ref}
           className={finalClassName}
           style={{
@@ -156,7 +156,6 @@ export default function styled(tag, componentMeta = {}) {
       componentName = `${name}${slot ? `-${slot}` : ''}`;
     }
     StyledComponent.displayName = `Styled(${componentName})`;
-    // eslint-disable-next-line no-underscore-dangle
     StyledComponent.__styled_by_pigment_css = true;
 
     return StyledComponent;
