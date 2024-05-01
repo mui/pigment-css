@@ -4,11 +4,12 @@
 
 <!-- generated comparing v0.0.9..master -->
 
-_Apr 30, 2024_
+_May 1, 2024_
 
 A big thanks to the 2 contributors who made this release possible.
 
 - [react] styled inheritance (#40) @siriwatknp
+- [react] Fix prop forwarding when `as` component is provided to HTML styled component (#43) @siriwatknp
 - [nextjs] Transform `!important` css to an intermediate representation (#38) @brijeshb42
 
 All contributors of this release in alphabetical order: @brijeshb42, @siriwatknp
