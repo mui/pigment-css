@@ -252,6 +252,20 @@ describe('props filtering', () => {
       expect(container.firstChild).to.have.style('--foo', '300px');
     });
 
+    it('use component forward prop if provided `as` is a component', () => {
+      const StyledDiv = styled('div')({
+        classes: ['root'],
+      });
+
+      function Component({ TagComponent = 'span', ...props }) {
+        return <TagComponent {...props} />;
+      }
+
+      const { container } = render(<StyledDiv as={Component} TagComponent="button" disabled />);
+
+      expect(container.firstChild).to.have.tagName('button');
+    });
+
     it('should forward `as` prop', () => {
       // The components below is a simplified version of the `NativeSelect` component from Material UI.
 
