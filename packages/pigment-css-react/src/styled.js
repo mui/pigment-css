@@ -123,14 +123,14 @@ export default function styled(tag, componentMeta = {}) {
         getVariantClasses(inProps, variants),
       );
 
-      if (shouldUseAs && !shouldForwardProp) {
-        // Reassign `shouldForwardProp` based on the incoming `as` prop
-        if (isHtmlTag(Component)) {
-          finalShouldForwardProp = isPropValid;
-        } else if (slot === 'Root' || slot === 'root') {
-          finalShouldForwardProp = rootShouldForwardProp;
-        } else {
-          finalShouldForwardProp = slotShouldForwardProp;
+      if (inProps.as && !shouldForwardProp) {
+        // Reassign `shouldForwardProp` if incoming `as` prop is a React component
+        if (!isHtmlTag(Component)) {
+          if (slot === 'Root' || slot === 'root') {
+            finalShouldForwardProp = rootShouldForwardProp;
+          } else {
+            finalShouldForwardProp = slotShouldForwardProp;
+          }
         }
       }
 
