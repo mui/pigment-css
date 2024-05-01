@@ -3,6 +3,7 @@
   "compilerOptions": {
     "resolveJsonModule": true,
     "target": "ES2022",
+    "lib": ["ES2021", "DOM"],
     "paths": {
       "@babel/core": ["./node_modules/@babel/core"],
       "@pigment-css/react": ["./packages/pigment-css-react/src"],
