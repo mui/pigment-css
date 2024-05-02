@@ -8,9 +8,14 @@ _May 1, 2024_
 
 A big thanks to the 2 contributors who made this release possible.
 
-- [react] Fix styled inheritance (#40) @siriwatknp
-- [react] Fix prop forwarding when `as` component is provided to HTML styled component (#43) @siriwatknp
-- [nextjs] Transform `!important` CSS to an intermediate representation (#38) @brijeshb42
+### `@pigment-css/react@0.0.10`
+
+- Fix styled inheritance (#40) @siriwatknp
+- Fix prop forwarding when `as` component is provided to HTML styled component (#43) @siriwatknp
+
+### `@pigment-css/nextjs-plugin@0.0.10`
+
+- Transform `!important` CSS to an intermediate representation (#38) @brijeshb42
 
 All contributors of this release in alphabetical order: @brijeshb42, @siriwatknp
 
