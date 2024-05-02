@@ -48,6 +48,7 @@
   "dependencies": {
     "@googleapis/sheets": "^5.0.5",
     "@slack/bolt": "^3.17.1",
+    "@pigment-css/react": "workspace:^",
     "execa": "^8.0.1",
     "google-auth-library": "^9.7.0",
     "util": "^0.12.5"

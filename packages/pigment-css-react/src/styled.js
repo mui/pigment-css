@@ -27,7 +27,7 @@ function isHtmlTag(tag) {
   );
 }
 
-const slotShouldForwardProp = (key) => key !== 'sx' && key !== 'as' && key !== 'ownerState';
+const slotShouldForwardProp = (key) => key !== 'as' && key !== 'ownerState';
 const rootShouldForwardProp = (key) => slotShouldForwardProp(key) && key !== 'classes';
 
 /**
@@ -103,25 +103,8 @@ export default function styled(tag, componentMeta = {}) {
         },
         {},
       );
-      const sxClass = typeof sx === 'string' ? sx : sx?.className;
-      const sxVars = sx && typeof sx !== 'string' ? sx.vars : undefined;
 
-      if (sxVars) {
-        Object.entries(sxVars).forEach(([cssVariable, [value, isUnitLess]]) => {
-          if (typeof value === 'string' || isUnitLess) {
-            varStyles[`--${cssVariable}`] = value;
-          } else {
-            varStyles[`--${cssVariable}`] = `${value}px`;
-          }
-        });
-      }
-
-      const finalClassName = clsx(
-        classes,
-        sxClass,
-        className,
-        getVariantClasses(inProps, variants),
-      );
+      const finalClassName = clsx(classes, className, getVariantClasses(inProps, variants));
 
       if (inProps.as && !shouldForwardProp) {
         // Reassign `shouldForwardProp` if incoming `as` prop is a React component
