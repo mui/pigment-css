@@ -28,6 +28,7 @@ export default defineConfig([
       './src/utils/index.ts',
       './src/utils/sx-plugin.ts',
       './src/utils/remove-prop-types-plugin.ts',
+      './src/utils/replace-zero-styled-plugin.ts',
     ],
     outDir: 'utils',
   },
