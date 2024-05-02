@@ -11,6 +11,7 @@ import {
 import { PluginCustomOptions, preprocessor } from '@pigment-css/react/utils';
 import * as prettier from 'prettier';
 
+import { replaceZeroStyledPlugin } from '../src/utils/replace-zero-styled-plugin';
 import sxTransformPlugin from '../exports/sx-plugin';
 
 const shouldUpdateOutput = process.env.UPDATE_FIXTURES === 'true';
@@ -20,7 +21,7 @@ function runSxTransform(code: string, filename: string) {
     babelrc: false,
     configFile: false,
     filename,
-    plugins: ['@babel/plugin-syntax-jsx', [sxTransformPlugin]],
+    plugins: ['@babel/plugin-syntax-jsx', replaceZeroStyledPlugin, [sxTransformPlugin]],
   });
 }
 

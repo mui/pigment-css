@@ -81,4 +81,13 @@ describe('Pigment CSS - styled', () => {
     expect(output.js).to.equal(fixture.js);
     expect(output.css).to.equal(fixture.css);
   });
+
+  it('should work with zero-styled path', async () => {
+    const { output, fixture } = await runTransformation(
+      path.join(__dirname, 'fixtures/zero-styled.input.js'),
+    );
+
+    expect(output.js).to.equal(fixture.js);
+    expect(output.css).to.equal(fixture.css);
+  });
 });
