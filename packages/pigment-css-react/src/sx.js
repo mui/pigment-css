@@ -33,7 +33,7 @@ export default function sx(transformedSx, { className, style }) {
   }
 
   return {
-    className: `${sxClass}${className ? `${className}` : ''}`,
+    className: `${sxClass.trim()}${className ? ` ${className}` : ''}`,
     style: {
       ...varStyles,
       ...style,
