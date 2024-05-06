@@ -1,11 +1,5 @@
 import { NodePath } from '@babel/core';
-import {
-  ArrowFunctionExpression,
-  Expression,
-  Identifier,
-  MemberExpression,
-  ObjectExpression,
-} from '@babel/types';
+import { ArrowFunctionExpression, Expression, ObjectExpression } from '@babel/types';
 import { sxObjectExtractor } from './sxObjectExtractor';
 
 function isAllowedExpression(
