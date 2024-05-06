@@ -5,14 +5,22 @@ import { sxObjectExtractor } from './sxObjectExtractor';
 function isAllowedExpression(
   node: NodePath<Expression>,
 ): node is NodePath<ObjectExpression> | NodePath<ArrowFunctionExpression> {
-  return node.isObjectExpression() || node.isArrowFunctionExpression();
+  return (
+    node.isObjectExpression() || node.isArrowFunctionExpression() || node.isFunctionExpression()
+  );
 }
 
 export function sxPropConverter(
   node: NodePath<Expression>,
   wrapWithSxCall: (expPath: NodePath<Expression>) => void,
 ) {
-  if (node.isConditionalExpression()) {
+  if (node.isArrayExpression()) {
+    node.get('elements').forEach((element) => {
+      if (element.isExpression()) {
+        sxPropConverter(element, wrapWithSxCall);
+      }
+    });
+  } else if (node.isConditionalExpression()) {
     const consequent = node.get('consequent');
     const alternate = node.get('alternate');
 
