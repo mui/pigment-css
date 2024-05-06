@@ -54,7 +54,9 @@ const cssFunctionTransformerPlugin = declare<BabelPluginOptions>((api, pluginOpt
         }
         const themeKeyArr = val.split('.').join('-');
         path.replaceWith(
-          t.stringLiteral(`var(--${finalPrefix}${propertyThemeKey}-${themeKeyArr})`),
+          t.stringLiteral(
+            `var(--${finalPrefix ? `${finalPrefix}-` : ''}${propertyThemeKey}-${themeKeyArr})`,
+          ),
         );
       },
     },
