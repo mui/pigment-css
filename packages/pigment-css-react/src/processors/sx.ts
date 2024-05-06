@@ -164,7 +164,8 @@ export class SxProcessor extends BaseProcessor {
 
   private processCss(styleObjOrFn: unknown, expressionValue: ExpressionValue) {
     const { themeArgs } = this.options as IOptions;
-    const styleObj = typeof styleObjOrFn === 'function' ? styleObjOrFn(themeArgs) : styleObjOrFn;
+    const styleObj =
+      typeof styleObjOrFn === 'function' ? styleObjOrFn(themeArgs?.theme) : styleObjOrFn;
 
     const res = cssFnValueToVariable({
       styleObj,
