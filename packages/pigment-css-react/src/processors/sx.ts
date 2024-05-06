@@ -145,13 +145,22 @@ export class SxProcessor extends BaseProcessor {
     /**
      * Replace the sx prop with runtime sx
      */
+    let pathToReplace: undefined | NodePath<CallExpression>;
     this.replacer((_tagPath) => {
       const tagPath = _tagPath as NodePath<CallExpression>;
 
-      spreadSxProp(tagPath);
+      const isArrayArgument = spreadSxProp(tagPath);
+      if (isArrayArgument) {
+        pathToReplace = tagPath;
+      }
 
       return tagPath.node;
     }, false);
+
+    if (pathToReplace) {
+      // need to replace outside of `this.replacer` to preserve the import statement
+      pathToReplace.replaceWith(pathToReplace.node.arguments[0]);
+    }
   }
 
   get asSelector(): string {

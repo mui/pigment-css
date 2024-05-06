@@ -3,11 +3,13 @@ export default function sx(transformedSx, { className, style }) {
   let sxVars = {};
 
   function iterateSx(element) {
-    sxClass += ` ${typeof element === 'string' ? element : element.className}`;
-    sxVars = {
-      ...sxVars,
-      ...(transformedSx && typeof transformedSx !== 'string' ? transformedSx.vars : undefined),
-    };
+    if (element) {
+      sxClass += ` ${typeof element === 'string' ? element : element.className}`;
+      sxVars = {
+        ...sxVars,
+        ...(transformedSx && typeof transformedSx !== 'string' ? transformedSx.vars : undefined),
+      };
+    }
   }
 
   if (Array.isArray(transformedSx)) {

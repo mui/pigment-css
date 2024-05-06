@@ -1,5 +1,6 @@
 import { NodePath, types as astService } from '@babel/core';
 import {
+  ArrayExpression,
   CallExpression,
   Expression,
   JSXAttribute,
@@ -100,7 +101,7 @@ export default function spreadSxProp(tagPath: NodePath<CallExpression>) {
     | NodePath<ObjectExpression>
     | null;
   if (!target) {
-    return;
+    return false;
   }
   let paths:
     | NodePath<JSXAttribute | JSXSpreadAttribute>[]
@@ -112,19 +113,45 @@ export default function spreadSxProp(tagPath: NodePath<CallExpression>) {
     paths = target.get('properties');
   }
   const { props, sxPath } = getProps(paths);
+  let spreadSxNode: undefined | SpreadElement | JSXSpreadAttribute;
   if (sxPath) {
     const expression = sxPath.get('value');
     if ('node' in expression) {
       if (target.isObjectExpression()) {
-        target.node.properties.push(astService.spreadElement(expression.node as Expression));
+        spreadSxNode = astService.spreadElement(expression.node as Expression);
+        target.node.properties.push(spreadSxNode);
       }
       if (target.isJSXOpeningElement() && expression.isJSXExpressionContainer()) {
-        target.node.attributes.push(
-          astService.jsxSpreadAttribute(expression.node.expression as Expression),
-        );
+        spreadSxNode = astService.jsxSpreadAttribute(expression.node.expression as Expression);
+        target.node.attributes.push(spreadSxNode);
       }
     }
     sxPath.remove();
   }
   tagPath.node.arguments.push(astService.objectExpression(props));
+
+  if (spreadSxNode?.argument.type === 'ArrayExpression') {
+    spreadSxNode.argument = astService.callExpression(tagPath.node.callee, [
+      spreadSxNode.argument,
+      astService.objectExpression(props),
+    ]);
+  }
+
+  // This step is required to pass information about the array argument to the outer function
+  // to replace the `tagPath` with its first argument.
+  //
+  // Check if the sx value is an array expression
+  let arrayPath: NodePath<ArrayExpression> | null = null;
+  if (tagPath.parentPath.isArrayExpression()) {
+    // sx call is a direct child, e.g. [_sx(...), _sx(...)]
+    arrayPath = tagPath.parentPath;
+  } else if (tagPath.parentPath.parentPath?.isArrayExpression()) {
+    // sx call inside a conditional/logical expression, e.g. [true ? _sx(...) : _sx(...), prop && _sx(...)]
+    arrayPath = tagPath.parentPath.parentPath;
+  }
+  if (arrayPath) {
+    return true;
+  }
+
+  return false;
 }
