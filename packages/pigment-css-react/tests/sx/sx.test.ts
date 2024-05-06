@@ -73,4 +73,46 @@ describe('Pigment CSS - sx prop', () => {
     expect(output.js).to.equal(fixture.js);
     expect(output.css).to.equal(fixture.css);
   });
+
+  it('sx prop support array', async () => {
+    const { output, fixture } = await runTransformation(
+      path.join(__dirname, 'fixtures/sx-array.input.js'),
+      {
+        themeArgs: {
+          theme,
+        },
+      },
+    );
+
+    expect(output.js).to.equal(fixture.js);
+    expect(output.css).to.equal(fixture.css);
+  });
+
+  it('sx prop shorthand', async () => {
+    const { output, fixture } = await runTransformation(
+      path.join(__dirname, 'fixtures/sx-shorthand.input.js'),
+      {
+        themeArgs: {
+          theme: {
+            cssVarPrefix: 'mui',
+            palette: {
+              grey: {
+                50: '#FBFCFE',
+              },
+            },
+            vars: {
+              palette: {
+                grey: {
+                  50: 'var(--mui-palette-grey-50)',
+                },
+              },
+            },
+          },
+        },
+      },
+    );
+
+    expect(output.js).to.equal(fixture.js);
+    expect(output.css).to.equal(fixture.css);
+  });
 });

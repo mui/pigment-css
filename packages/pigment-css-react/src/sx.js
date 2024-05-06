@@ -1,7 +1,25 @@
 export default function sx(transformedSx, { className, style }) {
-  const sxClass = typeof transformedSx === 'string' ? transformedSx : transformedSx?.className;
-  const sxVars =
-    transformedSx && typeof transformedSx !== 'string' ? transformedSx.vars : undefined;
+  let sxClass = '';
+  let sxVars = {};
+
+  function iterateSx(element) {
+    if (element) {
+      sxClass += `${typeof element === 'string' ? element : element.className} `;
+      sxVars = {
+        ...sxVars,
+        ...(element && typeof element !== 'string' ? element.vars : undefined),
+      };
+    }
+  }
+
+  if (Array.isArray(transformedSx)) {
+    transformedSx.forEach((element) => {
+      iterateSx(element);
+    });
+  } else {
+    iterateSx(transformedSx);
+  }
+
   const varStyles = {};
 
   if (sxVars) {
@@ -15,7 +33,7 @@ export default function sx(transformedSx, { className, style }) {
   }
 
   return {
-    className: `${sxClass}${className ? ` ${className}` : ''}`,
+    className: `${sxClass.trim()}${className ? ` ${className}` : ''}`,
     style: {
       ...varStyles,
       ...style,

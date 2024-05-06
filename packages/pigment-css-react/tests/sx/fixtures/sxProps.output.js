@@ -3,6 +3,8 @@ import {
   sx as _sx2,
   sx as _sx3,
   sx as _sx4,
+  sx as _sx5,
+  sx as _sx6,
   styled as _styled,
 } from '@pigment-css/react';
 export const SliderRail = /*#__PURE__*/ _styled('span', {
@@ -78,4 +80,10 @@ function App3(props) {
 }
 function App4(props) {
   return <SliderRail {..._sx4('sazg8ol', {})} />;
+}
+function App5(props) {
+  return <SliderRail {..._sx5('s1v3ec1v', {})} />;
+}
+function App6(props) {
+  return <SliderRail {..._sx6('s1ojh0i1', {})} />;
 }

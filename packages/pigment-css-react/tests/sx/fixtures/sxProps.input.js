@@ -1,4 +1,5 @@
 import { styled } from '@pigment-css/react';
+import visuallyHidden from '../visuallyHidden';
 
 export const SliderRail = styled('span', {
   name: 'MuiSlider',
@@ -50,4 +51,15 @@ const styles4 = {
 
 function App4(props) {
   return <SliderRail sx={styles4} />;
+}
+
+function App5(props) {
+  return <SliderRail sx={visuallyHidden} />;
+}
+
+const styles = {
+  visuallyHidden,
+};
+function App6(props) {
+  return <SliderRail sx={styles.visuallyHidden} />;
 }

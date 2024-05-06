@@ -1,3 +1,5 @@
+import visuallyHidden from '../visuallyHidden';
+
 function App() {
   return /*#__PURE__*/ _jsx(
     'div',
@@ -61,5 +63,20 @@ function App4(props) {
     className: `foo ${props.className}`,
     ...props,
     children: 'test',
+  });
+}
+
+function App5(props) {
+  return /*#__PURE__*/ _jsx('div', {
+    sx: visuallyHidden,
+  });
+}
+
+const styles = {
+  visuallyHidden,
+};
+function App6(props) {
+  return /*#__PURE__*/ _jsx('div', {
+    sx: styles.visuallyHidden,
   });
 }
