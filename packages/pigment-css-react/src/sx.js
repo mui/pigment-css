@@ -4,10 +4,10 @@ export default function sx(transformedSx, { className, style }) {
 
   function iterateSx(element) {
     if (element) {
-      sxClass += ` ${typeof element === 'string' ? element : element.className}`;
+      sxClass += `${typeof element === 'string' ? element : element.className} `;
       sxVars = {
         ...sxVars,
-        ...(transformedSx && typeof transformedSx !== 'string' ? transformedSx.vars : undefined),
+        ...(element && typeof element !== 'string' ? element.vars : undefined),
       };
     }
   }
@@ -33,7 +33,7 @@ export default function sx(transformedSx, { className, style }) {
   }
 
   return {
-    className: `${sxClass}${className ? ` ${className}` : ''}`,
+    className: `${sxClass}${className ? `${className}` : ''}`,
     style: {
       ...varStyles,
       ...style,
