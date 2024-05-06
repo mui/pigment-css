@@ -30,7 +30,7 @@ function App2(props) {
     className: props.className,
     style: props.style,
     children: /*#__PURE__*/ _jsx('p', {
-      sx: ({ theme }) => ({
+      sx: (theme) => ({
         color: (theme.vars || theme).palette.primary.main,
         ...theme.applyStyles('dark', {
           color: 'white',
