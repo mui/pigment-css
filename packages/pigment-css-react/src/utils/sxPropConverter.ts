@@ -1,5 +1,11 @@
 import { NodePath } from '@babel/core';
-import { ArrowFunctionExpression, Expression, ObjectExpression } from '@babel/types';
+import {
+  ArrowFunctionExpression,
+  Expression,
+  Identifier,
+  MemberExpression,
+  ObjectExpression,
+} from '@babel/types';
 import { sxObjectExtractor } from './sxObjectExtractor';
 
 function isAllowedExpression(
@@ -48,6 +54,18 @@ export function sxPropConverter(
     // and is used as <Component sx={styles} />
     if (binding?.scope === rootScope) {
       wrapWithSxCall(node);
+    }
+  } else if (node.isMemberExpression()) {
+    let current: NodePath<Expression> = node;
+    while (current.isMemberExpression()) {
+      current = current.get('object');
+    }
+    if (current.isIdentifier()) {
+      const rootScope = current.scope.getProgramParent();
+      const binding = current.scope.getBinding(current.node.name);
+      if (binding?.scope === rootScope) {
+        wrapWithSxCall(node);
+      }
     }
   }
 }

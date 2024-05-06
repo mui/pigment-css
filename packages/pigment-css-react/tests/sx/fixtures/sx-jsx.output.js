@@ -1,4 +1,12 @@
-import { sx as _sx, sx as _sx2, sx as _sx3, sx as _sx4, sx as _sx5 } from '@pigment-css/react';
+import {
+  sx as _sx,
+  sx as _sx2,
+  sx as _sx3,
+  sx as _sx4,
+  sx as _sx5,
+  sx as _sx6,
+  sx as _sx7,
+} from '@pigment-css/react';
 function App() {
   return /*#__PURE__*/ _jsx(
     'div',
@@ -70,5 +78,15 @@ function App4(props) {
           ...props,
         },
       )),
+  });
+}
+function App5(props) {
+  return /*#__PURE__*/ _jsx('div', {
+    ..._sx6('sblg7d5', {}),
+  });
+}
+function App6(props) {
+  return /*#__PURE__*/ _jsx('div', {
+    ..._sx7('s1xq3929', {}),
   });
 }
