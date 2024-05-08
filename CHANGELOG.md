@@ -4,7 +4,7 @@
 
 _May 8, 2024_
 
-A big thanks to the 1 contributors who made this release possible. Here are some highlights ✨:
+A big thanks to the 2 contributors who made this release possible. Here are some highlights ✨:
 
 - ✨ `sx` prop is now working on any components (#37) @siriwatknp
 
@@ -14,12 +14,13 @@ A big thanks to the 1 contributors who made this release possible. Here are some
 - Replace `sx` callback object param with `theme` (#51) @siriwatknp
 - Enable `sx` prop on any components (#37) @siriwatknp
 - Replace lowercase with lowerFirst (#54) @siriwatknp
+- Reorder the css generation order for styled calls (#56) @brijeshb42
 
 ### Core
 
 - Set root version to 0.0.10 (#44) @siriwatknp
 
-All contributors of this release in alphabetical order: @siriwatknp
+All contributors of this release in alphabetical order: @@brijeshb42, @siriwatknp
 
 ## v0.0.10
 
