@@ -13,6 +13,7 @@ Pigment CSS is a zero-runtime CSS-in-JS library that extracts the colocated sty
     - [Styling based on runtime values](#styling-based-on-runtime-values)
     - [Styled component as a CSS selector](#styled-component-as-a-css-selector)
     - [Typing props](#typing-props)
+- [sx prop](#sx-prop)
 - [Theming](#theming)
   - [Accessing theme values](#accessing-theme-values)
   - [CSS variables support](#css-variables-support)
@@ -467,7 +468,70 @@ function App() {
 }
 ```
 
-### Theming
+## sx prop
+
+A special `sx` prop lets you apply styles directly to an element. When `sx` prop is specified on a component, Pigment CSS will replace any `sx` prop with `className` and `style` props at build time.
+
+The `sx` prop works on any component, including HTML elements and 3rd-party custom components as long as it is JSX.
+
+### Usage
+
+```js
+<div sx={{ display: 'flex', flexDirection: 'column' }}>
+```
+
+For a React component, it must spread the `className` and `style` to the underlying DOM element, otherwise the styles won't be applied.
+
+```js
+const AnyComponent = (props) => {
+  return <div {...props} />;
+};
+
+<AnyComponent sx={{ fontSize: 12, color: 'red' }} />;
+```
+
+> 💡 **Gotcha**: You don't need to pass `sx` prop to underlying component or DOM because it will be replaced with `className` and `style` props.
+
+The value provided to `sx` prop can be one of the following:
+
+- a plain style object (recommended)
+- a callback function that receives the [theme object](#theming) then return a plain style object:
+
+  ```js
+  <div sx={(theme) => ({ color: theme.colors.primary })} />
+  ```
+
+- an array of plain style objects or callback functions. This is useful for applying conditional styles based on other variables:
+
+  ```js
+  <div
+    sx={[
+      { color: 'red' },
+      selected && { fontWeight: 'bold' },
+      disabled ? (theme) => ({ opacity: theme.state.disabledOpacity }) : { opacity: 1 },
+    ]}
+  />
+  ```
+
+### Shorthand properties
+
+> ⏳ **Coming soon**: We are working on the shorthand properties for `sx` prop.
+
+### TypeScript
+
+To use `sx` prop on HTML element, you need to augment the `HTMLAttributes` interface. Add the following code to a file that is included in your tsconfig.json:
+
+```ts
+declare global {
+  namespace React {
+    interface HTMLAttributes<T> {
+      sx?: any; // ⏳ **Coming soon**: We are working on the better typing
+    }
+  }
+}
+```
+
+## Theming
 
 Theming is an **optional** feature that lets you reuse the same values, such as colors, spacing, and typography, across your application. It is a plain object of any structure that you can define in your config file.
 
@@ -502,7 +566,7 @@ module.exports = withPigment(
 );
 ```
 
-#### Accessing theme values
+### Accessing theme values
 
 A callback can be used with **styled()** and **css()** APIs to access the theme values:
 
@@ -514,7 +578,7 @@ const Heading = styled('h1')(({ theme }) => ({
 }));
 ```
 
-#### CSS variables support
+### CSS variables support
 
 Pigment CSS can generate CSS variables from the theme values when you wrap your theme with `extendTheme` utility. For example, in a `next.config.js` file:
 
@@ -556,7 +620,7 @@ console.log(theme.colors.primary); // 'tomato'
 console.log(theme.vars.colors.primary); // 'var(--colors-primary)'
 ```
 
-#### Adding a prefix to CSS variables
+### Adding a prefix to CSS variables
 
 You can add a prefix to the generated CSS variables by providing a `cssVarPrefix` option to the `extendTheme` utility:
 
@@ -575,7 +639,7 @@ The generated CSS variables have the `pigment` prefix:
 }
 ```
 
-#### Color schemes
+### Color schemes
 
 Some tokens, especially color-related tokens, can have different values for different scenarios. For example in a daylight condition, the background color might be white, but in a dark condition, it might be black.
 
@@ -602,7 +666,7 @@ extendTheme({
 
 In the above example, `light` (default) and `dark` color schemes are defined. The structure of each color scheme must be a plain object with keys and values.
 
-#### Switching color schemes
+### Switching color schemes
 
 By default, when `colorSchemes` is defined, Pigment CSS uses the [`prefers-color-scheme`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme) media query to switch between color schemes based on the user's system settings.
 
@@ -634,7 +698,7 @@ function App() {
 }
 ```
 
-#### Styling based on color scheme
+### Styling based on color scheme
 
 The `extendTheme` utility attaches a function called `applyStyles` to the theme object. It receives a color scheme as the first argument followed by a style object.
 It returns a proper CSS selector based on the theme configuration.
@@ -650,7 +714,7 @@ const Heading = styled('h1')(({ theme }) => ({
 }));
 ```
 
-#### TypeScript
+### TypeScript
 
 To get the type checking for the theme, you need to augment the theme type:
 
