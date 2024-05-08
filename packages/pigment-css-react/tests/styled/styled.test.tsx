@@ -94,6 +94,9 @@ describe('Pigment CSS - styled', () => {
                   notchedOutline: {
                     border: 'none',
                   },
+                  input: {
+                    paddingLeft: 10,
+                  },
                 },
               },
             },
