@@ -1,5 +1,26 @@
 # [Versions](https://mui.com/versions/)
 
+## v0.0.11
+
+_May 8, 2024_
+
+A big thanks to the 1 contributors who made this release possible. Here are some highlights ✨:
+
+- ✨ `sx` prop is now working on any components (#37) @siriwatknp
+
+### `@pigment-css/react@0.0.11`
+
+- Support array for `sx` prop (#52) @siriwatknp
+- Replace `sx` callback object param with `theme` (#51) @siriwatknp
+- Enable `sx` prop on any components (#37) @siriwatknp
+- Replace lowercase with lowerFirst (#54) @siriwatknp
+
+### Core
+
+- Set root version to 0.0.10 (#44) @siriwatknp
+
+All contributors of this release in alphabetical order: @siriwatknp
+
 ## v0.0.10
 
 <!-- generated comparing v0.0.9..master -->
