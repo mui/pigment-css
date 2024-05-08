@@ -26,6 +26,7 @@ import type { PluginCustomOptions } from '../utils/cssFnValueToVariable';
 import { cssFnValueToVariable } from '../utils/cssFnValueToVariable';
 import { processCssObject } from '../utils/processCssObject';
 import { valueToLiteral } from '../utils/valueToLiteral';
+import { lowercaseFirstLetter } from '../utils/lowercaseFirstLetter';
 import BaseProcessor from './base-processor';
 import { Primitive, TemplateCallback } from './keyframes';
 import { cache, css } from '../utils/emotion';
@@ -470,9 +471,8 @@ export class StyledProcessor extends BaseProcessor {
       if (!overrides) {
         return;
       }
-      const overrideStyle = (overrides[value.slot.toLowerCase()] || overrides[value.slot]) as
-        | string
-        | CSSObject;
+      const overrideStyle = (overrides[lowercaseFirstLetter(value.slot)] ||
+        overrides[value.slot]) as string | CSSObject;
       const className = this.getClassName();
       if (typeof overrideStyle === 'string') {
         this.collectedStyles.push([className, overrideStyle, null]);
@@ -490,7 +490,7 @@ export class StyledProcessor extends BaseProcessor {
     if (
       'variants' in componentData &&
       componentData.variants &&
-      value.slot.toLowerCase() === 'root'
+      lowercaseFirstLetter(value.slot) === 'root'
     ) {
       variantsAccumulator.push(...(componentData.variants as unknown as VariantData[]));
     }
