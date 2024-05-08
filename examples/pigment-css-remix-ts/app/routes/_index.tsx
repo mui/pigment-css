@@ -189,7 +189,7 @@ export default function Index() {
         </Link>
         <Link
           outlined
-          href="https://github.com/orgs/mui/projects/27/views/1"
+          href="https://github.com/orgs/mui/projects/27/views/3"
           target="_blank"
           rel="noopener noreferrer"
         >
