@@ -41,7 +41,8 @@
     "@types/babel__core": "^7.20.5",
     "@types/chai": "^4.3.14",
     "@types/mocha": "^10.0.6",
-    "chai": "^4.4.1"
+    "chai": "^4.4.1",
+    "webpack": "^5.91.0"
   },
   "sideEffects": false,
   "publishConfig": {
