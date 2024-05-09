@@ -27,6 +27,7 @@ export default defineConfig([
     entry: [
       './src/utils/index.ts',
       './src/utils/sx-plugin.ts',
+      './src/utils/sx-plugin2.ts',
       './src/utils/remove-prop-types-plugin.ts',
     ],
     outDir: 'utils',
