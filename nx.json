@@ -3,7 +3,6 @@
   "extends": "nx/presets/npm.json",
   "targetDefaults": {
     "copy-license": {
-      "cache": true,
       "outputs": ["{projectRoot}/LICENSE"]
     },
     "build": {
@@ -13,6 +12,18 @@
     },
     "preview": {
       "dependsOn": ["^build"]
+    },
+    "test": {
+      "cache": false,
+      "dependsOn": ["build"]
+    },
+    "test:update": {
+      "cache": false,
+      "dependsOn": ["build"]
+    },
+    "test:ci": {
+      "cache": false,
+      "dependsOn": ["build"]
     }
   }
 }

@@ -58,13 +58,13 @@ export async function runTransformation(
       return require.resolve(`../exports/${tag}`);
     },
   };
-
   const result = await wywTransform(
     {
       options: {
         filename: inputFilePath,
         preprocessor: (selector, css) => preprocessor(selector, css, options?.css),
         pluginOptions,
+        root: process.env.PNPM_SCRIPT_SRC_DIR ?? process.cwd(),
       },
       cache,
       eventEmitter,

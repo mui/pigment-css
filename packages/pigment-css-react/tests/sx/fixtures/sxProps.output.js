@@ -11,7 +11,7 @@ export const SliderRail = /*#__PURE__*/ _styled('span', {
   name: 'MuiSlider',
   slot: 'Rail',
 })({
-  classes: ['sjfloo5', 'sjfloo5-1'],
+  classes: ['s18b79se', 's18b79se-1'],
 });
 function App(props) {
   return (
@@ -20,7 +20,7 @@ function App(props) {
       style={{
         color: 'red',
       }}
-      {..._sx('s1o8xp19', {
+      {..._sx('s6m0ihh', {
         className: props.className,
         style: {
           color: 'red',
@@ -36,16 +36,16 @@ function App2(props) {
       {...(props.variant === 'secondary'
         ? _sx2(
             {
-              className: 's1xbsywq',
+              className: 's1kwvbjk',
               vars: {
-                's1xbsywq-0': [props.isRed ? 'red' : 'blue', false],
+                's1kwvbjk-0': [props.isRed ? 'red' : 'blue', false],
               },
             },
             {
               ...props,
             },
           )
-        : _sx2('s1wnk6s5', {
+        : _sx2('s1cp99fn', {
             ...props,
           }))}
     />
@@ -62,9 +62,9 @@ function App3(props) {
       {...(props.variant === 'secondary' &&
         _sx3(
           {
-            className: 'stzaibv',
+            className: 's1w3gk0m',
             vars: {
-              'stzaibv-0': [props.isRed ? 'red' : 'blue', false],
+              's1w3gk0m-0': [props.isRed ? 'red' : 'blue', false],
             },
           },
           {
@@ -79,11 +79,11 @@ function App3(props) {
   );
 }
 function App4(props) {
-  return <SliderRail {..._sx4('sazg8ol', {})} />;
+  return <SliderRail {..._sx4('s399llo', {})} />;
 }
 function App5(props) {
-  return <SliderRail {..._sx5('s1v3ec1v', {})} />;
+  return <SliderRail {..._sx5('s1t8z5o6', {})} />;
 }
 function App6(props) {
-  return <SliderRail {..._sx6('s1ojh0i1', {})} />;
+  return <SliderRail {..._sx6('s1f34qq2', {})} />;
 }

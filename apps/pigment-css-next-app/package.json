@@ -29,14 +29,5 @@
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "eslint": "^8.57.0"
-  },
-  "nx": {
-    "targets": {
-      "preview": {
-        "dependsOn": [
-          "^build"
-        ]
-      }
-    }
   }
 }

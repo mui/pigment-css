@@ -12,7 +12,8 @@
 /.eslintcache
 /.nyc_output
 /benchmark/**/dist
-/coverage
+/coverage/
+/html/
 /docs/.env.local
 /docs/export
 /docs/pages/playground/

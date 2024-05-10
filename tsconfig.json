@@ -26,7 +26,7 @@
       ]
     },
     // Otherwise we get react-native typings which conflict with dom.lib.
-    "types": ["node", "react"]
+    "types": ["node", "react", "vitest/globals"]
   },
   "exclude": ["**/.*/", "**/build", "**/node_modules", "docs/export"]
 }

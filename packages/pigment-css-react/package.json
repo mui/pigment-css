@@ -25,9 +25,9 @@
     "watch": "tsup --watch --clean false",
     "copy-license": "node ../../scripts/pigment-license.mjs",
     "build": "tsup",
-    "test": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=text mocha 'packages/pigment-css-react/**/*.test.{js,ts,tsx}'",
-    "test:update": "cd ../../ && cross-env NODE_ENV=test UPDATE_FIXTURES=true mocha 'packages/pigment-css-react/**/*.test.{js,ts,tsx}'",
-    "test:ci": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=lcov --report-dir=./coverage/pigment-css-react mocha 'packages/pigment-css-react/**/*.test.{js,ts,tsx}'",
+    "test": "vitest run",
+    "test:update": "UPDATE_FIXTURES=true vitest run",
+    "test:ci": "vitest run --coverage --reporter=html --coverage.reportsDirectory=./coverage",
     "typecheck": "tsc --noEmit -p ."
   },
   "dependencies": {
@@ -55,17 +55,19 @@
   },
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "^7.24.1",
+    "@testing-library/jest-dom": "^6.4.5",
+    "@testing-library/react": "^15.0.7",
     "@types/babel__core": "^7.20.5",
     "@types/babel__helper-module-imports": "^7.18.3",
     "@types/babel__helper-plugin-utils": "^7.10.3",
     "@types/chai": "^4.3.16",
     "@types/cssesc": "^3.0.2",
     "@types/lodash": "^4.17.1",
-    "@types/mocha": "^10.0.6",
     "@types/node": "^18.19.31",
     "@types/prop-types": "^15.7.12",
     "@types/react": "^18.3.1",
     "@types/stylis": "^4.2.6",
+    "@vitejs/plugin-react": "^4.2.1",
     "chai": "^4.4.1",
     "prettier": "^3.2.5",
     "prop-types": "^15.8.1",
@@ -148,35 +150,6 @@
       },
       "require": "./build/RtlProvider.js",
       "default": "./build/RtlProvider.js"
-    }
-  },
-  "nx": {
-    "targets": {
-      "test": {
-        "cache": false,
-        "dependsOn": [
-          "build"
-        ]
-      },
-      "test:update": {
-        "cache": false,
-        "dependsOn": [
-          "build"
-        ]
-      },
-      "test:ci": {
-        "cache": false,
-        "dependsOn": [
-          "build"
-        ]
-      },
-      "build": {
-        "outputs": [
-          "{projectRoot}/build",
-          "{projectRoot}/processors",
-          "{projectRoot}/utils"
-        ]
-      }
     }
   }
 }

@@ -9,13 +9,13 @@ import {
   sx as _sx8,
 } from '@pigment-css/react';
 import { jsx as _jsx } from 'react/jsx-runtime';
-<div {..._sx(['dnf03uj'], {})} />;
+<div {..._sx(['d77f2qa'], {})} />;
 <div
   className="foo"
   style={{
     opacity: 1,
   }}
-  {..._sx2(['dsvwfmp', 'd121rcfp'], {
+  {..._sx2(['d7xe34b', 'd1c7ydi9'], {
     className: 'foo',
     style: {
       opacity: 1,
@@ -30,13 +30,13 @@ function App(props) {
         [
           props.variant === 'secondary'
             ? {
-                className: 'schfkcb',
+                className: 's1f8s81x',
                 vars: {
-                  'schfkcb-0': [props.isRed ? 'red' : 'blue', false],
+                  's1f8s81x-0': [props.isRed ? 'red' : 'blue', false],
                 },
               }
-            : 's1cp79ho',
-          'soyt4ij',
+            : 'svfluak',
+          'sv5tf3c',
         ],
         {
           ...props,
@@ -55,11 +55,11 @@ function App2(props) {
       }}
       {..._sx4(
         [
-          'sr48wd1',
+          's5gn2mm',
           props.variant === 'secondary' && {
-            className: 's6s70bv',
+            className: 's150l9nl',
             vars: {
-              's6s70bv-0': [props.isRed ? 'red' : 'blue', false],
+              's150l9nl-0': [props.isRed ? 'red' : 'blue', false],
             },
           },
         ],
@@ -75,14 +75,14 @@ function App2(props) {
   );
 }
 _jsx('div', {
-  ..._sx5(['s1v8upwb'], {}),
+  ..._sx5(['sh10a0'], {}),
 });
 _jsx('div', {
   className: 'foo',
   style: {
     opacity: 1,
   },
-  ..._sx6(['sjtfjpx', 's1r80n7h'], {
+  ..._sx6(['sylg5x2', 's96muxz'], {
     className: 'foo',
     style: {
       opacity: 1,
@@ -93,7 +93,7 @@ function App3(props) {
   return _jsx('div', {
     children: 'test',
     ...props,
-    ..._sx7(['s1gu7ed8', props.disabled ? 's1h4vmh2' : 's1oy2sl1'], {
+    ..._sx7(['s1g57qnj', props.disabled ? 's1k5bcbo' : 'so7h5fe'], {
       ...props,
     }),
   });
@@ -107,11 +107,11 @@ function App4(props) {
     },
     ..._sx8(
       [
-        's14d8kn5',
+        's1feokgc',
         props.variant === 'secondary' && {
-          className: 's1su4mia',
+          className: 's1vdrnlm',
           vars: {
-            's1su4mia-0': [props.isRed ? 'red' : 'blue', false],
+            's1vdrnlm-0': [props.isRed ? 'red' : 'blue', false],
           },
         },
       ],

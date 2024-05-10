@@ -1,4 +1,4 @@
-@keyframes r1sz5zcv {
+@keyframes rmbqoav {
   from {
     transform: rotate(360deg);
   }
@@ -6,21 +6,21 @@
     transform: rotate(0deg);
   }
 }
-.c1aiqtje {
+.c18u98at {
   color: #ff5252;
-  animation: r1sz5zcv 2s ease-out 0s infinite;
+  animation: rmbqoav 2s ease-out 0s infinite;
 }
-.sj0zd45 {
+.s1d2yhn4 {
   display: block;
   position: absolute;
   border-radius: inherit;
   background-color: currentColor;
   opacity: 0.38;
 }
-.shdkmm7 {
+.s17p3km3 {
   display: block;
   opacity: 0.38;
 }
-.shdkmm7 .sj0zd45 {
+.s17p3km3 .s1d2yhn4 {
   display: none;
 }

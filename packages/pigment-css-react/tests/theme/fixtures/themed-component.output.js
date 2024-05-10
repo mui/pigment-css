@@ -10,13 +10,13 @@ const StatRoot = /*#__PURE__*/ _styled('div', {
   // The component name
   slot: 'root', // The slot name
 })({
-  classes: ['si9gu6v'],
+  classes: ['s1a5hthf'],
   variants: [
     {
       props: {
         variant: 'outlined',
       },
-      className: 'si9gu6v-1',
+      className: 's1a5hthf-1',
     },
   ],
 });
@@ -24,13 +24,13 @@ const StatValue = /*#__PURE__*/ _styled2('div', {
   name: 'PigmentStat',
   slot: 'value',
 })({
-  classes: ['sbfbm5t'],
+  classes: ['s1cb4eun'],
 });
 const StatUnit = /*#__PURE__*/ _styled3('div', {
   name: 'PigmentStat',
   slot: 'unit',
 })({
-  classes: ['s1xscf0o'],
+  classes: ['s1s691w9'],
 });
 const Stat = React.forwardRef(function Stat(props, ref) {
   const { value, unit, ...other } = props;

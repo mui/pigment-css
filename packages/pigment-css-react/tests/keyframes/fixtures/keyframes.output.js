@@ -1,2 +1,2 @@
-const rotateKeyframe = 'rr2uptz';
-const rotateKeyframe2 = 'r1dngkim';
+const rotateKeyframe = 'r6toupf';
+const rotateKeyframe2 = 'rwg7boy';

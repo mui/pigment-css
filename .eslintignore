@@ -10,17 +10,6 @@
 /packages/pigment-css-react/theme/
 /packages/pigment-css-react/tests/**/fixtures
 /packages/pigment-css-nextjs-plugin/loader.js
-# Ignore fixtures
-/packages-internal/scripts/typescript-to-proptypes/test/*/*
-/test/bundling/fixtures/**/*.fixture.js
-# just an import that reports eslint errors depending on whether the fixture (which is not checked in) exists
-/test/bundling/fixtures/create-react-app/src/index.js
-/test/bundling/fixtures/gatsby/.cache
-/test/bundling/fixtures/gatsby/public
-/test/bundling/fixtures/gatsby/public
-/test/karma.conf.js
-/test/karma.conf.profile.js
-/test/regressions/**/*
 /tmp
 .next
 build

@@ -6,7 +6,7 @@ export function App(props) {
     as: 'ul',
     'aria-label': props.label,
     children: 'Hello Box',
-    ..._sx('sd5jss7', {}),
+    ..._sx('s102a5ob', {}),
   });
 }
 function App2(props) {
@@ -14,7 +14,7 @@ function App2(props) {
     Box,
     {
       children: 'Test',
-      ..._sx2('sk625fs', {}),
+      ..._sx2('s22pi4e', {}),
     },
     void 0,
     false,

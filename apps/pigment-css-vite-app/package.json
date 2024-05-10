@@ -35,19 +35,5 @@
     "postcss-combine-media-query": "^1.0.1",
     "vite": "5.2.11",
     "vite-plugin-pages": "^0.32.1"
-  },
-  "nx": {
-    "targets": {
-      "preview": {
-        "dependsOn": [
-          "^build"
-        ]
-      },
-      "dev": {
-        "dependsOn": [
-          "^build"
-        ]
-      }
-    }
   }
 }
