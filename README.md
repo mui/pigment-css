@@ -45,7 +45,7 @@ Pigment CSS is built on top of [WyW-in-JS](https://wyw-in-js.dev/), enabling to
 Use the following commands to quickly create a new Next.js project with Pigment CSS set up:
 
 ```bash
-curl https://codeload.github.com/mui/pigment-css/tar.gz/master | tar -xz --strip=2  pigment-css/examples/pigment-css-nextjs-ts
+curl https://codeload.github.com/mui/pigment-css/tar.gz/master | tar -xz --strip=2  pigment-css-master/examples/pigment-css-nextjs-ts
 cd pigment-css-nextjs-ts
 ```
 
