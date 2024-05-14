@@ -27,7 +27,8 @@
     "build": "tsup --tsconfig tsconfig.build.json",
     "typecheck": "tsc --noEmit -p .",
     "test": "vitest run",
-    "test:ci": "vitest run --coverage --reporter=html --coverage.reportsDirectory=./coverage"
+    "test:ci": "vitest run --coverage --reporter=html --coverage.reportsDirectory=./coverage",
+    "test:ci:html": "vitest run --coverage --reporter=html --coverage.reportsDirectory=./coverage"
   },
   "dependencies": {
     "@babel/core": "^7.24.5",

@@ -2,9 +2,6 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "extends": "nx/presets/npm.json",
   "targetDefaults": {
-    "copy-license": {
-      "outputs": ["{projectRoot}/LICENSE"]
-    },
     "build": {
       "cache": true,
       "dependsOn": ["copy-license", "^build"],
@@ -14,15 +11,15 @@
       "dependsOn": ["^build"]
     },
     "test": {
-      "cache": false,
       "dependsOn": ["build"]
     },
     "test:update": {
-      "cache": false,
       "dependsOn": ["build"]
     },
     "test:ci": {
-      "cache": false,
+      "dependsOn": ["build"]
+    },
+    "test:ci:html": {
       "dependsOn": ["build"]
     }
   }

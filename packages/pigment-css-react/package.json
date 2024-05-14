@@ -21,13 +21,14 @@
     "url": "https://opencollective.com/mui-org"
   },
   "scripts": {
-    "clean": "rimraf build types processors utils",
+    "clean": "rimraf build types processors utils coverage html",
     "watch": "tsup --watch --clean false",
     "copy-license": "node ../../scripts/pigment-license.mjs",
     "build": "tsup",
     "test": "vitest run",
-    "test:update": "UPDATE_FIXTURES=true vitest run",
-    "test:ci": "vitest run --coverage --reporter=html --coverage.reportsDirectory=./coverage",
+    "test-update": "UPDATE_FIXTURES=true vitest run",
+    "test:ci": "vitest run --coverage --reporter=json",
+    "test:ci:html": "vitest run --coverage --reporter=html",
     "typecheck": "tsc --noEmit -p ."
   },
   "dependencies": {
@@ -150,6 +151,18 @@
       },
       "require": "./build/RtlProvider.js",
       "default": "./build/RtlProvider.js"
+    }
+  },
+  "nx": {
+    "targets": {
+      "build": {
+        "outputs": [
+          "{projectRoot}/build",
+          "{projectRoot}/theme",
+          "{projectRoot}/utils",
+          "{projectRoot}/processors"
+        ]
+      }
     }
   }
 }

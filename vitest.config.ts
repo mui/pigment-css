@@ -9,5 +9,8 @@ export default defineConfig({
     include: ['tests/**/*.test.(js|jsx|ts|tsx)'],
     exclude: ['**/*.spec.*'],
     setupFiles: [path.join(__dirname, 'vitest-setup.ts')],
+    coverage: {
+      exclude: ['build/', 'coverage/', 'tests'],
+    },
   },
 });

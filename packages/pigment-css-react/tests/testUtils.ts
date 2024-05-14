@@ -8,8 +8,8 @@ import {
   transform as wywTransform,
   createFileReporter,
 } from '@wyw-in-js/transform';
-import { PluginCustomOptions, preprocessor } from '@pigment-css/react/utils';
 import * as prettier from 'prettier';
+import { PluginCustomOptions, preprocessor } from '../src/utils';
 
 import sxTransformPlugin from '../exports/sx-plugin';
 
