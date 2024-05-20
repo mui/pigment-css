@@ -41,8 +41,8 @@
     "@emotion/react": "^11.11.4",
     "@emotion/serialize": "^1.1.4",
     "@emotion/styled": "^11.11.5",
-    "@mui/system": "^6.0.0-alpha.1",
-    "@mui/utils": "^6.0.0-alpha.1",
+    "@mui/system": "^6.0.0-alpha.6",
+    "@mui/utils": "^6.0.0-alpha.6",
     "@wyw-in-js/processor-utils": "^0.5.3",
     "@wyw-in-js/shared": "^0.5.3",
     "@wyw-in-js/transform": "^0.5.3",
@@ -86,7 +86,9 @@
       "generateAtomics": "./exports/generateAtomics.js",
       "css": "./exports/css.js",
       "createUseThemeProps": "./exports/createUseThemeProps.js",
-      "internal_createExtendSxProp": "./exports/internal_createExtendSxProp.js"
+      "internal_createExtendSxProp": "./exports/internal_createExtendSxProp.js",
+      "globalCss": "./exports/globalCss.js",
+      "useTheme": "./exports/useTheme.js"
     }
   },
   "files": [
