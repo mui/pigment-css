@@ -345,7 +345,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
             },
             transform(_code, id) {
               if (id.endsWith('styles.css')) {
-                return theme ? generateTokenCss(theme) : _code;
+                return theme ? generateTokenCss(theme, options.experiments) : _code;
               }
               if (id.includes('pigment-css-react/theme')) {
                 return `export default ${
@@ -370,7 +370,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
             },
             load(id) {
               if (id === VIRTUAL_CSS_FILE && theme) {
-                return generateTokenCss(theme);
+                return generateTokenCss(theme, options.experiments);
               }
               if (id === VIRTUAL_THEME_FILE) {
                 return `export default ${

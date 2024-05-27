@@ -62,7 +62,7 @@ export function pigment(options: PigmentOptions) {
       },
       load(id) {
         if (id === VIRTUAL_CSS_FILE) {
-          return generateTokenCss(theme);
+          return generateTokenCss(theme, options.experiments);
         }
         if (id === VIRTUAL_THEME_FILE) {
           return `export default ${JSON.stringify(generateThemeTokens(theme))};`;

@@ -38,6 +38,13 @@ export type PluginCustomOptions = {
      */
     getDirSelector?: (dir: 'ltr' | 'rtl') => string;
   };
+  experiments?: {
+    /**
+     * Wrap generated CSS in layers so that all the base styles come before all the variant styles.
+     * Experimental right now, but will be default by v1 release.
+     */
+    styleLayers?: boolean;
+  };
 };
 
 type CssFnValueToVariableParams = {
