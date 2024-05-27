@@ -1,6 +1,6 @@
-import { useTheme as _useTheme } from '@pigment-css/react';
+import _default from '@pigment-css/react/theme';
 export const Fade = React.forwardRef(function Fade(props, ref) {
-  const theme = _useTheme(true);
+  const theme = _default;
   const defaultTimeout = {
     enter: theme.transitions.duration.enteringScreen,
     exit: theme.transitions.duration.leavingScreen,

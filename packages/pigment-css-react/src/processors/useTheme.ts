@@ -47,11 +47,8 @@ export class UseThemeProcessor extends BaseProcessor {
 
   doRuntimeReplacement() {
     const t = this.astService;
-    const useThemeIdentifier = t.addNamedImport(
-      this.tagSource.imported,
-      process.env.PACKAGE_NAME as string,
-    );
-    this.replacer(t.callExpression(useThemeIdentifier, [t.booleanLiteral(true)]), false);
+    const themeIdentifier = t.addDefaultImport(`${process.env.PACKAGE_NAME as string}/theme`);
+    this.replacer(themeIdentifier, false);
   }
 
   get asSelector() {

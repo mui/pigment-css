@@ -18,7 +18,7 @@ import {
 import {
   preprocessor as basePreprocessor,
   generateTokenCss,
-  generateThemeTokens,
+  generateThemeSource,
   extendTheme,
   type Theme as BaseTheme,
   type PluginCustomOptions,
@@ -348,9 +348,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
                 return theme ? generateTokenCss(theme) : _code;
               }
               if (id.includes('pigment-css-react/theme')) {
-                return `export default ${
-                  theme ? JSON.stringify(generateThemeTokens(theme)) : '{}'
-                };`;
+                return generateThemeSource(theme);
               }
               return null;
             },
@@ -373,9 +371,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
                 return generateTokenCss(theme);
               }
               if (id === VIRTUAL_THEME_FILE) {
-                return `export default ${
-                  theme ? JSON.stringify(generateThemeTokens(theme)) : '{}'
-                };`;
+                return generateThemeSource(theme);
               }
               return null;
             },
