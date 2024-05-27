@@ -11,8 +11,8 @@ const dummyResolver = (url: string) => {
 
 describe('utils', () => {
   describe('handleUrlReplacement', () => {
-    it('should not replace http/data/absolute urls', async () => {
-      [DATA_URI, HTML_LOGO_URL, ABSOLUTE_PATH].forEach(async (url) => {
+    it('should not replace http/data/absolute/hash urls', async () => {
+      [DATA_URI, HTML_LOGO_URL, ABSOLUTE_PATH, '#my_gradient'].forEach(async (url) => {
         const cssString1 = `.className {
           background-image: url(${url});
         }`;

@@ -29,7 +29,8 @@ export const handleUrlReplacement = async (
     if (
       mainItem.startsWith('data:') ||
       mainItem.startsWith('http:') ||
-      mainItem.startsWith('https:')
+      mainItem.startsWith('https:') ||
+      mainItem.startsWith('#')
     ) {
       newCss += `url(${mainItem})`;
     } else if (mainItem[0] === '/') {
