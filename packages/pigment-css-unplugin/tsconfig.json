@@ -9,7 +9,7 @@
       "@pigment-css/react": ["./packages/pigment-css-react/src"],
       "@pigment-css/react/*": ["./packages/pigment-css-react/src/*"]
     },
-    "types": ["node", "mocha", "chai"]
+    "types": ["node", "vitest/globals"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["./tsup.config.ts"]

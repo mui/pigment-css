@@ -140,7 +140,7 @@ module.exports = {
     'react/forbid-prop-types': 'off', // Too strict, no time for that
     'react/jsx-curly-brace-presence': 'off', // broken
     // airbnb is using .jsx
-    'react/jsx-filename-extension': ['error', { extensions: ['.js', '.tsx'] }],
+    'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx', '.tsx'] }],
     // Prefer <React.Fragment> over <>.
     'react/jsx-fragments': ['error', 'element'],
     // Enforces premature optimization
@@ -209,6 +209,7 @@ module.exports = {
         '*.test.js',
         '*.test.ts',
         '*.test.tsx',
+        '*.test.jsx',
       ],
       extends: ['plugin:mocha/recommended'],
       rules: {

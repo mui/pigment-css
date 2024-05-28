@@ -7,9 +7,9 @@ export function App(props) {
       aria-label={props.label}
       {..._sx(
         {
-          className: 'bc1d15y',
+          className: 'b1akj7oz',
           vars: {
-            'bc1d15y-0': [props.color, false],
+            'b1akj7oz-0': [props.color, false],
           },
         },
         {},

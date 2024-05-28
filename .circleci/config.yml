@@ -145,7 +145,7 @@ jobs:
       - checkout
       - install_js
       - run:
-          name: Tests fake browser
+          name: Unit Tests
           command: pnpm test:coverage:ci
       # - run:
       #     name: Check coverage generated

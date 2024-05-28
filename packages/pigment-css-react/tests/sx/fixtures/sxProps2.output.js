@@ -3,20 +3,20 @@ const SliderRail = /*#__PURE__*/ _styled('span', {
   name: 'MuiSlider',
   slot: 'Rail',
 })({
-  classes: ['sdbmcs3', 'sdbmcs3-1'],
+  classes: ['syo8irh', 'syo8irh-1'],
 });
 const A = {
   SliderRail,
 };
 function App(props) {
-  return <SliderRail {..._sx('si7ulc4', {})} />;
+  return <SliderRail {..._sx('s1g6t5jc', {})} />;
 }
 function App2() {
   return (
     <SliderRail
       component="li"
       {...props}
-      {..._sx2('sliig2s', {
+      {..._sx2('ska13jz', {
         ...props,
       })}
     />
@@ -27,9 +27,9 @@ function App3(props) {
     <A.SliderRail
       {..._sx3(
         {
-          className: 'so956n',
+          className: 's17in6il',
           vars: {
-            'so956n-0': [props.isRed ? 'h1-fontSize' : 'h2-fontSize', false],
+            's17in6il-0': [props.isRed ? 'h1-fontSize' : 'h2-fontSize', false],
           },
         },
         {},

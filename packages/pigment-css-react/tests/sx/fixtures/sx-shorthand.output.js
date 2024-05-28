@@ -5,9 +5,9 @@ function App(props) {
       <div
         {..._sx(
           {
-            className: 'd1h14by3',
+            className: 'dtadr1p',
             vars: {
-              'd1h14by3-0': [
+              'dtadr1p-0': [
                 props.tier.title === 'Professional' ? 'var(--mui-palette-grey-50)' : undefined,
                 false,
               ],

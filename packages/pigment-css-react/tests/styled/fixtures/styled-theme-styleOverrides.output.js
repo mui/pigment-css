@@ -5,5 +5,5 @@ const NotchedOutlineRoot = /*#__PURE__*/ _styled('fieldset', {
   slot: 'NotchedOutline',
   overridesResolver: (props, styles) => styles.notchedOutline,
 })({
-  classes: ['njazm0b', 'njazm0b-1'],
+  classes: ['n16dgyp3', 'n16dgyp3-1'],
 });

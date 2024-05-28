@@ -1,2 +1,2 @@
-const gradientKeyframe = 'gpsum18';
-const gradientKeyframe2 = 'g1t1dgxp';
+const gradientKeyframe = 'g14ms9lx';
+const gradientKeyframe2 = 'gz01um';

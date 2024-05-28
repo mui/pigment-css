@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
-import styled from '../../src/styled';
+import { render } from '@testing-library/react';
+import { expect } from 'vitest';
+import { styled } from '../../src';
 
 describe('props filtering', () => {
-  const { render } = createRenderer();
-
   it('composes shouldForwardProp on composed styled components', () => {
     const StyledDiv = styled('div', {
       shouldForwardProp: (prop) => prop !== 'foo',
@@ -17,9 +15,9 @@ describe('props filtering', () => {
 
     const { container } = render(<ComposedDiv foo bar xyz="true" />);
 
-    expect(container.firstChild).to.not.have.attribute('foo');
-    expect(container.firstChild).to.not.have.attribute('bar');
-    expect(container.firstChild).to.have.attribute('xyz', 'true');
+    expect(container.firstChild).not.toHaveAttribute('foo');
+    expect(container.firstChild).not.toHaveAttribute('bar');
+    expect(container.firstChild).toHaveAttribute('xyz', 'true');
   });
 
   it('custom shouldForwardProp works', () => {
@@ -41,9 +39,9 @@ describe('props filtering', () => {
     `;
 
     const { container } = render(<StyledSvg color="#0000ff" width="100px" height="100px" />);
-    expect(container.firstChild).to.not.have.attribute('color');
-    expect(container.firstChild).to.have.attribute('width', '100px');
-    expect(container.firstChild).to.have.attribute('height', '100px');
+    expect(container.firstChild).not.toHaveAttribute('color');
+    expect(container.firstChild).toHaveAttribute('width', '100px');
+    expect(container.firstChild).toHaveAttribute('height', '100px');
   });
 
   it('default prop filtering for native html tag', () => {
@@ -69,17 +67,17 @@ describe('props filtering', () => {
         hello world
       </Link>,
     );
-    expect(container.firstChild).to.have.attribute('href', 'link');
-    expect(container.firstChild).to.have.attribute('aria-label', 'some label');
-    expect(container.firstChild).to.have.attribute('data-wow', 'value');
-    expect(container.firstChild).to.have.attribute('is', 'true');
+    expect(container.firstChild).toHaveAttribute('href', 'link');
+    expect(container.firstChild).toHaveAttribute('aria-label', 'some label');
+    expect(container.firstChild).toHaveAttribute('data-wow', 'value');
+    expect(container.firstChild).toHaveAttribute('is', 'true');
 
-    expect(container.firstChild).not.to.have.attribute('a');
-    expect(container.firstChild).not.to.have.attribute('b');
-    expect(container.firstChild).not.to.have.attribute('wow');
-    expect(container.firstChild).not.to.have.attribute('prop');
-    expect(container.firstChild).not.to.have.attribute('filtering');
-    expect(container.firstChild).not.to.have.attribute('cool');
+    expect(container.firstChild).not.toHaveAttribute('a');
+    expect(container.firstChild).not.toHaveAttribute('b');
+    expect(container.firstChild).not.toHaveAttribute('wow');
+    expect(container.firstChild).not.toHaveAttribute('prop');
+    expect(container.firstChild).not.toHaveAttribute('filtering');
+    expect(container.firstChild).not.toHaveAttribute('cool');
   });
 
   it('no prop filtering on non string tags', () => {
@@ -105,16 +103,16 @@ describe('props filtering', () => {
       </Link>,
     );
 
-    expect(container.firstChild).to.have.attribute('href', 'link');
-    expect(container.firstChild).to.have.attribute('aria-label', 'some label');
-    expect(container.firstChild).to.have.attribute('data-wow', 'value');
-    expect(container.firstChild).to.have.attribute('is', 'true');
-    expect(container.firstChild).to.have.attribute('a', 'true');
-    expect(container.firstChild).to.have.attribute('b', 'true');
-    expect(container.firstChild).to.have.attribute('wow', 'true');
-    expect(container.firstChild).to.have.attribute('prop', 'true');
-    expect(container.firstChild).to.have.attribute('filtering', 'true');
-    expect(container.firstChild).to.have.attribute('cool', 'true');
+    expect(container.firstChild).toHaveAttribute('href', 'link');
+    expect(container.firstChild).toHaveAttribute('aria-label', 'some label');
+    expect(container.firstChild).toHaveAttribute('data-wow', 'value');
+    expect(container.firstChild).toHaveAttribute('is', 'true');
+    expect(container.firstChild).toHaveAttribute('a', 'true');
+    expect(container.firstChild).toHaveAttribute('b', 'true');
+    expect(container.firstChild).toHaveAttribute('wow', 'true');
+    expect(container.firstChild).toHaveAttribute('prop', 'true');
+    expect(container.firstChild).toHaveAttribute('filtering', 'true');
+    expect(container.firstChild).toHaveAttribute('cool', 'true');
   });
 
   describe('ownerState prop', () => {
@@ -122,7 +120,7 @@ describe('props filtering', () => {
       const StyledDiv = styled('div')();
 
       const { container } = render(<StyledDiv ownerState={{ color: 'red' }} />);
-      expect(container.firstChild).not.to.have.attribute('ownerState');
+      expect(container.firstChild).not.toHaveAttribute('ownerState');
     });
 
     it('does not forward `ownerState` to other React component', () => {
@@ -133,8 +131,8 @@ describe('props filtering', () => {
       const StyledDiv = styled(InnerComponent)();
 
       const { container } = render(<StyledDiv ownerState={{ color: 'red' }} />);
-      expect(container.firstChild).not.to.have.attribute('ownerState');
-      expect(container.firstChild).to.have.attribute('data-ownerstate', 'false');
+      expect(container.firstChild).not.toHaveAttribute('ownerState');
+      expect(container.firstChild).toHaveAttribute('data-ownerstate', 'false');
     });
 
     it('forward `ownerState` to inherited styled component', () => {
@@ -159,8 +157,8 @@ describe('props filtering', () => {
       });
 
       const { container } = render(<StyledDiv2 ownerState={{ color: 'secondary' }} />);
-      expect(container.firstChild).to.have.class('div1-secondary');
-      expect(container.firstChild).to.have.class('div2-secondary');
+      expect(container.firstChild).toHaveClass('div1-secondary');
+      expect(container.firstChild).toHaveClass('div2-secondary');
     });
   });
 
@@ -169,7 +167,7 @@ describe('props filtering', () => {
       const StyledDiv = styled('div')();
 
       const { container } = render(<StyledDiv classes={{ root: 'root-123' }} />);
-      expect(container.firstChild).not.to.have.attribute('classes');
+      expect(container.firstChild).not.toHaveAttribute('classes');
     });
 
     it('does not forward `classes` for the root slot to other React component', () => {
@@ -183,8 +181,8 @@ describe('props filtering', () => {
       })();
 
       const { container } = render(<StyledDiv classes={{ root: 'root-123' }} />);
-      expect(container.firstChild).not.to.have.attribute('classes');
-      expect(container.firstChild).not.to.have.class('root-123');
+      expect(container.firstChild).not.toHaveAttribute('classes');
+      expect(container.firstChild).not.toHaveClass('root-123');
     });
 
     it('forward `classes` for the root slot by a custom shouldForwardProp', () => {
@@ -199,7 +197,7 @@ describe('props filtering', () => {
       })();
 
       const { container } = render(<ButtonRoot classes={{ root: 'root-123' }} />);
-      expect(container.firstChild).to.have.class('root-123');
+      expect(container.firstChild).toHaveClass('root-123');
     });
   });
 
@@ -214,7 +212,7 @@ describe('props filtering', () => {
       });
 
       const { container } = render(<StyledParent as="div" />);
-      expect(container.firstChild).to.have.class('child');
+      expect(container.firstChild).toHaveClass('child');
     });
 
     it("child's variants still propagate to its parent", () => {
@@ -233,7 +231,7 @@ describe('props filtering', () => {
       });
 
       const { container } = render(<StyledParent as="div" ownerState={{ multiline: true }} />);
-      expect(container.firstChild).to.have.class('multiline');
+      expect(container.firstChild).toHaveClass('multiline');
     });
 
     it("child's vars still propagate to its parent", () => {
@@ -249,7 +247,7 @@ describe('props filtering', () => {
       });
 
       const { container } = render(<StyledParent as="div" ownerState={{ width: 300 }} />);
-      expect(container.firstChild).to.have.style('--foo', '300px');
+      expect(container.firstChild).toHaveStyle({ '--foo': '300px' });
     });
 
     it('use component forward prop if provided `as` is a component', () => {
@@ -263,7 +261,7 @@ describe('props filtering', () => {
 
       const { container } = render(<StyledDiv as={Component} TagComponent="button" disabled />);
 
-      expect(container.firstChild).to.have.tagName('button');
+      expect(container.firstChild.tagName).toEqual('BUTTON');
     });
 
     it('should forward `as` prop', () => {
@@ -382,11 +380,11 @@ describe('props filtering', () => {
           <option value="bar">Bar</option>
         </NativeSelect>,
       );
-      expect(container.firstChild).to.have.tagName('div');
-      expect(container.firstChild).to.have.class('InputBase-root', 'Input-root');
+      expect(container.firstChild.tagName).toEqual('DIV');
+      expect(container.firstChild).toHaveClass('InputBase-root', 'Input-root');
 
-      expect(container.firstChild.firstChild).to.have.tagName('select');
-      expect(container.firstChild.firstChild).to.have.class('InputBase-input', 'Input-input');
+      expect(container.firstChild.firstChild.tagName).toEqual('SELECT');
+      expect(container.firstChild.firstChild).toHaveClass('InputBase-input', 'Input-input');
     });
   });
 });

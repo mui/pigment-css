@@ -2,16 +2,16 @@ import { styled as _styled, styled as _styled2, styled as _styled3 } from '@pigm
 import _theme from '@pigment-css/react/theme';
 import PropTypes from 'prop-types';
 const Component = /*#__PURE__*/ _styled('div')({
-  classes: ['c1aiqtje'],
+  classes: ['c18u98at'],
 });
 export const SliderRail = /*#__PURE__*/ _styled2('span', {
   name: 'MuiSlider',
   slot: 'Rail',
 })({
-  classes: ['sj0zd45'],
+  classes: ['s1d2yhn4'],
 });
 const SliderRail2 = /*#__PURE__*/ _styled3('span')({
-  classes: ['shdkmm7'],
+  classes: ['s17p3km3'],
 });
 export function App() {
   return (

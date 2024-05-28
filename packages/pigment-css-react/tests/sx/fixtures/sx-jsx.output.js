@@ -16,7 +16,7 @@ function App() {
       style: {
         textAlign: 'center',
       },
-      ..._sx('s5molx8', {
+      ..._sx('sms9jur', {
         className: 'foo',
         style: {
           textAlign: 'center',
@@ -39,9 +39,9 @@ function App2(props) {
     style: props.style,
     children: /*#__PURE__*/ _jsx('p', {
       children: 'Test',
-      ..._sx3('s2bbd3t', {}),
+      ..._sx3('sx1n5bw', {}),
     }),
-    ..._sx2('s7fszdm', {
+    ..._sx2('s1934eew', {
       className: props.className,
       style: props.style,
     }),
@@ -52,10 +52,10 @@ function App3(props) {
     children: 'test',
     ...props,
     ...(props.disabled
-      ? _sx4('s1ou6jyi', {
+      ? _sx4('s1uhwhc6', {
           ...props,
         })
-      : _sx4('s1lqy6hu', {
+      : _sx4('sr0l0wy', {
           ...props,
         })),
   });
@@ -68,9 +68,9 @@ function App4(props) {
     ...(props.variant === 'secondary' &&
       _sx5(
         {
-          className: 'swssabr',
+          className: 's1tnwy45',
           vars: {
-            'swssabr-0': [props.isRed ? 'red' : 'blue', false],
+            's1tnwy45-0': [props.isRed ? 'red' : 'blue', false],
           },
         },
         {
@@ -82,11 +82,11 @@ function App4(props) {
 }
 function App5(props) {
   return /*#__PURE__*/ _jsx('div', {
-    ..._sx6('sblg7d5', {}),
+    ..._sx6('s14rwdtw', {}),
   });
 }
 function App6(props) {
   return /*#__PURE__*/ _jsx('div', {
-    ..._sx7('s1xq3929', {}),
+    ..._sx7('su4gtw5', {}),
   });
 }

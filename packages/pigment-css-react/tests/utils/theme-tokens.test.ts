@@ -1,5 +1,4 @@
-import { extendTheme, generateTokenCss, generateThemeTokens } from '@pigment-css/react/utils';
-import { expect } from 'chai';
+import { extendTheme, generateTokenCss, generateThemeTokens } from '../../src/utils';
 
 describe('theme-tokens', () => {
   describe('generateTokenCss', () => {

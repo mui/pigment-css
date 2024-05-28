@@ -13,31 +13,21 @@
     "@mui/utils": "next",
     "@mui/base": "next",
     "@mui/lab": "next",
-    "@mui/material": "next",
-    "@mui/system": "next",
-    "@mui/material-nextjs": "next",
-    "@mui/icons-material": "next",
-    "@emotion/cache": "latest",
+    "@mui/material": "^6.0.0-alpha.6",
+    "@mui/system": "^6.0.0-alpha.5",
+    "@mui/material-nextjs": "^6.0.0-alpha.6",
+    "@mui/icons-material": "^6.0.0-alpha.6",
+    "@emotion/cache": "11.11.0",
     "local-ui-lib": "workspace:^",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "next": "latest"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "next": "^14.2.3"
   },
   "devDependencies": {
     "@pigment-css/nextjs-plugin": "workspace:^",
-    "@types/node": "^20.5.7",
-    "@types/react": "^18.2.55",
-    "@types/react-dom": "^18.2.19",
-    "eslint": "^8.57.0",
-    "typescript": "^5.4.4"
-  },
-  "nx": {
-    "targets": {
-      "preview": {
-        "dependsOn": [
-          "^build"
-        ]
-      }
-    }
+    "@types/node": "^20.12.11",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "eslint": "^8.57.0"
   }
 }

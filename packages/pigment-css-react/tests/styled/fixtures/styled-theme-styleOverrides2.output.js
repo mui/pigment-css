@@ -4,31 +4,31 @@ const OutlinedInputInput = /*#__PURE__*/ _styled('input', {
   name: 'MuiOutlinedInput',
   slot: 'Input',
 })({
-  classes: ['o1ei225m', 'o1ei225m-5'],
+  classes: ['oqpebcq', 'oqpebcq-5'],
   variants: [
     {
       props: {
         size: 'small',
       },
-      className: 'o1ei225m-1',
+      className: 'oqpebcq-1',
     },
     {
       props: ({ ownerState }) => ownerState.multiline,
-      className: 'o1ei225m-2',
+      className: 'oqpebcq-2',
     },
     {
       props: ({ ownerState }) => ownerState.startAdornment,
-      className: 'o1ei225m-3',
+      className: 'oqpebcq-3',
     },
     {
       props: ({ ownerState }) => ownerState.endAdornment,
-      className: 'o1ei225m-4',
+      className: 'oqpebcq-4',
     },
     {
       props: {
         size: 'small',
       },
-      className: 'o1ei225m-6',
+      className: 'oqpebcq-6',
     },
   ],
 });
