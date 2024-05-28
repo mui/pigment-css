@@ -23,7 +23,7 @@ const A = {
 function App(props) {
   return (
     <SliderRail
-      sx={({ theme }) => ({
+      sx={(theme) => ({
         mb: 1,
         ...theme.applyStyles('dark', {
           color: 'white',
@@ -52,7 +52,7 @@ function App2() {
 function App3(props) {
   return (
     <A.SliderRail
-      sx={({ theme }) => ({
+      sx={(theme) => ({
         color: (theme.vars || theme).palette.primary.main,
         fontSize: props.isRed ? 'h1-fontSize' : 'h2-fontSize',
         ':hover': {

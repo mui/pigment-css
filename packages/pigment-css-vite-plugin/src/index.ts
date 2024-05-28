@@ -13,7 +13,7 @@ export interface PigmentOptions extends Omit<VitePluginOptions, 'themeArgs'> {
   /**
    * The theme object that you want to be passed to the `styled` function
    */
-  theme: Theme;
+  theme?: Theme;
 }
 
 const VIRTUAL_CSS_FILE = `\0zero-runtime-styles.css`;

@@ -1,4 +1,5 @@
-import type { Expression } from '@babel/types';
+import type { NodePath } from '@babel/core';
+import type { CallExpression, Expression } from '@babel/types';
 import {
   validateParams,
   type Params,
@@ -10,31 +11,7 @@ import type { IOptions } from './styled';
 import { processCssObject } from '../utils/processCssObject';
 import { cssFnValueToVariable } from '../utils/cssFnValueToVariable';
 import BaseProcessor from './base-processor';
-
-// @TODO: Maybe figure out a better way allow imports.
-const allowedSxTransformImports = [`${process.env.PACKAGE_NAME}/Box`];
-
-/**
- * Specifically looks for whether the sx prop should be transformed or not.
- * If it's a Pigment CSS styled component, the value of `argumentValue` will
- * be a string className starting with "."
- * In other cases, it explicitly checks if the import is allowed for sx transformation.
- */
-function allowSxTransform(argumentExpression: ExpressionValue, argumentValue?: string) {
-  if (!argumentExpression) {
-    return false;
-  }
-  if (
-    argumentExpression.kind === ValueType.LAZY &&
-    argumentExpression.importedFrom?.some((i) => allowedSxTransformImports.includes(i))
-  ) {
-    return true;
-  }
-  if (argumentValue && argumentValue[0] === '.') {
-    return true;
-  }
-  return false;
-}
+import spreadSxProp from '../utils/spreadSxProp';
 
 export class SxProcessor extends BaseProcessor {
   sxArguments: ExpressionValue[] = [];
@@ -66,10 +43,6 @@ export class SxProcessor extends BaseProcessor {
       }
     }
 
-    if (!allowSxTransform(elementClassExpression, this.elementClassName)) {
-      return;
-    }
-
     let cssText: string = '';
     if (sxStyle.kind === ValueType.CONST) {
       if (sxStyle.ex.type === 'StringLiteral') {
@@ -79,16 +52,13 @@ export class SxProcessor extends BaseProcessor {
       const styleObjOrFn = values.get(sxStyle.ex.name);
       cssText = this.processCss(styleObjOrFn, sxStyle);
     }
-    const selector = this.elementClassName
-      ? `${this.elementClassName}${this.asSelector}`
-      : this.asSelector;
 
     if (!cssText) {
       return;
     }
 
     const rules: Rules = {
-      [selector]: {
+      [this.asSelector]: {
         className: this.className,
         cssText,
         displayName: this.displayName,
@@ -123,6 +93,7 @@ export class SxProcessor extends BaseProcessor {
     if (this.artifacts.length === 0) {
       return;
     }
+    let result = this.value;
     if (this.collectedVariables.length) {
       const varProperties: ReturnType<typeof t.objectProperty>[] = this.collectedVariables.map(
         ([variableId, expression, isUnitLess]) => {
@@ -156,9 +127,39 @@ export class SxProcessor extends BaseProcessor {
         t.objectProperty(t.identifier('className'), t.stringLiteral(this.className)),
         t.objectProperty(t.identifier('vars'), t.objectExpression(varProperties)),
       ]);
-      this.replacer(obj, false);
-    } else {
-      this.replacer(this.value, false);
+      result = obj;
+    }
+
+    /**
+     * Replace the sx call with the transformed result. It works for both JSX and non-JSX calls.
+     *
+     * For example:
+     * <Component sx={_sx({ color: 'red' })} /> to <Component sx={_sx('sd5jss7')} />
+     * <Component sx={_sx({ bgcolor: 'red', color: props.color })} /> to <Component sx={_sx({ className: 'bc1d15y', vars: { 'bc1d15y-0': [props.color, false], }})} />
+     */
+    this.replacer((_tagPath) => {
+      const tagPath = _tagPath as NodePath<CallExpression>;
+      return t.callExpression(tagPath.get('callee').node, [result]);
+    }, false);
+
+    /**
+     * Replace the sx prop with runtime sx
+     */
+    let pathToReplace: undefined | NodePath<CallExpression>;
+    this.replacer((_tagPath) => {
+      const tagPath = _tagPath as NodePath<CallExpression>;
+
+      const isArrayArgument = spreadSxProp(tagPath);
+      if (isArrayArgument) {
+        pathToReplace = tagPath;
+      }
+
+      return tagPath.node;
+    }, false);
+
+    if (pathToReplace) {
+      // need to replace outside of `this.replacer` to preserve the import statement
+      pathToReplace.replaceWith(pathToReplace.node.arguments[0]);
     }
   }
 
@@ -172,7 +173,8 @@ export class SxProcessor extends BaseProcessor {
 
   private processCss(styleObjOrFn: unknown, expressionValue: ExpressionValue) {
     const { themeArgs } = this.options as IOptions;
-    const styleObj = typeof styleObjOrFn === 'function' ? styleObjOrFn(themeArgs) : styleObjOrFn;
+    const styleObj =
+      typeof styleObjOrFn === 'function' ? styleObjOrFn(themeArgs?.theme) : styleObjOrFn;
 
     const res = cssFnValueToVariable({
       styleObj,

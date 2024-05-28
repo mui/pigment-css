@@ -1,6 +1,6 @@
 {
   "name": "@pigment-css/react",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "main": "build/index.js",
   "module": "build/index.mjs",
   "types": "build/index.d.ts",
@@ -43,9 +43,9 @@
     "@emotion/styled": "^11.11.5",
     "@mui/system": "^6.0.0-alpha.1",
     "@mui/utils": "^6.0.0-alpha.1",
-    "@wyw-in-js/processor-utils": "^0.5.1",
-    "@wyw-in-js/shared": "^0.5.1",
-    "@wyw-in-js/transform": "^0.5.1",
+    "@wyw-in-js/processor-utils": "^0.5.3",
+    "@wyw-in-js/shared": "^0.5.3",
+    "@wyw-in-js/transform": "^0.5.3",
     "clsx": "^2.1.0",
     "cssesc": "^3.0.0",
     "csstype": "^3.1.3",
@@ -91,7 +91,6 @@
   "files": [
     "build",
     "exports",
-    "private-runtime",
     "processors",
     "theme",
     "utils",
@@ -149,15 +148,6 @@
       },
       "require": "./build/RtlProvider.js",
       "default": "./build/RtlProvider.js"
-    },
-    "./private-runtime": {
-      "types": "./private-runtime/index.d.ts",
-      "import": {
-        "types": "./private-runtime/index.d.mts",
-        "default": "./private-runtime/index.mjs"
-      },
-      "require": "./private-runtime/index.js",
-      "default": "./private-runtime/index.js"
     }
   },
   "nx": {

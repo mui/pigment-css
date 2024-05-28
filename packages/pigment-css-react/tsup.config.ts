@@ -39,9 +39,4 @@ export default defineConfig([
     ],
     outDir: 'utils',
   },
-  {
-    ...baseConfig,
-    entry: ['./src/private-runtime/index.ts'],
-    outDir: 'private-runtime',
-  },
 ]);

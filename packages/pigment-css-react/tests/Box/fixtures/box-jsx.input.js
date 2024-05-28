@@ -17,3 +17,24 @@ export function App(props) {
     children: 'Hello Box',
   });
 }
+
+function App2(props) {
+  return /*#__PURE__*/ _jsxDEV(
+    Box,
+    {
+      sx: {
+        display: 'flex',
+        flexDirection: 'column',
+      },
+      children: 'Test',
+    },
+    void 0,
+    false,
+    {
+      fileName: '',
+      lineNumber: 11,
+      columnNumber: 11,
+    },
+    this,
+  );
+}

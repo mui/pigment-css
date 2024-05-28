@@ -81,4 +81,62 @@ describe('Pigment CSS - styled', () => {
     expect(output.js).to.equal(fixture.js);
     expect(output.css).to.equal(fixture.css);
   });
+
+  it('should work with theme styleOverrides', async () => {
+    const { output, fixture } = await runTransformation(
+      path.join(__dirname, 'fixtures/styled-theme-styleOverrides.input.js'),
+      {
+        themeArgs: {
+          theme: {
+            components: {
+              MuiOutlinedInput: {
+                styleOverrides: {
+                  notchedOutline: {
+                    border: 'none',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    );
+
+    expect(output.js).to.equal(fixture.js);
+    expect(output.css).to.equal(fixture.css);
+  });
+
+  it('should work with theme styleOverrides and variants', async () => {
+    const { output, fixture } = await runTransformation(
+      path.join(__dirname, 'fixtures/styled-theme-styleOverrides2.input.js'),
+      {
+        themeArgs: {
+          theme: {
+            components: {
+              MuiOutlinedInput: {
+                styleOverrides: {
+                  input: {
+                    paddingLeft: 10,
+                    variants: [
+                      {
+                        props: {
+                          size: 'small',
+                        },
+                        style: {
+                          padding: '9px 14.5px',
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    );
+
+    expect(output.js).to.equal(fixture.js);
+    expect(output.css).to.equal(fixture.css);
+  });
 });

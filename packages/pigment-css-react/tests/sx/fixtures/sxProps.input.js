@@ -1,4 +1,5 @@
 import { styled } from '@pigment-css/react';
+import visuallyHidden from '../visuallyHidden';
 
 export const SliderRail = styled('span', {
   name: 'MuiSlider',
@@ -12,13 +13,14 @@ export const SliderRail = styled('span', {
   font-size: ${({ theme }) => (theme.vars ?? theme).size.font.h1};
 `;
 
-function App() {
-  return <SliderRail sx={{ color: 'red' }} />;
+function App(props) {
+  return <SliderRail className={props.className} style={{ color: 'red' }} sx={{ color: 'red' }} />;
 }
 
 function App2(props) {
   return (
     <SliderRail
+      {...props}
       sx={
         props.variant === 'secondary'
           ? { color: props.isRed ? 'red' : 'blue' }
@@ -30,7 +32,14 @@ function App2(props) {
 
 function App3(props) {
   return (
-    <SliderRail sx={props.variant === 'secondary' && { color: props.isRed ? 'red' : 'blue' }} />
+    <SliderRail
+      sx={props.variant === 'secondary' && { color: props.isRed ? 'red' : 'blue' }}
+      className={`foo ${props.className}`}
+      style={{
+        color: 'red',
+        ...props.style,
+      }}
+    />
   );
 }
 
@@ -42,4 +51,15 @@ const styles4 = {
 
 function App4(props) {
   return <SliderRail sx={styles4} />;
+}
+
+function App5(props) {
+  return <SliderRail sx={visuallyHidden} />;
+}
+
+const styles = {
+  visuallyHidden,
+};
+function App6(props) {
+  return <SliderRail sx={styles.visuallyHidden} />;
 }
