@@ -1054,16 +1054,18 @@ module.exports = withPigment(
   { ...nextConfig },
   {
     theme: {
-      styleOverrides: {
+      components: {
         PigmentStat: {
-          root: {
-            backgroundColor: 'tomato',
-          },
-          value: {
-            color: 'white',
-          },
-          unit: {
-            color: 'white',
+          styleOverrides: {
+            root: {
+              backgroundColor: 'tomato',
+            },
+            value: {
+              color: 'white',
+            },
+            unit: {
+              color: 'white',
+            },
           },
         },
       },
@@ -1084,25 +1086,27 @@ module.exports = withPigment(
         primary: 'tomato',
         primaryLight: 'lightcoral',
       },
-      styleOverrides: {
+      components: {
         PigmentStat: {
-          root: ({ theme }) => ({
-            backgroundColor: 'tomato',
-            variants: [
-              {
-                props: { variant: 'outlined' },
-                style: {
-                  border: `2px solid ${theme.colors.primary}`,
-                  backgroundColor: theme.colors.primaryLight,
+          styleOverrides: {
+            root: ({ theme }) => ({
+              backgroundColor: 'tomato',
+              variants: [
+                {
+                  props: { variant: 'outlined' },
+                  style: {
+                    border: `2px solid ${theme.colors.primary}`,
+                    backgroundColor: theme.colors.primaryLight,
+                  },
                 },
-              },
-            ],
-          }),
-          value: {
-            color: 'white',
-          },
-          unit: {
-            color: 'white',
+              ],
+            }),
+            value: {
+              color: 'white',
+            },
+            unit: {
+              color: 'white',
+            },
           },
         },
       },
