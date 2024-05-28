@@ -3,12 +3,11 @@ import * as React from 'react';
 import clsx from 'clsx';
 import isPropValid from '@emotion/is-prop-valid';
 
-function getVariantClasses(componentProps, variants) {
-  const { ownerState = {} } = componentProps;
+function getVariantClasses({ ownerState = {}, ...componentProps }, variants) {
   const variantClasses = variants
     .filter(({ props: variantProps }) =>
       typeof variantProps === 'function'
-        ? variantProps({ ...componentProps, ...componentProps.ownerState })
+        ? variantProps({ ...componentProps, ...ownerState, ownerState })
         : Object.entries(variantProps).every(([propKey, propValue]) => {
             return ownerState[propKey] === propValue || componentProps[propKey] === propValue;
           }),
