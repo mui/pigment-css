@@ -3,15 +3,25 @@ import type { NextConfig } from 'next';
 import { findPagesDir } from 'next/dist/lib/find-pages-dir';
 import { webpack as webpackPlugin, extendTheme, type PigmentOptions } from '@pigment-css/unplugin';
 
-export { type PigmentOptions };
+export interface WithPigmentOptions extends NextConfig {
+  pigment?: PigmentOptions;
+}
 
 const extractionFile = path.join(
   path.dirname(require.resolve('../package.json')),
   'zero-virtual.css',
 );
 
-export function withPigment(nextConfig: NextConfig, pigmentConfig?: PigmentOptions) {
-  const { babelOptions = {}, asyncResolve, ...rest } = pigmentConfig ?? {};
+export function withPigment(
+  { pigment, ...nextConfig }: WithPigmentOptions,
+  pigmentConfig?: PigmentOptions,
+) {
+  const { babelOptions = {}, asyncResolve, ...rest } = pigment ?? pigmentConfig ?? {};
+  if (pigmentConfig) {
+    console.warn(
+      'Passing Pigment CSS config through the 2nd argument is deprecated and will be removed in a future stable version. Instead, pass the config through the `pigment` key in your next.js config.',
+    );
+  }
   if (process.env.TURBOPACK === '1') {
     // eslint-disable-next-line no-console
     console.log(
@@ -103,4 +113,4 @@ export function withPigment(nextConfig: NextConfig, pigmentConfig?: PigmentOptio
   };
 }
 
-export { extendTheme };
+export { extendTheme, type PigmentOptions };

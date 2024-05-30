@@ -132,7 +132,7 @@ const pigmentOptions = {
   },
 };
 
-/** @type {import('next').NextConfig} */
+/** @type {import('@pigment-css/nextjs-plugin').WithPigmentOptions} */
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
@@ -144,6 +144,7 @@ const nextConfig = {
     buildActivity: true,
     buildActivityPosition: 'bottom-right',
   },
+  pigment: pigmentOptions,
 };
 
-module.exports = withPigment(nextConfig, pigmentOptions);
+module.exports = withPigment(nextConfig);
