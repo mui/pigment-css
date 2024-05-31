@@ -103,7 +103,6 @@ const pigmentOptions = {
   theme,
   transformLibraries: ['local-ui-lib', '@mui/material'],
   sourceMap: true,
-  displayName: true,
 };
 
 /** @type {import('next').NextConfig} */

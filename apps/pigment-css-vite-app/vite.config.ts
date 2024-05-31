@@ -41,7 +41,7 @@ export default defineConfig({
       theme,
       transformLibraries: ['local-ui-lib', '@mui/material'],
       sourceMap: true,
-      displayName: true,
+      displayName: false,
     }),
     Pages(),
     splitVendorChunkPlugin(),

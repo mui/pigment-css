@@ -7,7 +7,7 @@ export const stackAtomics = generateAtomics(({ theme }) => ({
     })`;
     return acc;
   }, {}),
-  defaultCondition: theme.defaultBreakpoint ?? 'xs',
+  defaultCondition: theme.breakpoints?.keys?.[0] ?? 'xs',
   properties: {
     display: ['flex', 'inline-flex'],
     flexDirection: ['column', 'column-reverse', 'row', 'row-reverse'],
