@@ -7,12 +7,17 @@ export type Atomics = {
     [key: string]: string[];
   };
   shorthands: Record<string, string[]>;
+  unitless: string[];
+  multiplier?: number;
 };
 
 export type RuntimeConfig = {
   conditions: string[];
   styles: Record<string, Record<string, Record<string, string>>>;
   shorthands: Atomics['shorthands'];
+  defaultCondition: string;
+  unitless: string[];
+  multiplier?: number;
 };
 
 function getClassName(...items: string[]) {
@@ -20,7 +25,14 @@ function getClassName(...items: string[]) {
 }
 
 export function convertAtomicsToCss(
-  { conditions = {}, defaultCondition, properties, shorthands = {} }: Atomics,
+  {
+    conditions = {},
+    defaultCondition,
+    properties,
+    shorthands = {},
+    unitless = [],
+    multiplier = undefined,
+  }: Atomics,
   mainClassName: string,
   isGlobal = false,
   debug = false,
@@ -30,6 +42,9 @@ export function convertAtomicsToCss(
     styles: {},
     shorthands,
     conditions: Object.keys(conditions),
+    defaultCondition,
+    unitless,
+    multiplier,
   };
   let count = 1;
   function getCount() {
@@ -46,6 +61,9 @@ export function convertAtomicsToCss(
   Object.entries(conditions).forEach(([conditionName, mediaQueryStr]) => {
     Object.entries(properties).forEach(([cssPropertyName, propertyValues]) => {
       propertyValues.forEach((propertyValue) => {
+        const propValue = propertyValue.startsWith('--')
+          ? cssesc(`var(${propertyValue}_${conditionName})`)
+          : propertyValue;
         const className =
           isGlobal || debug
             ? getClassName(
@@ -60,7 +78,7 @@ export function convertAtomicsToCss(
           classes.push({
             className,
             css: {
-              [cssPropertyName]: propertyValue,
+              [cssPropertyName]: propValue,
             },
           });
         } else {
@@ -68,7 +86,7 @@ export function convertAtomicsToCss(
             className,
             css: {
               [mediaQueryStr]: {
-                [cssPropertyName]: propertyValue,
+                [cssPropertyName]: propValue,
               },
             },
           });

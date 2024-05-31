@@ -482,6 +482,9 @@ importers:
       '@babel/plugin-syntax-jsx':
         specifier: ^7.24.1
         version: 7.24.1(@babel/core@7.24.4)
+      '@mui/types':
+        specifier: 7.2.14
+        version: 7.2.14(@types/react@18.2.75)
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -3325,7 +3328,6 @@ packages:
         optional: true
     dependencies:
       '@types/react': 18.2.75
-    dev: false
 
   /@mui/utils@6.0.0-alpha.9(@types/react@18.2.75)(react@18.2.0):
     resolution: {integrity: sha512-fie2VEiVzpHCbcUIwgWx5lQT+SYjL3uHDCfutXzr7hTbnqDu9KSVEBPgADitFqZOGCIcBXfs4aE4LIn1FmmKjg==}
