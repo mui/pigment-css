@@ -52,7 +52,7 @@ export async function runTransformation(
       plugins: ['@babel/plugin-syntax-jsx'],
     },
     tagResolver(source: string, tag: string) {
-      if (source !== '@pigment-css/react') {
+      if (source !== '@pigment-css/react' && !source.endsWith('/zero-styled')) {
         return null;
       }
       return require.resolve(`../exports/${tag}`);

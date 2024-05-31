@@ -1,9 +1,15 @@
-import type { Expression, Params, TailProcessorParams } from '@wyw-in-js/processor-utils';
+import {
+  validateParams,
+  type Expression,
+  type Params,
+  type TailProcessorParams,
+} from '@wyw-in-js/processor-utils';
 import BaseProcessor from './base-processor';
 
 export class CreateExtendSxPropProcessor extends BaseProcessor {
   constructor(params: Params, ...args: TailProcessorParams) {
     super([params[0]], ...args);
+    validateParams(params, ['callee', ['call']], `Invalid use of ${this.tagSource.imported} tag.`);
   }
 
   // eslint-disable-next-line class-methods-use-this
