@@ -34,6 +34,10 @@ const stylis = (css: string, serializerParam = serializer) =>
 
 const defaultGetDirSelector = (dir: 'ltr' | 'rtl') => `[dir=${dir}]`;
 
+export function getGlobalSelector(asSelector: string) {
+  return `$$GLOBAL-${asSelector}`;
+}
+
 export function preprocessor(
   selector: string,
   cssText: string,
@@ -45,14 +49,16 @@ export function preprocessor(
     getDirSelector = defaultGetDirSelector,
   } = options || {};
   let css = '';
-  if (cssText.startsWith('@keyframes')) {
+  const isGlobal = selector.startsWith(getGlobalSelector(''));
+
+  if (!isGlobal && cssText.startsWith('@keyframes')) {
     css += stylis(cssText.replace('@keyframes', `@keyframes ${selector}`));
     return css;
   }
-  css += stylis(`${selector}{${cssText}}`);
+  css += stylis(!isGlobal ? `${selector}{${cssText}}` : cssText);
   if (generateForBothDir) {
     css += stylis(
-      `${getDirSelector(defaultDirection === 'ltr' ? 'rtl' : 'ltr')} ${selector}{${cssText}}`,
+      `${getDirSelector(defaultDirection === 'ltr' ? 'rtl' : 'ltr')} ${!isGlobal ? `${selector}{${cssText}}` : cssText}`,
       serializerRtl,
     );
   }

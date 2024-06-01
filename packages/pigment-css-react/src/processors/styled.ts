@@ -310,8 +310,8 @@ export class StyledProcessor extends BaseProcessor {
    * which we can use to generate our styles.
    * Order of processing styles -
    * 1. CSS directly declared in styled call
-   * 2. CSS declared in theme object's styledOverrides
    * 3. Variants declared in styled call
+   * 2. CSS declared in theme object's styledOverrides
    * 3. Variants declared in theme object
    */
   build(values: ValueCache): void {
@@ -325,11 +325,17 @@ export class StyledProcessor extends BaseProcessor {
     );
     // all the variant definitions are collected here so that we can
     // apply variant styles after base styles for more specific targetting.
-    const variantsAccumulator: VariantData[] = [];
+    let variantsAccumulator: VariantData[] = [];
     (this.styleArgs as ExpressionValue[]).forEach((styleArg) => {
       this.processStyle(values, styleArg, variantsAccumulator, themeImportIdentifier.name);
     });
+    // Generate CSS for default variants first
+    variantsAccumulator.forEach((variant) => {
+      this.processVariant(variant);
+    });
+    variantsAccumulator = [];
     this.processOverrides(values, variantsAccumulator);
+    // Generate CSS for variants declared in `styleOverrides`, if any
     variantsAccumulator.forEach((variant) => {
       this.processVariant(variant);
     });

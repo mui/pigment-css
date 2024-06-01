@@ -9,7 +9,7 @@ Download the example [or clone the repo](https://github.com/mui/pigment-css):
 <!-- #default-branch-switch -->
 
 ```bash
-curl https://codeload.github.com/mui/pigment-css/tar.gz/master | tar -xz --strip=2  pigment-css/examples/pigment-css-nextjs-ts
+curl https://codeload.github.com/mui/pigment-css/tar.gz/master | tar -xz --strip=2  pigment-css-master/examples/pigment-css-nextjs-ts
 cd pigment-css-nextjs-ts
 ```
 

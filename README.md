@@ -46,7 +46,7 @@ Pigment CSS is built on top of [WyW-in-JS](https://wyw-in-js.dev/), enabling to
 Use the following commands to quickly create a new Next.js project with Pigment CSS set up:
 
 ```bash
-curl https://codeload.github.com/mui/pigment-css/tar.gz/master | tar -xz --strip=2  pigment-css/examples/pigment-css-nextjs-ts
+curl https://codeload.github.com/mui/pigment-css/tar.gz/master | tar -xz --strip=2  pigment-css-master/examples/pigment-css-nextjs-ts
 cd pigment-css-nextjs-ts
 ```
 
@@ -468,70 +468,26 @@ function App() {
 }
 ```
 
-## sx prop
+### Creating global styles
 
-A special `sx` prop lets you apply styles directly to an element. When `sx` prop is specified on a component, Pigment CSS will replace any `sx` prop with `className` and `style` props at build time.
-
-The `sx` prop works on any component, including HTML elements and 3rd-party custom components as long as it is JSX.
-
-### Usage
+Use the `globalCss` API to create global styles:
 
 ```js
-<div sx={{ display: 'flex', flexDirection: 'column' }}>
-```
+import { globalCss } from '@pigment-css/react';
 
-For a React component, it must spread the `className` and `style` to the underlying DOM element, otherwise the styles won't be applied.
-
-```js
-const AnyComponent = (props) => {
-  return <div {...props} />;
-};
-
-<AnyComponent sx={{ fontSize: 12, color: 'red' }} />;
-```
-
-> 💡 **Gotcha**: You don't need to pass `sx` prop to underlying component or DOM because it will be replaced with `className` and `style` props.
-
-The value provided to `sx` prop can be one of the following:
-
-- a plain style object (recommended)
-- a callback function that receives the [theme object](#theming) then return a plain style object:
-
-  ```js
-  <div sx={(theme) => ({ color: theme.colors.primary })} />
-  ```
-
-- an array of plain style objects or callback functions. This is useful for applying conditional styles based on other variables:
-
-  ```js
-  <div
-    sx={[
-      { color: 'red' },
-      selected && { fontWeight: 'bold' },
-      disabled ? (theme) => ({ opacity: theme.state.disabledOpacity }) : { opacity: 1 },
-    ]}
-  />
-  ```
-
-### Shorthand properties
-
-> ⏳ **Coming soon**: We are working on the shorthand properties for `sx` prop.
-
-### TypeScript
-
-To use `sx` prop on HTML element, you need to augment the `HTMLAttributes` interface. Add the following code to a file that is included in your tsconfig.json:
-
-```ts
-declare global {
-  namespace React {
-    interface HTMLAttributes<T> {
-      sx?: any; // ⏳ **Coming soon**: We are working on the better typing
-    }
+globalCss`
+  body {
+    margin: 0;
+    padding: 0;
   }
-}
+`;
 ```
 
-## Theming
+The `globalCss` function should to be called at the top level of your javascript file, usually from the entry point of the application.
+
+Calling inside a function or a component will not work as expected. Also, the extraction of global styles will always take place regardless of conditional rendering.
+
+### Theming
 
 Theming is an **optional** feature that lets you reuse the same values, such as colors, spacing, and typography, across your application. It is a plain object of any structure that you can define in your config file.
 
@@ -732,6 +688,65 @@ declare module '@pigment-css/react/theme' {
       colorScheme: 'light' | 'dark';
       tokens: ThemeTokens;
     }>;
+  }
+}
+```
+
+## sx prop
+
+A special `sx` prop lets you apply styles directly to an element. When `sx` prop is specified on an element, Pigment CSS will replace it with `className` and `style` props at build time.
+
+The `sx` prop works on any element, including HTML elements and 3rd-party custom components as long as it is JSX.
+
+### Usage
+
+```js
+<div sx={{ display: 'flex', flexDirection: 'column' }}>
+```
+
+For a React component like the example below, it must pass the `className` and `style` props to the underlying DOM element, otherwise the styles won't be applied.
+
+```js
+// /path/to/AnyComponent.js
+const AnyComponent = (props) => {
+  return <div {...props} />;
+};
+
+// /path/to/App.js
+<AnyComponent sx={{ fontSize: 12, color: 'red' }} />;
+```
+
+The value provided to `sx` prop can be one of the following:
+
+- a plain style object (recommended)
+- a callback function that receives the [theme object](#theming) then return a plain style object:
+
+  ```js
+  <div sx={(theme) => ({ color: theme.colors.primary })} />
+  ```
+
+- an array of plain style objects or callback functions. This is useful for applying conditional styles based on other variables:
+
+  ```js
+  <div
+    sx={[
+      { color: 'red' },
+      selected && { fontWeight: 'bold' },
+      disabled ? (theme) => ({ opacity: theme.state.disabledOpacity }) : { opacity: 1 },
+    ]}
+  />
+  ```
+
+### TypeScript
+
+To use `sx` prop on HTML element, you need to augment the `HTMLAttributes` interface. Add the following code to a file that is included in your tsconfig.json:
+
+```ts
+declare global {
+  namespace React {
+    interface HTMLAttributes<T> {
+      sx?: any; // ⏳ **Coming soon**: We are working on the better typing
+    }
   }
 }
 ```
@@ -1118,16 +1133,18 @@ module.exports = withPigment(
   { ...nextConfig },
   {
     theme: {
-      styleOverrides: {
+      components: {
         PigmentStat: {
-          root: {
-            backgroundColor: 'tomato',
-          },
-          value: {
-            color: 'white',
-          },
-          unit: {
-            color: 'white',
+          styleOverrides: {
+            root: {
+              backgroundColor: 'tomato',
+            },
+            value: {
+              color: 'white',
+            },
+            unit: {
+              color: 'white',
+            },
           },
         },
       },
@@ -1148,25 +1165,27 @@ module.exports = withPigment(
         primary: 'tomato',
         primaryLight: 'lightcoral',
       },
-      styleOverrides: {
+      components: {
         PigmentStat: {
-          root: ({ theme }) => ({
-            backgroundColor: 'tomato',
-            variants: [
-              {
-                props: { variant: 'outlined' },
-                style: {
-                  border: `2px solid ${theme.colors.primary}`,
-                  backgroundColor: theme.colors.primaryLight,
+          styleOverrides: {
+            root: ({ theme }) => ({
+              backgroundColor: 'tomato',
+              variants: [
+                {
+                  props: { variant: 'outlined' },
+                  style: {
+                    border: `2px solid ${theme.colors.primary}`,
+                    backgroundColor: theme.colors.primaryLight,
+                  },
                 },
-              },
-            ],
-          }),
-          value: {
-            color: 'white',
-          },
-          unit: {
-            color: 'white',
+              ],
+            }),
+            value: {
+              color: 'white',
+            },
+            unit: {
+              color: 'white',
+            },
           },
         },
       },
