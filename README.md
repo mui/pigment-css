@@ -487,7 +487,7 @@ The `globalCss` function should to be called at the top level of your javascript
 
 Calling inside a function or a component will not work as expected. Also, the extraction of global styles will always take place regardless of conditional rendering.
 
-### Theming
+## Theming
 
 Theming is an **optional** feature that lets you reuse the same values, such as colors, spacing, and typography, across your application. It is a plain object of any structure that you can define in your config file.
 
