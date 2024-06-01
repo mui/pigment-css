@@ -467,6 +467,25 @@ function App() {
 }
 ```
 
+### Creating global styles
+
+Use the `globalCss` API to create global styles:
+
+```js
+import { globalCss } from '@pigment-css/react';
+
+globalCss`
+  body {
+    margin: 0;
+    padding: 0;
+  }
+`;
+```
+
+The `globalCss` function should to be called at the top level of your javascript file, usually from the entry point of the application.
+
+Calling inside a function or a component will not work as expected. Also, the extraction of global styles will always take place regardless of conditional rendering.
+
 ### Theming
 
 Theming is an **optional** feature that lets you reuse the same values, such as colors, spacing, and typography, across your application. It is a plain object of any structure that you can define in your config file.
