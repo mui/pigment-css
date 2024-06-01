@@ -86,7 +86,7 @@
       "generateAtomics": "./exports/generateAtomics.js",
       "css": "./exports/css.js",
       "createUseThemeProps": "./exports/createUseThemeProps.js",
-      "createExtendSxProp": "./exports/createExtendSxProp.js"
+      "internal_createExtendSxProp": "./exports/internal_createExtendSxProp.js"
     }
   },
   "files": [

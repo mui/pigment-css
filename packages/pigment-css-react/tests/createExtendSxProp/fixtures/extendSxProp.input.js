@@ -1,6 +1,6 @@
-import { createExtendSxProp } from '../zero-styled';
+import { internal_createExtendSxProp } from '../zero-styled';
 
-const extendSxProp = createExtendSxProp();
+const extendSxProp = internal_createExtendSxProp();
 
 export default function Typography(inProps) {
   const props = extendSxProp(inProps);
