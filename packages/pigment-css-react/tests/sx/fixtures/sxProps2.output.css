@@ -29,10 +29,7 @@
   font-size: var(--so956n-0);
 }
 .so956n :hover {
-  background-color: primary.main;
-  background-color: secondary.main;
-}
-.so956n :hover color {
-  sm: primary.main;
-  md: secondary.main;
+  background-color: rgb(0, 255, 0);
+  background-color: color(display-p3 0 1 0);
+  color: rgb(0, 255, 0);
 }
