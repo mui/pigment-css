@@ -23,11 +23,11 @@
   color: var(--stzaibv-0);
 }
 .sazg8ol {
-  margin-bottom: 8px;
+  mb: 1px;
   text-align: center;
 }
 .s1v3ec1v {
-  border: 0px solid;
+  border: none;
   clip: rect(0 0 0 0);
   height: 1px;
   margin: -1px;
@@ -38,7 +38,7 @@
   width: 1px;
 }
 .s1ojh0i1 {
-  border: 0px solid;
+  border: none;
   clip: rect(0 0 0 0);
   height: 1px;
   margin: -1px;

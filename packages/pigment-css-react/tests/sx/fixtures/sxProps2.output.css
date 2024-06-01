@@ -10,7 +10,7 @@
   font-size: 3rem;
 }
 .si7ulc4 {
-  margin-bottom: 8px;
+  mb: 1px;
 }
 @media (prefers-color-scheme: dark) {
   .si7ulc4 {
@@ -28,19 +28,11 @@
   color: red;
   font-size: var(--so956n-0);
 }
-@media (min-width: 0px) {
-  .so956n :hover {
-    background-color: red;
-  }
+.so956n :hover {
+  background-color: primary.main;
+  background-color: secondary.main;
 }
-@media (min-width: 600px) {
-  .so956n :hover {
-    background-color: blue;
-    color: red;
-  }
-}
-@media (min-width: 900px) {
-  .so956n :hover {
-    color: blue;
-  }
+.so956n :hover color {
+  sm: primary.main;
+  md: secondary.main;
 }
