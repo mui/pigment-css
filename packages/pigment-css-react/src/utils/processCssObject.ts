@@ -1,6 +1,4 @@
 import type { CSSObject } from '@emotion/css';
-// @TODO - Ideally, this should be replicated here instead of importing.
-import styleFunctionSx from '@mui/system/styleFunctionSx';
 import { css, cache } from './emotion';
 import type { PluginCustomOptions } from './cssFnValueToVariable';
 
@@ -10,14 +8,7 @@ export function processCssObject(
   skipSx = true,
 ) {
   const processedObj = (
-    skipSx
-      ? cssObj
-      : styleFunctionSx({
-          // Does not support shorthand as of now because
-          // it also adds the spacing multiplier
-          sx: () => cssObj,
-          ...themeArgs,
-        })
+    skipSx ? cssObj : themeArgs?.theme?.unstable_sx?.(cssObj) || cssObj
   ) as CSSObject;
   const className = css(processedObj);
   return cache.registered[className];
