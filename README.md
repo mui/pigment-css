@@ -745,7 +745,10 @@ To use `sx` prop on HTML element, you need to augment the `HTMLAttributes` inter
 declare global {
   namespace React {
     interface HTMLAttributes<T> {
-      sx?: any; // ⏳ **Coming soon**: We are working on the better typing
+      sx?:
+        | React.CSSProperties
+        | ((theme: Theme) => React.CSSProperties)
+        | ReadonlyArray<React.CSSProperties | ((theme: Theme) => React.CSSProperties)>;
     }
   }
 }
