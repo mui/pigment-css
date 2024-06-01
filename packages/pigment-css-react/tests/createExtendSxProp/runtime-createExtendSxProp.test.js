@@ -1,6 +1,6 @@
 import { describe } from 'yargs';
 import { expect } from 'chai';
-import { createExtendSxProp } from '@pigment-css/react';
+import createExtendSxProp from '../../src/createExtendSxProp';
 
 describe('createExtendSxProp', () => {
   it('return the new copy of input', () => {
