@@ -718,7 +718,7 @@ const AnyComponent = (props) => {
 
 The value provided to `sx` prop can be one of the following:
 
-- a plain style object (recommended)
+- a plain style object (recommended for best performance)
 - a callback function that receives the [theme object](#theming) then return a plain style object:
 
   ```js
