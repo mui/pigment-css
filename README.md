@@ -9,14 +9,9 @@ Pigment CSS is a zero-runtime CSS-in-JS library that extracts the colocated sty
 [![npm latest package](https://img.shields.io/npm/v/@pigment-css/react/latest.svg)](https://www.npmjs.com/package/@pigment-css/react)
 [![npm downloads](https://img.shields.io/npm/dm/@pigment-css/react.svg)](https://www.npmjs.com/package/@pigment-css/react)
 [![GitHub branch status](https://img.shields.io/github/checks-status/mui/pigment-css/HEAD)](https://app.codecov.io/gh/mui/pigment-css/tree/master)
-
-<!-- [![Coverage Status](https://img.shields.io/codecov/c/github/mui/pigment-css.svg)](https://app.codecov.io/gh/mui/pigment-css/) -->
-
-[![Coverage status](https://img.shields.io/codecov/c/github/mui/pigment-css/master.svg)](https://codecov.io/gh/mui/pigment-css/branch/master)
+[![Coverage Status](https://img.shields.io/codecov/c/github/mui/pigment-css.svg)](https://app.codecov.io/gh/mui/pigment-css/)
 [![Follow on X](https://img.shields.io/twitter/follow/PigmentCSS.svg?label=follow+Pigment+CSS)](https://x.com/PigmentCSS)
-
-<!-- [![Renovate status](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://github.com/mui/pigment-css/issues/2) -->
-
+[![Renovate status](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://github.com/mui/pigment-css/issues/2)
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/mui/pigment-css.svg)](https://isitmaintained.com/project/mui/pigment-css 'Average time to resolve an issue')
 [![Open Collective backers and sponsors](https://img.shields.io/opencollective/all/mui-org)](https://opencollective.com/mui-org)
 
