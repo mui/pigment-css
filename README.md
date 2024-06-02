@@ -1,4 +1,8 @@
 <!-- markdownlint-disable-next-line -->
+<p align="center">
+  <a href="https://mui.com/system/getting-started/" rel="noopener" target="_blank"><img width="150" height="133" src="https://mui.com/static/logo.svg" alt="Pigment CSS logo"></a>
+</p>
+
 <h1 align="center">Pigment CSS</h1>
 
 Pigment CSS is a zero-runtime CSS-in-JS library that extracts the colocated styles to their own CSS files at build time.
