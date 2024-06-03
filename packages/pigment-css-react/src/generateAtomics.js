@@ -60,7 +60,6 @@ export function atomics({
           if (!propertyClasses) {
             return;
           }
-          console.log(propertyClasses);
           classes.push(propertyClasses[condition]);
           const value =
             typeof values[condition] === 'number'

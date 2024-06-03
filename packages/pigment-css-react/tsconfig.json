@@ -11,5 +11,5 @@
     "jsx": "react-jsx"
   },
   "include": ["src/**/*.tsx", "src/**/*.js", "src/**/*.ts"],
-  "exclude": ["./tsup.config.ts", "src/**/*.d.ts"]
+  "exclude": ["./tsup.config.ts"]
 }

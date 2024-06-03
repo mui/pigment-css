@@ -83,7 +83,6 @@ export default function InteractiveStack() {
             </label>
           ))}
         </fieldset>
-        {/** @ts-ignore */}
         <fieldset sx={{ mt: 1 }}>
           <legend>justifyContent</legend>
           {[
@@ -108,7 +107,6 @@ export default function InteractiveStack() {
         </fieldset>
       </Stack>
       <Stack direction="row" justifyContent="space-between">
-        {/** @ts-ignore */}
         <fieldset sx={{ mt: 1 }}>
           <legend>alignItems</legend>
           {[
@@ -133,7 +131,6 @@ export default function InteractiveStack() {
             </label>
           ))}
         </fieldset>
-        {/** @ts-ignore */}
         <fieldset sx={{ mt: 1 }}>
           <legend>Spacing</legend>
           {[0, 0.5, 1, 2, 3, 4, 8, 12].map((item) => (
