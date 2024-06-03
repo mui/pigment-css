@@ -56,7 +56,7 @@ export async function runTransformation(
       if (source !== '@pigment-css/react' && !source.endsWith('/zero-styled')) {
         return null;
       }
-      return require.resolve(`${pkgJson['wyw-in-js'].tags[tag]}`);
+      return require.resolve(`../${pkgJson['wyw-in-js'].tags[tag]}`.replace('.js', ''));
     },
   };
 
