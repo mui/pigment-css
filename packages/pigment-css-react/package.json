@@ -143,15 +143,6 @@
       "require": "./build/Box.js",
       "default": "./build/Box.js"
     },
-    "./createTransitions": {
-      "types": "./build/createTransitions.d.ts",
-      "import": {
-        "types": "./build/createTransitions.d.mts",
-        "default": "./build/createTransitions.mjs"
-      },
-      "require": "./build/createTransitions.js",
-      "default": "./build/createTransitions.js"
-    },
     "./RtlProvider": {
       "types": "./build/RtlProvider.d.ts",
       "import": {

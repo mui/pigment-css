@@ -20,7 +20,7 @@ const baseConfig: Options = {
   external,
 };
 
-const BASE_FILES = ['index.ts', 'theme.ts', 'Box.jsx', 'RtlProvider.tsx', 'createTransitions.ts'];
+const BASE_FILES = ['index.ts', 'theme.ts', 'Box.jsx', 'RtlProvider.tsx'];
 
 export default defineConfig([
   {

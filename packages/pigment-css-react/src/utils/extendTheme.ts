@@ -77,7 +77,6 @@ export type ExtendTheme<
     getColorSchemeSelector: (colorScheme: Options['colorScheme']) => string;
     generateStyleSheets: () => Array<Record<string, any>>;
     unstable_sxConfig?: SxConfig;
-    unstable_args: any;
   };
 
 export type Theme = Record<string, any>;
@@ -159,10 +158,6 @@ export function extendTheme<
     return {
       [this.getColorSchemeSelector(colorScheme)]: styles,
     };
-  };
-  finalTheme.unstable_args = {
-    breakpoints: theme.breakpoints,
-    transitions: theme.transitions,
   };
 
   return finalTheme;

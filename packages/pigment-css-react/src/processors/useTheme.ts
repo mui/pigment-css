@@ -56,6 +56,6 @@ export class UseThemeProcessor extends BaseProcessor {
   }
 
   get value(): Expression {
-    return this.astService.stringLiteral(this.className);
+    return this.astService.nullLiteral();
   }
 }
