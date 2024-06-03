@@ -7,7 +7,7 @@
 
 Pigment CSS is a zero-runtime CSS-in-JS library that extracts the colocated styles to their own CSS files at build time.
 
-<iframe src="https://www.youtube.com/embed/0ckOUBiuxVY?si=5vCwdo2qeaJVakbM&amp;start=21664" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 16/9;"></iframe>
+[![Introduction of Pigment CSS during React Conf 2024](https://img.youtube.com/vi/0ckOUBiuxVY/0.jpg)](https://www.youtube.com/watch?v=0ckOUBiuxVY&t=21677s)
 
 <div align="center">
 
