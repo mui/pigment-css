@@ -8,6 +8,7 @@ const processors = [
   'generateAtomics',
   'css',
   'createUseThemeProps',
+  'createExtendSxProp',
   'globalCss',
 ];
 const external = ['react', 'react-is', 'prop-types'];
