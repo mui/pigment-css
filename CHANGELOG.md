@@ -1,5 +1,44 @@
 # [Versions](https://mui.com/versions/)
 
+## v0.0.12
+
+<!-- generated comparing v0.0.11..master -->
+
+_Jun 4, 2024_
+
+A big thanks to the 6 contributors who made this release possible. Here are some highlights ✨:
+
+- 🚀 New `globalCss` API for creating global styles (#31) @siriwatknp
+- 🪄 Support configurable runtime theme (#105) @brijeshb42
+
+### `@pigment-css/react@0.0.12`
+
+- Add `createExtendSxProp` for Material UI integration (#112) @siriwatknp
+- Add `globalCss` processor (#31) @siriwatknp
+- Implement useTheme processor and runtime theme (#105) @brijeshb42
+- Implement variant matching parity (#111) @DiegoAndai
+- Ignore urls starting with # (#106) @brijeshb42
+- Make theme optional in Pigment CSS config (#108) @brijeshb42
+
+### Docs
+
+- Add logo to the README (#121) @danilo-leal
+- Add badges like in Material UI @oliviertassinari
+- Fix styleOverrides usage in README (#110) @brijeshb42
+- Improve wording (#70) @aarongarciah
+- Fix roadmap link (#60) @oliviertassinari
+
+### Core
+
+- Remove confusing comment @oliviertassinari
+- Cleanup (#63) @brijeshb42
+- Add stylelint (#109) @oliviertassinari
+- Use test-utils pacakge from npm (#113) @brijeshb42
+- Use shared .stylelintrc.js config (#103) @oliviertassinari
+- Fix instructions to run (#75) @oliviertassinari
+
+All contributors of this release in alphabetical order: @aarongarciah, @brijeshb42, @danilo-leal, @DiegoAndai, @oliviertassinari, @siriwatknp
+
 ## v0.0.11
 
 _May 8, 2024_
