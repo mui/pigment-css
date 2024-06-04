@@ -22,7 +22,14 @@ export function generateAtomics() {
  *
  * @param {RuntimeConfig} runtimeConfig
  */
-export function atomics({ styles, shorthands, conditions, unitless, multiplier = 1 }) {
+export function atomics({
+  styles,
+  shorthands,
+  conditions,
+  defaultCondition,
+  unitless,
+  multiplier = 1,
+}) {
   function addStyles(cssProperty, propertyValue, classes, inlineStyle) {
     const styleClasses = styles[cssProperty];
     if (!styleClasses) {
@@ -38,9 +45,8 @@ export function atomics({ styles, shorthands, conditions, unitless, multiplier =
         const key = keys[0];
         const styleValue = typeof value === 'number' ? value * multiplier : value;
         classes.push(styleClasses[key][breakpoint]);
-        inlineStyle[`${key}_${breakpoint}`] = unitless.includes(cssProperty)
-          ? styleValue
-          : `${styleValue}px`;
+        inlineStyle[`${key}_${breakpoint === '$$default' ? defaultCondition : breakpoint}`] =
+          unitless.includes(cssProperty) ? styleValue : `${styleValue}px`;
       } else {
         classes.push(styleClasses[value][breakpoint]);
       }
