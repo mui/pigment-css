@@ -1,11 +1,17 @@
 <!-- markdownlint-disable-next-line -->
 <p align="center">
-  <a href="https://mui.com/system/getting-started/" rel="noopener" target="_blank"><img width="150" height="133" src="https://mui.com/static/logo.svg" alt="Pigment CSS logo"></a>
+  <a href="https://mui.com/blog/introducing-pigment-css/" target="_blank">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://master--material-ui.netlify.app/static/pigment-css/pigment-css-logo-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://master--material-ui.netlify.app/static/pigment-css/pigment-css-logo-light.svg">
+      <img alt="Pigment CSS" src="https://master--material-ui.netlify.app/static/pigment-css/pigment-css-logo-light.svg" width="324" height="57">
+    </picture>
+  </a>
 </p>
 
-<h1 align="center">Pigment CSS</h1>
-
+<p align="center">
 Pigment CSS is a zero-runtime CSS-in-JS library that extracts the colocated styles to their own CSS files at build time.
+</p>
 
 <div align="center">
 
@@ -22,6 +28,10 @@ Pigment CSS is a zero-runtime CSS-in-JS library that extracts the colocated sty
 <!-- [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/8715/badge)](https://www.bestpractices.dev/projects/8715) -->
 
 </div>
+
+---
+
+# Documentation
 
 - [Getting started](#getting-started)
   - [Why this project exists?](#why-choose-pigmentcss)
