@@ -12,6 +12,7 @@ import { PluginCustomOptions, preprocessor } from '@pigment-css/react/utils';
 import * as prettier from 'prettier';
 
 import sxTransformPlugin from '../exports/sx-plugin';
+import pkgJson from '../package.json';
 
 const shouldUpdateOutput = process.env.UPDATE_FIXTURES === 'true';
 
@@ -55,7 +56,7 @@ export async function runTransformation(
       if (source !== '@pigment-css/react' && !source.endsWith('/zero-styled')) {
         return null;
       }
-      return require.resolve(`../exports/${tag}`);
+      return require.resolve(`../${pkgJson['wyw-in-js'].tags[tag]}`.replace('.js', ''));
     },
   };
 
