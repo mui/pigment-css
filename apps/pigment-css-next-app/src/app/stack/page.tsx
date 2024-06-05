@@ -1,6 +1,7 @@
 'use client';
 import * as React from 'react';
 import Stack from '@pigment-css/react/Stack';
+import Container from '@pigment-css/react/Container';
 import { styled, css } from '@pigment-css/react';
 
 type StackProps = React.ComponentProps<typeof Stack>;
@@ -58,45 +59,53 @@ export default function InteractiveStack() {
 `;
 
   return (
-    <Stack spacing={2} sx={{ flexGrow: 1, padding: 2 }}>
-      <Stack direction="row" justifyContent="space-between" spacing={2}>
-        <fieldset>
-          <legend>Direction</legend>
-          {['row', 'row-reverse', 'column', 'column-reverse'].map((item) => (
-            <label key={item} className={labelClass}>
-              {item}
-              <input
-                type="radio"
-                name="direction"
-                value={item}
-                checked={item === direction}
-                onChange={handleChange}
-              />
-            </label>
+    <Container maxWidth="md">
+      <Stack spacing={2} sx={{ flexGrow: 1, padding: 2 }}>
+        <Stack
+          spacing={2}
+          direction="row"
+          sx={{
+            justifyContent: 'space-between',
+          }}
+        >
+          <fieldset>
+            <legend>Direction</legend>
+            {['row', 'row-reverse', 'column', 'column-reverse'].map((item) => (
+              <label key={item} className={labelClass}>
+                {item}
+                <input
+                  type="radio"
+                  name="direction"
+                  value={item}
+                  checked={item === direction}
+                  onChange={handleChange}
+                />
+              </label>
+            ))}
+          </fieldset>
+          <fieldset sx={{ mt: 1 }}>
+            <legend>Spacing</legend>
+            {[0, 0.5, 1, 2, 3, 4, 8, 12, '2rem'].map((item) => (
+              <label key={item} className={labelClass}>
+                {item}
+                <input
+                  type="radio"
+                  name="spacing"
+                  value={item}
+                  checked={item === spacing}
+                  onChange={handleChange}
+                />
+              </label>
+            ))}
+          </fieldset>
+        </Stack>
+        <Stack direction={direction} spacing={spacing}>
+          {[0, 1, 2].map((value) => (
+            <Card key={value}>{`Item ${value + 1}`}</Card>
           ))}
-        </fieldset>
-        <fieldset sx={{ mt: 1 }}>
-          <legend>Spacing</legend>
-          {[0, 0.5, 1, 2, 3, 4, 8, 12, '2rem'].map((item) => (
-            <label key={item} className={labelClass}>
-              {item}
-              <input
-                type="radio"
-                name="spacing"
-                value={item}
-                checked={item === spacing}
-                onChange={handleChange}
-              />
-            </label>
-          ))}
-        </fieldset>
+        </Stack>
+        <textarea style={{ colorScheme: 'dark' }} value={jsx} readOnly rows={8} />
       </Stack>
-      <Stack direction={direction} spacing={spacing}>
-        {[0, 1, 2].map((value) => (
-          <Card key={value}>{`Item ${value + 1}`}</Card>
-        ))}
-      </Stack>
-      <textarea style={{ colorScheme: 'dark' }} value={jsx} readOnly rows={8} />
-    </Stack>
+    </Container>
   );
 }
