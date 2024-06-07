@@ -524,12 +524,12 @@ Theming is an **optional** feature that lets you reuse the same values, such as 
 >
 > The **theme** object is used at build time and does not exist in the final JavaScript bundle. This means that components created using Pigment CSS's `styled` can be used with React Server Components by default while still getting the benefits of theming.
 
-For example, in Next.js, you can define a theme in the `next.config.js` file like this:
+For example, in Next.js, you can define a theme in the `next.config.mjs` file like this:
 
 ```js
-const { withPigment } = require('@pigment-css/nextjs-plugin');
+import { withPigment } from '@pigment-css/nextjs-plugin';
 
-module.exports = withPigment(
+export default withPigment(
   {
     // ...other nextConfig
   },
@@ -565,12 +565,12 @@ const Heading = styled('h1')(({ theme }) => ({
 
 #### CSS variables support
 
-Pigment CSS can generate CSS variables from the theme values when you wrap your theme with `extendTheme` utility. For example, in a `next.config.js` file:
+Pigment CSS can generate CSS variables from the theme values when you wrap your theme with `extendTheme` utility. For example, in a `next.config.mjs` file:
 
 ```js
-const { withPigment, extendTheme } = require('@pigment-css/nextjs-plugin');
+import { withPigment, extendTheme } from '@pigment-css/nextjs-plugin';
 
-module.exports = withPigment(
+export default withPigment(
   {
     // ...nextConfig
   },
@@ -728,10 +728,10 @@ To support right-to-left (RTL) languages, add the `dir="rtl"` attribute to your 
 ### Next.js
 
 ```js
-const { withPigment } = require('@pigment-css/nextjs-plugin');
+import { withPigment } from '@pigment-css/nextjs-plugin';
 
 // ...
-module.exports = withPigment(nextConfig, {
+export default withPigment(nextConfig, {
   theme: yourCustomTheme,
   // CSS output option
   css: {
@@ -1065,10 +1065,10 @@ npm install -D @pigment-css/nextjs-plugin
 Next, they must set up Pigment CSS in their project:
 
 ```js
-// framework config file, for example next.config.js
-const { withPigment } = require('@pigment-css/nextjs-plugin');
+// framework config file, for example next.config.mjs
+import { withPigment } from '@pigment-css/nextjs-plugin';
 
-module.exports = withPigment(
+export default withPigment(
   {
     // ... Your nextjs config.
   },
@@ -1099,7 +1099,7 @@ Developers can customize the component's styles using the theme's `styleOverride
 For example, the custom theme below sets the background color of the statistics component's root slot to `tomato`:
 
 ```js
-module.exports = withPigment(
+export default withPigment(
   { ...nextConfig },
   {
     theme: {
@@ -1126,7 +1126,7 @@ module.exports = withPigment(
 Developers can also access theme values and apply styles based on the component's props using the `variants` key:
 
 ```js
-module.exports = withPigment(
+export default withPigment(
   { ...nextConfig },
   {
     theme: {
