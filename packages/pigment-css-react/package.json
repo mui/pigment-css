@@ -161,6 +161,15 @@
       },
       "require": "./build/Stack.js",
       "default": "./build/Stack.js"
+    },
+    "./Grid": {
+      "types": "./build/Grid.d.ts",
+      "import": {
+        "types": "./build/Grid.d.mts",
+        "default": "./build/Grid.mjs"
+      },
+      "require": "./build/Grid.js",
+      "default": "./build/Grid.js"
     }
   },
   "nx": {

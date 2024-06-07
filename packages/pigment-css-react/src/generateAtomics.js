@@ -12,7 +12,8 @@ export function generateAtomics() {
  * @property {Object.<string, string[]>} shorthands
  * @property {string[]} conditions
  * @property {string} defaultCondition
- * @property {string} multiplier
+ * @property {string[]} unitless
+ * @property {string} multipliers
  */
 
 /**
@@ -21,14 +22,21 @@ export function generateAtomics() {
  *
  * @param {RuntimeConfig} runtimeConfig
  */
-export function atomics({ styles, shorthands, conditions, defaultCondition, multiplier }) {
+export function atomics({
+  styles,
+  shorthands,
+  conditions,
+  defaultCondition,
+  unitless,
+  multipliers = {},
+}) {
   function addStyles(cssProperty, propertyValue, classes, inlineStyle) {
     const styleClasses = styles[cssProperty];
     if (!styleClasses) {
       return;
     }
 
-    function handlePrimitive(value, breakpoint = defaultCondition) {
+    function handlePrimitive(value, multiplier = 1, breakpoint = defaultCondition) {
       if (!(value in styleClasses)) {
         const keys = Object.keys(styleClasses);
         if (keys.length !== 1) {
@@ -48,7 +56,7 @@ export function atomics({ styles, shorthands, conditions, defaultCondition, mult
     }
 
     if (typeof propertyValue === 'string' || typeof propertyValue === 'number') {
-      handlePrimitive(propertyValue);
+      handlePrimitive(propertyValue, multipliers[cssProperty]);
     } else if (Array.isArray(propertyValue)) {
       propertyValue.forEach((value, index) => {
         if (value) {
@@ -56,7 +64,7 @@ export function atomics({ styles, shorthands, conditions, defaultCondition, mult
           if (!breakpoint) {
             return;
           }
-          handlePrimitive(value, conditions[index]);
+          handlePrimitive(value, multipliers[cssProperty], conditions[index]);
         }
       });
     } else if (propertyValue) {
@@ -64,7 +72,7 @@ export function atomics({ styles, shorthands, conditions, defaultCondition, mult
         if (propertyValue[condition]) {
           const propertyClasses = styleClasses[propertyValue[condition]];
           if (!propertyClasses) {
-            handlePrimitive(propertyValue[condition], condition);
+            handlePrimitive(propertyValue[condition], multipliers[cssProperty], condition);
             return;
           }
           classes.push(propertyClasses[condition]);

@@ -47,7 +47,10 @@ const atomic = atomics({
   // @ts-ignore This is not expected while calling the pre-transpiled generateAtomics
   conditions: ['xs', 'sm', 'md', 'lg', 'xl'],
   defaultCondition: 'xs',
-  multiplier: '8px',
+  unitless: [],
+  multipliers: {
+    gap: '8px',
+  },
 });
 
 describe('generateAtomics', () => {
