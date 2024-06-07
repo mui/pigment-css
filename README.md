@@ -87,7 +87,7 @@ npm install @pigment-css/react
 npm install --save-dev @pigment-css/nextjs-plugin
 ```
 
-Then, in your `next.config.js` file, import the plugin and wrap the exported config object:
+Then, in your `next.config.mjs` file, import the plugin and wrap the exported config object:
 
 ```js
 import { withPigment } from '@pigment-css/nextjs-plugin';
