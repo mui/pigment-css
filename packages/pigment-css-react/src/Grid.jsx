@@ -26,7 +26,7 @@ const Grid = React.forwardRef(function Grid(
     className,
     display = 'flex',
     component = 'div',
-    direction = 'column',
+    direction = 'row',
     flexWrap = 'wrap',
     columns = 12,
     container = false,
