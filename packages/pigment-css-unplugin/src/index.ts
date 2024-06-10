@@ -349,7 +349,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
               }
               if (
                 id.includes('pigment-css-react/theme') ||
-                id === `${process.env.RUNTIME_PACKAGE_NAME}/theme`
+                id.includes(`${process.env.RUNTIME_PACKAGE_NAME}/theme`)
               ) {
                 return generateThemeSource(theme);
               }
