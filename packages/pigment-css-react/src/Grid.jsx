@@ -5,16 +5,25 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import { gridAtomics } from './baseAtomics';
+import styled from './styled';
 
-
-const itemStyle = {
-  width: 'calc(100% * var(--Column-span) / var(--Column-count) - (var(--Column-count) - var(--Column-span)) * var(--Column-gap) / var(--Column-count))',
-  marginLeft: 'calc(100% * var(--Item-offset) / var(--Column-count) + var(--Column-gap) * var(--Item-offset) / var(--Column-count))'
-}
-
-const containerStyle = {
-  gap: 'var(--Row-gap) var(--Column-gap)',
-}
+const GridComponent = styled('div')({
+  variants: [
+    {
+      props: { container: true },
+      style: {
+        gap: 'var(--Row-gap) var(--Column-gap)',
+      }
+    },
+    {
+      props: { container: false },
+      style: {
+        width: 'calc(100% * var(--Column-span) / var(--Column-count) - (var(--Column-count) - var(--Column-span)) * var(--Column-gap) / var(--Column-count))',
+        marginLeft: 'calc(100% * var(--Item-offset) / var(--Column-count) + var(--Column-gap) * var(--Item-offset) / var(--Column-count))'
+      }
+    }
+  ]
+})
 
 const Grid = React.forwardRef(function Grid(
   {
@@ -68,17 +77,21 @@ const Grid = React.forwardRef(function Grid(
   if (offset) {
     GridAtomicsObj['--Item-offset'] = offset;
   }
+
+  const ownerState = { container };
+
   const GridClasses = gridAtomics(GridAtomicsObj);
-  const Component = component;
   return (
-    <Component
+    <GridComponent
+      as={component}
       ref={ref}
       className={clsx(GridClasses.className, className)}
-      style={{ ...(container ? containerStyle : itemStyle), ...style, ...GridClasses.style }}
+      style={{ ...style, ...GridClasses.style }}
       {...rest}
+      ownerState={ownerState}
     >
       {children}
-    </Component>
+    </GridComponent>
   );
 });
 
