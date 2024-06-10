@@ -5,7 +5,7 @@
  * to reduce bundle size only. DO NOT use it in your codebase.
  */
 function extendSxProp(props) {
-  return props;
+  return { ...props };
 }
 export default function createExtendSxProp() {
   return extendSxProp;

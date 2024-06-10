@@ -52,10 +52,10 @@ export function pigment(options: PigmentOptions) {
       name: 'vite-mui-theme-injection-plugin',
       enforce: 'pre',
       resolveId(source) {
-        if (source === `${process.env.RUNTIME_PACKAGE_NAME}/styles.css`) {
+        if (source.includes(`${process.env.RUNTIME_PACKAGE_NAME}/styles.css`)) {
           return VIRTUAL_CSS_FILE;
         }
-        if (source === `${process.env.RUNTIME_PACKAGE_NAME}/theme`) {
+        if (source.includes(`${process.env.RUNTIME_PACKAGE_NAME}/theme`)) {
           return VIRTUAL_THEME_FILE;
         }
         return null;
