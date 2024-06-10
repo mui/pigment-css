@@ -56,11 +56,8 @@ function App3(props) {
         color: (theme.vars || theme).palette.primary.main,
         fontSize: props.isRed ? 'h1-fontSize' : 'h2-fontSize',
         ':hover': {
-          backgroundColor: ['primary.main', 'secondary.main'],
-          color: {
-            sm: 'primary.main',
-            md: 'secondary.main',
-          },
+          backgroundColor: ['rgb(0, 255, 0)', 'color(display-p3 0 1 0)'],
+          color: 'rgb(0, 255, 0)',
         },
       })}
     />

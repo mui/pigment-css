@@ -1,6 +1,4 @@
 import type { CSSObject } from '@emotion/css';
-// @TODO - Ideally, this should be replicated here instead of importing.
-import styleFunctionSx from '@mui/system/styleFunctionSx';
 import { css, cache } from './emotion';
 import type { PluginCustomOptions } from './cssFnValueToVariable';
 
@@ -9,16 +7,10 @@ export function processCssObject(
   themeArgs?: PluginCustomOptions['themeArgs'],
   skipSx = true,
 ) {
-  const processedObj = (
-    skipSx
-      ? cssObj
-      : styleFunctionSx({
-          // Does not support shorthand as of now because
-          // it also adds the spacing multiplier
-          sx: () => cssObj,
-          ...themeArgs,
-        })
-  ) as CSSObject;
+  const processedObj =
+    // `unstable_sx` is currently an internal API for integrating Material UI with Pigment CSS only.
+    // so for Pigment CSS users, the shorthand `sx` prop is not supported yet.
+    (skipSx ? cssObj : themeArgs?.theme?.unstable_sx?.(cssObj) || cssObj) as CSSObject;
   const className = css(processedObj);
   return cache.registered[className];
 }

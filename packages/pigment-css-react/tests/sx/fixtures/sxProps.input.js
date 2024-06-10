@@ -45,7 +45,7 @@ function App3(props) {
 
 const textAlign = 'center';
 const styles4 = {
-  mb: 1,
+  marginBottom: 1,
   textAlign,
 };
 

@@ -1,5 +1,4 @@
 import { prepareCssVars } from '@mui/system/cssVars';
-import type { SxConfig } from '@mui/system/styleFunctionSx';
 import type { CSSObject } from '../base';
 
 export interface ThemeInput<ColorScheme extends string = string> extends Record<string, any> {
@@ -76,7 +75,6 @@ export type ExtendTheme<
     ) => Record<string, CSSObject<any>>;
     getColorSchemeSelector: (colorScheme: Options['colorScheme']) => string;
     generateStyleSheets: () => Array<Record<string, any>>;
-    unstable_sxConfig?: SxConfig;
   };
 
 export type Theme = Record<string, any>;
