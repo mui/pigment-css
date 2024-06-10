@@ -2,9 +2,9 @@ import type { Plugin } from 'vite';
 import {
   preprocessor as basePreprocessor,
   generateTokenCss,
-  generateThemeTokens,
   type Theme,
   extendTheme,
+  generateThemeSource,
 } from '@pigment-css/react/utils';
 import { transformAsync } from '@babel/core';
 import baseWywPluginPlugin, { type VitePluginOptions } from './vite-plugin';
@@ -65,7 +65,7 @@ export function pigment(options: PigmentOptions) {
           return generateTokenCss(theme);
         }
         if (id === VIRTUAL_THEME_FILE) {
-          return `export default ${JSON.stringify(generateThemeTokens(theme))};`;
+          return generateThemeSource(theme);
         }
         return null;
       },

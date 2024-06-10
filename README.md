@@ -1,6 +1,37 @@
-# Pigment CSS
+<!-- markdownlint-disable-next-line -->
+<p align="center">
+  <a href="https://mui.com/blog/introducing-pigment-css/" target="_blank">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://master--material-ui.netlify.app/static/pigment-css/pigment-css-logo-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://master--material-ui.netlify.app/static/pigment-css/pigment-css-logo-light.svg">
+      <img alt="Pigment CSS" src="https://master--material-ui.netlify.app/static/pigment-css/pigment-css-logo-light.svg" width="324" height="57">
+    </picture>
+  </a>
+</p>
 
+<p align="center">
 Pigment CSS is a zero-runtime CSS-in-JS library that extracts the colocated styles to their own CSS files at build time.
+</p>
+
+<div align="center">
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mui/pigment-css/blob/HEAD/LICENSE)
+[![npm latest package](https://img.shields.io/npm/v/@pigment-css/react/latest.svg)](https://www.npmjs.com/package/@pigment-css/react)
+[![npm downloads](https://img.shields.io/npm/dm/@pigment-css/react.svg)](https://www.npmjs.com/package/@pigment-css/react)
+[![GitHub branch status](https://img.shields.io/github/checks-status/mui/pigment-css/HEAD)](https://app.codecov.io/gh/mui/pigment-css/tree/master)
+[![Coverage Status](https://img.shields.io/codecov/c/github/mui/pigment-css.svg)](https://app.codecov.io/gh/mui/pigment-css/)
+[![Follow on X](https://img.shields.io/twitter/follow/PigmentCSS.svg?label=follow+Pigment+CSS)](https://x.com/PigmentCSS)
+[![Renovate status](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://github.com/mui/pigment-css/issues/2)
+[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/mui/pigment-css.svg)](https://isitmaintained.com/project/mui/pigment-css 'Average time to resolve an issue')
+[![Open Collective backers and sponsors](https://img.shields.io/opencollective/all/mui-org)](https://opencollective.com/mui-org)
+
+<!-- [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/8715/badge)](https://www.bestpractices.dev/projects/8715) -->
+
+</div>
+
+---
+
+# Documentation
 
 - [Getting started](#getting-started)
   - [Why this project exists?](#why-choose-pigmentcss)
