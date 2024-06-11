@@ -78,11 +78,15 @@ export const gridAtomics = generateAtomics(({ theme }) => ({
       'normal',
       'stretch',
     ],
+    '--Column-width': ['--Column-width'],
+    '--Column-max-width': ['--Column-max-width'],
+    '--Column-flex': ['--Column-flex'],
     '--Column-count': ['--Column-count'],
     '--Column-span': ['--Column-span'],
     '--Column-gap': ['--Column-gap'],
     '--Row-gap': ['--Row-gap'],
-    '--Item-offset': ['--Item-offset']
+    '--Item-offset': ['--Item-offset'],
+    '--Item-margin-left': ['--Item-margin-left'],
   },
   shorthands: {
     direction: ['flexDirection'],
@@ -91,5 +95,47 @@ export const gridAtomics = generateAtomics(({ theme }) => ({
   multipliers: {
     '--Column-gap': 8,
     '--Row-gap': 8,
+  },
+  inlineGetters: {
+    '--Column-width': (value) => {
+      if (value === 'grow') {
+        return 'unset';
+      }
+
+      if (value === 'auto') {
+        return 'auto';
+      }
+
+      return 'calc(100% * var(--Column-span) / var(--Column-count) - (var(--Column-count) - var(--Column-span)) * var(--Column-gap) / var(--Column-count))';
+    },
+    '--Column-max-width': (value) => {
+      if (value === 'grow') {
+        return '100%';
+      }
+
+      if (value === 'auto') {
+        return 'none';
+      }
+
+      return 'unset';
+    },
+    '--Column-flex': (value) => {
+      if (value === 'grow') {
+        return '1 1 0';
+      }
+
+      if (value === 'auto') {
+        return '0 0 auto';
+      }
+
+      return '0 1 auto';
+    },
+    '--Item-margin-left': (value) => {
+      if (value === 'auto') {
+        return 'auto';
+      }
+
+      return 'calc(100% * var(--Item-offset) / var(--Column-count) + var(--Column-gap) * var(--Item-offset) / var(--Column-count))';
+    },
   },
 }));

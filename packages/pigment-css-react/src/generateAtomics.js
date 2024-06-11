@@ -6,6 +6,10 @@ export function generateAtomics() {
   );
 }
 
+function defaultInlineGetter(styleValue, cssProperty, unitless) {
+  return unitless.includes(cssProperty) ? styleValue : `${styleValue}px`;
+}
+
 /**
  * @typedef {Object} RuntimeConfig
  * @property {Object.<string, Object.<string, Object.<string, string>>>} styles
@@ -29,6 +33,7 @@ export function atomics({
   defaultCondition,
   unitless,
   multipliers = {},
+  inlineGetters = {},
 }) {
   function addStyles(cssProperty, propertyValue, classes, inlineStyle) {
     const styleClasses = styles[cssProperty];
@@ -36,7 +41,12 @@ export function atomics({
       return;
     }
 
-    function handlePrimitive(value, multiplier = 1, breakpoint = defaultCondition) {
+    function handlePrimitive(
+      value,
+      multiplier = 1,
+      inlineGetter = defaultInlineGetter,
+      breakpoint = defaultCondition,
+    ) {
       if (!(value in styleClasses)) {
         const keys = Object.keys(styleClasses);
         if (keys.length !== 1) {
@@ -49,14 +59,14 @@ export function atomics({
         }
         classes.push(styleClasses[key][breakpoint]);
         inlineStyle[`${key}${breakpoint === defaultCondition ? '' : `-${breakpoint}`}`] =
-          styleValue;
+          inlineGetter(styleValue, cssProperty, unitless);
       } else {
         classes.push(styleClasses[value][breakpoint]);
       }
     }
 
     if (typeof propertyValue === 'string' || typeof propertyValue === 'number') {
-      handlePrimitive(propertyValue, multipliers[cssProperty]);
+      handlePrimitive(propertyValue, multipliers[cssProperty], inlineGetters[cssProperty]);
     } else if (Array.isArray(propertyValue)) {
       propertyValue.forEach((value, index) => {
         if (value) {
@@ -64,7 +74,12 @@ export function atomics({
           if (!breakpoint) {
             return;
           }
-          handlePrimitive(value, multipliers[cssProperty], conditions[index]);
+          handlePrimitive(
+            value,
+            multipliers[cssProperty],
+            inlineGetters[cssProperty],
+            conditions[index],
+          );
         }
       });
     } else if (propertyValue) {
@@ -72,7 +87,12 @@ export function atomics({
         if (propertyValue[condition]) {
           const propertyClasses = styleClasses[propertyValue[condition]];
           if (!propertyClasses) {
-            handlePrimitive(propertyValue[condition], multipliers[cssProperty], condition);
+            handlePrimitive(
+              propertyValue[condition],
+              multipliers[cssProperty],
+              inlineGetters[cssProperty],
+              condition,
+            );
             return;
           }
           classes.push(propertyClasses[condition]);

@@ -9,6 +9,7 @@ export type Atomics = {
   shorthands: Record<string, string[]>;
   unitless: string[];
   multipliers?: Record<string, string>;
+  inlineGetters: Record<string, (value: string) => string>;
 };
 
 export type RuntimeConfig = {
@@ -18,6 +19,7 @@ export type RuntimeConfig = {
   defaultCondition: string;
   unitless: string[];
   multipliers?: Record<string, string>;
+  inlineGetters: Record<string, (value: string) => string>;
 };
 
 function getClassName(...items: string[]) {
@@ -32,6 +34,7 @@ export function convertAtomicsToCss(
     shorthands = {},
     unitless = [],
     multipliers = {},
+    inlineGetters = {},
   }: Atomics,
   mainClassName: string,
   isGlobal = false,
@@ -45,6 +48,7 @@ export function convertAtomicsToCss(
     defaultCondition,
     unitless,
     multipliers,
+    inlineGetters,
   };
   let count = 1;
   function getCount() {

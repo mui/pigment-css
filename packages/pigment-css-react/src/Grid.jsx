@@ -8,20 +8,18 @@ import { gridAtomics } from './baseAtomics';
 import styled from './styled';
 
 const GridComponent = styled('div')({
+  width: 'var(--Column-width)',
+  maxWidth: 'var(--Column-max-width)',
+  flex: 'var(--Column-flex)',
+  marginLeft: 'var(--Item-margin-left)',
   variants: [
     {
       props: { container: true },
       style: {
+        display: 'flex',
         gap: 'var(--Row-gap) var(--Column-gap)',
       }
     },
-    {
-      props: { container: false },
-      style: {
-        width: 'calc(100% * var(--Column-span) / var(--Column-count) - (var(--Column-count) - var(--Column-span)) * var(--Column-gap) / var(--Column-count))',
-        marginLeft: 'calc(100% * var(--Item-offset) / var(--Column-count) + var(--Column-gap) * var(--Item-offset) / var(--Column-count))'
-      }
-    }
   ]
 })
 
@@ -33,7 +31,6 @@ const Grid = React.forwardRef(function Grid(
     rowSpacing,
     style,
     className,
-    display = 'flex',
     component = 'div',
     direction = 'row',
     flexWrap = 'wrap',
@@ -48,7 +45,6 @@ const Grid = React.forwardRef(function Grid(
   ref,
 ) {
   const GridAtomicsObj = {
-    display,
     direction,
     flexWrap,
   };
@@ -73,9 +69,14 @@ const Grid = React.forwardRef(function Grid(
   }
   if (size) {
     GridAtomicsObj['--Column-span'] = size;
+    GridAtomicsObj['--Column-width'] = size;
+    GridAtomicsObj['--Column-max-width'] = size;
+    GridAtomicsObj['--Column-flex'] = size;
+    
   }
   if (offset) {
     GridAtomicsObj['--Item-offset'] = offset;
+    GridAtomicsObj['--Item-margin-left'] = offset;
   }
 
   const ownerState = { container };
