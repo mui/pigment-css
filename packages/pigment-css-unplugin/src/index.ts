@@ -338,9 +338,13 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
               return (
                 // this file should exist in the package
                 id.endsWith(`${process.env.RUNTIME_PACKAGE_NAME}/styles.css`) ||
+                id.endsWith(`${process.env.RUNTIME_PACKAGE_NAME}\\styles.css`) ||
                 id.endsWith('/pigment-css-react/styles.css') ||
+                id.endsWith('/pigment-css-react\\styles.css') ||
                 id.includes(`${process.env.RUNTIME_PACKAGE_NAME}/theme`) ||
-                id.includes('/pigment-css-react/theme')
+                id.includes(`${process.env.RUNTIME_PACKAGE_NAME}\\theme`) ||
+                id.includes('/pigment-css-react/theme') ||
+                id.includes('\\pigment-css-react\\theme')
               );
             },
             transform(_code, id) {
@@ -349,7 +353,9 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
               }
               if (
                 id.includes('pigment-css-react/theme') ||
-                id.includes(`${process.env.RUNTIME_PACKAGE_NAME}/theme`)
+                id.includes('pigment-css-react\\theme') ||
+                id.includes(`${process.env.RUNTIME_PACKAGE_NAME}/theme`) ||
+                id.includes(`${process.env.RUNTIME_PACKAGE_NAME}\\theme`)
               ) {
                 return generateThemeSource(theme);
               }
