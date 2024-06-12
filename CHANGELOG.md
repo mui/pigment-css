@@ -1,5 +1,15 @@
 # [Versions](https://mui.com/versions/)
 
+## v0.0.14
+
+A big thanks to the 1 contributors who made this release possible. Here are some highlights ✨:
+
+### `@pigment-css/unplugin@0.0.14`
+
+- Fix the path check for Windows (#136) @siriwatknp
+
+All contributors of this release in alphabetical order: @siriwatknp
+
 ## v0.0.13
 
 <!-- generated comparing v0.0.12..master -->
