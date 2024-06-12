@@ -335,6 +335,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
       ...(isNext
         ? {
             transformInclude(id) {
+              console.log('transformInclude', id);
               return (
                 // this file should exist in the package
                 id.endsWith(`${process.env.RUNTIME_PACKAGE_NAME}/styles.css`) ||
@@ -348,6 +349,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
               );
             },
             transform(_code, id) {
+              console.log('transform', id);
               if (id.endsWith('styles.css')) {
                 return theme ? generateTokenCss(theme) : _code;
               }
