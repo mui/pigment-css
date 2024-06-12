@@ -2,7 +2,7 @@
 
 ## v0.0.14
 
-A big thanks to the 1 contributors who made this release possible. Here are some highlights ✨:
+A big thanks to the 1 contributors who made this release possible:
 
 ### `@pigment-css/unplugin@0.0.14`
 
