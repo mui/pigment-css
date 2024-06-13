@@ -53,51 +53,31 @@ export const gridAtomics = generateAtomics(({ theme }) => ({
   }, {}),
   defaultCondition: theme.breakpoints?.keys?.[0] ?? 'xs',
   properties: {
-    display: ['flex', 'inline-flex'],
     flexDirection: ['column', 'column-reverse', 'row', 'row-reverse'],
-    flexWrap: ['wrap', 'nowrap', 'wrap-reverse'],
-    justifyContent: [
-      'end',
-      'start',
-      'flex-end',
-      'flex-start',
-      'center',
-      'space-between',
-      'space-around',
-      'space-evenly',
-    ],
-    alignItems: [
-      'center',
-      'end',
-      'flex-end',
-      'flex-start',
-      'self-end',
-      'self-start',
-      'start',
-      'baseline',
-      'normal',
-      'stretch',
-    ],
-    '--Column-width': ['--Column-width'],
-    '--Column-max-width': ['--Column-max-width'],
-    '--Column-flex': ['--Column-flex'],
-    '--Column-count': ['--Column-count'],
-    '--Column-span': ['--Column-span'],
-    '--Column-gap': ['--Column-gap'],
-    '--Row-gap': ['--Row-gap'],
-    '--Item-offset': ['--Item-offset'],
-    '--Item-margin-left': ['--Item-margin-left'],
+    '--Grid-parent-column-count': ['--Grid-parent-column-count'],
+    '--Grid-parent-column-spacing': ['--Grid-parent-column-spacing'],
+    '--Grid-parent-row-spacing': ['--Grid-parent-row-spacing'],
+    '--Grid-self-column-span': ['--Grid-self-column-span'],
+    '--Grid-self-width': ['--Grid-self-width'],
+    '--Grid-self-max-width': ['--Grid-self-max-width'],
+    '--Grid-self-flex': ['--Grid-self-flex'],
+    '--Grid-self-column-spacing': ['--Grid-self-column-spacing'],
+    '--Grid-self-row-spacing': ['--Grid-self-row-spacing'],
+    '--Grid-self-offset': ['--Grid-self-offset'],
+    '--Grid-self-margin-left': ['--Grid-self-margin-left'],
   },
   shorthands: {
     direction: ['flexDirection'],
   },
-  unitless: ['--Column-count', '--Column-span', '--Item-offset'],
+  unitless: ['--Grid-parent-column-count', '--Grid-self-column-span', '--Grid-self-offset'],
   multipliers: {
-    '--Column-gap': 8,
-    '--Row-gap': 8,
+    '--Grid-parent-column-spacing': 8,
+    '--Grid-parent-row-spacing': 8,
+    '--Grid-self-column-spacing': 8,
+    '--Grid-self-row-spacing': 8,
   },
   inlineGetters: {
-    '--Column-width': (value) => {
+    '--Grid-self-width': (value) => {
       if (value === 'grow') {
         return 'unset';
       }
@@ -106,9 +86,9 @@ export const gridAtomics = generateAtomics(({ theme }) => ({
         return 'auto';
       }
 
-      return 'calc(100% * var(--Column-span) / var(--Column-count) - (var(--Column-count) - var(--Column-span)) * var(--Column-gap) / var(--Column-count))';
+      return 'calc(100% * var(--Grid-self-column-span) / var(--Grid-parent-column-count) - (var(--Grid-parent-column-count) - var(--Grid-self-column-span)) * var(--Grid-parent-column-spacing) / var(--Grid-parent-column-count))';
     },
-    '--Column-max-width': (value) => {
+    '--Grid-self-max-width': (value) => {
       if (value === 'grow') {
         return '100%';
       }
@@ -119,7 +99,7 @@ export const gridAtomics = generateAtomics(({ theme }) => ({
 
       return 'unset';
     },
-    '--Column-flex': (value) => {
+    '--Grid-self-flex': (value) => {
       if (value === 'grow') {
         return '1 1 0';
       }
@@ -130,12 +110,12 @@ export const gridAtomics = generateAtomics(({ theme }) => ({
 
       return '0 1 auto';
     },
-    '--Item-margin-left': (value) => {
+    '--Grid-self-margin-left': (value) => {
       if (value === 'auto') {
         return 'auto';
       }
 
-      return 'calc(100% * var(--Item-offset) / var(--Column-count) + var(--Column-gap) * var(--Item-offset) / var(--Column-count))';
+      return 'calc(100% * var(--Grid-self-offset) / var(--Grid-parent-column-count) + var(--Grid-parent-column-spacing) * var(--Grid-self-offset) / var(--Grid-parent-column-count))';
     },
   },
 }));

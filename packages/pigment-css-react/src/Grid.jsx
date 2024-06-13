@@ -7,79 +7,104 @@ import * as React from 'react';
 import { gridAtomics } from './baseAtomics';
 import styled from './styled';
 
+function isGridComponent(element) {
+  // For server components `muiName` is avaialble in element.type._payload.value.muiName
+  // relevant info - https://github.com/facebook/react/blob/2807d781a08db8e9873687fccc25c0f12b4fb3d4/packages/react/src/ReactLazy.js#L45
+  // eslint-disable-next-line no-underscore-dangle
+  return element.type.muiName === 'Grid' || element.type?._payload?.value?.muiName === 'Grid';
+}
+
 const GridComponent = styled('div')({
-  width: 'var(--Column-width)',
-  maxWidth: 'var(--Column-max-width)',
-  flex: 'var(--Column-flex)',
-  marginLeft: 'var(--Item-margin-left)',
   variants: [
     {
       props: { container: true },
       style: {
         display: 'flex',
-        gap: 'var(--Row-gap) var(--Column-gap)',
+        flexWrap: 'wrap',
+        gap: 'var(--Grid-self-row-spacing) var(--Grid-self-column-spacing)',
       }
     },
+    {
+      props: ({ size }) => size !== undefined,
+      style: {
+        width: 'var(--Grid-self-width)',
+        maxWidth: 'var(--Grid-self-max-width)',
+        flex: 'var(--Grid-self-flex)',
+      }
+    },
+    {
+      props: ({ offset }) => offset !== undefined,
+      style: {
+        marginLeft: 'var(--Grid-self-margin-left)',
+      }
+    }
   ]
 })
 
 const Grid = React.forwardRef(function Grid(
   {
     children,
-    spacing = 0,
+    columns,
+    spacing,
     columnSpacing,
     rowSpacing,
+    direction = 'row',
     style,
     className,
     component = 'div',
-    direction = 'row',
-    flexWrap = 'wrap',
-    columns = 12,
     container = false,
     size,
     offset,
-    alignItems,
-    justifyContent,
+    // internal props
+    // eslint-disable-next-line react/prop-types
+    unstable_parent_columns,
+    // eslint-disable-next-line react/prop-types
+    unstable_parent_column_spacing,
+    // eslint-disable-next-line react/prop-types
+    unstable_parent_row_spacing,
     ...rest
   },
   ref,
 ) {
+
+  const selfColumns = columns ?? unstable_parent_columns ?? 12;
+  const selfColumnSpacing = columnSpacing ?? spacing ?? unstable_parent_column_spacing ?? 0;
+  const selfRowSpacing = rowSpacing ?? spacing ?? unstable_parent_row_spacing ?? 0;
+
   const GridAtomicsObj = {
     direction,
-    flexWrap,
   };
-  if (alignItems) {
-    GridAtomicsObj.alignItems = alignItems;
+
+  if (unstable_parent_columns !== undefined) {
+    GridAtomicsObj['--Grid-parent-column-count'] = unstable_parent_columns;
   }
-  if (justifyContent) {
-    GridAtomicsObj.justifyContent = justifyContent;
+
+  if (unstable_parent_column_spacing !== undefined) {
+    GridAtomicsObj['--Grid-parent-column-spacing'] = unstable_parent_column_spacing;
   }
+
+  if (unstable_parent_row_spacing !== undefined) {
+    GridAtomicsObj['--Grid-parent-row-spacing'] = unstable_parent_row_spacing;
+  }
+
   if (container) {
-    GridAtomicsObj['--Column-count'] = columns;
-    GridAtomicsObj['--Column-gap'] = spacing;
-    GridAtomicsObj['--Row-gap'] = spacing;
-
-    if (columnSpacing) {
-      GridAtomicsObj['--Column-gap'] = columnSpacing;
-    }
-
-    if (rowSpacing) {
-      GridAtomicsObj['--Row-gap'] = rowSpacing;
-    }
+    GridAtomicsObj['--Grid-self-column-spacing'] = selfColumnSpacing;
+    GridAtomicsObj['--Grid-self-row-spacing'] = selfRowSpacing;
   }
+
   if (size) {
-    GridAtomicsObj['--Column-span'] = size;
-    GridAtomicsObj['--Column-width'] = size;
-    GridAtomicsObj['--Column-max-width'] = size;
-    GridAtomicsObj['--Column-flex'] = size;
+    GridAtomicsObj['--Grid-self-column-span'] = size;
+    GridAtomicsObj['--Grid-self-width'] = size;
+    GridAtomicsObj['--Grid-self-max-width'] = size;
+    GridAtomicsObj['--Grid-self-flex'] = size;
     
   }
   if (offset) {
-    GridAtomicsObj['--Item-offset'] = offset;
-    GridAtomicsObj['--Item-margin-left'] = offset;
+    GridAtomicsObj['--Grid-self-offset'] = offset;
+    GridAtomicsObj['--Grid-self-margin-left'] = offset;
   }
 
-  const ownerState = { container };
+  const ownerState = { container, size, offset };
 
   const GridClasses = gridAtomics(GridAtomicsObj);
   return (
@@ -91,49 +116,28 @@ const Grid = React.forwardRef(function Grid(
       {...rest}
       ownerState={ownerState}
     >
-      {children}
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child) && isGridComponent(child)) {
+          return React.cloneElement(child, {
+            unstable_parent_columns: selfColumns,
+            unstable_parent_column_spacing: selfColumnSpacing,
+            unstable_parent_row_spacing: selfRowSpacing,
+          });
+        }
+        return child;
+      })}
     </GridComponent>
   );
 });
 
+Grid.muiName = 'Grid';
+
 process.env.NODE_ENV !== 'production'
-  ? (Grid.propTypes /* remove-proptypes */ = {
+  && (Grid.propTypes /* remove-proptypes */ = {
       // ┌────────────────────────────── Warning ──────────────────────────────┐
       // │ These PropTypes are generated from the TypeScript type definitions. │
       // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
       // └─────────────────────────────────────────────────────────────────────┘
-      /**
-       * @ignore
-       */
-      alignItems: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-        PropTypes.oneOf([
-          'center',
-          'end',
-          'flex-end',
-          'flex-start',
-          'self-end',
-          'self-start',
-          'start',
-          'baseline',
-          'normal',
-          'stretch',
-        ]),
-        PropTypes.arrayOf(
-          PropTypes.oneOf([
-            'center',
-            'end',
-            'flex-end',
-            'flex-start',
-            'self-end',
-            'self-start',
-            'start',
-            'baseline',
-            'normal',
-            'stretch',
-          ]),
-        ),
-        PropTypes.object,
-      ]),
       /**
        * The content of the component.
        */
@@ -143,10 +147,31 @@ process.env.NODE_ENV !== 'production'
        */
       className: PropTypes.string,
       /**
+       * @ignore
+       */
+      columns: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+        PropTypes.arrayOf(PropTypes.number),
+        PropTypes.number,
+        PropTypes.object,
+      ]),
+      /**
+       * @ignore
+       */
+      columnSpacing: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+        PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired),
+        PropTypes.number,
+        PropTypes.object,
+        PropTypes.string,
+      ]),
+      /**
        * The component used for the root node.
        * Either a string to use a HTML element or a component.
        */
       component: PropTypes.elementType,
+      /**
+       * @ignore
+       */
+      container: PropTypes.bool,
       /**
        * @ignore
        */
@@ -158,41 +183,26 @@ process.env.NODE_ENV !== 'production'
       /**
        * @ignore
        */
-      display: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-        PropTypes.oneOf(['flex', 'inline-flex']),
-        PropTypes.arrayOf(PropTypes.oneOf(['flex', 'inline-flex']).isRequired),
+      offset: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+        PropTypes.arrayOf(PropTypes.number),
+        PropTypes.number,
         PropTypes.object,
       ]),
       /**
        * @ignore
        */
-      divider: PropTypes.node,
+      rowSpacing: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+        PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired),
+        PropTypes.number,
+        PropTypes.object,
+        PropTypes.string,
+      ]),
       /**
        * @ignore
        */
-      justifyContent: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-        PropTypes.oneOf([
-          'end',
-          'start',
-          'flex-end',
-          'flex-start',
-          'center',
-          'space-between',
-          'space-around',
-          'space-evenly',
-        ]),
-        PropTypes.arrayOf(
-          PropTypes.oneOf([
-            'end',
-            'start',
-            'flex-end',
-            'flex-start',
-            'center',
-            'space-between',
-            'space-around',
-            'space-evenly',
-          ]),
-        ),
+      size: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+        PropTypes.arrayOf(PropTypes.number),
+        PropTypes.number,
         PropTypes.object,
       ]),
       /**
@@ -204,8 +214,12 @@ process.env.NODE_ENV !== 'production'
         PropTypes.object,
         PropTypes.string,
       ]),
+      /**
+       * @ignore
+       */
+      style: PropTypes.object,
+      
     })
-  : void 0;
 
 Grid.displayName = 'Grid';
 

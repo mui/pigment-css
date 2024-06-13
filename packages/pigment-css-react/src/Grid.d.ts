@@ -6,13 +6,15 @@ import { PolymorphicComponent } from './Box';
 type CssProperty<T> = T | Array<T> | Partial<Record<Breakpoint, T>>;
 
 type GridBaseProps = {
-  display?: CssProperty<'flex' | 'inline-flex'>;
-  spacing?: CssProperty<number | string>;
-  direction?: CssProperty<CSS.StandardLonghandProperties['flexDirection']>;
-  justifyContent?: CssProperty<CSS.StandardLonghandProperties['justifyContent']>;
-  alignItems?: CssProperty<CSS.StandardLonghandProperties['alignItems']>;
-  divider?: React.ReactNode;
   className?: string;
+  columns?: CssProperty<number>;
+  columnSpacing?: CssProperty<number | string>;
+  container?: boolean;
+  direction?: CssProperty<CSS.StandardLonghandProperties['flexDirection']>;
+  offset?: CssProperty<number | 'auto'>;
+  rowSpacing?: CssProperty<number | string>;
+  size?: CssProperty<number | 'grow' | 'auto'>;
+  spacing?: CssProperty<number | string>;
 };
 
 declare const Grid: PolymorphicComponent<GridBaseProps>;
