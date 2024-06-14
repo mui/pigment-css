@@ -31,7 +31,7 @@ export default function InteractiveStack() {
   const [justifyContent, setJustifyContent] =
     React.useState<StackProps['justifyContent']>('center');
   const [alignItems, setAlignItems] = React.useState<StackProps['alignItems']>('center');
-  const [spacing, setSpacing] = React.useState(2);
+  const [spacing, setSpacing] = React.useState<string | number>(2);
 
   const handleChange = React.useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
     switch (ev.target.name) {
@@ -48,7 +48,9 @@ export default function InteractiveStack() {
         break;
       }
       case 'spacing': {
-        setSpacing(parseFloat(ev.target.value));
+        setSpacing(
+          ev.target.value.match(/^[0-9]+$/) ? parseFloat(ev.target.value) : ev.target.value,
+        );
         break;
       }
       default:
@@ -133,7 +135,7 @@ export default function InteractiveStack() {
         </fieldset>
         <fieldset sx={{ mt: 1 }}>
           <legend>Spacing</legend>
-          {[0, 0.5, 1, 2, 3, 4, 8, 12].map((item) => (
+          {[0, 0.5, 1, 2, 3, 4, 8, 12, '2rem'].map((item) => (
             <label key={item} className={labelClass}>
               {item}
               <input
