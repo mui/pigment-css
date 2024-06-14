@@ -27,6 +27,10 @@ const stackAtomics = generateAtomics(({ theme }) => {
   };
 });
 
+const baseStack = css({
+  display: 'flex',
+});
+
 /**
  * Return an array with the separator React element interspersed between
  * each React node of the input children.
@@ -74,13 +78,7 @@ const Stack = React.forwardRef(function Stack(
   return (
     <Component
       ref={ref}
-      className={clsx(
-        css`
-          display: flex;
-        `,
-        stackClasses.className,
-        className,
-      )}
+      className={clsx(baseStack, stackClasses.className, className)}
       style={{ ...style, ...stackClasses.style }}
       {...rest}
     >
