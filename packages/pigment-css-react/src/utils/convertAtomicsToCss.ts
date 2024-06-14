@@ -7,8 +7,7 @@ export type Atomics = {
     [key: string]: string[];
   };
   shorthands: Record<string, string[]>;
-  unitless: string[];
-  multiplier?: number;
+  multiplier?: string;
 };
 
 export type RuntimeConfig = {
@@ -16,8 +15,7 @@ export type RuntimeConfig = {
   styles: Record<string, Record<string, Record<string, string>>>;
   shorthands: Atomics['shorthands'];
   defaultCondition: string;
-  unitless: string[];
-  multiplier?: number;
+  multiplier?: string;
 };
 
 function getClassName(...items: string[]) {
@@ -30,7 +28,6 @@ export function convertAtomicsToCss(
     defaultCondition,
     properties,
     shorthands = {},
-    unitless = [],
     multiplier = undefined,
   }: Atomics,
   mainClassName: string,
@@ -43,7 +40,6 @@ export function convertAtomicsToCss(
     shorthands,
     conditions: Object.keys(conditions),
     defaultCondition,
-    unitless,
     multiplier,
   };
   let count = 1;
@@ -62,7 +58,9 @@ export function convertAtomicsToCss(
     Object.entries(properties).forEach(([cssPropertyName, propertyValues]) => {
       propertyValues.forEach((propertyValue) => {
         const propValue = propertyValue.startsWith('--')
-          ? cssesc(`var(${propertyValue}_${conditionName})`)
+          ? cssesc(
+              `var(${propertyValue}${conditionName === defaultCondition ? '' : `-${conditionName}`})`,
+            )
           : propertyValue;
         const className =
           isGlobal || debug
@@ -91,14 +89,14 @@ export function convertAtomicsToCss(
             },
           });
         }
-        const classMap = runtimeConfig.styles[cssPropertyName] ?? {};
-        const conditionClassMap = classMap[propertyValue] ?? {};
-        conditionClassMap[conditionName] = className;
-        if (conditionName === defaultCondition) {
-          conditionClassMap.$$default = className;
+
+        if (!runtimeConfig.styles[cssPropertyName]) {
+          runtimeConfig.styles[cssPropertyName] = {};
         }
-        classMap[propertyValue] = conditionClassMap;
-        runtimeConfig.styles[cssPropertyName] = classMap;
+        if (!runtimeConfig.styles[cssPropertyName][propertyValue]) {
+          runtimeConfig.styles[cssPropertyName][propertyValue] = {};
+        }
+        runtimeConfig.styles[cssPropertyName][propertyValue][conditionName] = className;
       });
     });
   });

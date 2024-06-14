@@ -1,8 +1,31 @@
+/* eslint-disable react/jsx-filename-extension */
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import * as React from 'react';
+import { generateAtomics } from './generateAtomics';
+import css from './css';
 
-import { stackAtomics } from './baseAtomics';
+const stackAtomics = generateAtomics(({ theme }) => {
+  const conditions = {};
+  Object.entries(theme.breakpoints.values)
+    .sort((a, b) => a[1] - b[1])
+    .forEach(([breakpoint, value]) => {
+      conditions[breakpoint] = `@media (min-width: ${value}${theme.breakpoints.unit ?? 'px'})`;
+    });
+  return {
+    conditions,
+    defaultCondition: theme.breakpoints?.keys?.[0],
+    properties: {
+      flexDirection: ['column', 'column-reverse', 'row', 'row-reverse'],
+      gap: ['--Stack-gap'],
+    },
+    shorthands: {
+      direction: ['flexDirection'],
+      spacing: ['gap'],
+    },
+    multiplier: Array.isArray(theme.vars?.spacing) ? theme.vars.spacing[0] : theme.vars?.spacing,
+  };
+});
 
 /**
  * Return an array with the separator React element interspersed between
@@ -36,34 +59,28 @@ const Stack = React.forwardRef(function Stack(
     style,
     className,
     divider,
-    display = 'flex',
     component = 'div',
     direction = 'column',
-    alignItems,
-    justifyContent,
     ...rest
   },
   ref,
 ) {
   const stackAtomicsObj = {
-    display,
     direction,
+    spacing,
   };
-  if (spacing) {
-    stackAtomicsObj.spacing = spacing;
-  }
-  if (alignItems) {
-    stackAtomicsObj.alignItems = alignItems;
-  }
-  if (justifyContent) {
-    stackAtomicsObj.justifyContent = justifyContent;
-  }
   const stackClasses = stackAtomics(stackAtomicsObj);
   const Component = component;
   return (
     <Component
       ref={ref}
-      className={clsx(stackClasses.className, className)}
+      className={clsx(
+        css`
+          display: flex;
+        `,
+        stackClasses.className,
+        className,
+      )}
       style={{ ...style, ...stackClasses.style }}
       {...rest}
     >
@@ -72,117 +89,55 @@ const Stack = React.forwardRef(function Stack(
   );
 });
 
-process.env.NODE_ENV !== 'production'
-  ? (Stack.propTypes /* remove-proptypes */ = {
-      // ┌────────────────────────────── Warning ──────────────────────────────┐
-      // │ These PropTypes are generated from the TypeScript type definitions. │
-      // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
-      // └─────────────────────────────────────────────────────────────────────┘
-      /**
-       * @ignore
-       */
-      alignItems: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-        PropTypes.oneOf([
-          'center',
-          'end',
-          'flex-end',
-          'flex-start',
-          'self-end',
-          'self-start',
-          'start',
-          'baseline',
-          'normal',
-          'stretch',
-        ]),
-        PropTypes.arrayOf(
-          PropTypes.oneOf([
-            'center',
-            'end',
-            'flex-end',
-            'flex-start',
-            'self-end',
-            'self-start',
-            'start',
-            'baseline',
-            'normal',
-            'stretch',
-          ]),
-        ),
-        PropTypes.object,
-      ]),
-      /**
-       * The content of the component.
-       */
-      children: PropTypes.node,
-      /**
-       * @ignore
-       */
-      className: PropTypes.string,
-      /**
-       * The component used for the root node.
-       * Either a string to use a HTML element or a component.
-       */
-      component: PropTypes.elementType,
-      /**
-       * @ignore
-       */
-      direction: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-        PropTypes.oneOf(['column', 'column-reverse', 'row', 'row-reverse']),
-        PropTypes.arrayOf(PropTypes.oneOf(['column', 'column-reverse', 'row', 'row-reverse'])),
-        PropTypes.object,
-      ]),
-      /**
-       * @ignore
-       */
-      display: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-        PropTypes.oneOf(['flex', 'inline-flex']),
-        PropTypes.arrayOf(PropTypes.oneOf(['flex', 'inline-flex']).isRequired),
-        PropTypes.object,
-      ]),
-      /**
-       * @ignore
-       */
-      divider: PropTypes.node,
-      /**
-       * @ignore
-       */
-      justifyContent: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-        PropTypes.oneOf([
-          'end',
-          'start',
-          'flex-end',
-          'flex-start',
-          'center',
-          'space-between',
-          'space-around',
-          'space-evenly',
-        ]),
-        PropTypes.arrayOf(
-          PropTypes.oneOf([
-            'end',
-            'start',
-            'flex-end',
-            'flex-start',
-            'center',
-            'space-between',
-            'space-around',
-            'space-evenly',
-          ]),
-        ),
-        PropTypes.object,
-      ]),
-      /**
-       * @ignore
-       */
-      spacing: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-        PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired),
-        PropTypes.number,
-        PropTypes.object,
-        PropTypes.string,
-      ]),
-    })
-  : void 0;
+if (process.env.NODE_ENV !== 'production') {
+  Stack.propTypes /* remove-proptypes */ = {
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
+    /**
+     * The content of the component.
+     */
+    children: PropTypes.node,
+    /**
+     * @ignore
+     */
+    className: PropTypes.string,
+    /**
+     * The component used for the root node.
+     * Either a string to use a HTML element or a component.
+     */
+    component: PropTypes.elementType,
+    /**
+     * @ignore
+     */
+    direction: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+      PropTypes.oneOf(['column', 'column-reverse', 'row', 'row-reverse']),
+      PropTypes.arrayOf(PropTypes.oneOf(['column', 'column-reverse', 'row', 'row-reverse'])),
+      PropTypes.object,
+    ]),
+    /**
+     * @ignore
+     */
+    divider: PropTypes.node,
+    /**
+     * @ignore
+     */
+    spacing: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired),
+      PropTypes.number,
+      PropTypes.object,
+      PropTypes.string,
+    ]),
+    /**
+     * @ignore
+     */
+    style: PropTypes.shape(),
+  };
+}
 
-Stack.displayName = 'Stack';
+if (Stack) {
+  Stack.displayName = 'Stack';
+}
 
 export default Stack;

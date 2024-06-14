@@ -12,7 +12,6 @@ export function generateAtomics() {
  * @property {Object.<string, string[]>} shorthands
  * @property {string[]} conditions
  * @property {string} defaultCondition
- * @property {string[]} unitless
  * @property {string} multiplier
  */
 
@@ -22,31 +21,27 @@ export function generateAtomics() {
  *
  * @param {RuntimeConfig} runtimeConfig
  */
-export function atomics({
-  styles,
-  shorthands,
-  conditions,
-  defaultCondition,
-  unitless,
-  multiplier = 1,
-}) {
+export function atomics({ styles, shorthands, conditions, defaultCondition, multiplier }) {
   function addStyles(cssProperty, propertyValue, classes, inlineStyle) {
     const styleClasses = styles[cssProperty];
     if (!styleClasses) {
       return;
     }
 
-    function handlePrimitive(value, breakpoint = '$$default') {
+    function handlePrimitive(value, breakpoint = defaultCondition) {
       if (!(value in styleClasses)) {
         const keys = Object.keys(styleClasses);
         if (keys.length !== 1) {
           return;
         }
         const key = keys[0];
-        const styleValue = typeof value === 'number' ? value * multiplier : value;
+        let styleValue = value;
+        if (typeof value === 'number') {
+          styleValue = multiplier ? `calc(${value} * ${multiplier})` : `${value}px`;
+        }
         classes.push(styleClasses[key][breakpoint]);
-        inlineStyle[`${key}_${breakpoint === '$$default' ? defaultCondition : breakpoint}`] =
-          unitless.includes(cssProperty) ? styleValue : `${styleValue}px`;
+        inlineStyle[`${key}${breakpoint === defaultCondition ? '' : `-${breakpoint}`}`] =
+          styleValue;
       } else {
         classes.push(styleClasses[value][breakpoint]);
       }
