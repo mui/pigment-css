@@ -1,4 +1,5 @@
 import type * as CSS from 'csstype';
+import { OverridableStringUnion } from '@mui/types';
 
 export type CSSProperties = CSS.PropertiesFallback<number | string>;
 
@@ -64,3 +65,10 @@ export interface PolymorphicComponent<SxProp, BaseProps extends BaseDefaultProps
     props: PolymorphicComponentProps<SxProp, BaseProps, AsTarget>,
   ): JSX.Element;
 }
+
+export interface BreakpointOverrides {}
+
+export type Breakpoint = OverridableStringUnion<
+  'xs' | 'sm' | 'md' | 'lg' | 'xl',
+  BreakpointOverrides
+>;

@@ -114,6 +114,9 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
     css,
     ...rest
   } = options;
+  const finalTransformLibraries = transformLibraries.concat(
+    process.env.RUNTIME_PACKAGE_NAME as string,
+  );
   const cache = new TransformCacheCollection();
   const { emitter, onDone } = createFileReporter(debug ?? false);
   const cssLookup = meta?.type === 'next' ? globalCssLookup : new Map<string, string>();
@@ -124,7 +127,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
     name: 'pigment-css-plugin-transform-babel',
     enforce: 'post',
     transformInclude(id) {
-      return isZeroRuntimeProcessableFile(id, transformLibraries);
+      return isZeroRuntimeProcessableFile(id, finalTransformLibraries);
     },
     async transform(code, id) {
       const result = await transformAsync(code, {

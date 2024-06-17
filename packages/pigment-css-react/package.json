@@ -55,6 +55,7 @@
   },
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "^7.24.1",
+    "@mui/types": "7.2.14",
     "@types/babel__core": "^7.20.5",
     "@types/babel__helper-module-imports": "^7.18.3",
     "@types/babel__helper-plugin-utils": "^7.10.3",
@@ -151,6 +152,15 @@
       },
       "require": "./build/RtlProvider.js",
       "default": "./build/RtlProvider.js"
+    },
+    "./Stack": {
+      "types": "./build/Stack.d.ts",
+      "import": {
+        "types": "./build/Stack.d.mts",
+        "default": "./build/Stack.mjs"
+      },
+      "require": "./build/Stack.js",
+      "default": "./build/Stack.js"
     }
   },
   "nx": {

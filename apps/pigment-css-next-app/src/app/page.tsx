@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { styled, css } from '@pigment-css/react';
+import Stack from '@pigment-css/react/Stack';
 import Chip from '@mui/material/Chip';
 import styles from './page.module.css';
 
@@ -112,6 +113,11 @@ export default function Home() {
           },
         }}
       >
+        <Stack spacing={{ xs: 2, md: 3 }}>
+          <div>Item1</div>
+          <div>Item1</div>
+          <div>Item1</div>
+        </Stack>
         <p sx={{ boxShadow: '0 0 4px 0 rgba(0 0 0 / 0.12)' }}>
           Get started by editing&nbsp;
           <code className={styles.code}>src/app/page.tsx</code>

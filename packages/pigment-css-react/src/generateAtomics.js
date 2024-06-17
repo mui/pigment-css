@@ -11,53 +11,88 @@ export function generateAtomics() {
  * @property {Object.<string, Object.<string, Object.<string, string>>>} styles
  * @property {Object.<string, string[]>} shorthands
  * @property {string[]} conditions
+ * @property {string} defaultCondition
+ * @property {string} multiplier
  */
 
 /**
+ * Given a mapping of atomic classes to css properties for each breakpoint, this function
+ * returns all the classnames associated with the runtime values.
+ *
  * @param {RuntimeConfig} runtimeConfig
  */
-export function atomics({ styles, shorthands, conditions }) {
-  function addStyles(cssProperty, values, classes) {
+export function atomics({ styles, shorthands, conditions, defaultCondition, multiplier }) {
+  function addStyles(cssProperty, propertyValue, classes, inlineStyle) {
     const styleClasses = styles[cssProperty];
     if (!styleClasses) {
       return;
     }
-    if (typeof values === 'string') {
-      classes.push(styleClasses[values].$$default);
-    } else if (Array.isArray(values)) {
-      values.forEach((value, index) => {
-        classes.push(styleClasses[value][conditions[index]]);
-      });
-    } else {
-      Object.keys(values).forEach((condition) => {
-        const propertyClasses = styleClasses[values[condition]];
-        if (!propertyClasses) {
+
+    function handlePrimitive(value, breakpoint = defaultCondition) {
+      if (!(value in styleClasses)) {
+        const keys = Object.keys(styleClasses);
+        if (keys.length !== 1) {
           return;
         }
-        classes.push(propertyClasses[condition]);
+        const key = keys[0];
+        let styleValue = value;
+        if (typeof value === 'number') {
+          styleValue = multiplier ? `calc(${value} * ${multiplier})` : `${value}px`;
+        }
+        classes.push(styleClasses[key][breakpoint]);
+        inlineStyle[`${key}${breakpoint === defaultCondition ? '' : `-${breakpoint}`}`] =
+          styleValue;
+      } else {
+        classes.push(styleClasses[value][breakpoint]);
+      }
+    }
+
+    if (typeof propertyValue === 'string' || typeof propertyValue === 'number') {
+      handlePrimitive(propertyValue);
+    } else if (Array.isArray(propertyValue)) {
+      propertyValue.forEach((value, index) => {
+        if (value) {
+          const breakpoint = conditions[index];
+          if (!breakpoint) {
+            return;
+          }
+          handlePrimitive(value, conditions[index]);
+        }
+      });
+    } else if (propertyValue) {
+      Object.keys(propertyValue).forEach((condition) => {
+        if (propertyValue[condition]) {
+          const propertyClasses = styleClasses[propertyValue[condition]];
+          if (!propertyClasses) {
+            handlePrimitive(propertyValue[condition], condition);
+            return;
+          }
+          classes.push(propertyClasses[condition]);
+        }
       });
     }
   }
 
   function generateClass(props) {
     const classes = [];
-    const runtimeStyles = { ...props };
-    Object.keys(runtimeStyles).forEach((cssProperty) => {
-      const values = runtimeStyles[cssProperty];
+    const inlineStyle = {};
+    Object.keys(props).forEach((cssProperty) => {
+      const values = props[cssProperty];
       if (cssProperty in shorthands) {
         const configShorthands = shorthands[cssProperty];
         if (!configShorthands) {
           return;
         }
         configShorthands.forEach((shorthand) => {
-          addStyles(shorthand, values, classes);
+          addStyles(shorthand, values, classes, inlineStyle);
         });
       } else {
-        addStyles(cssProperty, values, classes);
+        addStyles(cssProperty, values, classes, inlineStyle);
       }
     });
     return {
       className: cx(Array.from(new Set(classes))),
+      style: inlineStyle,
     };
   }
   return generateClass;
