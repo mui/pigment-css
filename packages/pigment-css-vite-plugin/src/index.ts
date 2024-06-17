@@ -46,6 +46,9 @@ export function pigment(options: PigmentOptions) {
     css,
     ...rest
   } = options ?? {};
+  const finalTransformLibraries = transformLibraries.concat(
+    process.env.RUNTIME_PACKAGE_NAME as string,
+  );
 
   function injectMUITokensPlugin(): Plugin {
     return {
@@ -78,7 +81,7 @@ export function pigment(options: PigmentOptions) {
       enforce: 'post',
       async transform(code, id) {
         const [filename] = id.split('?');
-        if (!isZeroRuntimeProcessableFile(id, transformLibraries)) {
+        if (!isZeroRuntimeProcessableFile(id, finalTransformLibraries)) {
           return null;
         }
         try {
