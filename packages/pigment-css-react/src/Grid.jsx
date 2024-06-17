@@ -41,10 +41,18 @@ export const gridAtomics = generateAtomics(({ theme }) => ({
   },
   unitless: ['--Grid-parent-column-count', '--Grid-self-column-span', '--Grid-self-offset'],
   multipliers: {
-    '--Grid-parent-column-spacing': Array.isArray(theme.vars?.spacing) ? theme.vars.spacing[0] : theme.vars?.spacing,
-    '--Grid-parent-row-spacing': Array.isArray(theme.vars?.spacing) ? theme.vars.spacing[0] : theme.vars?.spacing,
-    '--Grid-self-column-spacing': Array.isArray(theme.vars?.spacing) ? theme.vars.spacing[0] : theme.vars?.spacing,
-    '--Grid-self-row-spacing': Array.isArray(theme.vars?.spacing) ? theme.vars.spacing[0] : theme.vars?.spacing,
+    '--Grid-parent-column-spacing': Array.isArray(theme.vars?.spacing)
+      ? theme.vars.spacing[0]
+      : theme.vars?.spacing,
+    '--Grid-parent-row-spacing': Array.isArray(theme.vars?.spacing)
+      ? theme.vars.spacing[0]
+      : theme.vars?.spacing,
+    '--Grid-self-column-spacing': Array.isArray(theme.vars?.spacing)
+      ? theme.vars.spacing[0]
+      : theme.vars?.spacing,
+    '--Grid-self-row-spacing': Array.isArray(theme.vars?.spacing)
+      ? theme.vars.spacing[0]
+      : theme.vars?.spacing,
   },
   inlineGetters: {
     '--Grid-self-width': (value) => {
@@ -91,8 +99,10 @@ export const gridAtomics = generateAtomics(({ theme }) => ({
 }));
 
 const GridComponent = styled('div')({
-  '--Grid-fixed-width': 'calc(100% * var(--Grid-self-column-span) / var(--Grid-parent-column-count) - (var(--Grid-parent-column-count) - var(--Grid-self-column-span)) * var(--Grid-parent-column-spacing) / var(--Grid-parent-column-count))',
-  '--Grid-fixed-offset': 'calc(100% * var(--Grid-self-offset) / var(--Grid-parent-column-count) + var(--Grid-parent-column-spacing) * var(--Grid-self-offset) / var(--Grid-parent-column-count))',
+  '--Grid-fixed-width':
+    'calc(100% * var(--Grid-self-column-span) / var(--Grid-parent-column-count) - (var(--Grid-parent-column-count) - var(--Grid-self-column-span)) * var(--Grid-parent-column-spacing) / var(--Grid-parent-column-count))',
+  '--Grid-fixed-offset':
+    'calc(100% * var(--Grid-self-offset) / var(--Grid-parent-column-count) + var(--Grid-parent-column-spacing) * var(--Grid-self-offset) / var(--Grid-parent-column-count))',
   variants: [
     {
       props: { container: true },
@@ -100,7 +110,7 @@ const GridComponent = styled('div')({
         display: 'flex',
         flexWrap: 'wrap',
         gap: 'var(--Grid-self-row-spacing) var(--Grid-self-column-spacing)',
-      }
+      },
     },
     {
       props: ({ size }) => size !== undefined,
@@ -108,16 +118,16 @@ const GridComponent = styled('div')({
         width: 'var(--Grid-self-width)',
         maxWidth: 'var(--Grid-self-max-width)',
         flex: 'var(--Grid-self-flex)',
-      }
+      },
     },
     {
       props: ({ offset }) => offset !== undefined,
       style: {
         marginLeft: 'var(--Grid-self-margin-left)',
-      }
-    }
-  ]
-})
+      },
+    },
+  ],
+});
 
 const Grid = React.forwardRef(function Grid(
   {
@@ -144,7 +154,6 @@ const Grid = React.forwardRef(function Grid(
   },
   ref,
 ) {
-
   const selfColumns = columns ?? unstable_parent_columns ?? 12;
   const selfColumnSpacing = columnSpacing ?? spacing ?? unstable_parent_column_spacing ?? 0;
   const selfRowSpacing = rowSpacing ?? spacing ?? unstable_parent_row_spacing ?? 0;
@@ -175,7 +184,6 @@ const Grid = React.forwardRef(function Grid(
     GridAtomicsObj['--Grid-self-width'] = size;
     GridAtomicsObj['--Grid-self-max-width'] = size;
     GridAtomicsObj['--Grid-self-flex'] = size;
-    
   }
   if (offset) {
     GridAtomicsObj['--Grid-self-offset'] = offset;
@@ -210,94 +218,93 @@ const Grid = React.forwardRef(function Grid(
 
 Grid.muiName = 'Grid';
 
-process.env.NODE_ENV !== 'production'
-  && (Grid.propTypes /* remove-proptypes */ = {
-      // ┌────────────────────────────── Warning ──────────────────────────────┐
-      // │ These PropTypes are generated from the TypeScript type definitions. │
-      // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
-      // └─────────────────────────────────────────────────────────────────────┘
-      /**
-       * The content of the component.
-       */
-      children: PropTypes.node,
-      /**
-       * @ignore
-       */
-      className: PropTypes.string,
-      /**
-       * @ignore
-       */
-      columns: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-        PropTypes.arrayOf(PropTypes.number),
-        PropTypes.number,
-        PropTypes.object,
-      ]),
-      /**
-       * @ignore
-       */
-      columnSpacing: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-        PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired),
-        PropTypes.number,
-        PropTypes.object,
-        PropTypes.string,
-      ]),
-      /**
-       * The component used for the root node.
-       * Either a string to use a HTML element or a component.
-       */
-      component: PropTypes.elementType,
-      /**
-       * @ignore
-       */
-      container: PropTypes.bool,
-      /**
-       * @ignore
-       */
-      direction: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-        PropTypes.oneOf(['column', 'column-reverse', 'row', 'row-reverse']),
-        PropTypes.arrayOf(PropTypes.oneOf(['column', 'column-reverse', 'row', 'row-reverse'])),
-        PropTypes.object,
-      ]),
-      /**
-       * @ignore
-       */
-      offset: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-        PropTypes.arrayOf(PropTypes.number),
-        PropTypes.number,
-        PropTypes.object,
-      ]),
-      /**
-       * @ignore
-       */
-      rowSpacing: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-        PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired),
-        PropTypes.number,
-        PropTypes.object,
-        PropTypes.string,
-      ]),
-      /**
-       * @ignore
-       */
-      size: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-        PropTypes.arrayOf(PropTypes.number),
-        PropTypes.number,
-        PropTypes.object,
-      ]),
-      /**
-       * @ignore
-       */
-      spacing: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-        PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired),
-        PropTypes.number,
-        PropTypes.object,
-        PropTypes.string,
-      ]),
-      /**
-       * @ignore
-       */
-      style: PropTypes.object,
-      
-    })
+process.env.NODE_ENV !== 'production' &&
+  (Grid.propTypes /* remove-proptypes */ = {
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
+    /**
+     * The content of the component.
+     */
+    children: PropTypes.node,
+    /**
+     * @ignore
+     */
+    className: PropTypes.string,
+    /**
+     * @ignore
+     */
+    columns: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+      PropTypes.arrayOf(PropTypes.number),
+      PropTypes.number,
+      PropTypes.object,
+    ]),
+    /**
+     * @ignore
+     */
+    columnSpacing: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired),
+      PropTypes.number,
+      PropTypes.object,
+      PropTypes.string,
+    ]),
+    /**
+     * The component used for the root node.
+     * Either a string to use a HTML element or a component.
+     */
+    component: PropTypes.elementType,
+    /**
+     * @ignore
+     */
+    container: PropTypes.bool,
+    /**
+     * @ignore
+     */
+    direction: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+      PropTypes.oneOf(['column', 'column-reverse', 'row', 'row-reverse']),
+      PropTypes.arrayOf(PropTypes.oneOf(['column', 'column-reverse', 'row', 'row-reverse'])),
+      PropTypes.object,
+    ]),
+    /**
+     * @ignore
+     */
+    offset: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+      PropTypes.arrayOf(PropTypes.number),
+      PropTypes.number,
+      PropTypes.object,
+    ]),
+    /**
+     * @ignore
+     */
+    rowSpacing: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired),
+      PropTypes.number,
+      PropTypes.object,
+      PropTypes.string,
+    ]),
+    /**
+     * @ignore
+     */
+    size: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+      PropTypes.arrayOf(PropTypes.number),
+      PropTypes.number,
+      PropTypes.object,
+    ]),
+    /**
+     * @ignore
+     */
+    spacing: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired),
+      PropTypes.number,
+      PropTypes.object,
+      PropTypes.string,
+    ]),
+    /**
+     * @ignore
+     */
+    style: PropTypes.object,
+  });
 
 Grid.displayName = 'Grid';
 

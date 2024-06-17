@@ -24,7 +24,7 @@ const stackAtomics = generateAtomics(({ theme }) => {
       spacing: ['gap'],
     },
     multipliers: {
-      gap: Array.isArray(theme.vars?.spacing) ? theme.vars.spacing[0] : theme.vars?.spacing
+      gap: Array.isArray(theme.vars?.spacing) ? theme.vars.spacing[0] : theme.vars?.spacing,
     },
   };
 });

@@ -27,7 +27,7 @@ function GridDemo1() {
         <Item>size=8</Item>
       </Grid>
     </Grid>
-  )
+  );
 }
 
 function GridDemo2() {
@@ -46,7 +46,7 @@ function GridDemo2() {
         <Item>xs=6 md=8</Item>
       </Grid>
     </Grid>
-  )
+  );
 }
 
 function GridDemo3() {
@@ -54,30 +54,36 @@ function GridDemo3() {
   return (
     <div sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
       <Grid container spacing={spacing} sx={{ justifyContent: 'center' }}>
-          {[0, 1, 2].map((value) => (
-            <Grid key={value}>
+        {[0, 1, 2].map((value) => (
+          <Grid key={value}>
             <Item
               sx={{
                 height: 140,
                 width: 100,
               }}
-              />
-            </Grid>
-          ))}
+            />
+          </Grid>
+        ))}
       </Grid>
-      <Grid container spacing={1} sx={{ justifyContent: 'center' }} >
+      <Grid container spacing={1} sx={{ justifyContent: 'center' }}>
         <Grid size={'auto'}>Spacing:</Grid>
         {[0, 0.5, 1, 2, 3, 4, 8, 12].map((value) => (
           <Grid key={value} size={'auto'}>
             <label>
-              <input type="radio" name="radio" value={value} checked={value === spacing} onChange={(e) => setSpacing(parseFloat(e.target.value))} />
+              <input
+                type="radio"
+                name="radio"
+                value={value}
+                checked={value === spacing}
+                onChange={(e) => setSpacing(parseFloat(e.target.value))}
+              />
               {value}
             </label>
           </Grid>
         ))}
-        </Grid>
+      </Grid>
     </div>
-  )
+  );
 }
 
 function GridDemo4() {
@@ -96,7 +102,7 @@ function GridDemo4() {
         <Item>4</Item>
       </Grid>
     </Grid>
-  )
+  );
 }
 
 function GridDemo5() {
@@ -108,7 +114,7 @@ function GridDemo5() {
         </Grid>
       ))}
     </Grid>
-  )
+  );
 }
 
 function GridDemo6() {
@@ -124,7 +130,7 @@ function GridDemo6() {
         <Item>grow</Item>
       </Grid>
     </Grid>
-  )
+  );
 }
 
 function GridDemo7() {
@@ -140,7 +146,7 @@ function GridDemo7() {
         <Item>grow</Item>
       </Grid>
     </Grid>
-  )
+  );
 }
 
 function GridDemo8() {
@@ -153,10 +159,7 @@ function GridDemo8() {
         <Grid container size={{ xs: 12, md: 7, lg: 8 }} spacing={4}>
           <Grid size={{ xs: 6, lg: 3 }}>
             <Item>
-              <Box
-                id="category-a"
-                sx={{ fontSize: '12px', textTransform: 'uppercase' }}
-              >
+              <Box id="category-a" sx={{ fontSize: '12px', textTransform: 'uppercase' }}>
                 Category A
               </Box>
               <Box component="ul" aria-labelledby="category-a" sx={{ pl: 2 }}>
@@ -168,10 +171,7 @@ function GridDemo8() {
           </Grid>
           <Grid size={{ xs: 6, lg: 3 }}>
             <Item>
-              <Box
-                id="category-b"
-                sx={{ fontSize: '12px', textTransform: 'uppercase' }}
-              >
+              <Box id="category-b" sx={{ fontSize: '12px', textTransform: 'uppercase' }}>
                 Category B
               </Box>
               <Box component="ul" aria-labelledby="category-b" sx={{ pl: 2 }}>
@@ -183,10 +183,7 @@ function GridDemo8() {
           </Grid>
           <Grid size={{ xs: 6, lg: 3 }}>
             <Item>
-              <Box
-                id="category-c"
-                sx={{ fontSize: '12px', textTransform: 'uppercase' }}
-              >
+              <Box id="category-c" sx={{ fontSize: '12px', textTransform: 'uppercase' }}>
                 Category C
               </Box>
               <Box component="ul" aria-labelledby="category-c" sx={{ pl: 2 }}>
@@ -198,10 +195,7 @@ function GridDemo8() {
           </Grid>
           <Grid size={{ xs: 6, lg: 3 }}>
             <Item>
-              <Box
-                id="category-d"
-                sx={{ fontSize: '12px', textTransform: 'uppercase' }}
-              >
+              <Box id="category-d" sx={{ fontSize: '12px', textTransform: 'uppercase' }}>
                 Category D
               </Box>
               <Box component="ul" aria-labelledby="category-d" sx={{ pl: 2 }}>
@@ -216,7 +210,7 @@ function GridDemo8() {
           size={12}
           container
           direction={{ xs: 'column', sm: 'row' }}
-          sx={{ fontSize: '12px', justifyContent: 'space-between', alignItems: 'center'}}
+          sx={{ fontSize: '12px', justifyContent: 'space-between', alignItems: 'center' }}
         >
           <Grid sx={{ order: { xs: 2, sm: 1 } }}>
             <Item>© Copyright</Item>
@@ -235,20 +229,20 @@ function GridDemo8() {
         </Grid>
       </Grid>
     </Box>
-  )
+  );
 }
 
 function GridDemo9() {
   return (
     <Grid container spacing={2} columns={16}>
-      <Grid size={{xs: 8}}>
+      <Grid size={{ xs: 8 }}>
         <Item>size=8</Item>
       </Grid>
-      <Grid size={{xs: 8}}>
+      <Grid size={{ xs: 8 }}>
         <Item>size=8</Item>
       </Grid>
     </Grid>
-  )
+  );
 }
 
 function GridDemo10() {
@@ -257,17 +251,17 @@ function GridDemo10() {
       <Grid size={{ xs: 6, md: 2 }} offset={{ xs: 3, md: 0 }}>
         <Item>1</Item>
       </Grid>
-      <Grid size={{ xs: 4, md: 2 }} offset={{ md: "auto" }}>
+      <Grid size={{ xs: 4, md: 2 }} offset={{ md: 'auto' }}>
         <Item>2</Item>
       </Grid>
-      <Grid size={{ xs: 4, md: 2 }} offset={{ xs: 4, md: 0 }} >
+      <Grid size={{ xs: 4, md: 2 }} offset={{ xs: 4, md: 0 }}>
         <Item>3</Item>
       </Grid>
       <Grid size={{ xs: 'grow', md: 6 }} offset={{ md: 2 }}>
         <Item>4</Item>
       </Grid>
     </Grid>
-  )
+  );
 }
 
 const demos = [
@@ -281,15 +275,14 @@ const demos = [
   { id: '8', component: GridDemo8 },
   { id: '9', component: GridDemo9 },
   { id: '10', component: GridDemo10 },
-]
+];
 
 export default function InteractiveGrid() {
-
   return (
-    <div sx={{ p: 2, mb: 16, display: 'flex', flexDirection: 'column', gap: 2}}>
+    <div sx={{ p: 2, mb: 16, display: 'flex', flexDirection: 'column', gap: 2 }}>
       <a href="https://mui.com/system/react-grid">Benchmark v5</a>
       <a href="https://next.mui.com/system/react-grid">Benchmark next</a>
-      {demos.map(demo => {
+      {demos.map((demo) => {
         const Demo = demo.component;
         return (
           <div key={demo.id} sx={{ flex: '1 1 0', pb: 4, borderBottom: '1px solid gray' }}>
