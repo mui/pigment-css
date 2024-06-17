@@ -13,7 +13,7 @@ export function generateAtomics() {
  * @property {string[]} conditions
  * @property {string} defaultCondition
  * @property {string[]} unitless
- * @property {string} multipliers
+ * @property {Object.<string, string>} multipliers
  */
 
 /**
