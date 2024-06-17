@@ -51,20 +51,24 @@ export function atomics({ styles, shorthands, conditions, defaultCondition, mult
       handlePrimitive(propertyValue);
     } else if (Array.isArray(propertyValue)) {
       propertyValue.forEach((value, index) => {
-        const breakpoint = conditions[index];
-        if (!breakpoint) {
-          return;
+        if (value) {
+          const breakpoint = conditions[index];
+          if (!breakpoint) {
+            return;
+          }
+          handlePrimitive(value, conditions[index]);
         }
-        handlePrimitive(value, conditions[index]);
       });
-    } else {
+    } else if (propertyValue) {
       Object.keys(propertyValue).forEach((condition) => {
-        const propertyClasses = styleClasses[propertyValue[condition]];
-        if (!propertyClasses) {
-          handlePrimitive(propertyValue[condition], condition);
-          return;
+        if (propertyValue[condition]) {
+          const propertyClasses = styleClasses[propertyValue[condition]];
+          if (!propertyClasses) {
+            handlePrimitive(propertyValue[condition], condition);
+            return;
+          }
+          classes.push(propertyClasses[condition]);
         }
-        handlePrimitive(propertyClasses[condition], condition);
       });
     }
   }
@@ -72,9 +76,8 @@ export function atomics({ styles, shorthands, conditions, defaultCondition, mult
   function generateClass(props) {
     const classes = [];
     const inlineStyle = {};
-    const runtimeStyles = props;
-    Object.keys(runtimeStyles).forEach((cssProperty) => {
-      const values = runtimeStyles[cssProperty];
+    Object.keys(props).forEach((cssProperty) => {
+      const values = props[cssProperty];
       if (cssProperty in shorthands) {
         const configShorthands = shorthands[cssProperty];
         if (!configShorthands) {

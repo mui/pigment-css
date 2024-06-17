@@ -68,7 +68,61 @@ describe('generateAtomics', () => {
     });
   });
 
-  it('should work with shorthands', () => {
+  it('should work with shorthands with primitives values', () => {
+    expect(
+      atomic({
+        direction: 'row',
+        spacing: 1,
+      }),
+    ).to.deep.equal({
+      className: 'flex-direction-row-xs gap--Stack-gap-xs',
+      style: {
+        '--Stack-gap': 'calc(1 * 8px)',
+      },
+    });
+  });
+
+  it('should not throw with undefined or null', () => {
+    expect(
+      atomic({
+        direction: undefined,
+        spacing: null,
+      }),
+    ).to.deep.equal({
+      className: '',
+      style: {},
+    });
+  });
+
+  it('should work with shorthands with object as values', () => {
+    expect(
+      atomic({
+        direction: { xs: 'row', sm: 'column' },
+        gap: { xs: 1, sm: 2 },
+      }),
+    ).to.deep.equal({
+      className:
+        'flex-direction-row-xs flex-direction-column-sm gap--Stack-gap-xs gap--Stack-gap-sm',
+      style: {
+        '--Stack-gap': 'calc(1 * 8px)',
+        '--Stack-gap-sm': 'calc(2 * 8px)',
+      },
+    });
+  });
+
+  it('should not throw with shorthands with object as values', () => {
+    expect(
+      atomic({
+        direction: { xs: null, sm: undefined },
+        gap: { xs: null, sm: undefined },
+      }),
+    ).to.deep.equal({
+      className: '',
+      style: {},
+    });
+  });
+
+  it('should work with shorthands with array as values', () => {
     expect(
       atomic({
         direction: ['row', 'column'],
@@ -81,6 +135,18 @@ describe('generateAtomics', () => {
         '--Stack-gap': 'calc(1 * 8px)',
         '--Stack-gap-sm': 'calc(2 * 8px)',
       },
+    });
+  });
+
+  it('should not throw with shorthands with array as values', () => {
+    expect(
+      atomic({
+        direction: [null, undefined],
+        gap: [undefined, null],
+      }),
+    ).to.deep.equal({
+      className: '',
+      style: {},
     });
   });
 });
