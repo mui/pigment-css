@@ -310,9 +310,9 @@ export class StyledProcessor extends BaseProcessor {
    * which we can use to generate our styles.
    * Order of processing styles -
    * 1. CSS directly declared in styled call
-   * 3. Variants declared in styled call
-   * 2. CSS declared in theme object's styledOverrides
-   * 3. Variants declared in theme object
+   * 2. Variants declared in styled call
+   * 3. CSS declared in theme object's styledOverrides
+   * 4. Variants declared in theme object
    */
   build(values: ValueCache): void {
     if (this.isTemplateTag) {
@@ -449,6 +449,7 @@ export class StyledProcessor extends BaseProcessor {
         variantsAccumulator,
         themeImportIdentifier,
       );
+
       const className = this.getClassName();
       this.baseClasses.push(className);
       this.collectedStyles.push([className, finalStyle, styleArg]);
@@ -523,8 +524,8 @@ export class StyledProcessor extends BaseProcessor {
     styleArg: ExpressionValue | null,
     variantsAccumulator?: VariantData[],
     themeImportIdentifier?: string,
-  ) {
-    const { themeArgs = {} } = this.options as IOptions;
+  ): string {
+    const { themeArgs = {}, experiments = {} } = this.options as IOptions;
     const styleObj = typeof styleObjOrFn === 'function' ? styleObjOrFn(themeArgs) : styleObjOrFn;
     if (!styleObj) {
       return '';
@@ -551,7 +552,15 @@ export class StyledProcessor extends BaseProcessor {
     if (res.length) {
       this.collectedVariables.push(...res);
     }
-    return processCssObject(styleObj, themeArgs);
+    const cssText = processCssObject(styleObj, themeArgs);
+
+    if (experiments.styleLayers) {
+      if (variantsAccumulator) {
+        return `@layer pigment-base {${cssText}}`;
+      }
+      return `@layer pigment-variant {${cssText}}`;
+    }
+    return cssText;
   }
 
   public override get asSelector(): string {

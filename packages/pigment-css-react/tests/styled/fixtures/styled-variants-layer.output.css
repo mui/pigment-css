@@ -1,0 +1,31 @@
+@layer pigment-base, pigment-variant;
+@layer pigment-base {
+  .srxh6zy {
+    color: red;
+  }
+}
+@layer pigment-variant {
+  .srxh6zy-1 {
+    color: tomato;
+  }
+}
+@layer pigment-variant {
+  .srxh6zy-2 {
+    color: salmon;
+  }
+}
+@layer pigment-base {
+  .srxh6zy-3 {
+    font-size: 1.5rem;
+  }
+}
+@layer pigment-base {
+  .s1q936we {
+    color: blue;
+  }
+}
+@layer pigment-variant {
+  .s1q936we-1 {
+    color: indigo;
+  }
+}

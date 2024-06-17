@@ -82,6 +82,23 @@ describe('Pigment CSS - styled', () => {
     expect(output.css).to.equal(fixture.css);
   });
 
+  it('should work with variants with layers enabled', async () => {
+    const { output, fixture } = await runTransformation(
+      path.join(__dirname, 'fixtures/styled-variants-layer.input.js'),
+      {
+        themeArgs: {
+          theme,
+        },
+        experiments: {
+          styleLayers: true,
+        },
+      },
+    );
+
+    expect(output.js).to.equal(fixture.js);
+    expect(output.css).to.equal(fixture.css);
+  });
+
   it('should work with theme styleOverrides', async () => {
     const { output, fixture } = await runTransformation(
       path.join(__dirname, 'fixtures/styled-theme-styleOverrides.input.js'),

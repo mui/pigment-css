@@ -8,7 +8,7 @@ import {
   transform as wywTransform,
   createFileReporter,
 } from '@wyw-in-js/transform';
-import { PluginCustomOptions, preprocessor } from '@pigment-css/react/utils';
+import { PluginCustomOptions, preprocessor, generateTokenCss } from '@pigment-css/react/utils';
 import * as prettier from 'prettier';
 
 import sxTransformPlugin from '../exports/sx-plugin';
@@ -25,10 +25,7 @@ function runSxTransform(code: string, filename: string) {
   });
 }
 
-export async function runTransformation(
-  absolutePath: string,
-  options?: { themeArgs?: { theme?: any }; css?: PluginCustomOptions['css'] },
-) {
+export async function runTransformation(absolutePath: string, options?: PluginCustomOptions) {
   const cache = new TransformCacheCollection();
   const { emitter: eventEmitter } = createFileReporter(false);
   const inputFilePath = absolutePath;
@@ -44,9 +41,7 @@ export async function runTransformation(
   const babelResult = await runSxTransform(inputContent, inputFilePath);
 
   const pluginOptions = {
-    themeArgs: {
-      theme: options?.themeArgs?.theme,
-    },
+    ...options,
     babelOptions: {
       configFile: false,
       babelrc: false,
@@ -81,7 +76,10 @@ export async function runTransformation(
     ...prettierConfig,
     parser: 'babel',
   });
-  const formattedCss = await prettier.format(result.cssText ?? '', {
+  const baseCss = generateTokenCss(options?.themeArgs?.theme ?? {}, options?.experiments);
+  const originalCss = baseCss + result.cssText ?? '';
+
+  const formattedCss = await prettier.format(originalCss, {
     ...prettierConfig,
     parser: 'css',
   });
