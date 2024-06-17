@@ -66,9 +66,7 @@ export function convertAtomicsToCss(
     Object.entries(properties).forEach(([cssPropertyName, propertyValues]) => {
       propertyValues.forEach((propertyValue) => {
         const propValue = propertyValue.startsWith('--')
-          ? cssesc(
-              `var(${propertyValue}${conditionName === defaultCondition ? '' : `-${conditionName}`})`,
-            )
+          ? cssesc(`var(${propertyValue}-${conditionName})`)
           : propertyValue;
         const className =
           isGlobal || debug

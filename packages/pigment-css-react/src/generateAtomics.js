@@ -6,10 +6,6 @@ export function generateAtomics() {
   );
 }
 
-function defaultInlineGetter(styleValue, cssProperty, unitless) {
-  return unitless.includes(cssProperty) ? styleValue : `${styleValue}px`;
-}
-
 /**
  * @typedef {Object} RuntimeConfig
  * @property {Object.<string, Object.<string, Object.<string, string>>>} styles
@@ -31,7 +27,7 @@ export function atomics({
   shorthands,
   conditions,
   defaultCondition,
-  unitless,
+  unitless = [],
   multipliers = {},
   inlineGetters = {},
 }) {
@@ -43,8 +39,8 @@ export function atomics({
 
     function handlePrimitive(
       value,
-      multiplier = 1,
-      inlineGetter = defaultInlineGetter,
+      multiplier = undefined,
+      inlineGetter = undefined,
       breakpoint = defaultCondition,
     ) {
       if (!(value in styleClasses)) {
@@ -55,11 +51,14 @@ export function atomics({
         const key = keys[0];
         let styleValue = value;
         if (typeof value === 'number') {
-          styleValue = multiplier ? `calc(${value} * ${multiplier})` : `${value}px`;
+          if (multiplier) {
+            styleValue = `calc(${value} * ${multiplier})`;
+          } else if (!unitless.includes(cssProperty)) {
+            styleValue = `${value}px`;
+          }
         }
         classes.push(styleClasses[key][breakpoint]);
-        inlineStyle[`${key}${breakpoint === defaultCondition ? '' : `-${breakpoint}`}`] =
-          inlineGetter(styleValue, cssProperty, unitless);
+        inlineStyle[`${key}-${breakpoint}`] = inlineGetter ? inlineGetter(styleValue) : styleValue;
       } else {
         classes.push(styleClasses[value][breakpoint]);
       }
@@ -69,7 +68,7 @@ export function atomics({
       handlePrimitive(propertyValue, multipliers[cssProperty], inlineGetters[cssProperty]);
     } else if (Array.isArray(propertyValue)) {
       propertyValue.forEach((value, index) => {
-        if (value) {
+        if (value !== undefined && value !== null) {
           const breakpoint = conditions[index];
           if (!breakpoint) {
             return;
@@ -84,7 +83,7 @@ export function atomics({
       });
     } else if (propertyValue) {
       Object.keys(propertyValue).forEach((condition) => {
-        if (propertyValue[condition]) {
+        if (propertyValue[condition] !== undefined && propertyValue[condition] !== null) {
           const propertyClasses = styleClasses[propertyValue[condition]];
           if (!propertyClasses) {
             handlePrimitive(

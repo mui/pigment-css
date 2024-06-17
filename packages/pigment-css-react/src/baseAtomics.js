@@ -71,10 +71,10 @@ export const gridAtomics = generateAtomics(({ theme }) => ({
   },
   unitless: ['--Grid-parent-column-count', '--Grid-self-column-span', '--Grid-self-offset'],
   multipliers: {
-    '--Grid-parent-column-spacing': 8,
-    '--Grid-parent-row-spacing': 8,
-    '--Grid-self-column-spacing': 8,
-    '--Grid-self-row-spacing': 8,
+    '--Grid-parent-column-spacing': Array.isArray(theme.vars?.spacing) ? theme.vars.spacing[0] : theme.vars?.spacing,
+    '--Grid-parent-row-spacing': Array.isArray(theme.vars?.spacing) ? theme.vars.spacing[0] : theme.vars?.spacing,
+    '--Grid-self-column-spacing': Array.isArray(theme.vars?.spacing) ? theme.vars.spacing[0] : theme.vars?.spacing,
+    '--Grid-self-row-spacing': Array.isArray(theme.vars?.spacing) ? theme.vars.spacing[0] : theme.vars?.spacing,
   },
   inlineGetters: {
     '--Grid-self-width': (value) => {

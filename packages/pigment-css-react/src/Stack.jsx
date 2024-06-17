@@ -23,7 +23,9 @@ const stackAtomics = generateAtomics(({ theme }) => {
       direction: ['flexDirection'],
       spacing: ['gap'],
     },
-    multiplier: Array.isArray(theme.vars?.spacing) ? theme.vars.spacing[0] : theme.vars?.spacing,
+    multipliers: {
+      gap: Array.isArray(theme.vars?.spacing) ? theme.vars.spacing[0] : theme.vars?.spacing
+    },
   };
 });
 
