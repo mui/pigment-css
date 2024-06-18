@@ -8,7 +8,7 @@ export function isSerializable(o: unknown): o is Serializable {
     return o.every(isSerializable);
   }
 
-  if (o === null) {
+  if (o === null || o === undefined) {
     return true;
   }
 

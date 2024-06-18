@@ -161,6 +161,15 @@
       },
       "require": "./build/Stack.js",
       "default": "./build/Stack.js"
+    },
+    "./Hidden": {
+      "types": "./build/Hidden.d.ts",
+      "import": {
+        "types": "./build/Hidden.d.mts",
+        "default": "./build/Hidden.mjs"
+      },
+      "require": "./build/Hidden.js",
+      "default": "./build/Hidden.js"
     }
   },
   "nx": {
