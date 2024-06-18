@@ -20,7 +20,15 @@ const baseConfig: Options = {
   external,
 };
 
-const BASE_FILES = ['index.ts', 'theme.ts', 'Box.jsx', 'RtlProvider.tsx', 'Stack.jsx', 'Grid.jsx'];
+const BASE_FILES = [
+  'index.ts',
+  'theme.ts',
+  'Box.jsx',
+  'RtlProvider.tsx',
+  'Stack.jsx',
+  'Container.jsx',
+  'Grid.jsx',
+];
 
 export default defineConfig([
   {
