@@ -57,12 +57,11 @@ export function convertAtomicsToCss(
   Object.entries(conditions).forEach(([conditionName, mediaQueryStr]) => {
     Object.entries(properties).forEach(([cssPropertyName, propertyValues]) => {
       propertyValues.forEach((propertyValue) => {
-        const propValue =
-          typeof propertyValue === 'string' && propertyValue.startsWith('--')
-            ? cssesc(
-                `var(${propertyValue}${conditionName === defaultCondition ? '' : `-${conditionName}`})`,
-              )
-            : propertyValue;
+        const propValue = propertyValue.startsWith('--')
+          ? cssesc(
+              `var(${propertyValue}${conditionName === defaultCondition ? '' : `-${conditionName}`})`,
+            )
+          : propertyValue;
         const className =
           isGlobal || debug
             ? getClassName(
