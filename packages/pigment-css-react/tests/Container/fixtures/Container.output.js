@@ -14,27 +14,39 @@ const ContainerRoot = /*#__PURE__*/ _default('div', {
     },
     {
       props: {
-        maxWidth: 'sm',
+        fixed: true,
       },
       className: 'c12mgz3n-2',
     },
     {
       props: {
-        maxWidth: 'md',
+        maxWidth: 'xs',
       },
       className: 'c12mgz3n-3',
     },
     {
       props: {
-        maxWidth: 'lg',
+        maxWidth: 'sm',
       },
       className: 'c12mgz3n-4',
     },
     {
       props: {
-        maxWidth: 'xl',
+        maxWidth: 'md',
       },
       className: 'c12mgz3n-5',
+    },
+    {
+      props: {
+        maxWidth: 'lg',
+      },
+      className: 'c12mgz3n-6',
+    },
+    {
+      props: {
+        maxWidth: 'xl',
+      },
+      className: 'c12mgz3n-7',
     },
   ],
 });

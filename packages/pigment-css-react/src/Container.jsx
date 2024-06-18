@@ -10,7 +10,6 @@ const ContainerRoot = styled('div', {
   marginLeft: 'auto',
   boxSizing: 'border-box',
   marginRight: 'auto',
-  display: 'block',
   variants: [
     {
       props: (props) => !props.disableGutters,
@@ -23,11 +22,36 @@ const ContainerRoot = styled('div', {
         },
       },
     },
-    ...theme.breakpoints.keys
-      .map((breakpoint) => {
-        if (!breakpoint || breakpoint === 'xs') {
-          return false;
+    {
+      props: {
+        fixed: true,
+      },
+      style: Object.keys(theme.breakpoints.values).reduce((acc, breakpointValueKey) => {
+        const breakpoint = breakpointValueKey;
+        const value = theme.breakpoints.values[breakpoint];
+
+        if (value !== 0) {
+          // @ts-ignore
+          acc[theme.breakpoints.up(breakpoint)] = {
+            maxWidth: `${value}${theme.breakpoints.unit}`,
+          };
         }
+        return acc;
+      }, {}),
+    },
+    {
+      props: {
+        maxWidth: 'xs',
+      },
+      style: {
+        [theme.breakpoints.up('xs')]: {
+          maxWidth: Math.max(theme.breakpoints.values.xs, 444),
+        },
+      },
+    },
+    ...theme.breakpoints.keys
+      .filter((breakpoint) => breakpoint && breakpoint !== 'xs')
+      .map((breakpoint) => {
         return {
           props: {
             maxWidth: breakpoint,
