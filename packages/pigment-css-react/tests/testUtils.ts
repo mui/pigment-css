@@ -30,15 +30,15 @@ export async function runTransformation(
   options?: {
     themeArgs?: { theme?: any };
     css?: PluginCustomOptions['css'];
-    outputFilePath?: string;
+    outputJsPath?: string;
   },
 ) {
   const cache = new TransformCacheCollection();
   const { emitter: eventEmitter } = createFileReporter(false);
   const inputFilePath = absolutePath;
-  const outputFilePath = options?.outputFilePath || absolutePath.replace('.input.', '.output.');
+  const outputFilePath = options?.outputJsPath || absolutePath.replace('.input.', '.output.');
   const outputCssFilePath =
-    options?.outputFilePath?.replace('.js', '.css') ||
+    options?.outputJsPath?.replace('.js', '.css') ||
     absolutePath.replace('.input.js', '.output.css');
 
   const inputContent = fs.readFileSync(inputFilePath, 'utf8');

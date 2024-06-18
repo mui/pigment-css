@@ -17,7 +17,7 @@ describe('Pigment CSS - Hidden', () => {
             breakpoints: createBreakpoints({}),
           },
         },
-        outputFilePath: path.join(
+        outputJsPath: path.join(
           process.cwd(),
           'packages/pigment-css-react/tests/Hidden/Hidden.output.js',
         ),
