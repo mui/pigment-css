@@ -56,71 +56,73 @@ const Hidden = React.forwardRef(function Hidden(
   );
 });
 
-Hidden.propTypes = {
-  /**
-   * The content of the component.
-   */
-  children: PropTypes.node,
-  /**
-   * @ignore
-   */
-  className: PropTypes.string,
-  /**
-   * The component used for the root node.
-   * Either a string to use a HTML element or a component.
-   */
-  component: PropTypes.elementType,
-  /**
-   * If `true`, screens this size and down are hidden.
-   */
-  lgDown: PropTypes.bool,
-  /**
-   * If `true`, screens this size and up are hidden.
-   */
-  lgUp: PropTypes.bool,
-  /**
-   * If `true`, screens this size and down are hidden.
-   */
-  mdDown: PropTypes.bool,
-  /**
-   * If `true`, screens this size and up are hidden.
-   */
-  mdUp: PropTypes.bool,
-  /**
-   * Hide the given breakpoint(s).
-   */
-  only: PropTypes.oneOfType([
-    PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
-    PropTypes.arrayOf(PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl'])),
-  ]),
-  /**
-   * If `true`, screens this size and down are hidden.
-   */
-  smDown: PropTypes.bool,
-  /**
-   * If `true`, screens this size and up are hidden.
-   */
-  smUp: PropTypes.bool,
-  /**
-   * @ignore
-   */
-  style: PropTypes.object,
-  /**
-   * If `true`, screens this size and down are hidden.
-   */
-  xlDown: PropTypes.bool,
-  /**
-   * If `true`, screens this size and up are hidden.
-   */
-  xlUp: PropTypes.bool,
-  /**
-   * If `true`, screens this size and down are hidden.
-   */
-  xsDown: PropTypes.bool,
-  /**
-   * If `true`, screens this size and up are hidden.
-   */
-  xsUp: PropTypes.bool,
-};
+if (process.env.NODE_ENV !== 'production') {
+  Hidden.propTypes = {
+    /**
+     * The content of the component.
+     */
+    children: PropTypes.node,
+    /**
+     * @ignore
+     */
+    className: PropTypes.string,
+    /**
+     * The component used for the root node.
+     * Either a string to use a HTML element or a component.
+     */
+    component: PropTypes.elementType,
+    /**
+     * If `true`, screens this size and down are hidden.
+     */
+    lgDown: PropTypes.bool,
+    /**
+     * If `true`, screens this size and up are hidden.
+     */
+    lgUp: PropTypes.bool,
+    /**
+     * If `true`, screens this size and down are hidden.
+     */
+    mdDown: PropTypes.bool,
+    /**
+     * If `true`, screens this size and up are hidden.
+     */
+    mdUp: PropTypes.bool,
+    /**
+     * Hide the given breakpoint(s).
+     */
+    only: PropTypes.oneOfType([
+      PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
+      PropTypes.arrayOf(PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl'])),
+    ]),
+    /**
+     * If `true`, screens this size and down are hidden.
+     */
+    smDown: PropTypes.bool,
+    /**
+     * If `true`, screens this size and up are hidden.
+     */
+    smUp: PropTypes.bool,
+    /**
+     * @ignore
+     */
+    style: PropTypes.object,
+    /**
+     * If `true`, screens this size and down are hidden.
+     */
+    xlDown: PropTypes.bool,
+    /**
+     * If `true`, screens this size and up are hidden.
+     */
+    xlUp: PropTypes.bool,
+    /**
+     * If `true`, screens this size and down are hidden.
+     */
+    xsDown: PropTypes.bool,
+    /**
+     * If `true`, screens this size and up are hidden.
+     */
+    xsUp: PropTypes.bool,
+  };
+}
 
 export default Hidden;
