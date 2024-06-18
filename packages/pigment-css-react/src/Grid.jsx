@@ -158,47 +158,47 @@ const Grid = React.forwardRef(function Grid(
   const selfColumnSpacing = columnSpacing ?? spacing ?? unstable_parent_column_spacing ?? 0;
   const selfRowSpacing = rowSpacing ?? spacing ?? unstable_parent_row_spacing ?? 0;
 
-  const GridAtomicsObj = {
+  const gridAtomicsObj = {
     direction,
   };
 
   if (unstable_parent_columns !== undefined) {
-    GridAtomicsObj['--Grid-parent-column-count'] = unstable_parent_columns;
+    gridAtomicsObj['--Grid-parent-column-count'] = unstable_parent_columns;
   }
 
   if (unstable_parent_column_spacing !== undefined) {
-    GridAtomicsObj['--Grid-parent-column-spacing'] = unstable_parent_column_spacing;
+    gridAtomicsObj['--Grid-parent-column-spacing'] = unstable_parent_column_spacing;
   }
 
   if (unstable_parent_row_spacing !== undefined) {
-    GridAtomicsObj['--Grid-parent-row-spacing'] = unstable_parent_row_spacing;
+    gridAtomicsObj['--Grid-parent-row-spacing'] = unstable_parent_row_spacing;
   }
 
   if (container) {
-    GridAtomicsObj['--Grid-self-column-spacing'] = selfColumnSpacing;
-    GridAtomicsObj['--Grid-self-row-spacing'] = selfRowSpacing;
+    gridAtomicsObj['--Grid-self-column-spacing'] = selfColumnSpacing;
+    gridAtomicsObj['--Grid-self-row-spacing'] = selfRowSpacing;
   }
 
   if (size) {
-    GridAtomicsObj['--Grid-self-column-span'] = size;
-    GridAtomicsObj['--Grid-self-width'] = size;
-    GridAtomicsObj['--Grid-self-max-width'] = size;
-    GridAtomicsObj['--Grid-self-flex'] = size;
+    gridAtomicsObj['--Grid-self-column-span'] = size;
+    gridAtomicsObj['--Grid-self-width'] = size;
+    gridAtomicsObj['--Grid-self-max-width'] = size;
+    gridAtomicsObj['--Grid-self-flex'] = size;
   }
   if (offset) {
-    GridAtomicsObj['--Grid-self-offset'] = offset;
-    GridAtomicsObj['--Grid-self-margin-left'] = offset;
+    gridAtomicsObj['--Grid-self-offset'] = offset;
+    gridAtomicsObj['--Grid-self-margin-left'] = offset;
   }
 
   const ownerState = { container, size, offset };
 
-  const GridClasses = gridAtomics(GridAtomicsObj);
+  const gridClasses = gridAtomics(gridAtomicsObj);
   return (
     <GridComponent
       as={component}
       ref={ref}
-      className={clsx(GridClasses.className, className)}
-      style={{ ...style, ...GridClasses.style }}
+      className={clsx(gridClasses.className, className)}
+      style={{ ...style, ...gridClasses.style }}
       {...rest}
       ownerState={ownerState}
     >
