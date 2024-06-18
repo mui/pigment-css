@@ -14,14 +14,16 @@ function isGridComponent(element) {
   return element.type.muiName === 'Grid' || element.type?._payload?.value?.muiName === 'Grid';
 }
 
-export const gridAtomics = generateAtomics(({ theme }) => ({
-  conditions: Object.keys(theme.breakpoints.values).reduce((acc, breakpoint) => {
-    acc[breakpoint] = `@media (min-width: ${theme.breakpoints.values[breakpoint]}${
-      theme.breakpoints.unit ?? 'px'
-    })`;
-    return acc;
-  }, {}),
-  defaultCondition: theme.breakpoints?.keys?.[0] ?? 'xs',
+export const gridAtomics = generateAtomics(({ theme }) => {
+  const conditions = {};
+  Object.entries(theme.breakpoints.values)
+    .sort((a, b) => a[1] - b[1])
+    .forEach(([breakpoint, value]) => {
+      conditions[breakpoint] = `@media (min-width: ${value}${theme.breakpoints.unit ?? 'px'})`;
+    });
+  return {
+  conditions,
+  defaultCondition: theme.breakpoints?.keys?.[0],
   properties: {
     flexDirection: ['column', 'column-reverse', 'row', 'row-reverse'],
     '--Grid-parent-column-count': ['--Grid-parent-column-count'],
@@ -35,9 +37,6 @@ export const gridAtomics = generateAtomics(({ theme }) => ({
     '--Grid-self-row-spacing': ['--Grid-self-row-spacing'],
     '--Grid-self-offset': ['--Grid-self-offset'],
     '--Grid-self-margin-left': ['--Grid-self-margin-left'],
-  },
-  shorthands: {
-    direction: ['flexDirection'],
   },
   unitless: ['--Grid-parent-column-count', '--Grid-self-column-span', '--Grid-self-offset'],
   multipliers: {
@@ -96,7 +95,7 @@ export const gridAtomics = generateAtomics(({ theme }) => ({
       return 'var(--Grid-fixed-offset)';
     },
   },
-}));
+}});
 
 const GridComponent = styled('div')({
   '--Grid-fixed-width':
@@ -159,7 +158,7 @@ const Grid = React.forwardRef(function Grid(
   const selfRowSpacing = rowSpacing ?? spacing ?? unstable_parent_row_spacing ?? 0;
 
   const gridAtomicsObj = {
-    direction,
+    flexDirection: direction,
   };
 
   if (unstable_parent_columns !== undefined) {
