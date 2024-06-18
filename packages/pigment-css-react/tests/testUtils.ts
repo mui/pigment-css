@@ -27,13 +27,19 @@ function runSxTransform(code: string, filename: string) {
 
 export async function runTransformation(
   absolutePath: string,
-  options?: { themeArgs?: { theme?: any }; css?: PluginCustomOptions['css'] },
+  options?: {
+    themeArgs?: { theme?: any };
+    css?: PluginCustomOptions['css'];
+    outputFilePath?: string;
+  },
 ) {
   const cache = new TransformCacheCollection();
   const { emitter: eventEmitter } = createFileReporter(false);
   const inputFilePath = absolutePath;
-  const outputFilePath = absolutePath.replace('.input.', '.output.');
-  const outputCssFilePath = absolutePath.replace('.input.js', '.output.css');
+  const outputFilePath = options?.outputFilePath || absolutePath.replace('.input.', '.output.');
+  const outputCssFilePath =
+    options?.outputFilePath?.replace('.js', '.css') ||
+    absolutePath.replace('.input.js', '.output.css');
 
   const inputContent = fs.readFileSync(inputFilePath, 'utf8');
   let outputContent = fs.existsSync(outputFilePath) ? fs.readFileSync(outputFilePath, 'utf8') : '';
