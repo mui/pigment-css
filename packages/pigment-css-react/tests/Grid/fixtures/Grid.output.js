@@ -1,4 +1,4 @@
-import _default from '@pigment-css/react';
+import { styled as _styled } from '@pigment-css/react';
 import _theme from '@pigment-css/react/theme';
 import { atomics as _atomics } from '@pigment-css/react';
 /* eslint-disable @typescript-eslint/no-unused-expressions */
@@ -190,7 +190,7 @@ const gridAtomics = /*#__PURE__*/ _atomics({
     },
   },
 });
-const GridComponent = /*#__PURE__*/ _default('div')({
+const GridComponent = /*#__PURE__*/ _styled('div')({
   classes: ['g1i5ygey'],
   variants: [
     {
