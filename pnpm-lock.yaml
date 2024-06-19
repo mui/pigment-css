@@ -445,9 +445,6 @@ importers:
       '@emotion/styled':
         specifier: ^11.11.5
         version: 11.11.5(@emotion/react@11.11.4(@types/react@18.2.75)(react@18.2.0))(@types/react@18.2.75)(react@18.2.0)
-      '@emotion/unitless':
-        specifier: ^0.8.1
-        version: 0.8.1
       '@mui/system':
         specifier: ^6.0.0-alpha.6
         version: 6.0.0-alpha.11(@emotion/react@11.11.4(@types/react@18.2.75)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.2.75)(react@18.2.0))(@types/react@18.2.75)(react@18.2.0))(@types/react@18.2.75)(react@18.2.0)
