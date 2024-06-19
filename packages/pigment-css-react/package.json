@@ -28,7 +28,7 @@
     "test": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=text mocha 'packages/pigment-css-react/**/*.test.{js,ts,tsx}'",
     "test:update": "cd ../../ && cross-env NODE_ENV=test UPDATE_FIXTURES=true mocha 'packages/pigment-css-react/**/*.test.{js,ts,tsx}'",
     "test:ci": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=lcov --report-dir=./coverage/pigment-css-react mocha 'packages/pigment-css-react/**/*.test.{js,ts,tsx}'",
-    "typecheck": "tsc --noEmit -p ."
+    "typescript": "tsc --noEmit -p ."
   },
   "dependencies": {
     "@babel/core": "^7.24.4",
