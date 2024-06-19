@@ -4,7 +4,6 @@ import { parseExpression } from '@babel/parser';
 import * as t from '@babel/types';
 import type { Expression } from '@babel/types';
 import { isUnitLess } from './isUnitLess';
-import { cssFunctionTransformerPlugin } from './cssFunctionTransformerPlugin';
 import type { Theme } from './extendTheme';
 
 interface StyleObj {
@@ -92,15 +91,6 @@ function transformThemeKeysInFn(
   }
 
   const result = transformSync(functionString, {
-    plugins: [
-      [
-        cssFunctionTransformerPlugin,
-        {
-          styleKey,
-          options,
-        },
-      ],
-    ],
     filename: filename ?? 'intermediate-fn.ts',
     ast: true,
     configFile: false,
