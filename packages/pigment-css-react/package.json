@@ -171,6 +171,15 @@
       "require": "./build/Container.js",
       "default": "./build/Container.js"
     },
+    "./Hidden": {
+      "types": "./build/Hidden.d.ts",
+      "import": {
+        "types": "./build/Hidden.d.mts",
+        "default": "./build/Hidden.mjs"
+      },
+      "require": "./build/Hidden.js",
+      "default": "./build/Hidden.js"
+    },
     "./Grid": {
       "types": "./build/Grid.d.ts",
       "import": {

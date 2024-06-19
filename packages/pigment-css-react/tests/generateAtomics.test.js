@@ -152,4 +152,88 @@ describe('generateAtomics', () => {
       style: {},
     });
   });
+
+  describe('hidden atomics', () => {
+    const hiddenAtomic = atomics({
+      styles: {
+        display: {
+          none: {
+            xsUp: 'display-none-xsUp',
+            xsDown: 'display-none-xsDown',
+            smUp: 'display-none-smUp',
+            smDown: 'display-none-smDown',
+            mdUp: 'display-none-mdUp',
+            mdDown: 'display-none-mdDown',
+            lgUp: 'display-none-lgUp',
+            lgDown: 'display-none-lgDown',
+            xlUp: 'display-none-xlUp',
+            xlDown: 'display-none-xlDown',
+            xsOnly: 'display-none-onlyXs',
+            smOnly: 'display-none-onlySm',
+            mdOnly: 'display-none-onlyMd',
+            lgOnly: 'display-none-onlyLg',
+            xlOnly: 'display-none-onlyXl',
+          },
+        },
+      },
+      conditions: [
+        'xsUp',
+        'xsDown',
+        'smUp',
+        'smDown',
+        'mdUp',
+        'mdDown',
+        'lgUp',
+        'lgDown',
+        'xlUp',
+        'xlDown',
+        'xsOnly',
+        'smOnly',
+        'mdOnly',
+        'lgOnly',
+        'xlOnly',
+      ],
+    });
+
+    it('should generate up and down classes', () => {
+      expect(
+        hiddenAtomic({
+          display: {
+            smDown: 'none',
+            lgUp: 'none',
+          },
+        }),
+      ).to.deep.equal({
+        className: 'display-none-smDown display-none-lgUp',
+        style: {},
+      });
+    });
+
+    it('should work with only sm', () => {
+      expect(
+        hiddenAtomic({
+          display: {
+            smOnly: 'none',
+          },
+        }),
+      ).to.deep.equal({
+        className: 'display-none-onlySm',
+        style: {},
+      });
+    });
+
+    it('should work with only with array value', () => {
+      expect(
+        hiddenAtomic({
+          display: {
+            smOnly: 'none',
+            lgOnly: 'none',
+          },
+        }),
+      ).to.deep.equal({
+        className: 'display-none-onlySm display-none-onlyLg',
+        style: {},
+      });
+    });
+  });
 });

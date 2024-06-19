@@ -112,11 +112,13 @@ export async function runTransformation(absolutePath: string, options?: Transfor
   });
 
   if (!outputContent || shouldUpdateOutput) {
+    fs.mkdirSync(path.dirname(outputFilePath), { recursive: true });
     fs.writeFileSync(outputFilePath, formattedJs, 'utf-8');
     outputContent = formattedJs;
   }
 
   if (!outputCssContent || shouldUpdateOutput) {
+    fs.mkdirSync(path.dirname(outputCssFilePath), { recursive: true });
     fs.writeFileSync(outputCssFilePath, formattedCss, 'utf-8');
     outputCssContent = formattedCss;
   }

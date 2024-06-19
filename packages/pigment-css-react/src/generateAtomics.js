@@ -60,11 +60,19 @@ export function atomics({
         classes.push(styleClasses[key][breakpoint]);
         inlineStyle[`${key}-${breakpoint}`] = inlineGetter ? inlineGetter(styleValue) : styleValue;
       } else {
-        classes.push(styleClasses[value][breakpoint]);
+        classes.push(
+          typeof styleClasses[value] !== 'object'
+            ? styleClasses[value]
+            : styleClasses[value][breakpoint],
+        );
       }
     }
 
-    if (typeof propertyValue === 'string' || typeof propertyValue === 'number') {
+    if (
+      typeof propertyValue === 'string' ||
+      typeof propertyValue === 'number' ||
+      typeof propertyValue === 'boolean'
+    ) {
       handlePrimitive(propertyValue, multipliers[cssProperty], inlineGetters[cssProperty]);
     } else if (Array.isArray(propertyValue)) {
       propertyValue.forEach((value, index) => {
@@ -105,7 +113,7 @@ export function atomics({
     const inlineStyle = {};
     Object.keys(props).forEach((cssProperty) => {
       const values = props[cssProperty];
-      if (cssProperty in shorthands) {
+      if (shorthands && cssProperty in shorthands) {
         const configShorthands = shorthands[cssProperty];
         if (!configShorthands) {
           return;

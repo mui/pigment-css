@@ -27,6 +27,7 @@ const BASE_FILES = [
   'RtlProvider.tsx',
   'Stack.jsx',
   'Container.jsx',
+  'Hidden.jsx',
   'Grid.jsx',
 ];
 
