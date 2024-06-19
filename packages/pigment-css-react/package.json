@@ -162,6 +162,15 @@
       "require": "./build/Stack.js",
       "default": "./build/Stack.js"
     },
+    "./Container": {
+      "types": "./build/Container.d.ts",
+      "import": {
+        "types": "./build/Container.d.mts",
+        "default": "./build/Container.mjs"
+      },
+      "require": "./build/Container.js",
+      "default": "./build/Container.js"
+    },
     "./Hidden": {
       "types": "./build/Hidden.d.ts",
       "import": {
