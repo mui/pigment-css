@@ -41,6 +41,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/serialize": "^1.1.4",
     "@emotion/styled": "^11.11.5",
+    "@emotion/unitless": "^0.8.1",
     "@mui/system": "^6.0.0-alpha.6",
     "@mui/utils": "^6.0.0-alpha.6",
     "@wyw-in-js/processor-utils": "^0.5.3",
