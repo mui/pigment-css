@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { valueToLiteral } from '../src/utils/valueToLiteral';
+import { valueToLiteral } from './valueToLiteral';
 
 describe('valueToLiteral', () => {
   it('should work with undefined as a value', () => {

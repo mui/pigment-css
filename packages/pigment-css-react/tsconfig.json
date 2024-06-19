@@ -10,6 +10,6 @@
     "types": ["node", "mocha"],
     "jsx": "react-jsx"
   },
-  "include": ["src/**/*.tsx", "src/**/*.js", "src/**/*.ts", "tests/valueToLiteral.test.ts"],
+  "include": ["src/**/*.tsx", "src/**/*.js", "src/**/*.ts"],
   "exclude": ["./tsup.config.ts"]
 }
