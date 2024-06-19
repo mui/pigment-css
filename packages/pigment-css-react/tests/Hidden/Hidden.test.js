@@ -23,7 +23,7 @@ describe('Pigment CSS - Hidden', () => {
     expect(output.js).to.equal(fixture.js);
     expect(output.css).to.equal(fixture.css);
 
-    const HiddenOutput = (await import('./fixtures/Hidden.output.js')).default;
+    const HiddenOutput = (await import('./fixtures/Hidden.output')).default;
 
     const { container } = render(<HiddenOutput smDown lgUp only={['xs', 'xl']} />);
     const classNames = new Set([...container.firstChild.className.split(' ')]);
