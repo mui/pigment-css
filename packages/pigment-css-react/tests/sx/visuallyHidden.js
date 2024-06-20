@@ -1,5 +1,5 @@
 const visuallyHidden = {
-  border: 0,
+  border: 'none',
   clip: 'rect(0 0 0 0)',
   height: '1px',
   margin: '-1px',

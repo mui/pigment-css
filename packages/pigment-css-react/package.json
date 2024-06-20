@@ -1,6 +1,6 @@
 {
   "name": "@pigment-css/react",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "main": "build/index.js",
   "module": "build/index.mjs",
   "types": "build/index.d.ts",
@@ -28,7 +28,7 @@
     "test": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=text mocha 'packages/pigment-css-react/**/*.test.{js,ts,tsx}'",
     "test:update": "cd ../../ && cross-env NODE_ENV=test UPDATE_FIXTURES=true mocha 'packages/pigment-css-react/**/*.test.{js,ts,tsx}'",
     "test:ci": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=lcov --report-dir=./coverage/pigment-css-react mocha 'packages/pigment-css-react/**/*.test.{js,ts,tsx}'",
-    "typecheck": "tsc --noEmit -p ."
+    "typescript": "tsc --noEmit -p ."
   },
   "dependencies": {
     "@babel/core": "^7.24.4",
@@ -55,6 +55,7 @@
   },
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "^7.24.1",
+    "@mui/types": "7.2.14",
     "@types/babel__core": "^7.20.5",
     "@types/babel__helper-module-imports": "^7.18.3",
     "@types/babel__helper-plugin-utils": "^7.10.3",
@@ -151,6 +152,33 @@
       },
       "require": "./build/RtlProvider.js",
       "default": "./build/RtlProvider.js"
+    },
+    "./Stack": {
+      "types": "./build/Stack.d.ts",
+      "import": {
+        "types": "./build/Stack.d.mts",
+        "default": "./build/Stack.mjs"
+      },
+      "require": "./build/Stack.js",
+      "default": "./build/Stack.js"
+    },
+    "./Container": {
+      "types": "./build/Container.d.ts",
+      "import": {
+        "types": "./build/Container.d.mts",
+        "default": "./build/Container.mjs"
+      },
+      "require": "./build/Container.js",
+      "default": "./build/Container.js"
+    },
+    "./Hidden": {
+      "types": "./build/Hidden.d.ts",
+      "import": {
+        "types": "./build/Hidden.d.mts",
+        "default": "./build/Hidden.mjs"
+      },
+      "require": "./build/Hidden.js",
+      "default": "./build/Hidden.js"
     }
   },
   "nx": {

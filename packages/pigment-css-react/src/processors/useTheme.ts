@@ -10,6 +10,9 @@ export type TemplateCallback = (params: Record<string, unknown> | undefined) => 
 export class UseThemeProcessor extends BaseProcessor {
   constructor(params: Params, ...args: TailProcessorParams) {
     super([params[0]], ...args);
+    if (params.length === 1) {
+      throw BaseProcessor.SKIP;
+    }
     validateParams(params, ['callee', ['call']], `Invalid use of ${this.tagSource.imported} tag.`);
   }
 

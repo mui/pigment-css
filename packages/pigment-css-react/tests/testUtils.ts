@@ -14,6 +14,12 @@ import * as prettier from 'prettier';
 import sxTransformPlugin from '../exports/sx-plugin';
 import pkgJson from '../package.json';
 
+type TransformOptions = {
+  themeArgs?: { theme?: any };
+  css?: PluginCustomOptions['css'];
+  outputDir?: string;
+};
+
 const shouldUpdateOutput = process.env.UPDATE_FIXTURES === 'true';
 
 function runSxTransform(code: string, filename: string) {
@@ -25,15 +31,30 @@ function runSxTransform(code: string, filename: string) {
   });
 }
 
-export async function runTransformation(
-  absolutePath: string,
-  options?: { themeArgs?: { theme?: any }; css?: PluginCustomOptions['css'] },
-) {
+export async function runTransformation(absolutePath: string, options?: TransformOptions) {
   const cache = new TransformCacheCollection();
   const { emitter: eventEmitter } = createFileReporter(false);
   const inputFilePath = absolutePath;
-  const outputFilePath = absolutePath.replace('.input.', '.output.');
-  const outputCssFilePath = absolutePath.replace('.input.js', '.output.css');
+  let outputFilePath = (
+    options?.outputDir
+      ? path.join(options.outputDir, inputFilePath.split(path.sep).pop() as string)
+      : absolutePath
+  ).replace('.input.', '.output.');
+  let outputCssFilePath = (
+    options?.outputDir
+      ? path.join(options.outputDir, inputFilePath.split(path.sep).pop() as string)
+      : absolutePath
+  )
+    .replace('.input.js', '.output.css')
+    .replace('.input.jsx', '.output.css');
+
+  if (!outputFilePath.includes('output')) {
+    outputFilePath = outputFilePath.replace(path.extname(outputFilePath), '.output.js');
+  }
+
+  if (!outputCssFilePath.includes('output')) {
+    outputCssFilePath = outputCssFilePath.replace(path.extname(outputCssFilePath), '.output.css');
+  }
 
   const inputContent = fs.readFileSync(inputFilePath, 'utf8');
   let outputContent = fs.existsSync(outputFilePath) ? fs.readFileSync(outputFilePath, 'utf8') : '';
@@ -53,6 +74,10 @@ export async function runTransformation(
       plugins: ['@babel/plugin-syntax-jsx'],
     },
     tagResolver(source: string, tag: string) {
+      if (tag === 'default' && source.endsWith('/styled')) {
+        return require.resolve(`../exports/styled`);
+      }
+
       if (source !== '@pigment-css/react' && !source.endsWith('/zero-styled')) {
         return null;
       }
@@ -87,11 +112,13 @@ export async function runTransformation(
   });
 
   if (!outputContent || shouldUpdateOutput) {
+    fs.mkdirSync(path.dirname(outputFilePath), { recursive: true });
     fs.writeFileSync(outputFilePath, formattedJs, 'utf-8');
     outputContent = formattedJs;
   }
 
   if (!outputCssContent || shouldUpdateOutput) {
+    fs.mkdirSync(path.dirname(outputCssFilePath), { recursive: true });
     fs.writeFileSync(outputCssFilePath, formattedCss, 'utf-8');
     outputCssContent = formattedCss;
   }

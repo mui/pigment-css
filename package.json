@@ -1,10 +1,10 @@
 {
   "name": "@pigment-css/monorepo",
-  "version": "0.0.12",
+  "version": "0.0.14",
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "proptypes": "tsx ./scripts/generateProptypes.ts",
+    "proptypes": "echo \"tsx ./scripts/generateProptypes.ts\"",
     "deduplicate": "pnpm dedupe",
     "build": "lerna run --no-private build",
     "build:ci": "lerna run build --concurrency 8 --skip-nx-cache",
@@ -27,7 +27,7 @@
     "size:snapshot": "node --max-old-space-size=4096 ./scripts/sizeSnapshot/create",
     "size:why": "pnpm size:snapshot --analyze",
     "test": "node scripts/test.mjs",
-    "tc": "node test/cli.js",
+    "tc": "node scripts/cli.js",
     "test:extended": "pnpm eslint && pnpm typescript && pnpm test:coverage",
     "test:coverage": "pnpm build && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=text mocha 'packages/**/*.test.{js,ts,tsx}' 'docs/**/*.test.{js,ts,tsx}'",
     "test:coverage:ci": "pnpm build && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=lcov mocha 'packages/**/*.test.{js,ts,tsx}' 'docs/**/*.test.{js,ts,tsx}'",
@@ -39,7 +39,7 @@
     "test:regressions:server": "serve test/regressions -p 5001",
     "test:unit": "cross-env NODE_ENV=test mocha 'packages/**/*.test.{js,ts,tsx}' 'docs/**/*.test.{js,ts,tsx}'",
     "test:argos": "node ./scripts/pushArgos.mjs",
-    "typescript": "tsc -b tsconfig.typecheck.json",
+    "typescript": "lerna run --no-bail --parallel typescript",
     "typescript:ci": "lerna run --concurrency 3 --no-bail --no-sort typescript",
     "validate-declarations": "tsx scripts/validateTypescriptDeclarations.mts"
   },
@@ -119,9 +119,9 @@
     "unist-util-visit": "^2.0.3",
     "yargs": "^17.7.2"
   },
-  "packageManager": "pnpm@8.15.6",
+  "packageManager": "pnpm@9.2.0",
   "engines": {
-    "pnpm": "8.15.6"
+    "pnpm": "9.2.0"
   },
   "resolutions": {
     "@babel/core": "^7.24.4",

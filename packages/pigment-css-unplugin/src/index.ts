@@ -114,6 +114,9 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
     css,
     ...rest
   } = options;
+  const finalTransformLibraries = transformLibraries.concat(
+    process.env.RUNTIME_PACKAGE_NAME as string,
+  );
   const cache = new TransformCacheCollection();
   const { emitter, onDone } = createFileReporter(debug ?? false);
   const cssLookup = meta?.type === 'next' ? globalCssLookup : new Map<string, string>();
@@ -124,7 +127,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
     name: 'pigment-css-plugin-transform-babel',
     enforce: 'post',
     transformInclude(id) {
-      return isZeroRuntimeProcessableFile(id, transformLibraries);
+      return isZeroRuntimeProcessableFile(id, finalTransformLibraries);
     },
     async transform(code, id) {
       const result = await transformAsync(code, {
@@ -335,6 +338,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
       ...(isNext
         ? {
             transformInclude(id) {
+              id = id.replace(/\\/g, '/');
               return (
                 // this file should exist in the package
                 id.endsWith(`${process.env.RUNTIME_PACKAGE_NAME}/styles.css`) ||
@@ -344,10 +348,14 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
               );
             },
             transform(_code, id) {
+              id = id.replace(/\\/g, '/');
               if (id.endsWith('styles.css')) {
                 return theme ? generateTokenCss(theme) : _code;
               }
-              if (id.includes('pigment-css-react/theme')) {
+              if (
+                id.includes('pigment-css-react/theme') ||
+                id.includes(`${process.env.RUNTIME_PACKAGE_NAME}/theme`)
+              ) {
                 return generateThemeSource(theme);
               }
               return null;

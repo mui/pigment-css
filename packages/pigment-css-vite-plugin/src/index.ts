@@ -46,16 +46,19 @@ export function pigment(options: PigmentOptions) {
     css,
     ...rest
   } = options ?? {};
+  const finalTransformLibraries = transformLibraries.concat(
+    process.env.RUNTIME_PACKAGE_NAME as string,
+  );
 
   function injectMUITokensPlugin(): Plugin {
     return {
       name: 'vite-mui-theme-injection-plugin',
       enforce: 'pre',
       resolveId(source) {
-        if (source === `${process.env.RUNTIME_PACKAGE_NAME}/styles.css`) {
+        if (source.includes(`${process.env.RUNTIME_PACKAGE_NAME}/styles.css`)) {
           return VIRTUAL_CSS_FILE;
         }
-        if (source === `${process.env.RUNTIME_PACKAGE_NAME}/theme`) {
+        if (source.includes(`${process.env.RUNTIME_PACKAGE_NAME}/theme`)) {
           return VIRTUAL_THEME_FILE;
         }
         return null;
@@ -78,7 +81,7 @@ export function pigment(options: PigmentOptions) {
       enforce: 'post',
       async transform(code, id) {
         const [filename] = id.split('?');
-        if (!isZeroRuntimeProcessableFile(id, transformLibraries)) {
+        if (!isZeroRuntimeProcessableFile(id, finalTransformLibraries)) {
           return null;
         }
         try {

@@ -7,8 +7,9 @@
     "composite": true,
     "noEmit": false,
     "resolveJsonModule": true,
-    "types": ["node", "mocha"]
+    "types": ["node", "mocha"],
+    "jsx": "react-jsx"
   },
   "include": ["src/**/*.tsx", "src/**/*.js", "src/**/*.ts"],
-  "exclude": ["./tsup.config.ts", "src/**/*.d.ts"]
+  "exclude": ["./tsup.config.ts"]
 }

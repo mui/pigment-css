@@ -1,5 +1,28 @@
 # [Versions](https://mui.com/versions/)
 
+## v0.0.14
+
+A big thanks to the 1 contributors who made this release possible:
+
+### `@pigment-css/unplugin@0.0.14`
+
+- Fix the path check for Windows (#136) @siriwatknp
+
+All contributors of this release in alphabetical order: @siriwatknp
+
+## v0.0.13
+
+<!-- generated comparing v0.0.12..master -->
+
+A big thanks to the 2 contributors who made this release possible:
+
+### `@pigment-css/react@0.0.13`
+
+- Decouple `sx` prop from system and add docs (#57) @siriwatknp
+- Fix useTheme import change (#134) @brijeshb42
+
+All contributors of this release in alphabetical order: @brijeshb42, @siriwatknp
+
 ## v0.0.12
 
 <!-- generated comparing v0.0.11..master -->
