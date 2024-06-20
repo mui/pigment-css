@@ -171,7 +171,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
       onDone(process.cwd());
     },
     transformInclude(id) {
-      return isZeroRuntimeProcessableFile(id, transformLibraries);
+      return isZeroRuntimeProcessableFile(id, finalTransformLibraries);
     },
     webpack(compiler) {
       const resolverPlugin: ResolvePluginInstance = {
