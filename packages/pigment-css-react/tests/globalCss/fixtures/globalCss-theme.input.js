@@ -28,3 +28,12 @@ let inputGlobalStyles = globalCss(({ theme }) => ({
 if (typeof inputGlobalStyles === 'function') {
   inputGlobalStyles = inputGlobalStyles();
 }
+
+// simulate CssBaseline transpiled by Next.js
+export const styles = (theme) => ({
+  html: {
+    color: theme.palette.primary.main,
+  },
+});
+const GlobalStyles = globalCss((_c = ({ theme }) => styles(theme)));
+var _c;

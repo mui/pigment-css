@@ -134,18 +134,13 @@ export class GlobalCssProcessor extends BaseProcessor {
   }
 
   private handleCall([, callArg]: CallParam, values: ValueCache) {
-    let styleObj: CSSInterpolation;
-    if (callArg.kind === ValueType.LAZY) {
-      styleObj = values.get(callArg.ex.name) as CSSInterpolation;
-    } else if (callArg.kind === ValueType.FUNCTION) {
+    if (callArg.kind === ValueType.LAZY || callArg.kind === ValueType.FUNCTION) {
+      const value = values.get(callArg.ex.name);
       const { themeArgs } = this.options as IOptions;
-      const value = values.get(callArg.ex.name) as (
-        args: Record<string, unknown> | undefined,
-      ) => CSSInterpolation;
-      styleObj = value(themeArgs);
-    }
-    if (styleObj) {
-      this.generateArtifacts(styleObj);
+      const styleObj: CSSInterpolation = typeof value === 'function' ? value(themeArgs) : value;
+      if (styleObj) {
+        this.generateArtifacts(styleObj);
+      }
     }
   }
 
