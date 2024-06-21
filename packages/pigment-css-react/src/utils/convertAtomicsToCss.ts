@@ -7,7 +7,9 @@ export type Atomics = {
     [key: string]: string[];
   };
   shorthands: Record<string, string[]>;
-  multiplier?: string;
+  unitless: string[];
+  multipliers?: Record<string, string>;
+  inlineGetters: Record<string, (value: string) => string>;
 };
 
 export type RuntimeConfig = {
@@ -15,7 +17,9 @@ export type RuntimeConfig = {
   styles: Record<string, Record<string, Record<string, string>>>;
   shorthands: Atomics['shorthands'];
   defaultCondition: string;
-  multiplier?: string;
+  unitless: string[];
+  multipliers?: Record<string, string>;
+  inlineGetters: Record<string, (value: string) => string>;
 };
 
 function getClassName(...items: string[]) {
@@ -28,7 +32,9 @@ export function convertAtomicsToCss(
     defaultCondition,
     properties,
     shorthands = {},
-    multiplier = undefined,
+    unitless = [],
+    multipliers = {},
+    inlineGetters = {},
   }: Atomics,
   mainClassName: string,
   isGlobal = false,
@@ -40,7 +46,9 @@ export function convertAtomicsToCss(
     shorthands,
     conditions: Object.keys(conditions),
     defaultCondition,
-    multiplier,
+    unitless,
+    multipliers,
+    inlineGetters,
   };
   let count = 1;
   function getCount() {
@@ -58,9 +66,7 @@ export function convertAtomicsToCss(
     Object.entries(properties).forEach(([cssPropertyName, propertyValues]) => {
       propertyValues.forEach((propertyValue) => {
         const propValue = propertyValue.startsWith('--')
-          ? cssesc(
-              `var(${propertyValue}${conditionName === defaultCondition ? '' : `-${conditionName}`})`,
-            )
+          ? cssesc(`var(${propertyValue}-${conditionName})`)
           : propertyValue;
         const className =
           isGlobal || debug

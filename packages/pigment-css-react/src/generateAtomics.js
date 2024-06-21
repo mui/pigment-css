@@ -12,7 +12,8 @@ export function generateAtomics() {
  * @property {Object.<string, string[]>} shorthands
  * @property {string[]} conditions
  * @property {string} defaultCondition
- * @property {string} multiplier
+ * @property {string[]} unitless
+ * @property {Object.<string, string>} multipliers
  */
 
 /**
@@ -21,14 +22,27 @@ export function generateAtomics() {
  *
  * @param {RuntimeConfig} runtimeConfig
  */
-export function atomics({ styles, shorthands, conditions, defaultCondition, multiplier }) {
+export function atomics({
+  styles,
+  shorthands,
+  conditions,
+  defaultCondition,
+  unitless = [],
+  multipliers = {},
+  inlineGetters = {},
+}) {
   function addStyles(cssProperty, propertyValue, classes, inlineStyle) {
     const styleClasses = styles[cssProperty];
     if (!styleClasses) {
       return;
     }
 
-    function handlePrimitive(value, breakpoint = defaultCondition) {
+    function handlePrimitive(
+      value,
+      multiplier = undefined,
+      inlineGetter = undefined,
+      breakpoint = defaultCondition,
+    ) {
       if (!(value in styleClasses)) {
         const keys = Object.keys(styleClasses);
         if (keys.length !== 1) {
@@ -37,11 +51,14 @@ export function atomics({ styles, shorthands, conditions, defaultCondition, mult
         const key = keys[0];
         let styleValue = value;
         if (typeof value === 'number') {
-          styleValue = multiplier ? `calc(${value} * ${multiplier})` : `${value}px`;
+          if (multiplier) {
+            styleValue = `calc(${value} * ${multiplier})`;
+          } else if (!unitless.includes(cssProperty)) {
+            styleValue = `${value}px`;
+          }
         }
         classes.push(styleClasses[key][breakpoint]);
-        inlineStyle[`${key}${breakpoint === defaultCondition ? '' : `-${breakpoint}`}`] =
-          styleValue;
+        inlineStyle[`${key}-${breakpoint}`] = inlineGetter ? inlineGetter(styleValue) : styleValue;
       } else {
         classes.push(
           typeof styleClasses[value] !== 'object'
@@ -56,23 +73,33 @@ export function atomics({ styles, shorthands, conditions, defaultCondition, mult
       typeof propertyValue === 'number' ||
       typeof propertyValue === 'boolean'
     ) {
-      handlePrimitive(propertyValue);
+      handlePrimitive(propertyValue, multipliers[cssProperty], inlineGetters[cssProperty]);
     } else if (Array.isArray(propertyValue)) {
       propertyValue.forEach((value, index) => {
-        if (value) {
+        if (value !== undefined && value !== null) {
           const breakpoint = conditions[index];
           if (!breakpoint) {
             return;
           }
-          handlePrimitive(value, conditions[index]);
+          handlePrimitive(
+            value,
+            multipliers[cssProperty],
+            inlineGetters[cssProperty],
+            conditions[index],
+          );
         }
       });
     } else if (propertyValue) {
       Object.keys(propertyValue).forEach((condition) => {
-        if (propertyValue[condition]) {
+        if (propertyValue[condition] !== undefined && propertyValue[condition] !== null) {
           const propertyClasses = styleClasses[propertyValue[condition]];
           if (!propertyClasses) {
-            handlePrimitive(propertyValue[condition], condition);
+            handlePrimitive(
+              propertyValue[condition],
+              multipliers[cssProperty],
+              inlineGetters[cssProperty],
+              condition,
+            );
             return;
           }
           classes.push(propertyClasses[condition]);

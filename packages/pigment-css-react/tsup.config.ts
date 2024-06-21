@@ -28,6 +28,7 @@ const BASE_FILES = [
   'Stack.jsx',
   'Container.jsx',
   'Hidden.jsx',
+  'Grid.jsx',
 ];
 
 export default defineConfig([

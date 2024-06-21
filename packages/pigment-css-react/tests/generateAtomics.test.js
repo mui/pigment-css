@@ -47,7 +47,10 @@ const atomic = atomics({
   // @ts-ignore This is not expected while calling the pre-transpiled generateAtomics
   conditions: ['xs', 'sm', 'md', 'lg', 'xl'],
   defaultCondition: 'xs',
-  multiplier: '8px',
+  unitless: [],
+  multipliers: {
+    gap: '8px',
+  },
 });
 
 describe('generateAtomics', () => {
@@ -62,7 +65,7 @@ describe('generateAtomics', () => {
     ).to.deep.equal({
       className: 'gap--Stack-gap-lg gap--Stack-gap-xs',
       style: {
-        '--Stack-gap': 'calc(2 * 8px)',
+        '--Stack-gap-xs': 'calc(2 * 8px)',
         '--Stack-gap-lg': 'calc(1 * 8px)',
       },
     });
@@ -77,7 +80,7 @@ describe('generateAtomics', () => {
     ).to.deep.equal({
       className: 'flex-direction-row-xs gap--Stack-gap-xs',
       style: {
-        '--Stack-gap': 'calc(1 * 8px)',
+        '--Stack-gap-xs': 'calc(1 * 8px)',
       },
     });
   });
@@ -104,7 +107,7 @@ describe('generateAtomics', () => {
       className:
         'flex-direction-row-xs flex-direction-column-sm gap--Stack-gap-xs gap--Stack-gap-sm',
       style: {
-        '--Stack-gap': 'calc(1 * 8px)',
+        '--Stack-gap-xs': 'calc(1 * 8px)',
         '--Stack-gap-sm': 'calc(2 * 8px)',
       },
     });
@@ -132,7 +135,7 @@ describe('generateAtomics', () => {
       className:
         'flex-direction-row-xs flex-direction-column-sm gap--Stack-gap-xs gap--Stack-gap-sm',
       style: {
-        '--Stack-gap': 'calc(1 * 8px)',
+        '--Stack-gap-xs': 'calc(1 * 8px)',
         '--Stack-gap-sm': 'calc(2 * 8px)',
       },
     });

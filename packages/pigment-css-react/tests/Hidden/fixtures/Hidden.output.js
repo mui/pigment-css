@@ -44,7 +44,9 @@ const hiddenAtomics = /*#__PURE__*/ _atomics({
     'xlDown',
   ],
   defaultCondition: undefined,
-  multiplier: undefined,
+  unitless: [],
+  multipliers: {},
+  inlineGetters: {},
 });
 const Hidden = React.forwardRef(function Hidden(
   { className, component = 'div', style, ...props },

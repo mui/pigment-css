@@ -1,8 +1,8 @@
-import _default from '@pigment-css/react';
+import { styled as _styled } from '@pigment-css/react';
 import _theme from '@pigment-css/react/theme';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-const ContainerRoot = /*#__PURE__*/ _default('div', {
+const ContainerRoot = /*#__PURE__*/ _styled('div', {
   name: 'MuiContainer',
   slot: 'Root',
 })({
