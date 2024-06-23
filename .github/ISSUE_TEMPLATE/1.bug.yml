@@ -58,3 +58,9 @@ body:
           Output from `npx @mui/envinfo` goes here.
         ```
         </details>
+  - type: markdown
+    attributes:
+      value: |
+        ## :heart: Love Pigment CSS?
+
+        Consider donating $10 to sustain our open-source work: [https://opencollective.com/mui-org](https://opencollective.com/mui-org).
