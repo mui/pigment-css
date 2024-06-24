@@ -356,7 +356,6 @@
 }
 .g1i5ygey-1 {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--Grid-self-row-spacing) var(--Grid-self-column-spacing);
 }
 .g1i5ygey-2 {
@@ -366,4 +365,13 @@
 }
 .g1i5ygey-3 {
   margin-left: var(--Grid-self-margin-left);
+}
+.g1i5ygey-4 {
+  flex-wrap: nowrap;
+}
+.g1i5ygey-5 {
+  flex-wrap: wrap-reverse;
+}
+.g1i5ygey-6 {
+  flex-wrap: wrap;
 }
