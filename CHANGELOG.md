@@ -1,5 +1,38 @@
 # [Versions](https://mui.com/versions/)
 
+## v0.0.15
+
+<!-- generated comparing v0.0.14..master -->
+
+_Jun 24, 2024_
+
+A big thanks to the 5 contributors who made this release possible. Here are some highlights ✨:
+
+- 🚀 Added layout components (#144) @DiegoAndai, (#146) @siriwatknp, (#143) @brijeshb42, (#118) @brijeshb42
+
+### `@pigment-css/react@0.0.15`
+
+- [react] Create Grid component (#144) @DiegoAndai
+- [react] Support transpiled library for `globalCss` and `keyframes` (#155) @siriwatknp
+- [react] Remove sx transform logic and leverage Emotion unitless (#149) @siriwatknp
+- [react] Export `globalCss` from index (#148) @siriwatknp
+- [react] Create Hidden component (#146) @siriwatknp
+- [react] Implement Container component (#143) @brijeshb42
+- [react] Create Stack component (#118) @brijeshb42
+
+### `@pigment-css/unplugin@0.0.15`
+
+- [unplugin] Fix misuse variable to transform libraries (#153) @siriwatknp
+
+### Core
+
+- [code-infra] Propagate pnpm engine in package.json (#126) @Janpot
+- [core] Update package manager to 9.4.0 (#156) @siriwatknp
+- [core] Update package manager to follow core repo (#150) @siriwatknp
+- [infra] Add support donation button @oliviertassinari
+
+All contributors of this release in alphabetical order: @brijeshb42, @DiegoAndai, @Janpot, @oliviertassinari, @siriwatknp
+
 ## v0.0.14
 
 A big thanks to the 1 contributors who made this release possible:
