@@ -114,9 +114,9 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
     css,
     ...rest
   } = options;
-  const finalTransformLibraries = transformLibraries.concat(
-    process.env.RUNTIME_PACKAGE_NAME as string,
-  );
+  const finalTransformLibraries = transformLibraries
+    .concat(process.env.RUNTIME_PACKAGE_NAME as string)
+    .map((lib) => lib.split('/').join(path.sep));
   const cache = new TransformCacheCollection();
   const { emitter, onDone } = createFileReporter(debug ?? false);
   const cssLookup = meta?.type === 'next' ? globalCssLookup : new Map<string, string>();
