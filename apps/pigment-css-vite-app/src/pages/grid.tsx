@@ -266,7 +266,7 @@ function GridDemo10() {
 
 function GridDemo11() {
   return (
-    <>
+    <React.Fragment>
       {['wrap', 'nowrap', 'wrap-reverse'].map((wrap) => (
         <div key={wrap}>
           <h3>wrap = {wrap}</h3>
@@ -286,7 +286,7 @@ function GridDemo11() {
           </Grid>
         </div>
       ))}
-    </>
+    </React.Fragment>
   );
 }
 
