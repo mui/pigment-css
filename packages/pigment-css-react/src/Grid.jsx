@@ -126,6 +126,12 @@ const GridComponent = styled('div')({
         marginLeft: 'var(--Grid-self-margin-left)',
       },
     },
+    ...['nowrap', 'wrap-reverse', 'wrap'].map((wrap) => ({
+      props: { wrap },
+      style: {
+        flexWrap: wrap,
+      },
+    })),
   ],
 });
 
@@ -150,6 +156,7 @@ const Grid = React.forwardRef(function Grid(
     unstable_parent_column_spacing,
     // eslint-disable-next-line react/prop-types
     unstable_parent_row_spacing,
+    wrap = 'wrap',
     ...rest
   },
   ref,
@@ -304,6 +311,12 @@ process.env.NODE_ENV !== 'production' &&
      * @ignore
      */
     style: PropTypes.object,
+    /**
+     * Defines the `flex-wrap` style property.
+     * It's applied for all screen sizes.
+     * @default 'wrap'
+     */
+    wrap: PropTypes.oneOf(['nowrap', 'wrap-reverse', 'wrap']),
   });
 
 Grid.displayName = 'Grid';
