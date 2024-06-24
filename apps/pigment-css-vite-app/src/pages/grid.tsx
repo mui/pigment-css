@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@pigment-css/react/Box';
-import Grid from '@pigment-css/react/Grid';
+import Grid, { GridProps } from '@pigment-css/react/Grid';
 import { styled } from '@pigment-css/react';
 
 const Item = styled.div`
@@ -264,6 +264,32 @@ function GridDemo10() {
   );
 }
 
+function GridDemo11() {
+  return (
+    <>
+      {['wrap', 'nowrap', 'wrap-reverse'].map((wrap) => (
+        <div key={wrap}>
+          <h3>wrap = {wrap}</h3>
+          <Grid container spacing={3} sx={{ flexGrow: 1 }} wrap={wrap as GridProps['wrap']}>
+            <Grid size={6}>
+              <Item>1</Item>
+            </Grid>
+            <Grid size={6}>
+              <Item>2</Item>
+            </Grid>
+            <Grid size={4}>
+              <Item>3</Item>
+            </Grid>
+            <Grid size={6}>
+              <Item>4</Item>
+            </Grid>
+          </Grid>
+        </div>
+      ))}
+    </>
+  );
+}
+
 const demos = [
   { id: '1', component: GridDemo1 },
   { id: '2', component: GridDemo2 },
@@ -275,6 +301,7 @@ const demos = [
   { id: '8', component: GridDemo8 },
   { id: '9', component: GridDemo9 },
   { id: '10', component: GridDemo10 },
+  { id: '11', component: GridDemo11 },
 ];
 
 export default function InteractiveGrid() {

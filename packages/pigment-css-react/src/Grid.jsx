@@ -197,7 +197,7 @@ const Grid = React.forwardRef(function Grid(
     gridAtomicsObj['--Grid-self-margin-left'] = offset;
   }
 
-  const ownerState = { container, size, offset };
+  const ownerState = { container, size, offset, wrap };
 
   const gridClasses = gridAtomics(gridAtomicsObj);
   return (
