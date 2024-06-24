@@ -108,7 +108,6 @@ const GridComponent = styled('div')({
       props: { container: true },
       style: {
         display: 'flex',
-        flexWrap: 'wrap',
         gap: 'var(--Grid-self-row-spacing) var(--Grid-self-column-spacing)',
       },
     },
@@ -127,7 +126,7 @@ const GridComponent = styled('div')({
       },
     },
     ...['nowrap', 'wrap-reverse', 'wrap'].map((wrap) => ({
-      props: { wrap },
+      props: { wrap, container: true },
       style: {
         flexWrap: wrap,
       },
