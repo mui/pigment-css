@@ -15,6 +15,7 @@ type GridBaseProps = {
   rowSpacing?: CssProperty<number | string>;
   size?: CssProperty<number | 'grow' | 'auto'>;
   spacing?: CssProperty<number | string>;
+  wrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
 };
 
 declare const Grid: PolymorphicComponent<GridBaseProps>;
