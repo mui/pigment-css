@@ -11,15 +11,15 @@ _Jun 25, 2024_
 
 A big thanks to the 2 contributors who made this release possible.
 
-### @pigment-css/react@0.0.16
+### `@pigment-css/react@0.0.16`
 
 - [Grid] Add wrap prop (#159) @mnajdova
 
-### @pigment-css/nextjs-plugin@0.0.16
+### `@pigment-css/nextjs-plugin@0.0.16`
 
 - Make library path check OS agnostic (#160) @brijeshb42
 
-### @pigment-css/vite-plugin@0.0.16
+### `@pigment-css/vite-plugin@0.0.16`
 
 - Make library path check OS agnostic (#160) @brijeshb42
 
