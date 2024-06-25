@@ -531,11 +531,9 @@ For example, in Next.js, you can define a theme in the `next.config.js` file lik
 ```js
 const { withPigment } = require('@pigment-css/nextjs-plugin');
 
-module.exports = withPigment(
-  {
-    // ...other nextConfig
-  },
-  {
+module.exports = withPigment({
+  // ...other nextConfig
+  pigment: {
     theme: {
       colors: {
         primary: 'tomato',
@@ -550,8 +548,11 @@ module.exports = withPigment(
       // ...more keys and values, it's free style!
     },
   },
-);
+});
 ```
+
+> [!NOTE]
+> The previous API to configure theming was to pass the data in the above `pigment` key as the second argument, ie, `withPigment(nextConfig, pigmentConfig)`. But it has been changed to follow what Next.js community follows.
 
 ### Accessing theme values
 
@@ -572,11 +573,9 @@ Pigment CSS can generate CSS variables from the theme values when you wrap your
 ```js
 const { withPigment, extendTheme } = require('@pigment-css/nextjs-plugin');
 
-module.exports = withPigment(
-  {
-    // ...nextConfig
-  },
-  {
+module.exports = withPigment({
+  // ...nextConfig
+  pigment: {
     theme: extendTheme({
       colors: {
         primary: 'tomato',
@@ -590,7 +589,7 @@ module.exports = withPigment(
       },
     }),
   },
-);
+});
 ```
 
 The `extendTheme` utility goes through the theme and creates a `vars` object which represents the tokens that refer to CSS variables.
@@ -798,18 +797,23 @@ To support right-to-left (RTL) languages, add the `dir="rtl"` attribute to your 
 ```js
 const { withPigment } = require('@pigment-css/nextjs-plugin');
 
-// ...
-module.exports = withPigment(nextConfig, {
-  theme: yourCustomTheme,
-  // CSS output option
-  css: {
-    // Specify your default CSS authoring direction
-    defaultDirection: 'ltr',
-    // Generate CSS for the opposite of the `defaultDirection`
-    // This is set to `false` by default
-    generateForBothDir: true,
+/** @type {import('@pigment-css/nextjs-plugin').WithPigmentOptions} */
+const nextConfig = {
+  pigment: {
+    theme: yourCustomTheme,
+    // CSS output option
+    css: {
+      // Specify your default CSS authoring direction
+      defaultDirection: 'ltr',
+      // Generate CSS for the opposite of the `defaultDirection`
+      // This is set to `false` by default
+      generateForBothDir: true,
+    },
   },
-});
+};
+
+// ...
+module.exports = withPigment(nextConfig);
 ```
 
 ### Vite
@@ -1136,12 +1140,12 @@ Next, they must set up Pigment CSS in their project:
 // framework config file, for example next.config.js
 const { withPigment } = require('@pigment-css/nextjs-plugin');
 
-module.exports = withPigment(
-  {
-    // ... Your nextjs config.
+module.exports = withPigment({
+  // ... Your nextjs config.
+  pigment: {
+    transformLibraries: ['your-package-name'],
   },
-  { transformLibraries: ['your-package-name'] },
-);
+});
 ```
 
 Finally, they must import the stylesheet in the root layout file:
@@ -1167,9 +1171,9 @@ Developers can customize the component's styles using the theme's `styleOverride
 For example, the custom theme below sets the background color of the statistics component's root slot to `tomato`:
 
 ```js
-module.exports = withPigment(
-  { ...nextConfig },
-  {
+module.exports = withPigment({
+  ...nextConfig,
+  pigment: {
     theme: {
       components: {
         PigmentStat: {
@@ -1188,15 +1192,15 @@ module.exports = withPigment(
       },
     },
   },
-);
+});
 ```
 
 Developers can also access theme values and apply styles based on the component's props using the `variants` key:
 
 ```js
-module.exports = withPigment(
-  { ...nextConfig },
-  {
+module.exports = withPigment({
+  ...nextConfig,
+  pigment: {
     theme: {
       // user defined colors
       colors: {
@@ -1229,7 +1233,7 @@ module.exports = withPigment(
       },
     },
   },
-);
+});
 ```
 
 ## How Pigment CSS works

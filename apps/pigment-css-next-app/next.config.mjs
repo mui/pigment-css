@@ -1,7 +1,5 @@
-/* eslint-env node */
-// eslint-ignore-next-line import/no-unresolved
-const { withPigment } = require('@pigment-css/nextjs-plugin');
-const { extendTheme } = require('@mui/material/styles');
+import { withPigment } from '@pigment-css/nextjs-plugin';
+import { experimental_extendTheme as extendTheme } from '@mui/material';
 
 /**
  * @typedef {import('@pigment-css/nextjs-plugin').PigmentOptions} PigmentOptions
@@ -132,7 +130,7 @@ const pigmentOptions = {
   },
 };
 
-/** @type {import('next').NextConfig} */
+/** @type {import('@pigment-css/nextjs-plugin').WithPigmentOptions} */
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
@@ -144,6 +142,7 @@ const nextConfig = {
     buildActivity: true,
     buildActivityPosition: 'bottom-right',
   },
+  pigment: pigmentOptions,
 };
 
-module.exports = withPigment(nextConfig, pigmentOptions);
+export default withPigment(nextConfig);
