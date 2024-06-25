@@ -1,3 +1,4 @@
+import * as path from 'node:path';
 import type { Plugin } from 'vite';
 import {
   preprocessor as basePreprocessor,
@@ -46,9 +47,9 @@ export function pigment(options: PigmentOptions) {
     css,
     ...rest
   } = options ?? {};
-  const finalTransformLibraries = transformLibraries.concat(
-    process.env.RUNTIME_PACKAGE_NAME as string,
-  );
+  const finalTransformLibraries = transformLibraries
+    .concat(process.env.RUNTIME_PACKAGE_NAME as string)
+    .map((lib) => lib.split('/').join(path.sep));
 
   function injectMUITokensPlugin(): Plugin {
     return {
