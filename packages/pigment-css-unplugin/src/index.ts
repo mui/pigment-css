@@ -115,7 +115,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
     ...rest
   } = options;
   const finalTransformLibraries = transformLibraries
-    .concat(process.env.RUNTIME_PACKAGE_NAME as string)
+    .concat([process.env.RUNTIME_PACKAGE_NAME as string, '@mui/material-pigment-css'])
     .map((lib) => lib.split('/').join(path.sep));
   const cache = new TransformCacheCollection();
   const { emitter, onDone } = createFileReporter(debug ?? false);
@@ -341,9 +341,11 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
               id = id.replace(/\\/g, '/');
               return (
                 // this file should exist in the package
-                id.endsWith(`${process.env.RUNTIME_PACKAGE_NAME}/styles.css`) ||
+                transformLibraries.some(
+                  (lib) => id.endsWith(`${lib}/styles.css`) || id.endsWith(`${lib}/theme`),
+                ) ||
+                // These are only to support local workspace development
                 id.endsWith('/pigment-css-react/styles.css') ||
-                id.includes(`${process.env.RUNTIME_PACKAGE_NAME}/theme`) ||
                 id.includes('/pigment-css-react/theme')
               );
             },
@@ -352,10 +354,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
               if (id.endsWith('styles.css')) {
                 return theme ? generateTokenCss(theme) : _code;
               }
-              if (
-                id.includes('pigment-css-react/theme') ||
-                id.includes(`${process.env.RUNTIME_PACKAGE_NAME}/theme`)
-              ) {
+              if (id.endsWith('/theme')) {
                 return generateThemeSource(theme);
               }
               return null;
@@ -363,10 +362,10 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
           }
         : {
             resolveId(source: string) {
-              if (source === `${process.env.RUNTIME_PACKAGE_NAME}/styles.css`) {
+              if (transformLibraries.some((lib) => source === `${lib}/styles.css`)) {
                 return VIRTUAL_CSS_FILE;
               }
-              if (source === `${process.env.RUNTIME_PACKAGE_NAME}/theme`) {
+              if (transformLibraries.some((lib) => source === `${lib}/theme`)) {
                 return VIRTUAL_THEME_FILE;
               }
               return null;

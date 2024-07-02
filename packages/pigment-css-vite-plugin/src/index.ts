@@ -48,7 +48,7 @@ export function pigment(options: PigmentOptions) {
     ...rest
   } = options ?? {};
   const finalTransformLibraries = transformLibraries
-    .concat(process.env.RUNTIME_PACKAGE_NAME as string)
+    .concat([process.env.RUNTIME_PACKAGE_NAME as string, '@mui/material-pigment-css'])
     .map((lib) => lib.split('/').join(path.sep));
 
   function injectMUITokensPlugin(): Plugin {
@@ -56,10 +56,10 @@ export function pigment(options: PigmentOptions) {
       name: 'vite-mui-theme-injection-plugin',
       enforce: 'pre',
       resolveId(source) {
-        if (source.includes(`${process.env.RUNTIME_PACKAGE_NAME}/styles.css`)) {
+        if (finalTransformLibraries.some((lib) => source.includes(`${lib}/styles.css`))) {
           return VIRTUAL_CSS_FILE;
         }
-        if (source.includes(`${process.env.RUNTIME_PACKAGE_NAME}/theme`)) {
+        if (finalTransformLibraries.some((lib) => source.includes(`${lib}/theme`))) {
           return VIRTUAL_THEME_FILE;
         }
         return null;
