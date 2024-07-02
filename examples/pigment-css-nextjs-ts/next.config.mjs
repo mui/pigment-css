@@ -1,4 +1,4 @@
-const { withPigment, extendTheme } = require('@pigment-css/nextjs-plugin');
+import { withPigment, extendTheme } from '@pigment-css/nextjs-plugin';
 
 // To learn more about theming, visit https://github.com/mui/pigment-css/blob/master/README.md#theming
 const theme = extendTheme({
@@ -25,4 +25,4 @@ const theme = extendTheme({
 /** @type {import('next').NextConfig} */
 const nextConfig = {};
 
-module.exports = withPigment(nextConfig, { theme });
+export default withPigment(nextConfig, { theme });
