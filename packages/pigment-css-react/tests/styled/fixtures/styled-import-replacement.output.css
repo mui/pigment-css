@@ -1,0 +1,23 @@
+@keyframes rrqhzm2 {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+.ci0148v {
+  animation: rrqhzm2 2s ease-out 0s infinite;
+  margin-left: 10px;
+}
+.suo5xob {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-top-left-radius: 3px;
+}
+.sudpq9z .suo5xob {
+  padding-inline-start: none;
+  margin: 0px 10px 10px 30px;
+}

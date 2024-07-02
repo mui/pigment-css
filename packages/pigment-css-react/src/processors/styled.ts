@@ -320,7 +320,7 @@ export class StyledProcessor extends BaseProcessor {
       return;
     }
     const themeImportIdentifier = this.astService.addDefaultImport(
-      `${process.env.PACKAGE_NAME}/theme`,
+      `${this.getImportPath()}/theme`,
       'theme',
     );
     // all the variant definitions are collected here so that we can
@@ -416,7 +416,7 @@ export class StyledProcessor extends BaseProcessor {
       }
     }
 
-    const styledImportIdentifier = t.addNamedImport('styled', process.env.PACKAGE_NAME as string);
+    const styledImportIdentifier = t.addNamedImport('styled', this.getImportPath());
     const styledCall = t.callExpression(
       styledImportIdentifier,
       componentMetaExpression ? [componentName, componentMetaExpression] : [componentName],

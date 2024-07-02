@@ -103,7 +103,7 @@ export class GenerateAtomicsProcessor extends BaseProcessor {
       return;
     }
     const { astService: t } = this;
-    const importName = t.addNamedImport('atomics', process.env.PACKAGE_NAME as string);
+    const importName = t.addNamedImport('atomics', this.getImportPath());
     this.replacer(t.callExpression(importName, [valueToLiteral(this.runtimeConfig)]), true);
   }
 }

@@ -28,7 +28,7 @@ export class CreateExtendSxPropProcessor extends BaseProcessor {
 
     const extendSxPropImportIdentifier = t.addNamedImport(
       this.tagSource.imported,
-      process.env.PACKAGE_NAME as string,
+      this.getImportPath(),
     );
 
     this.replacer(t.callExpression(extendSxPropImportIdentifier, []), true);

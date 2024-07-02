@@ -113,6 +113,13 @@ export function pigment(options: PigmentOptions) {
       theme,
     },
     transformLibraries: finalTransformLibraries,
+    packageMap: transformLibraries.reduce(
+      (acc, lib) => {
+        acc[lib] = lib;
+        return acc;
+      },
+      {} as Record<string, string>,
+    ),
     preprocessor: preprocessor ?? withRtl,
     babelOptions: {
       ...babelOptions,

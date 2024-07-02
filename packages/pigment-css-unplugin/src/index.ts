@@ -82,6 +82,24 @@ function isZeroRuntimeProcessableFile(fileName: string, transformLibraries: stri
   );
 }
 
+const addMaterialUIOverriedContext = (originalContext: Record<string, unknown>) => {
+  const originalRequire = originalContext.require as (id: string) => any;
+  const newRequire = (id: string) => {
+    if (id === '@mui/styled-engine' || id === '@mui/styled-engine-sc') {
+      return {
+        __esModule: true,
+        default: () => () => () => null,
+        internal_processStyles: () => {},
+        keyframes: () => '',
+        css: () => '',
+      };
+    }
+    return originalRequire(id);
+  };
+  originalContext.require = newRequire;
+  return originalContext;
+};
+
 /**
  * Next.js initializes the plugin multiple times. So all the calls
  * have to share the same Maps.
@@ -213,17 +231,25 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
             themeArgs: {
               theme,
             },
+            packageMap: transformLibraries.reduce(
+              (acc, lib) => {
+                acc[lib] = lib;
+                return acc;
+              },
+              {} as Record<string, string>,
+            ),
             features: {
               useWeakRefInEval: false,
               // If users know what they are doing, let them override to true
               ...rest.features,
             },
             overrideContext(context: Record<string, unknown>, filename: string) {
-              if (overrideContext) {
-                return overrideContext(context, filename);
-              }
               if (!context.$RefreshSig$) {
                 context.$RefreshSig$ = outerNoop;
+              }
+              addMaterialUIOverriedContext(context);
+              if (overrideContext) {
+                return overrideContext(context, filename);
               }
               return context;
             },

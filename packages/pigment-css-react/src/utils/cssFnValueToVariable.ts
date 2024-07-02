@@ -37,6 +37,31 @@ export type PluginCustomOptions = {
      */
     getDirSelector?: (dir: 'ltr' | 'rtl') => string;
   };
+  /**
+   * Customize the replacement package name that should be added in-place of
+   * the actually imported package name, ie,
+   *
+   * ```js
+   * import { styled } from '@pigment-css/react';
+   * ```
+   *
+   * will turn into
+   *
+   * ```js
+   * import { styled } from '@mui/material-pigment-css';
+   * ```
+   *
+   * if packageMap has this
+   *
+   * ```js
+   * {
+   *   packageMap: {
+   *     '@pigment-css/react': '@mui/material-pigment-css',
+   *   }
+   * }
+   * ```
+   */
+  packageMap?: Record<string, string>;
 };
 
 type CssFnValueToVariableParams = {
