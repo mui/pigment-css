@@ -112,6 +112,7 @@ export function pigment(options: PigmentOptions) {
     themeArgs: {
       theme,
     },
+    transformLibraries: finalTransformLibraries,
     preprocessor: preprocessor ?? withRtl,
     babelOptions: {
       ...babelOptions,
