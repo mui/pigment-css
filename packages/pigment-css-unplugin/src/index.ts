@@ -186,7 +186,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
     name: 'pigment-css-plugin-transform-wyw-in-js',
     enforce: 'post',
     buildEnd() {
-      onDone(process.cwd());
+      onDone(projectPath);
     },
     transformInclude(id) {
       return isZeroRuntimeProcessableFile(id, finalTransformLibraries);
@@ -201,7 +201,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
           ) {
             const context = path.isAbsolute(importer)
               ? path.dirname(importer)
-              : path.join(process.cwd(), path.dirname(importer));
+              : path.join(projectPath, path.dirname(importer));
             return new Promise((resolve, reject) => {
               resolver.resolve({}, context, what, { stack: new Set(stack) }, (err, result) => {
                 if (err) {
@@ -224,7 +224,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
       const transformServices = {
         options: {
           filename: id,
-          root: process.cwd(),
+          root: projectPath,
           preprocessor: preprocessor ?? withRtl,
           pluginOptions: {
             ...rest,
@@ -364,23 +364,23 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
       ...(isNext
         ? {
             transformInclude(id) {
-              id = id.replace(/\\/g, '/');
               return (
                 // this file should exist in the package
-                transformLibraries.some(
-                  (lib) => id.endsWith(`${lib}/styles.css`) || id.endsWith(`${lib}/theme`),
+                finalTransformLibraries.some(
+                  (lib) =>
+                    id.endsWith(`${lib}${path.sep}styles.css`) ||
+                    id.includes(`${lib}${path.sep}theme`),
                 ) ||
                 // These are only to support local workspace development
                 id.endsWith('/pigment-css-react/styles.css') ||
                 id.includes('/pigment-css-react/theme')
               );
             },
-            transform(_code, id) {
-              id = id.replace(/\\/g, '/');
+            transform(code, id) {
               if (id.endsWith('styles.css')) {
-                return theme ? generateTokenCss(theme) : _code;
+                return theme ? generateTokenCss(theme) : code;
               }
-              if (id.endsWith('/theme')) {
+              if (id.includes('theme')) {
                 return generateThemeSource(theme);
               }
               return null;
