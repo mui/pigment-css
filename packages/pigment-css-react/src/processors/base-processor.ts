@@ -4,6 +4,7 @@ import {
   BaseProcessor as WywBaseProcessor,
   toValidCSSIdentifier,
 } from '@wyw-in-js/processor-utils';
+import type { PluginCustomOptions } from '../utils/cssFnValueToVariable';
 
 export default abstract class BaseProcessor extends WywBaseProcessor {
   variableIdx = 0;
@@ -41,5 +42,12 @@ export default abstract class BaseProcessor extends WywBaseProcessor {
       unit: '',
       valueSlug: slugify(`${source}${hasUnit}`),
     };
+  }
+
+  protected getImportPath() {
+    const { packageMap } = this.options as PluginCustomOptions;
+    const { source: originalSource } = this.tagSource;
+    const transformedImport = packageMap?.[originalSource];
+    return transformedImport ?? `${process.env.PACKAGE_NAME as string}`;
   }
 }

@@ -48,7 +48,7 @@ export class CreateUseThemePropsProcessor extends BaseProcessor {
 
     const useThemePropsImportIdentifier = t.addNamedImport(
       this.tagSource.imported,
-      process.env.PACKAGE_NAME as string,
+      this.getImportPath(),
     );
 
     let replacement: Expression = t.stringLiteral(this.componentName);

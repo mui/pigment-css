@@ -41,6 +41,24 @@ function outerNoop() {
   return innerNoop;
 }
 
+const addMaterialUIOverriedContext = (originalContext: Record<string, unknown>) => {
+  const originalRequire = originalContext.require as (id: string) => any;
+  const newRequire = (id: string) => {
+    if (id === '@mui/styled-engine' || id === '@mui/styled-engine-sc') {
+      return {
+        __esModule: true,
+        default: () => () => () => null,
+        internal_processStyles: () => {},
+        keyframes: () => '',
+        css: () => '',
+      };
+    }
+    return originalRequire(id);
+  };
+  originalContext.require = newRequire;
+  return originalContext;
+};
+
 export default function wywVitePlugin({
   debug,
   include,
@@ -203,12 +221,16 @@ export default function wywVitePlugin({
                   presets: Array.from(presets),
                 },
                 overrideContext(context: Record<string, unknown>, filename: string) {
-                  if (overrideContext) {
-                    return overrideContext(context, filename);
-                  }
                   if (!context.$RefreshSig$) {
                     context.$RefreshSig$ = outerNoop;
                   }
+
+                  addMaterialUIOverriedContext(context);
+
+                  if (overrideContext) {
+                    return overrideContext(context, filename);
+                  }
+
                   return context;
                 },
                 tagResolver(source: string, tag: string) {

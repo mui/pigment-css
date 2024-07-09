@@ -139,4 +139,18 @@ describe('Pigment CSS - styled', () => {
     expect(output.js).to.equal(fixture.js);
     expect(output.css).to.equal(fixture.css);
   });
+
+  it('should replace the import paths to the ones specific in packageMap', async () => {
+    const { output, fixture } = await runTransformation(
+      path.join(__dirname, 'fixtures/styled-import-replacement.input.js'),
+      {
+        packageMap: {
+          '@pigment-css/react': '@mui/material-pigment-css',
+        },
+      },
+    );
+
+    expect(output.js).to.equal(fixture.js);
+    expect(output.css).to.equal(fixture.css);
+  });
 });

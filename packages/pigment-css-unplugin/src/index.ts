@@ -82,6 +82,24 @@ function isZeroRuntimeProcessableFile(fileName: string, transformLibraries: stri
   );
 }
 
+const addMaterialUIOverriedContext = (originalContext: Record<string, unknown>) => {
+  const originalRequire = originalContext.require as (id: string) => any;
+  const newRequire = (id: string) => {
+    if (id === '@mui/styled-engine' || id === '@mui/styled-engine-sc') {
+      return {
+        __esModule: true,
+        default: () => () => () => null,
+        internal_processStyles: () => {},
+        keyframes: () => '',
+        css: () => '',
+      };
+    }
+    return originalRequire(id);
+  };
+  originalContext.require = newRequire;
+  return originalContext;
+};
+
 /**
  * Next.js initializes the plugin multiple times. So all the calls
  * have to share the same Maps.
@@ -115,7 +133,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
     ...rest
   } = options;
   const finalTransformLibraries = transformLibraries
-    .concat(process.env.RUNTIME_PACKAGE_NAME as string)
+    .concat([process.env.RUNTIME_PACKAGE_NAME as string, '@mui/material-pigment-css'])
     .map((lib) => lib.split('/').join(path.sep));
   const cache = new TransformCacheCollection();
   const { emitter, onDone } = createFileReporter(debug ?? false);
@@ -168,7 +186,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
     name: 'pigment-css-plugin-transform-wyw-in-js',
     enforce: 'post',
     buildEnd() {
-      onDone(process.cwd());
+      onDone(projectPath);
     },
     transformInclude(id) {
       return isZeroRuntimeProcessableFile(id, finalTransformLibraries);
@@ -183,7 +201,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
           ) {
             const context = path.isAbsolute(importer)
               ? path.dirname(importer)
-              : path.join(process.cwd(), path.dirname(importer));
+              : path.join(projectPath, path.dirname(importer));
             return new Promise((resolve, reject) => {
               resolver.resolve({}, context, what, { stack: new Set(stack) }, (err, result) => {
                 if (err) {
@@ -206,24 +224,32 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
       const transformServices = {
         options: {
           filename: id,
-          root: process.cwd(),
+          root: projectPath,
           preprocessor: preprocessor ?? withRtl,
           pluginOptions: {
             ...rest,
             themeArgs: {
               theme,
             },
+            packageMap: transformLibraries.reduce(
+              (acc, lib) => {
+                acc[lib] = lib;
+                return acc;
+              },
+              {} as Record<string, string>,
+            ),
             features: {
               useWeakRefInEval: false,
               // If users know what they are doing, let them override to true
               ...rest.features,
             },
             overrideContext(context: Record<string, unknown>, filename: string) {
-              if (overrideContext) {
-                return overrideContext(context, filename);
-              }
               if (!context.$RefreshSig$) {
                 context.$RefreshSig$ = outerNoop;
+              }
+              addMaterialUIOverriedContext(context);
+              if (overrideContext) {
+                return overrideContext(context, filename);
               }
               return context;
             },
@@ -338,24 +364,23 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
       ...(isNext
         ? {
             transformInclude(id) {
-              id = id.replace(/\\/g, '/');
               return (
                 // this file should exist in the package
-                id.endsWith(`${process.env.RUNTIME_PACKAGE_NAME}/styles.css`) ||
+                finalTransformLibraries.some(
+                  (lib) =>
+                    id.endsWith(`${lib}${path.sep}styles.css`) ||
+                    id.includes(`${lib}${path.sep}theme`),
+                ) ||
+                // These are only to support local workspace development
                 id.endsWith('/pigment-css-react/styles.css') ||
-                id.includes(`${process.env.RUNTIME_PACKAGE_NAME}/theme`) ||
                 id.includes('/pigment-css-react/theme')
               );
             },
-            transform(_code, id) {
-              id = id.replace(/\\/g, '/');
+            transform(code, id) {
               if (id.endsWith('styles.css')) {
-                return theme ? generateTokenCss(theme) : _code;
+                return theme ? generateTokenCss(theme) : code;
               }
-              if (
-                id.includes('pigment-css-react/theme') ||
-                id.includes(`${process.env.RUNTIME_PACKAGE_NAME}/theme`)
-              ) {
+              if (id.includes('theme')) {
                 return generateThemeSource(theme);
               }
               return null;
@@ -363,10 +388,10 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
           }
         : {
             resolveId(source: string) {
-              if (source === `${process.env.RUNTIME_PACKAGE_NAME}/styles.css`) {
+              if (transformLibraries.some((lib) => source === `${lib}/styles.css`)) {
                 return VIRTUAL_CSS_FILE;
               }
-              if (source === `${process.env.RUNTIME_PACKAGE_NAME}/theme`) {
+              if (transformLibraries.some((lib) => source === `${lib}/theme`)) {
                 return VIRTUAL_THEME_FILE;
               }
               return null;

@@ -14,9 +14,7 @@ import * as prettier from 'prettier';
 import sxTransformPlugin from '../exports/sx-plugin';
 import pkgJson from '../package.json';
 
-type TransformOptions = {
-  themeArgs?: { theme?: any };
-  css?: PluginCustomOptions['css'];
+type TransformOptions = PluginCustomOptions & {
   outputDir?: string;
 };
 
@@ -35,15 +33,12 @@ export async function runTransformation(absolutePath: string, options?: Transfor
   const cache = new TransformCacheCollection();
   const { emitter: eventEmitter } = createFileReporter(false);
   const inputFilePath = absolutePath;
+  const { outputDir, ...restOptions } = options ?? {};
   let outputFilePath = (
-    options?.outputDir
-      ? path.join(options.outputDir, inputFilePath.split(path.sep).pop() as string)
-      : absolutePath
+    outputDir ? path.join(outputDir, inputFilePath.split(path.sep).pop() as string) : absolutePath
   ).replace('.input.', '.output.');
   let outputCssFilePath = (
-    options?.outputDir
-      ? path.join(options.outputDir, inputFilePath.split(path.sep).pop() as string)
-      : absolutePath
+    outputDir ? path.join(outputDir, inputFilePath.split(path.sep).pop() as string) : absolutePath
   )
     .replace('.input.js', '.output.css')
     .replace('.input.jsx', '.output.css');
@@ -65,9 +60,6 @@ export async function runTransformation(absolutePath: string, options?: Transfor
   const babelResult = await runSxTransform(inputContent, inputFilePath);
 
   const pluginOptions = {
-    themeArgs: {
-      theme: options?.themeArgs?.theme,
-    },
     babelOptions: {
       configFile: false,
       babelrc: false,
@@ -83,6 +75,7 @@ export async function runTransformation(absolutePath: string, options?: Transfor
       }
       return require.resolve(`../${pkgJson['wyw-in-js'].tags[tag]}`.replace('.js', ''));
     },
+    ...restOptions,
   };
 
   const result = await wywTransform(
