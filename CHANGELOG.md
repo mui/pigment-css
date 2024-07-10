@@ -3,6 +3,30 @@
 > @pigment-css/monorepo@0.0.15 release:changelog /Users/siriwatknp/Personal-Repos/pigment-css
 > node scripts/releaseChangelog.mjs
 
+## v0.0.17
+
+<!-- generated comparing v0.0.16..master -->
+
+_Jul 10, 2024_
+
+A big thanks to the 3 contributors who made this release possible.
+
+### `@pigment-css/vite-plugin@0.0.17`
+
+- &#8203;<!-- 2 -->[vite] Allow package authors to specify packages to include in vite (#172) @brijeshb42
+- &#8203;<!-- 1 -->[vite] Pass down `transformLibraries` (#169) @siriwatknp
+
+### `@pigment-css/unplugin@0.0.17`
+
+- &#8203;<!-- 3 -->[plugin] Allow runtime libraries to have their own theme and styles css path (#165) @brijeshb42
+
+### Core
+
+- &#8203;<!-- 5 -->[core] Simpler pnpm dedupe error message to act on @oliviertassinari
+- &#8203;<!-- 4 -->[examples] Rename next.config.js to next.config.mjs (#157) @brijeshb42
+
+All contributors of this release in alphabetical order: @brijeshb42, @oliviertassinari, @siriwatknp
+
 ## v0.0.16
 
 <!-- generated comparing v0.0.15..master -->
