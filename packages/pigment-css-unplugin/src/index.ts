@@ -8,7 +8,7 @@ import {
   transform,
   createFileReporter,
 } from '@wyw-in-js/transform';
-import { asyncResolveFallback } from '@wyw-in-js/shared';
+import { asyncResolveFallback, slugify } from '@wyw-in-js/shared';
 import {
   UnpluginFactoryOutput,
   WebpackPluginInstance,
@@ -325,11 +325,14 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
         }
 
         const rootPath = process.cwd();
+        const slug = slugify(cssText);
         const cssFilename = path
-          .normalize(`${id.replace(/\.[jt]sx?$/, '')}.pigment.css`)
+          .normalize(`${id.replace(/\.[jt]sx?$/, '')}-${slug}.pigment.css`)
           .replace(/\\/g, path.posix.sep);
 
         const cssRelativePath = path.relative(rootPath, cssFilename).replace(/\\/g, path.posix.sep);
+        // Starting with null character so that it calls the resolver method (resolveId in line:430)
+        // Otherwise, webpack tries to resolve the path directly
         const cssId = `\0${cssRelativePath}`;
 
         cssFileLookup.set(cssId, cssText);
