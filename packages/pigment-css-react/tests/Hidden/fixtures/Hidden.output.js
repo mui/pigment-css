@@ -67,7 +67,7 @@ const Hidden = React.forwardRef(function Hidden(
         });
       }
     } else {
-      rest[key] = props[key];
+      other[key] = props[key];
     }
   });
   const stackClasses = hiddenAtomics({
