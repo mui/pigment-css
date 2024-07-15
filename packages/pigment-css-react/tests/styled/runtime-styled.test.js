@@ -50,7 +50,7 @@ describe('props filtering', () => {
     const Link = styled('a')`
       color: green;
     `;
-    const rest = { m: [3], pt: [4] };
+    const other = { m: [3], pt: [4] };
 
     const { container } = render(
       <Link
@@ -64,7 +64,7 @@ describe('props filtering', () => {
         aria-label="some label"
         data-wow="value"
         href="link"
-        {...rest}
+        {...other}
       >
         hello world
       </Link>,

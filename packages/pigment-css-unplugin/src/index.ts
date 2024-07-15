@@ -130,7 +130,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
     overrideContext,
     tagResolver,
     css,
-    ...rest
+    ...other
   } = options;
   const finalTransformLibraries = transformLibraries
     .concat([process.env.RUNTIME_PACKAGE_NAME as string, '@mui/material-pigment-css'])
@@ -227,7 +227,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
           root: projectPath,
           preprocessor: preprocessor ?? withRtl,
           pluginOptions: {
-            ...rest,
+            ...other,
             themeArgs: {
               theme,
             },
@@ -241,7 +241,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
             features: {
               useWeakRefInEval: false,
               // If users know what they are doing, let them override to true
-              ...rest.features,
+              ...other.features,
             },
             overrideContext(context: Record<string, unknown>, filename: string) {
               if (!context.$RefreshSig$) {
@@ -264,13 +264,13 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
               return null;
             },
             babelOptions: {
-              ...rest.babelOptions,
+              ...other.babelOptions,
               plugins: [
                 require.resolve(
                   `${process.env.RUNTIME_PACKAGE_NAME}/exports/remove-prop-types-plugin`,
                 ),
                 'babel-plugin-define-var', // A fix for undefined variables in the eval phase of wyw-in-js, more details on https://github.com/siriwatknp/babel-plugin-define-var?tab=readme-ov-file#problem
-                ...(rest.babelOptions?.plugins ?? []),
+                ...(other.babelOptions?.plugins ?? []),
               ],
             },
           },

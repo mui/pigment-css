@@ -63,7 +63,7 @@ const Stack = React.forwardRef(function Stack(
     divider,
     component = 'div',
     direction = 'column',
-    ...rest
+    ...other
   },
   ref,
 ) {
@@ -84,7 +84,7 @@ const Stack = React.forwardRef(function Stack(
         className,
       )}
       style={{ ...style, ...stackClasses.style }}
-      {...rest}
+      {...other}
     >
       {divider ? joinChildren(children, divider) : children}
     </Component>

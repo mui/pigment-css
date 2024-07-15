@@ -52,7 +52,7 @@ const Hidden = React.forwardRef(function Hidden(
   { className, component = 'div', style, ...props },
   ref,
 ) {
-  const rest = {};
+  const other = {};
   const breakpointProps = {};
   Object.keys(props).forEach((key) => {
     if (key.endsWith('Up') || key.endsWith('Down')) {
@@ -82,7 +82,7 @@ const Hidden = React.forwardRef(function Hidden(
         ...style,
         ...stackClasses.style,
       }}
-      {...rest}
+      {...other}
     />
   );
 });

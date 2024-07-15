@@ -26,7 +26,7 @@ const Hidden = React.forwardRef(function Hidden(
   { className, component = 'div', style, ...props },
   ref,
 ) {
-  const rest = {};
+  const other = {};
   const breakpointProps = {};
   Object.keys(props).forEach((key) => {
     if (key.endsWith('Up') || key.endsWith('Down')) {
@@ -41,7 +41,7 @@ const Hidden = React.forwardRef(function Hidden(
         });
       }
     } else {
-      rest[key] = props[key];
+      other[key] = props[key];
     }
   });
   const stackClasses = hiddenAtomics({ display: breakpointProps });
@@ -51,7 +51,7 @@ const Hidden = React.forwardRef(function Hidden(
       ref={ref}
       className={clsx(stackClasses.className, className)}
       style={{ ...style, ...stackClasses.style }}
-      {...rest}
+      {...other}
     />
   );
 });

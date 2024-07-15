@@ -69,7 +69,7 @@ export default function wywVitePlugin({
   overrideContext,
   tagResolver,
   css: cssConfig,
-  ...rest
+  ...other
 }: VitePluginOptions = {}): Plugin {
   const filter = createFilter(include, exclude);
   const cssLookup = new Map<string, string>();
@@ -191,7 +191,7 @@ export default function wywVitePlugin({
       };
 
       const presets = new Set(
-        Array.isArray(rest.babelOptions?.presets) ? rest.babelOptions?.presets : [],
+        Array.isArray(other.babelOptions?.presets) ? other.babelOptions?.presets : [],
       );
       presets.add('@babel/preset-typescript');
 
@@ -203,20 +203,20 @@ export default function wywVitePlugin({
               root: process.cwd(),
               preprocessor,
               pluginOptions: {
-                ...rest,
+                ...other,
                 features: {
                   useWeakRefInEval: false,
                   // If users know what they are doing, let them override to true
-                  ...rest.features,
+                  ...other.features,
                 },
                 babelOptions: {
-                  ...rest.babelOptions,
+                  ...other.babelOptions,
                   plugins: [
                     require.resolve(
                       `${process.env.RUNTIME_PACKAGE_NAME}/exports/remove-prop-types-plugin`,
                     ),
                     'babel-plugin-define-var', // A fix for undefined variables in the eval phase of wyw-in-js, more details on https://github.com/siriwatknp/babel-plugin-define-var?tab=readme-ov-file#problem
-                    ...(rest.babelOptions?.plugins ?? []),
+                    ...(other.babelOptions?.plugins ?? []),
                   ],
                   presets: Array.from(presets),
                 },

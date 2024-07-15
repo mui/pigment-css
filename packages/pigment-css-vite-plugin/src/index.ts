@@ -55,7 +55,7 @@ export function pigment(options: PigmentOptions) {
     transformLibraries = [],
     transformSx = true,
     css,
-    ...rest
+    ...other
   } = options ?? {};
   const defaultLibs = [process.env.RUNTIME_PACKAGE_NAME as string, MATERIAL_WRAPPER_LIB];
   const allLibs = transformLibraries.concat(defaultLibs);
@@ -169,7 +169,7 @@ export function pigment(options: PigmentOptions) {
       ...babelOptions,
       plugins: ['@babel/plugin-syntax-typescript', ...(babelOptions.plugins ?? [])],
     },
-    ...rest,
+    ...other,
   });
 
   return [

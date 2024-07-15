@@ -20,7 +20,7 @@ const Box = React.forwardRef(
       sx,
       className,
       style,
-      ...rest
+      ...other
     },
     ref,
   ) => {
@@ -48,7 +48,7 @@ const Box = React.forwardRef(
     };
 
     // eslint-disable-next-line react/jsx-filename-extension
-    return <Component ref={ref} className={classes} style={styles} {...rest} />;
+    return <Component ref={ref} className={classes} style={styles} {...other} />;
   },
 );
 

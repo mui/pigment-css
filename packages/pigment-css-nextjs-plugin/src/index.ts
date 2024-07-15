@@ -11,7 +11,7 @@ const extractionFile = path.join(
 );
 
 export function withPigment(nextConfig: NextConfig, pigmentConfig?: PigmentOptions) {
-  const { babelOptions = {}, asyncResolve, ...rest } = pigmentConfig ?? {};
+  const { babelOptions = {}, asyncResolve, ...other } = pigmentConfig ?? {};
   if (process.env.TURBOPACK === '1') {
     // eslint-disable-next-line no-console
     console.log(
@@ -46,7 +46,7 @@ export function withPigment(nextConfig: NextConfig, pigmentConfig?: PigmentOptio
     });
     config.plugins.push(
       webpackPlugin({
-        ...rest,
+        ...other,
         meta: {
           type: 'next',
           dev,

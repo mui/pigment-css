@@ -252,7 +252,7 @@ const Grid = React.forwardRef(function Grid(
     // eslint-disable-next-line react/prop-types
     unstable_parent_row_spacing,
     wrap = 'wrap',
-    ...rest
+    ...other
   },
   ref,
 ) {
@@ -301,7 +301,7 @@ const Grid = React.forwardRef(function Grid(
         ...style,
         ...gridClasses.style,
       }}
-      {...rest}
+      {...other}
       ownerState={ownerState}
     >
       {React.Children.map(children, (child) => {
