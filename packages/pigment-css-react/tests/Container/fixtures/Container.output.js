@@ -48,6 +48,12 @@ const ContainerRoot = /*#__PURE__*/ _styled('div', {
       },
       className: 'c12mgz3n-7',
     },
+    {
+      props: {
+        maxWidth: 'uw',
+      },
+      className: 'c12mgz3n-8',
+    },
   ],
 });
 const Container = React.forwardRef(function Container(props, ref) {
@@ -113,7 +119,7 @@ process.env.NODE_ENV !== 'production'
        * Set to `false` to disable `maxWidth`.
        * @default 'lg'
        */
-      maxWidth: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs', false]),
+      maxWidth: PropTypes.oneOf(['lg', 'md', 'sm', 'uw', 'xl', 'xs', false]),
     })
   : void 0;
 export default Container;

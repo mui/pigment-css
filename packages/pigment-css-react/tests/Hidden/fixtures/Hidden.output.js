@@ -22,6 +22,9 @@ const hiddenAtomics = /*#__PURE__*/ _atomics({
         xlOnly: 'hccfrvp13',
         xlUp: 'hccfrvp14',
         xlDown: 'hccfrvp15',
+        uwOnly: 'hccfrvp16',
+        uwUp: 'hccfrvp17',
+        uwDown: 'hccfrvp18',
       },
     },
   },
@@ -42,6 +45,9 @@ const hiddenAtomics = /*#__PURE__*/ _atomics({
     'xlOnly',
     'xlUp',
     'xlDown',
+    'uwOnly',
+    'uwUp',
+    'uwDown',
   ],
   defaultCondition: undefined,
   unitless: [],
@@ -121,8 +127,8 @@ if (process.env.NODE_ENV !== 'production') {
      * Hide the given breakpoint(s).
      */
     only: PropTypes.oneOfType([
-      PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
-      PropTypes.arrayOf(PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl'])),
+      PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl', 'uw']),
+      PropTypes.arrayOf(PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl', 'uw'])),
     ]),
     /**
      * If `true`, screens this size and down are hidden.
@@ -136,6 +142,14 @@ if (process.env.NODE_ENV !== 'production') {
      * @ignore
      */
     style: PropTypes.object,
+    /**
+     * If `true`, screens this size and down are hidden.
+     */
+    uwDown: PropTypes.bool,
+    /**
+     * If `true`, screens this size and up are hidden.
+     */
+    uwUp: PropTypes.bool,
     /**
      * If `true`, screens this size and down are hidden.
      */

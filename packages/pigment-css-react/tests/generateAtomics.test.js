@@ -10,6 +10,7 @@ const atomic = atomics({
         md: 'flex-direction-column-md',
         lg: 'flex-direction-column-lg',
         xl: 'flex-direction-column-xl',
+        uw: 'flex-direction-column-uw',
       },
       'column-reverse': {
         xs: 'flex-direction-column-reverse-xs',
@@ -17,6 +18,7 @@ const atomic = atomics({
         md: 'flex-direction-column-reverse-md',
         lg: 'flex-direction-column-reverse-lg',
         xl: 'flex-direction-column-reverse-xl',
+        uw: 'flex-direction-column-reverse-uw',
       },
       row: {
         xs: 'flex-direction-row-xs',
@@ -24,6 +26,7 @@ const atomic = atomics({
         md: 'flex-direction-row-md',
         lg: 'flex-direction-row-lg',
         xl: 'flex-direction-row-xl',
+        uw: 'flex-direction-row-uw',
       },
       'row-reverse': {
         xs: 'flex-direction-row-reverse-xs',
@@ -31,6 +34,7 @@ const atomic = atomics({
         md: 'flex-direction-row-reverse-md',
         lg: 'flex-direction-row-reverse-lg',
         xl: 'flex-direction-row-reverse-xl',
+        uw: 'flex-direction-row-reverse-uw',
       },
     },
     gap: {
@@ -40,12 +44,13 @@ const atomic = atomics({
         md: 'gap--Stack-gap-md',
         lg: 'gap--Stack-gap-lg',
         xl: 'gap--Stack-gap-xl',
+        uw: 'gap--Stack-gap-uw',
       },
     },
   },
   shorthands: { direction: ['flexDirection'], spacing: ['gap'] },
   // @ts-ignore This is not expected while calling the pre-transpiled generateAtomics
-  conditions: ['xs', 'sm', 'md', 'lg', 'xl'],
+  conditions: ['xs', 'sm', 'md', 'lg', 'xl', 'uw'],
   defaultCondition: 'xs',
   unitless: [],
   multipliers: {
@@ -168,11 +173,14 @@ describe('generateAtomics', () => {
             lgDown: 'display-none-lgDown',
             xlUp: 'display-none-xlUp',
             xlDown: 'display-none-xlDown',
+            uwUp: 'display-none-uwUp',
+            uwDown: 'display-none-uwDown',
             xsOnly: 'display-none-onlyXs',
             smOnly: 'display-none-onlySm',
             mdOnly: 'display-none-onlyMd',
             lgOnly: 'display-none-onlyLg',
             xlOnly: 'display-none-onlyXl',
+            uwOnly: 'display-none-onlyUw',
           },
         },
       },
@@ -187,11 +195,14 @@ describe('generateAtomics', () => {
         'lgDown',
         'xlUp',
         'xlDown',
+        'uwUp',
+        'uwDown',
         'xsOnly',
         'smOnly',
         'mdOnly',
         'lgOnly',
         'xlOnly',
+        'uwOnly',
       ],
     });
 

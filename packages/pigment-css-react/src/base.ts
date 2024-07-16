@@ -69,6 +69,6 @@ export interface PolymorphicComponent<SxProp, BaseProps extends BaseDefaultProps
 export interface BreakpointOverrides {}
 
 export type Breakpoint = OverridableStringUnion<
-  'xs' | 'sm' | 'md' | 'lg' | 'xl',
+  'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'uw',
   BreakpointOverrides
 >;
