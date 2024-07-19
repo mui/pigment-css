@@ -1,3 +1,4 @@
+import type * as React from 'react';
 import type * as CSS from 'csstype';
 import { OverridableStringUnion } from '@mui/types';
 
@@ -63,7 +64,7 @@ export interface PolymorphicComponent<SxProp, BaseProps extends BaseDefaultProps
   extends React.ForwardRefExoticComponent<BaseProps> {
   <AsTarget extends React.ElementType | undefined = undefined>(
     props: PolymorphicComponentProps<SxProp, BaseProps, AsTarget>,
-  ): JSX.Element;
+  ): React.JSX.Element;
 }
 
 export interface BreakpointOverrides {}
