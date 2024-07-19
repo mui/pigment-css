@@ -1,14 +1,20 @@
 import Box from '@pigment-css/react/Box';
 import Grid from '@pigment-css/react/Grid';
 import { styled } from '@pigment-css/react';
+import { Test } from '@/components/Test';
 import GridDemo3 from './demo3';
 
 const Item = styled.div`
   background-color: #fff;
   border: 1px solid #ced7e0;
+  color: #222;
   padding: 8px;
   border-radius: 4px;
   text-align: center;
+
+  ${Test} {
+    color: red;
+  }
 `;
 
 function GridDemo1() {
@@ -53,7 +59,9 @@ function GridDemo4() {
   return (
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       <Grid size={6}>
-        <Item>1</Item>
+        <Item>
+          <Test>1</Test>
+        </Item>
       </Grid>
       <Grid size={6}>
         <Item>2</Item>
