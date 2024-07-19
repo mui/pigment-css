@@ -70,7 +70,10 @@ export interface CreateStyled {
 }
 
 export type CreateStyledIndex = {
-  [Key in keyof React.JSX.IntrinsicElements]: CreateStyledComponent<Key, React.JSX.IntrinsicElements[Key]>;
+  [Key in keyof React.JSX.IntrinsicElements]: CreateStyledComponent<
+    Key,
+    React.JSX.IntrinsicElements[Key]
+  >;
 };
 
 declare const styled: CreateStyled & CreateStyledIndex;
