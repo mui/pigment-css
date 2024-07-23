@@ -21,7 +21,6 @@ const gridAtomics = /*#__PURE__*/ _atomics({
         md: 'g1s0u14x31',
         lg: 'g1s0u14x46',
         xl: 'g1s0u14x61',
-        uw: 'g1s0u14x76',
       },
       'column-reverse': {
         xs: 'g1s0u14x2',
@@ -29,7 +28,6 @@ const gridAtomics = /*#__PURE__*/ _atomics({
         md: 'g1s0u14x32',
         lg: 'g1s0u14x47',
         xl: 'g1s0u14x62',
-        uw: 'g1s0u14x77',
       },
       row: {
         xs: 'g1s0u14x3',
@@ -37,7 +35,6 @@ const gridAtomics = /*#__PURE__*/ _atomics({
         md: 'g1s0u14x33',
         lg: 'g1s0u14x48',
         xl: 'g1s0u14x63',
-        uw: 'g1s0u14x78',
       },
       'row-reverse': {
         xs: 'g1s0u14x4',
@@ -45,7 +42,6 @@ const gridAtomics = /*#__PURE__*/ _atomics({
         md: 'g1s0u14x34',
         lg: 'g1s0u14x49',
         xl: 'g1s0u14x64',
-        uw: 'g1s0u14x79',
       },
     },
     '--Grid-parent-column-count': {
@@ -55,7 +51,6 @@ const gridAtomics = /*#__PURE__*/ _atomics({
         md: 'g1s0u14x35',
         lg: 'g1s0u14x50',
         xl: 'g1s0u14x65',
-        uw: 'g1s0u14x80',
       },
     },
     '--Grid-parent-column-spacing': {
@@ -65,7 +60,6 @@ const gridAtomics = /*#__PURE__*/ _atomics({
         md: 'g1s0u14x36',
         lg: 'g1s0u14x51',
         xl: 'g1s0u14x66',
-        uw: 'g1s0u14x81',
       },
     },
     '--Grid-parent-row-spacing': {
@@ -75,7 +69,6 @@ const gridAtomics = /*#__PURE__*/ _atomics({
         md: 'g1s0u14x37',
         lg: 'g1s0u14x52',
         xl: 'g1s0u14x67',
-        uw: 'g1s0u14x82',
       },
     },
     '--Grid-self-column-span': {
@@ -85,7 +78,6 @@ const gridAtomics = /*#__PURE__*/ _atomics({
         md: 'g1s0u14x38',
         lg: 'g1s0u14x53',
         xl: 'g1s0u14x68',
-        uw: 'g1s0u14x83',
       },
     },
     '--Grid-self-width': {
@@ -95,7 +87,6 @@ const gridAtomics = /*#__PURE__*/ _atomics({
         md: 'g1s0u14x39',
         lg: 'g1s0u14x54',
         xl: 'g1s0u14x69',
-        uw: 'g1s0u14x84',
       },
     },
     '--Grid-self-max-width': {
@@ -105,7 +96,6 @@ const gridAtomics = /*#__PURE__*/ _atomics({
         md: 'g1s0u14x40',
         lg: 'g1s0u14x55',
         xl: 'g1s0u14x70',
-        uw: 'g1s0u14x85',
       },
     },
     '--Grid-self-flex': {
@@ -115,7 +105,6 @@ const gridAtomics = /*#__PURE__*/ _atomics({
         md: 'g1s0u14x41',
         lg: 'g1s0u14x56',
         xl: 'g1s0u14x71',
-        uw: 'g1s0u14x86',
       },
     },
     '--Grid-self-column-spacing': {
@@ -125,7 +114,6 @@ const gridAtomics = /*#__PURE__*/ _atomics({
         md: 'g1s0u14x42',
         lg: 'g1s0u14x57',
         xl: 'g1s0u14x72',
-        uw: 'g1s0u14x87',
       },
     },
     '--Grid-self-row-spacing': {
@@ -135,7 +123,6 @@ const gridAtomics = /*#__PURE__*/ _atomics({
         md: 'g1s0u14x43',
         lg: 'g1s0u14x58',
         xl: 'g1s0u14x73',
-        uw: 'g1s0u14x88',
       },
     },
     '--Grid-self-offset': {
@@ -145,7 +132,6 @@ const gridAtomics = /*#__PURE__*/ _atomics({
         md: 'g1s0u14x44',
         lg: 'g1s0u14x59',
         xl: 'g1s0u14x74',
-        uw: 'g1s0u14x89',
       },
     },
     '--Grid-self-margin-left': {
@@ -155,12 +141,11 @@ const gridAtomics = /*#__PURE__*/ _atomics({
         md: 'g1s0u14x45',
         lg: 'g1s0u14x60',
         xl: 'g1s0u14x75',
-        uw: 'g1s0u14x90',
       },
     },
   },
   shorthands: {},
-  conditions: ['xs', 'sm', 'md', 'lg', 'xl', 'uw'],
+  conditions: ['xs', 'sm', 'md', 'lg', 'xl'],
   defaultCondition: 'xs',
   unitless: ['--Grid-parent-column-count', '--Grid-self-column-span', '--Grid-self-offset'],
   multipliers: {

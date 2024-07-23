@@ -48,12 +48,6 @@ const ContainerRoot = /*#__PURE__*/ _styled('div', {
       },
       className: 'c12mgz3n-7',
     },
-    {
-      props: {
-        maxWidth: 'uw',
-      },
-      className: 'c12mgz3n-8',
-    },
   ],
 });
 const Container = React.forwardRef(function Container(props, ref) {
