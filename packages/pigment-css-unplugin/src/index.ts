@@ -105,7 +105,6 @@ const addMaterialUIOverriedContext = (originalContext: Record<string, unknown>) 
  * have to share the same Maps.
  */
 const globalCssFileLookup = new Map<string, string>();
-const globalCssLookup = new Map<string, string>();
 
 const pluginName = 'PigmentCSSWebpackPlugin';
 
@@ -137,7 +136,6 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
     .map((lib) => lib.split('/').join(path.sep));
   const cache = new TransformCacheCollection();
   const { emitter, onDone } = createFileReporter(debug ?? false);
-  const cssLookup = meta?.type === 'next' ? globalCssLookup : new Map<string, string>();
   const cssFileLookup = meta?.type === 'next' ? globalCssFileLookup : new Map<string, string>();
   const isNext = meta?.type === 'next';
   const outputCss = isNext && meta.outputCss;
@@ -326,14 +324,22 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
           };
         }
 
+        const rootPath = process.cwd();
         const slug = slugify(cssText);
-        const cssFilename = `${slug}.pigment.css`;
-        const cssId = `./${cssFilename}`;
-        cssFileLookup.set(cssId, cssFilename);
-        cssLookup.set(cssFilename, cssText);
+        const cssFilename = path
+          .normalize(`${id.replace(/\.[jt]sx?$/, '')}-${slug}.pigment.css`)
+          .replace(/\\/g, path.posix.sep);
+
+        const cssRelativePath = path.relative(rootPath, cssFilename).replace(/\\/g, path.posix.sep);
+        // Starting with null character so that it calls the resolver method (resolveId in line:430)
+        // Otherwise, webpack tries to resolve the path directly
+        const cssId = `\0${cssRelativePath}`;
+
+        cssFileLookup.set(cssId, cssText);
+        result.code += `\nimport ${JSON.stringify(cssId)};`;
 
         return {
-          code: `${result.code}\nimport ${JSON.stringify(`./${cssFilename}`)};`,
+          code: result.code,
           map: result.sourceMap,
         };
       } catch (e) {
@@ -388,10 +394,10 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
           }
         : {
             resolveId(source: string) {
-              if (transformLibraries.some((lib) => source === `${lib}/styles.css`)) {
+              if (finalTransformLibraries.some((lib) => source === `${lib}/styles.css`)) {
                 return VIRTUAL_CSS_FILE;
               }
-              if (transformLibraries.some((lib) => source === `${lib}/theme`)) {
+              if (finalTransformLibraries.some((lib) => source === `${lib}/theme`)) {
                 return VIRTUAL_THEME_FILE;
               }
               return null;
@@ -422,14 +428,21 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
     plugins.push({
       name: 'pigment-css-plugin-load-output-css',
       enforce: 'pre',
-      resolveId(source: string) {
-        return cssFileLookup.get(source);
+      resolveId(id) {
+        if (id[0] === '\0' && id.endsWith('.pigment.css')) {
+          return { id };
+        }
+        return null;
       },
       loadInclude(id) {
+        if (!id) {
+          return false;
+        }
         return id.endsWith('.pigment.css');
       },
-      load(id) {
-        return cssLookup.get(id) ?? '';
+      load(url: string) {
+        const [id] = url.split('?', 1);
+        return cssFileLookup.get(id);
       },
     });
   }

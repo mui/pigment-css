@@ -1,3 +1,4 @@
+import type * as React from 'react';
 import type { BaseDefaultProps, Substitute, NoInfer } from './base';
 import type { SxProp } from './sx';
 
@@ -33,7 +34,7 @@ export interface PolymorphicComponent<BaseProps extends BaseDefaultProps>
   extends React.ForwardRefExoticComponent<BaseProps> {
   <AsTarget extends React.ElementType | undefined = undefined>(
     props: PolymorphicComponentProps<BaseProps, AsTarget>,
-  ): JSX.Element;
+  ): React.JSX.Element;
 }
 
 declare const Box: PolymorphicComponent<{}>;
