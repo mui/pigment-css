@@ -31,17 +31,17 @@ export default function InteractiveStack() {
   const [direction, setDirection] = React.useState<StackProps['direction']>('column');
   const [spacing, setSpacing] = React.useState<string | number>(2);
 
-  const handleChange = React.useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
-    switch (ev.target.name) {
+  const handleChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    switch (event.target.name) {
       case 'direction': {
-        setDirection(ev.target.value as StackProps['direction']);
+        setDirection(event.target.value as StackProps['direction']);
         break;
       }
       case 'spacing': {
         setSpacing(
-          ev.target.value.match(/^[0-9]+\.?[0-9]*$/)
-            ? parseFloat(ev.target.value)
-            : ev.target.value,
+          event.target.value.match(/^[0-9]+\.?[0-9]*$/)
+            ? parseFloat(event.target.value)
+            : event.target.value,
         );
         break;
       }
