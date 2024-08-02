@@ -3,6 +3,26 @@
 > @pigment-css/monorepo@0.0.15 release:changelog /Users/siriwatknp/Personal-Repos/pigment-css
 > node scripts/releaseChangelog.mjs
 
+## 0.0.18
+
+<!-- generated comparing v0.0.17..master -->
+
+_Jul 25, 2024_
+
+A big thanks to the 3 contributors who made this release possible. Here are some highlights ✨:
+
+## `@pigment-css/react@0.0.18`
+
+- &#8203;<!-- 4 -->Replace global JSX (#183) @DiegoAndai
+- &#8203;<!-- 3 -->Normalize rest / other to match the most common used @oliviertassinari
+- &#8203;<!-- 2 -->Normalize rest / other to match the most common used @oliviertassinari
+
+## `@pigment-css/unplugin@0.0.18`
+
+- &#8203;<!-- 1 -->[webpack] Fix support for webpack and add example app (#174) @brijeshb42
+
+All contributors of this release in alphabetical order: @brijeshb42, @DiegoAndai, @oliviertassinari
+
 ## v0.0.17
 
 <!-- generated comparing v0.0.16..master -->
