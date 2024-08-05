@@ -44,12 +44,12 @@ styled.div(({ theme }) => ({
 }));
 
 sx({ color: 'red' });
-sx(({ theme }) => ({
+sx((theme) => ({
   color: theme.palette.primary.main,
 }));
 sx([
   { color: 'red' },
-  ({ theme }) => ({
+  (theme) => ({
     color: theme.palette.primary.main,
   }),
 ]);
@@ -57,7 +57,7 @@ const foo = true;
 sx([
   true && { color: 'red' },
   foo
-    ? ({ theme }) => ({
+    ? (theme) => ({
         color: theme.palette.primary.main,
       })
     : {
