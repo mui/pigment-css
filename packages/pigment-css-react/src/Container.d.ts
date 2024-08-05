@@ -24,6 +24,8 @@ type ContainerBaseProps = {
   maxWidth?: Breakpoint | false;
 };
 
-declare const Container: PolymorphicComponent<ContainerBaseProps>;
+declare const Container: PolymorphicComponent<
+  ContainerBaseProps & React.DetailsHTMLAttributes<HTMLDivElement>
+>;
 
 export default Container;

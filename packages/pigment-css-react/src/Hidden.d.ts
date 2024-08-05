@@ -13,6 +13,8 @@ interface HiddenBaseProps extends HiddenUp, HiddenDown {
   only?: Breakpoint | Breakpoint[];
 }
 
-declare const Hidden: PolymorphicComponent<HiddenBaseProps>;
+declare const Hidden: PolymorphicComponent<
+  HiddenBaseProps & React.DetailsHTMLAttributes<HTMLDivElement>
+>;
 
 export default Hidden;
