@@ -6,7 +6,7 @@ The versions of the project that are currently supported with security updates.
 
 | Pigment CSS Version | Release    | Supported          |
 | ------------------: | :--------- | :----------------- |
-|              ^0.0.0 | 2024-04-19 | :white_check_mark: |
+|             <=1.0.0 | 2024-04-19 | :white_check_mark: |
 
 ## Reporting a vulnerability
 
