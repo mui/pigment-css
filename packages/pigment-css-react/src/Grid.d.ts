@@ -18,6 +18,8 @@ type GridBaseProps = {
   wrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
 };
 
-declare const Grid: PolymorphicComponent<GridBaseProps>;
+declare const Grid: PolymorphicComponent<
+  GridBaseProps & React.DetailsHTMLAttributes<HTMLDivElement>
+>;
 
 export default Grid;

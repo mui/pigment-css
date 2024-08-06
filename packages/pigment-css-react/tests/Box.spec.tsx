@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box } from '@pigment-css/react/Box';
+import Box from '../src/Box';
 
 export function App() {
   return (
@@ -13,7 +13,7 @@ export function App() {
           Dialog
         </Box>
         {/* @ts-expect-error */}
-        <Box component="dialog" as="button" open>
+        <Box component="dialog" as="button" href>
           Dialog 2
         </Box>
       </Box>
