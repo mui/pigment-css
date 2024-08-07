@@ -12,5 +12,5 @@ export function processCssObject(
     // so for Pigment CSS users, the shorthand `sx` prop is not supported yet.
     (skipSx ? cssObj : themeArgs?.theme?.unstable_sx?.(cssObj) || cssObj) as CSSObject;
   const className = css(processedObj);
-  return cache.registered[className] ?? '';
+  return cache.registered[className] as string;
 }

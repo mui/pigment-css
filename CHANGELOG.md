@@ -3,6 +3,30 @@
 > @pigment-css/monorepo@0.0.15 release:changelog /Users/siriwatknp/Personal-Repos/pigment-css
 > node scripts/releaseChangelog.mjs
 
+## 0.0.19
+
+<!-- generated comparing v0.0.18..master -->
+
+_Aug 7, 2024_
+
+A big thanks to the 3 contributors who made this release possible.
+
+### `@pigment-css/react@0.0.19`
+
+- &#8203;<!-- 6 -->[react] Fix thrown error during eval phase (#196) @brijeshb42
+- &#8203;<!-- 1 -->[TypeScript] Fix `sx` types and missing `style` prop from layout components (#191) @siriwatknp
+
+### Docs
+
+- &#8203;<!-- 4 -->[docs] Clarify security policy @oliviertassinari
+
+### Core
+
+- &#8203;<!-- 7 -->[core] Temporarily fallback to v5 of Material UI (#198) @brijeshb42
+- &#8203;<!-- 5 -->[core] Fix event naming convention @oliviertassinari
+
+All contributors of this release in alphabetical order: @brijeshb42, @oliviertassinari, @siriwatknp
+
 ## 0.0.18
 
 <!-- generated comparing v0.0.17..master -->

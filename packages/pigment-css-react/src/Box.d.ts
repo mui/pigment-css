@@ -7,7 +7,7 @@ export type PolymorphicComponentProps<
   AsTarget extends React.ElementType | undefined,
   AsTargetProps extends object = AsTarget extends React.ElementType
     ? React.ComponentPropsWithRef<AsTarget>
-    : BaseDefaultProps,
+    : React.HTMLAttributes<HTMLElement>,
 > = NoInfer<Omit<Substitute<BaseProps, AsTargetProps>, 'as' | 'component'>> & {
   /**
    * The component used for the root node.
@@ -37,6 +37,6 @@ export interface PolymorphicComponent<BaseProps extends BaseDefaultProps>
   ): React.JSX.Element;
 }
 
-declare const Box: PolymorphicComponent<{}>;
+declare const Box: PolymorphicComponent<React.DetailsHTMLAttributes<HTMLDivElement>>;
 
 export default Box;

@@ -12,6 +12,8 @@ type StackBaseProps = {
   className?: string;
 };
 
-declare const Stack: PolymorphicComponent<StackBaseProps>;
+declare const Stack: PolymorphicComponent<
+  StackBaseProps & React.DetailsHTMLAttributes<HTMLDivElement>
+>;
 
 export default Stack;
