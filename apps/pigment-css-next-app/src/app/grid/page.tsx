@@ -13,7 +13,7 @@ const Item = styled.div`
 
 function GridDemo1() {
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} sx={{ color: '#070707' }}>
       <Grid size={8}>
         <Item>size=8</Item>
       </Grid>
