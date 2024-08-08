@@ -23,7 +23,6 @@ import {
   type Theme as BaseTheme,
   type PluginCustomOptions,
 } from '@pigment-css/react/utils';
-import type { ResolvePluginInstance } from 'webpack';
 
 import { handleUrlReplacement, type AsyncResolver } from './utils';
 
@@ -190,32 +189,32 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
       return isZeroRuntimeProcessableFile(id, finalTransformLibraries);
     },
     webpack(compiler) {
-      const resolverPlugin: ResolvePluginInstance = {
-        apply(resolver) {
-          webpackResolver = function webpackAsyncResolve(
-            what: string,
-            importer: string,
-            stack: string[],
-          ) {
+      compiler.resolverFactory.hooks.resolver
+        .for('normal')
+        .tap(`${pluginName}Resolver`, (resolver) => {
+          webpackResolver = (what: string, importer: string, stack: string[]) => {
             const context = path.isAbsolute(importer)
               ? path.dirname(importer)
               : path.join(projectPath, path.dirname(importer));
             return new Promise((resolve, reject) => {
-              resolver.resolve({}, context, what, { stack: new Set(stack) }, (err, result) => {
-                if (err) {
-                  reject(err);
-                } else if (result) {
-                  resolve(result);
-                } else {
-                  reject(new Error(`${process.env.PACKAGE_NAME}: Cannot resolve ${what}`));
-                }
-              });
+              resolver.resolve(
+                {},
+                context,
+                what,
+                {
+                  stack: new Set(stack),
+                },
+                (err, result) => {
+                  if (err || typeof result !== 'string') {
+                    reject(err);
+                  } else {
+                    resolve(result);
+                  }
+                },
+              );
             });
           };
-        },
-      };
-      compiler.options.resolve.plugins = compiler.options.resolve.plugins || [];
-      compiler.options.resolve.plugins.push(resolverPlugin);
+        });
     },
     async transform(code, filePath) {
       const [id] = filePath.split('?');
