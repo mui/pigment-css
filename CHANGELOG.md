@@ -1,7 +1,16 @@
 # [Versions](https://mui.com/versions/)
 
-> @pigment-css/monorepo@0.0.15 release:changelog /Users/siriwatknp/Personal-Repos/pigment-css
-> node scripts/releaseChangelog.mjs
+## 0.0.20
+
+<!-- generated comparing v0.0.19..master -->
+
+_Aug 8, 2024_
+
+A big thanks to the 1 contributors who made this release possible.
+
+- &#8203;<!-- 1 -->[typescript] Fix `sx` types (#200) @siriwatknp
+
+All contributors of this release in alphabetical order: @siriwatknp
 
 ## 0.0.19
 
