@@ -1,9 +1,11 @@
 import type { CSSObjectNoCallback } from './base';
 import type { ThemeArgs } from './theme';
 
+type GetTheme<Argument> = Argument extends { theme: infer Theme } ? Theme : never;
+
 export type SxProp =
   | CSSObjectNoCallback
-  | ((themeArgs: ThemeArgs['theme']) => CSSObjectNoCallback)
-  | ReadonlyArray<CSSObjectNoCallback | ((themeArgs: ThemeArgs['theme']) => CSSObjectNoCallback)>;
+  | ((theme: GetTheme<ThemeArgs>) => CSSObjectNoCallback)
+  | ReadonlyArray<CSSObjectNoCallback | ((theme: GetTheme<ThemeArgs>) => CSSObjectNoCallback)>;
 
-export default function sx(arg: SxProp | Array<SxProp>, componentClass?: string): string;
+export default function sx(arg: SxProp, componentClass?: string): string;
