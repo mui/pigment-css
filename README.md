@@ -375,6 +375,7 @@ Pigment CSS replaces the callback with a CSS variable and injects the value thr
 
 ```jsx
 <h1
+  className="Heading_class_akjsdfb"
   style={{
     '--Heading_class_akjsdfb-0': isError ? 'red' : 'black',
   }}
