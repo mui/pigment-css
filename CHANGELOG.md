@@ -1,5 +1,31 @@
 # [Versions](https://mui.com/versions/)
 
+## 0.0.21
+
+<!-- generated comparing v0.0.20..master -->
+
+_Aug 29, 2024_
+
+A big thanks to the 2 contributors who made this release possible.
+
+### `@pigment-css/unplugin@0.0.21`
+
+- Replace `endsWith` with `includes` to check adapter path (#214) @siriwatknp
+
+### `@pigment-css/vite-plugin@0.0.21`
+
+- Replace `endsWith` with `includes` to check adapter path (#214) @siriwatknp
+
+### Docs
+
+- [docs] Fix Stack Overflow issue canned response @oliviertassinari
+- [docs] Fix outdated link to support page @oliviertassinari
+- [docs] Keep contributing guide simple (#213) @oliviertassinari
+- [docs] Fix description of eslint-plugin-material-ui @oliviertassinari
+- [docs] Hide a bit the notion of MUI Core @oliviertassinari
+
+All contributors of this release in alphabetical order: @oliviertassinari, @siriwatknp
+
 ## 0.0.20
 
 <!-- generated comparing v0.0.19..master -->
