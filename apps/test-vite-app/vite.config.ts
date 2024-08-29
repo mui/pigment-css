@@ -1,9 +1,9 @@
-import { defineConfig } from 'vite';
+import { defineConfig, Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
-import { pigment } from '@pigment-css/vite-plugin';
+import { pigment, PigmentOptions } from '@pigment-css/vite-plugin';
 import { createTheme } from '@mui/material/styles';
 
-const pigmentConfig = {
+const pigmentConfig: PigmentOptions = {
   theme: createTheme({
     cssVariables: true,
     colorSchemes: { light: true, dark: true },
@@ -13,5 +13,5 @@ const pigmentConfig = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), pigment(pigmentConfig)],
+  plugins: [react(), pigment(pigmentConfig) as unknown as Plugin],
 });
