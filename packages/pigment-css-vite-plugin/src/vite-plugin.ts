@@ -20,7 +20,7 @@ import {
   type PluginOptions,
   type IFileReporterOptions,
 } from '@wyw-in-js/transform';
-import { type PluginCustomOptions } from '@pigment-css/react/utils';
+import { matchAdapterPath, type PluginCustomOptions } from '@pigment-css/react/utils';
 
 export type VitePluginOptions = {
   debug?: IFileReporterOptions | false | null | undefined;
@@ -238,7 +238,7 @@ export default function wywVitePlugin({
                   if (tagResult) {
                     return tagResult;
                   }
-                  if (source.endsWith('/zero-styled')) {
+                  if (matchAdapterPath(source)) {
                     return `${process.env.RUNTIME_PACKAGE_NAME}/exports/${tag}`;
                   }
                   return null;

@@ -20,6 +20,7 @@ import {
   generateTokenCss,
   generateThemeSource,
   extendTheme,
+  matchAdapterPath,
   type Theme as BaseTheme,
   type PluginCustomOptions,
 } from '@pigment-css/react/utils';
@@ -256,7 +257,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
               if (tagResult) {
                 return tagResult;
               }
-              if (source.endsWith('/zero-styled')) {
+              if (matchAdapterPath(source)) {
                 return require.resolve(`${process.env.RUNTIME_PACKAGE_NAME}/exports/${tag}`);
               }
               return null;

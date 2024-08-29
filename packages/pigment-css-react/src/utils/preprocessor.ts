@@ -65,3 +65,7 @@ export function preprocessor(
 
   return css;
 }
+
+export function matchAdapterPath(path: string) {
+  return path.includes('zero-styled');
+}

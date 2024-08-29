@@ -8,7 +8,7 @@ import {
   transform as wywTransform,
   createFileReporter,
 } from '@wyw-in-js/transform';
-import { PluginCustomOptions, preprocessor } from '@pigment-css/react/utils';
+import { matchAdapterPath, PluginCustomOptions, preprocessor } from '@pigment-css/react/utils';
 import * as prettier from 'prettier';
 
 import sxTransformPlugin from '../exports/sx-plugin';
@@ -70,7 +70,7 @@ export async function runTransformation(absolutePath: string, options?: Transfor
         return require.resolve(`../exports/styled`);
       }
 
-      if (source !== '@pigment-css/react' && !source.endsWith('/zero-styled')) {
+      if (source !== '@pigment-css/react' && !matchAdapterPath(source)) {
         return null;
       }
       return require.resolve(`../${pkgJson['wyw-in-js'].tags[tag]}`.replace('.js', ''));
