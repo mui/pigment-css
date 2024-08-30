@@ -218,8 +218,11 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
       compiler.options.resolve.plugins = compiler.options.resolve.plugins || [];
       compiler.options.resolve.plugins.push(resolverPlugin);
     },
-    async transform(code, filePath) {
-      const [id] = filePath.split('?');
+    async transform(code, url) {
+      const [filePath] = url.split('?');
+      // Converts path separator as per platform, even on Windows, path segments have `/` instead of the usual `\`,
+      // so this function replaces such path separators.
+      const id = path.normalize(filePath);
       const transformServices = {
         options: {
           filename: id,
@@ -314,7 +317,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
         if (isNext) {
           const data = `${meta.placeholderCssFile}?${encodeURIComponent(
             JSON.stringify({
-              filename: id.split('/').pop(),
+              filename: id.split(path.sep).pop(),
               source: cssText.replaceAll('!important', '__IMP__'),
             }),
           )}`;
