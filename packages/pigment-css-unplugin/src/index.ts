@@ -91,6 +91,7 @@ const addMaterialUIOverriedContext = (originalContext: Record<string, unknown>) 
         __esModule: true,
         default: () => () => () => null,
         internal_processStyles: () => {},
+        internal_serializeStyles: () => {},
         keyframes: () => '',
         css: () => '',
       };
