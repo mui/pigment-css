@@ -2,6 +2,7 @@
 // eslint-ignore-next-line import/no-unresolved
 const { withPigment } = require('@pigment-css/nextjs-plugin');
 const { experimental_extendTheme: extendTheme } = require('@mui/material/styles');
+// eslint-ignore-next-line @typescript-eslint/naming-convention
 const { internal_styledEngineMockup } = require('@pigment-css/react');
 
 /**
