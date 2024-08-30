@@ -1,4 +1,4 @@
-/* 
+/*
  * Replicates `@mui/styled-engine` internals for the plugins to swap the runtime.
  */
 
