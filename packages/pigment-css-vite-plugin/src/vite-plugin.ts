@@ -21,7 +21,7 @@ import {
   type IFileReporterOptions,
 } from '@wyw-in-js/transform';
 import { matchAdapterPath, type PluginCustomOptions } from '@pigment-css/react/utils';
-import styledEngineMockup from '@pigment-css/react/styledEngineMockup';
+import { internal_styledEngineMockup } from '@pigment-css/react';
 
 export type VitePluginOptions = {
   debug?: IFileReporterOptions | false | null | undefined;
@@ -46,7 +46,7 @@ const addMaterialUIOverriedContext = (originalContext: Record<string, unknown>) 
   const originalRequire = originalContext.require as (id: string) => any;
   const newRequire = (id: string) => {
     if (id === '@mui/styled-engine' || id === '@mui/styled-engine-sc') {
-      return styledEngineMockup;
+      return internal_styledEngineMockup;
     }
     return originalRequire(id);
   };

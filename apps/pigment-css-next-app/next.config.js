@@ -2,7 +2,7 @@
 // eslint-ignore-next-line import/no-unresolved
 const { withPigment } = require('@pigment-css/nextjs-plugin');
 const { experimental_extendTheme: extendTheme } = require('@mui/material/styles');
-const styledEngineMockup = require('@pigment-css/react/styledEngineMockup');
+const { internal_styledEngineMockup } = require('@pigment-css/react');
 
 /**
  * @typedef {import('@pigment-css/nextjs-plugin').PigmentOptions} PigmentOptions
@@ -119,7 +119,7 @@ const pigmentOptions = {
       ...context,
       require: (id) => {
         if (id === '@mui/styled-engine' || id === '@mui/styled-engine-sc') {
-          return styledEngineMockup;
+          return internal_styledEngineMockup;
         }
         return context.require(id);
       },
