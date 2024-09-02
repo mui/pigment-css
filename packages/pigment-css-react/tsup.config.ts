@@ -22,7 +22,6 @@ const baseConfig: Options = {
 
 const BASE_FILES = [
   'index.ts',
-  'internal/index.ts',
   'theme.ts',
   'Box.jsx',
   'RtlProvider.tsx',
