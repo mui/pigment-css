@@ -51,4 +51,13 @@ export default defineConfig([
     ],
     outDir: 'utils',
   },
+  {
+    ...baseConfig,
+    entry: [
+      './src/internal/index.ts',
+      './src/internal/sx-plugin.ts',
+      './src/internal/remove-prop-types-plugin.ts',
+    ],
+    outDir: 'internal',
+  },
 ]);
