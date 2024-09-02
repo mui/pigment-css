@@ -11,5 +11,6 @@
   NODE_VERSION = "18"
   PNPM_FLAGS = "--shamefully-hoist"
 
-[[plugins]]
-  package = "./packages/netlify-plugin-cache-docs"
+# TODO uncomment once we have a docs website.
+# [[plugins]]
+#  package = "./packages/netlify-plugin-cache-docs"
