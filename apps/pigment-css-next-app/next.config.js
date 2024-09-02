@@ -120,7 +120,13 @@ const pigmentOptions = {
       ...context,
       require: (id) => {
         if (id === '@mui/styled-engine' || id === '@mui/styled-engine-sc') {
-          return styledEngineMockup;
+          return {
+            __esModule: true,
+            default: () => () => () => null,
+            internal_processStyles: () => {},
+            keyframes: () => '',
+            css: () => '',
+          };
         }
         return context.require(id);
       },
