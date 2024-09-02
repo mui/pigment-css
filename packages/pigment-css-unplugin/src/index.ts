@@ -25,7 +25,7 @@ import {
   type PluginCustomOptions,
 } from '@pigment-css/react/utils';
 import type { ResolvePluginInstance } from 'webpack';
-import { internal_styledEngineMockup } from '@pigment-css/react';
+import { styledEngineMockup } from '@pigment-css/react/internal';
 
 import { handleUrlReplacement, type AsyncResolver } from './utils';
 
@@ -88,7 +88,7 @@ const addMaterialUIOverriedContext = (originalContext: Record<string, unknown>) 
   const originalRequire = originalContext.require as (id: string) => any;
   const newRequire = (id: string) => {
     if (id === '@mui/styled-engine' || id === '@mui/styled-engine-sc') {
-      return internal_styledEngineMockup;
+      return styledEngineMockup;
     }
     return originalRequire(id);
   };
