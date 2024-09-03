@@ -52,9 +52,7 @@ export default defineConfig([
   },
   {
     ...baseConfig,
-    entry: [
-      './src/internal/index.ts',
-    ],
+    entry: ['./src/internal/index.ts'],
     outDir: 'internal',
   },
 ]);
