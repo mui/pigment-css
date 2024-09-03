@@ -98,6 +98,7 @@
     "processors",
     "theme",
     "utils",
+    "internal",
     "package.json",
     "styles.css",
     "LICENSE"
@@ -131,6 +132,15 @@
       },
       "require": "./utils/index.js",
       "default": "./utils/index.js"
+    },
+    "./internal": {
+      "types": "./internal/index.d.ts",
+      "import": {
+        "types": "./internal/index.d.mts",
+        "default": "./internal/index.mjs"
+      },
+      "require": "./internal/index.js",
+      "default": "./internal/index.js"
     },
     "./exports/*": {
       "default": "./exports/*.js"
