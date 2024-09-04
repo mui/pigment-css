@@ -10,13 +10,13 @@ A big thanks to the 3 contributors who made this release possible.
 
 ### `@pigment-css/vite-plugin@0.0.22`
 
-- &#8203;<!-- 1 -->[plugin] Fix bug related to path separator on Windows (#218) @brijeshb42
-- &#8203;<!-- 4 -->fix: styled-engine new internals (#220) @romgrk
+- &#8203;<!-- 1 -->Fix bug related to path separator on Windows (#218) @brijeshb42
+- &#8203;<!-- 4 -->Fix styled-engine new internals (#220) @romgrk
 
 ### `@pigment-css/unplugin@0.0.22`
 
-- &#8203;<!-- 1 -->[plugin] Fix bug related to path separator on Windows (#218) @brijeshb42
-- &#8203;<!-- 4 -->fix: styled-engine new internals (#220) @romgrk
+- &#8203;<!-- 1 -->Fix bug related to path separator on Windows (#218) @brijeshb42
+- &#8203;<!-- 4 -->Fix styled-engine new internals (#220) @romgrk
 
 ### Core
 
