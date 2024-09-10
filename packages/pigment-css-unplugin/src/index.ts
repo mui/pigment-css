@@ -26,7 +26,6 @@ import {
 } from '@pigment-css/react/utils';
 import type { ResolvePluginInstance } from 'webpack';
 import { styledEngineMockup } from '@pigment-css/react/internal';
-
 import { handleUrlReplacement, type AsyncResolver } from './utils';
 
 type NextMeta = {
@@ -287,10 +286,14 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
 
         const slug = slugify(cssText);
 
+        // Valid names must start with a underscore or letter.
+        const layerName = `_${slug}`;
+
+        // TODO: Do this in a way that keeps the source map correct
         cssText = `
-          @layer _${slug} {
+          @layer pigment.${layerName} {
             ${cssText}
-          } 
+          }
         `;
 
         if (isNext && !outputCss) {
