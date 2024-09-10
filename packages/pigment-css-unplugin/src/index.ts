@@ -284,6 +284,15 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
         }
 
         let { cssText } = result;
+
+        const slug = slugify(cssText);
+
+        cssText = `
+          @layer _${slug} {
+            ${cssText}
+          } 
+        `;
+
         if (isNext && !outputCss) {
           return {
             code: result.code,
@@ -324,7 +333,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
         }
 
         const rootPath = process.cwd();
-        const slug = slugify(cssText);
+
         const cssFilename = path
           .normalize(`${id.replace(/\.[jt]sx?$/, '')}-${slug}.pigment.css`)
           .replace(/\\/g, path.posix.sep);
