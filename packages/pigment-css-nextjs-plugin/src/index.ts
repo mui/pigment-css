@@ -61,13 +61,7 @@ export function withPigment(nextConfig: NextConfig, pigmentConfig?: PigmentOptio
           if (what.startsWith('__barrel_optimize__')) {
             return require.resolve('../next-font');
           }
-          // Need to point to the react from node_modules during eval time.
-          // Otherwise, next makes it point to its own version of react that
-          // has a lot of RSC specific logic which is not actually needed.
-          if (what.startsWith('@babel') || what.startsWith('react') || what.startsWith('next')) {
-            return require.resolve(what);
-          }
-          if (what === 'next/image') {
+          if (what === 'next/image' || what === 'next/link') {
             return require.resolve('../next-image');
           }
           if (what.startsWith('next/font')) {
@@ -75,6 +69,12 @@ export function withPigment(nextConfig: NextConfig, pigmentConfig?: PigmentOptio
           }
           if (what.startsWith('@emotion/styled') || what.startsWith('styled-components')) {
             return require.resolve('../third-party-styled');
+          }
+          // Need to point to the react from node_modules during eval time.
+          // Otherwise, next makes it point to its own version of react that
+          // has a lot of RSC specific logic which is not actually needed.
+          if (what.startsWith('@babel') || what.startsWith('react') || what.startsWith('next')) {
+            return require.resolve(what);
           }
           if (asyncResolve) {
             return asyncResolve(what, importer, stack);
