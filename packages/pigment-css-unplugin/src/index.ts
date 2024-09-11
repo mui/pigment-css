@@ -25,6 +25,7 @@ import {
   type PluginCustomOptions,
 } from '@pigment-css/react/utils';
 import type { ResolvePluginInstance } from 'webpack';
+import { styledEngineMockup } from '@pigment-css/react/internal';
 
 import { handleUrlReplacement, type AsyncResolver } from './utils';
 
@@ -87,13 +88,7 @@ const addMaterialUIOverriedContext = (originalContext: Record<string, unknown>) 
   const originalRequire = originalContext.require as (id: string) => any;
   const newRequire = (id: string) => {
     if (id === '@mui/styled-engine' || id === '@mui/styled-engine-sc') {
-      return {
-        __esModule: true,
-        default: () => () => () => null,
-        internal_processStyles: () => {},
-        keyframes: () => '',
-        css: () => '',
-      };
+      return styledEngineMockup;
     }
     return originalRequire(id);
   };
@@ -218,8 +213,11 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
       compiler.options.resolve.plugins = compiler.options.resolve.plugins || [];
       compiler.options.resolve.plugins.push(resolverPlugin);
     },
-    async transform(code, filePath) {
-      const [id] = filePath.split('?');
+    async transform(code, url) {
+      const [filePath] = url.split('?');
+      // Converts path separator as per platform, even on Windows, path segments have `/` instead of the usual `\`,
+      // so this function replaces such path separators.
+      const id = path.normalize(filePath);
       const transformServices = {
         options: {
           filename: id,
@@ -314,7 +312,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
         if (isNext) {
           const data = `${meta.placeholderCssFile}?${encodeURIComponent(
             JSON.stringify({
-              filename: id.split('/').pop(),
+              filename: id.split(path.sep).pop(),
               source: cssText.replaceAll('!important', '__IMP__'),
             }),
           )}`;

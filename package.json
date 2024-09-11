@@ -1,6 +1,6 @@
 {
   "name": "@pigment-css/monorepo",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
@@ -15,6 +15,7 @@
     "release:publish": "pnpm publish --recursive --tag latest",
     "release:publish:dry-run": "pnpm publish --recursive --tag latest --registry=\"http://localhost:4873/\"",
     "release:tag": "node scripts/releaseTag.mjs",
+    "docs:build": "rm -rf docs && mkdir -p docs/export && touch docs/export/index.html",
     "extract-error-codes": "cross-env MUI_EXTRACT_ERROR_CODES=true lerna run --concurrency 8 build:modern",
     "install:codesandbox": "pnpm install --no-frozen-lockfile",
     "jsonlint": "node ./scripts/jsonlint.mjs",

@@ -50,4 +50,9 @@ export default defineConfig([
     ],
     outDir: 'utils',
   },
+  {
+    ...baseConfig,
+    entry: ['./src/internal/index.ts'],
+    outDir: 'internal',
+  },
 ]);

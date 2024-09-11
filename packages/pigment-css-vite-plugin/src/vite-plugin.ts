@@ -21,6 +21,7 @@ import {
   type IFileReporterOptions,
 } from '@wyw-in-js/transform';
 import { matchAdapterPath, type PluginCustomOptions } from '@pigment-css/react/utils';
+import { styledEngineMockup } from '@pigment-css/react/internal';
 
 export type VitePluginOptions = {
   debug?: IFileReporterOptions | false | null | undefined;
@@ -45,13 +46,7 @@ const addMaterialUIOverriedContext = (originalContext: Record<string, unknown>) 
   const originalRequire = originalContext.require as (id: string) => any;
   const newRequire = (id: string) => {
     if (id === '@mui/styled-engine' || id === '@mui/styled-engine-sc') {
-      return {
-        __esModule: true,
-        default: () => () => () => null,
-        internal_processStyles: () => {},
-        keyframes: () => '',
-        css: () => '',
-      };
+      return styledEngineMockup;
     }
     return originalRequire(id);
   };
@@ -132,17 +127,19 @@ export default function wywVitePlugin({
         .filter((m): m is ModuleNode => !!m);
     },
     async transform(code, url) {
-      const [id] = url.split('?', 1);
-
+      const [filePath] = url.split('?', 1);
+      // Converts path separator as per platform, even on Windows, path segments have `/` instead of the usual `\`,
+      // so this function replaces such path separators.
+      const id = path.normalize(filePath);
       // Main modification starts
       if (id in cssLookup) {
         return null;
       }
 
-      let shouldReturn = url.includes('node_modules');
+      let shouldReturn = id.includes('node_modules');
 
       if (shouldReturn) {
-        shouldReturn = !transformLibraries.some((libName: string) => url.includes(libName));
+        shouldReturn = !transformLibraries.some((libName: string) => id.includes(libName));
       }
 
       if (shouldReturn) {
@@ -151,7 +148,7 @@ export default function wywVitePlugin({
       // Main modification end
 
       // Do not transform ignored and generated files
-      if (!filter(url)) {
+      if (!filter(id)) {
         return null;
       }
 
@@ -282,7 +279,7 @@ export default function wywVitePlugin({
 
         for (let i = 0, end = dependencies.length; i < end; i += 1) {
           // eslint-disable-next-line no-await-in-loop
-          const depModule = await this.resolve(dependencies[i], url, {
+          const depModule = await this.resolve(dependencies[i], id, {
             isEntry: false,
           });
           if (depModule) {
