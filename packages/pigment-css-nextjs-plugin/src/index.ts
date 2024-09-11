@@ -73,7 +73,12 @@ export function withPigment(nextConfig: NextConfig, pigmentConfig?: PigmentOptio
           // Need to point to the react from node_modules during eval time.
           // Otherwise, next makes it point to its own version of react that
           // has a lot of RSC specific logic which is not actually needed.
-          if (what.startsWith('@babel') || what.startsWith('react') || what.startsWith('next')) {
+          if (
+            what === 'react' ||
+            what.startsWith('react-dom/') ||
+            what.startsWith('@babel/') ||
+            what.startsWith('next/')
+          ) {
             return require.resolve(what);
           }
           if (asyncResolve) {

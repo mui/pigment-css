@@ -155,10 +155,6 @@ function iterateAndReplaceFunctions(
   const css = styleObj as StyleObj;
   Object.keys(css).forEach((key) => {
     const value = css[key];
-    if (!value) {
-      // ignore null value
-      return;
-    }
 
     if (typeof value === 'object') {
       if (!Array.isArray(value)) {
