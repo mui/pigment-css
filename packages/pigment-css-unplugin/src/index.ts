@@ -26,7 +26,6 @@ import {
 } from '@pigment-css/react/utils';
 import type { ResolvePluginInstance } from 'webpack';
 import { styledEngineMockup } from '@pigment-css/react/internal';
-
 import { handleUrlReplacement, type AsyncResolver } from './utils';
 
 type NextMeta = {
@@ -284,6 +283,9 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
         }
 
         let { cssText } = result;
+
+        const slug = slugify(cssText);
+
         if (isNext && !outputCss) {
           return {
             code: result.code,
@@ -298,6 +300,19 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
           if (cssText && cssText.includes('url(')) {
             cssText = await handleUrlReplacement(cssText, id, asyncResolve, projectPath);
           }
+
+          // Valid names must start with a underscore or letter.
+          const layerName = `_${slug}`;
+
+          // Fix for https://github.com/mui/pigment-css/issues/199
+          // Bring each file in its own layer so that the order is maintained between css modules
+          // shared between layout.tsx and page.tsx.
+          // TODO: Do this in a way that keeps the source map correct
+          cssText = `
+            @layer pigment.${layerName} {
+              ${cssText}
+            }
+          `;
         }
 
         if (sourceMap && result.cssSourceMapText) {
@@ -324,7 +339,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
         }
 
         const rootPath = process.cwd();
-        const slug = slugify(cssText);
+
         const cssFilename = path
           .normalize(`${id.replace(/\.[jt]sx?$/, '')}-${slug}.pigment.css`)
           .replace(/\\/g, path.posix.sep);
