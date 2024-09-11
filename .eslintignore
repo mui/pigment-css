@@ -1,5 +1,4 @@
 /.git
-/.yarn
 /benchmark/**/dist
 /coverage
 /docs/export
