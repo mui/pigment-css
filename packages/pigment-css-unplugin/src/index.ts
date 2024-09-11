@@ -286,16 +286,6 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
 
         const slug = slugify(cssText);
 
-        // Valid names must start with a underscore or letter.
-        const layerName = `_${slug}`;
-
-        // TODO: Do this in a way that keeps the source map correct
-        cssText = `
-          @layer pigment.${layerName} {
-            ${cssText}
-          }
-        `;
-
         if (isNext && !outputCss) {
           return {
             code: result.code,
@@ -310,6 +300,19 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
           if (cssText && cssText.includes('url(')) {
             cssText = await handleUrlReplacement(cssText, id, asyncResolve, projectPath);
           }
+
+          // Valid names must start with a underscore or letter.
+          const layerName = `_${slug}`;
+
+          // Fix for https://github.com/mui/pigment-css/issues/199
+          // Bring each file in its own layer so that the order is maintained between css modules
+          // shared between layout.tsx and page.tsx.
+          // TODO: Do this in a way that keeps the source map correct
+          cssText = `
+            @layer pigment.${layerName} {
+              ${cssText}
+            }
+          `;
         }
 
         if (sourceMap && result.cssSourceMapText) {
