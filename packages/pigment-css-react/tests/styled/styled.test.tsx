@@ -3,6 +3,7 @@ import { runTransformation, expect } from '../testUtils';
 
 const theme = {
   palette: {
+    mode: 'light',
     primary: {
       main: 'red',
     },
