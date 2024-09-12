@@ -14,6 +14,7 @@ import {
   IOptions as IBaseOptions,
 } from '@wyw-in-js/processor-utils';
 import {
+  type FunctionValue,
   ValueType,
   type ConstValue,
   type ExpressionValue,
@@ -238,7 +239,35 @@ export class StyledProcessor extends BaseProcessor {
     });
   }
 
-  private buildForTemplateTag(values: ValueCache): void {
+  private buildTemplateTag(
+    templateStrs: TemplateStringsArray,
+    templateExpressions: Primitive[],
+    values: ValueCache,
+  ) {
+    const cssClassName = css(templateStrs, ...templateExpressions);
+    const cssText = cache.registered[cssClassName] as string;
+
+    const baseClass = this.getClassName();
+    this.baseClasses.push(baseClass);
+    this.collectedStyles.push([baseClass, cssText, null]);
+    const variantsAccumulator: VariantData[] = [];
+    this.processOverrides(values, variantsAccumulator);
+    variantsAccumulator.forEach((variant) => {
+      this.processVariant(variant);
+    });
+    this.generateArtifacts();
+  }
+
+  /**
+   * This handles transformation for direct tagged-template literal styled calls.
+   *
+   * @example
+   * ```js
+   * const Component = style('a')`
+   *   color: red;
+   * `;
+   */
+  private buildForTemplateTag(values: ValueCache) {
     const templateStrs: string[] = [];
     // @ts-ignore @TODO - Fix this. No idea how to initialize a Tagged String array.
     templateStrs.raw = [];
@@ -274,14 +303,74 @@ export class StyledProcessor extends BaseProcessor {
         templateStrs.raw.push(item.value.raw);
       }
     });
-    const cssClassName = css(templateStrs, ...templateExpressions);
-    const cssText = cache.registered[cssClassName] as string;
+    this.buildTemplateTag(
+      templateStrs as unknown as TemplateStringsArray,
+      templateExpressions,
+      values,
+    );
+  }
 
-    const baseClass = this.getClassName();
-    this.baseClasses.push(baseClass);
-    this.collectedStyles.push([baseClass, cssText, null]);
-    const variantsAccumulator: VariantData[] = [];
+  /**
+   * This handles transformation for tagged-template literal styled calls that have already been
+   * transformed through swc. See [styled-swc-transformed-tagged-string.input.js](../../tests/styled/fixtures/styled-swc-transformed-tagged-string.input.js)
+   * for sample code.
+   */
+  private buildForTransformedTemplateTag(values: ValueCache) {
+    // the below types are already validated in isMaybeTransformedTemplateLiteral check
+    const [templateStrArg, ...restArgs] = this.styleArgs as (LazyValue | FunctionValue)[];
+    const templateStrings = values.get(templateStrArg.ex.name) as string[];
+
+    const templateStrs: string[] = [...templateStrings];
+    // @ts-ignore @TODO - Fix this. No idea how to initialize a Tagged String array.
+    templateStrs.raw = [...templateStrings];
+    const templateExpressions: Primitive[] = [];
+    const { themeArgs } = this.options as IOptions;
+
+    restArgs.forEach((item) => {
+      switch (item.kind) {
+        case ValueType.FUNCTION: {
+          const value = values.get(item.ex.name) as TemplateCallback;
+          templateExpressions.push(value(themeArgs));
+          break;
+        }
+        case ValueType.LAZY: {
+          const evaluatedValue = values.get(item.ex.name);
+          if (typeof evaluatedValue === 'function') {
+            templateExpressions.push(evaluatedValue(themeArgs));
+          } else {
+            templateExpressions.push(evaluatedValue as Primitive);
+          }
+          break;
+        }
+        default:
+          break;
+      }
+    });
+    this.buildTemplateTag(
+      templateStrs as unknown as TemplateStringsArray,
+      templateExpressions,
+      values,
+    );
+  }
+
+  private buildForStyledCall(values: ValueCache) {
+    const themeImportIdentifier = this.astService.addDefaultImport(
+      `${this.getImportPath()}/theme`,
+      'theme',
+    );
+    // all the variant definitions are collected here so that we can
+    // apply variant styles after base styles for more specific targetting.
+    let variantsAccumulator: VariantData[] = [];
+    (this.styleArgs as ExpressionValue[]).forEach((styleArg) => {
+      this.processStyle(values, styleArg, variantsAccumulator, themeImportIdentifier.name);
+    });
+    // Generate CSS for default variants first
+    variantsAccumulator.forEach((variant) => {
+      this.processVariant(variant);
+    });
+    variantsAccumulator = [];
     this.processOverrides(values, variantsAccumulator);
+    // Generate CSS for variants declared in `styleOverrides`, if any
     variantsAccumulator.forEach((variant) => {
       this.processVariant(variant);
     });
@@ -304,6 +393,18 @@ export class StyledProcessor extends BaseProcessor {
     this.replacer(this.astService.stringLiteral(this.asSelector), false);
   }
 
+  isMaybeTransformedTemplateLiteral(values: ValueCache): boolean {
+    const [firstArg, ...restArgs] = this.styleArgs;
+    if (!('kind' in firstArg) || firstArg.kind === ValueType.CONST) {
+      return false;
+    }
+    const firstArgVal = values.get(firstArg.ex.name);
+    if (Array.isArray(firstArgVal) && restArgs.length === firstArgVal.length - 1) {
+      return true;
+    }
+    return false;
+  }
+
   /**
    * This is called by Wyw-in-JS after evaluating the code. Here, we
    * get access to the actual values of the `styled` arguments
@@ -314,32 +415,16 @@ export class StyledProcessor extends BaseProcessor {
    * 2. CSS declared in theme object's styledOverrides
    * 3. Variants declared in theme object
    */
-  build(values: ValueCache): void {
+  build(values: ValueCache) {
     if (this.isTemplateTag) {
       this.buildForTemplateTag(values);
       return;
     }
-    const themeImportIdentifier = this.astService.addDefaultImport(
-      `${this.getImportPath()}/theme`,
-      'theme',
-    );
-    // all the variant definitions are collected here so that we can
-    // apply variant styles after base styles for more specific targetting.
-    let variantsAccumulator: VariantData[] = [];
-    (this.styleArgs as ExpressionValue[]).forEach((styleArg) => {
-      this.processStyle(values, styleArg, variantsAccumulator, themeImportIdentifier.name);
-    });
-    // Generate CSS for default variants first
-    variantsAccumulator.forEach((variant) => {
-      this.processVariant(variant);
-    });
-    variantsAccumulator = [];
-    this.processOverrides(values, variantsAccumulator);
-    // Generate CSS for variants declared in `styleOverrides`, if any
-    variantsAccumulator.forEach((variant) => {
-      this.processVariant(variant);
-    });
-    this.generateArtifacts();
+    if (this.isMaybeTransformedTemplateLiteral(values)) {
+      this.buildForTransformedTemplateTag(values);
+      return;
+    }
+    this.buildForStyledCall(values);
   }
 
   /**

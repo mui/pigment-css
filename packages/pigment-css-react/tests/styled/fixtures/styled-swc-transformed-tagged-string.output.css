@@ -1,0 +1,78 @@
+@keyframes e19ejdhp {
+  0% {
+    transform: scale(0);
+    opacity: 0.1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+}
+@keyframes e1rvu9kp {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes p1yhz964 {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.92);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.ttz155n {
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: inherit;
+}
+.tm7990f {
+  opacity: 0;
+  position: absolute;
+}
+.tm7990f.MuiTouchRipple.rippleVisible {
+  opacity: 0.3;
+  transform: scale(1);
+  animation-name: e19ejdhp;
+  animation-duration: ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tm7990f.MuiTouchRipple.ripplePulsate {
+  animation-duration: 200ms;
+}
+.tm7990f .MuiTouchRipple.child {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+.tm7990f .MuiTouchRipple.childLeaving {
+  opacity: 0;
+  animation-name: e1rvu9kp;
+  animation-duration: ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tm7990f .MuiTouchRipple.childPulsate {
+  position: absolute;
+  left: 0px;
+  top: 0;
+  animation-name: p1yhz964;
+  animation-duration: 2500ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-iteration-count: infinite;
+  animation-delay: 200ms;
+}
