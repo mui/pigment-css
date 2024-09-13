@@ -8,8 +8,8 @@
   "description": "Webpack integration for Pigment CSS.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mui/pigment-css.git",
-    "directory": "packages/pigment-unplugin"
+    "url": "git+https://github.com/mui/pigment-css.git",
+    "directory": "packages/pigment-css-unplugin"
   },
   "license": "MIT",
   "bugs": {

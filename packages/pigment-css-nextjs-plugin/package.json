@@ -8,7 +8,7 @@
   "description": "Next.js integration for Pigment CSS.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mui/pigment-css.git",
+    "url": "git+https://github.com/mui/pigment-css.git",
     "directory": "packages/pigment-css-nextjs-plugin"
   },
   "license": "MIT",
