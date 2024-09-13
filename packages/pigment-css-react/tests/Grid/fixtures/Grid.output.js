@@ -7,10 +7,16 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 function isGridComponent(element) {
-  // For server components `muiName` is avaialble in element.type._payload.value.muiName
-  // relevant info - https://github.com/facebook/react/blob/2807d781a08db8e9873687fccc25c0f12b4fb3d4/packages/react/src/ReactLazy.js#L45
-  // eslint-disable-next-line no-underscore-dangle
-  return element.type.muiName === 'Grid' || element.type?._payload?.value?.muiName === 'Grid';
+  try {
+    // For server components `muiName` is avaialble in element.type._payload.value.muiName
+    // relevant info - https://github.com/facebook/react/blob/2807d781a08db8e9873687fccc25c0f12b4fb3d4/packages/react/src/ReactLazy.js#L45
+    // eslint-disable-next-line no-underscore-dangle
+    return element.type.muiName === 'Grid' || element.type?._payload?.value?.muiName === 'Grid';
+  } catch (error) {
+    // Covers for the case in which the Grid is a server component and the child is a client component
+    // https://github.com/mui/material-ui/issues/43635
+    return false;
+  }
 }
 const gridAtomics = /*#__PURE__*/ _atomics({
   styles: {
