@@ -75,6 +75,7 @@ export function withPigment(nextConfig: NextConfig, pigmentConfig?: PigmentOptio
           // has a lot of RSC specific logic which is not actually needed.
           if (
             what === 'react' ||
+            what.startsWith('react/') ||
             what.startsWith('react-dom/') ||
             what.startsWith('@babel/') ||
             what.startsWith('next/')
