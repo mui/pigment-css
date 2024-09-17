@@ -1,5 +1,35 @@
 # [Versions](https://mui.com/versions/)
 
+## 0.0.23
+
+<!-- generated comparing v0.0.22..master -->
+
+_Sep 17, 2024_
+
+A big thanks to the 5 contributors who made this release possible. This PR mainly fixes bugs with Material UI integration.
+
+### `@pigment-css/react@0.0.23`
+
+- &#8203;<!-- 10 -->Support null as a value for CSS object (#229) @siriwatknp
+- &#8203;<!-- 01 -->[styled] Fix css extraction for transformed styled tagged-template call (#234) @brijeshb42
+- &#8203;<!-- 07 -->[Grid] ignore RSC error (#233) @siriwatknp
+
+### `@pigment-css/nextjs-plugin@0.0.23`
+
+- &#8203;<!-- 04 -->[nextjs] Wrap all generated CSS with a cascade layer (WIP) (#226) @Janpot
+- &#8203;<!-- 03 -->[nextjs] Fix react import check bug introduced in #228 (#236) @brijeshb42
+- &#8203;<!-- 02 -->[nextjs] Move the import startsWith next check at end (#228) @brijeshb42
+
+### Core
+
+- &#8203;<!-- 09 -->[core] Fix 301 link to Next.js and git diff @oliviertassinari
+- &#8203;<!-- 08 -->[core] Fix package.json repository rule @oliviertassinari
+- &#8203;<!-- 07 -->[core] Remove legacy yarn file @oliviertassinari
+- &#8203;<!-- 06 -->[infra] Adds reusable workflow for close issue message (#231) @michelengelen
+- &#8203;<!-- 05 -->[infra] Adds reusable workflow for new issue cleanup (#230) @michelengelen
+
+All contributors of this release in alphabetical order: @brijeshb42, @Janpot, @michelengelen, @oliviertassinari, @siriwatknp
+
 ## 0.0.22
 
 <!-- generated comparing v0.0.21..master -->
