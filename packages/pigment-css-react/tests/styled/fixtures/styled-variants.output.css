@@ -1,6 +1,10 @@
-.b1prasel-1 {
-  color: tomato;
+@layer pigment.variant {
+  .b1prasel-1 {
+    color: tomato;
+  }
 }
-.b1prasel-2 {
-  color: salmon;
+@layer pigment.variant {
+  .b1prasel-2 {
+    color: salmon;
+  }
 }

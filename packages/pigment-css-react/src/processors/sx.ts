@@ -60,7 +60,7 @@ export class SxProcessor extends BaseProcessor {
     const rules: Rules = {
       [this.asSelector]: {
         className: this.className,
-        cssText,
+        cssText: `@layer pigment.sx {${cssText}}`,
         displayName: this.displayName,
         start: this.location?.start ?? null,
       },

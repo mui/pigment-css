@@ -249,7 +249,7 @@ export class StyledProcessor extends BaseProcessor {
 
     const baseClass = this.getClassName();
     this.baseClasses.push(baseClass);
-    this.collectedStyles.push([baseClass, cssText, null]);
+    this.collectedStyles.push([baseClass, `@layer pigment.base {${cssText}}`, null]);
     const variantsAccumulator: VariantData[] = [];
     this.processOverrides(values, variantsAccumulator);
     variantsAccumulator.forEach((variant) => {
@@ -521,7 +521,11 @@ export class StyledProcessor extends BaseProcessor {
   ) {
     if (styleArg.kind === ValueType.CONST) {
       if (typeof styleArg.value === 'string') {
-        this.collectedStyles.push([this.getClassName(), styleArg.value, styleArg]);
+        this.collectedStyles.push([
+          this.getClassName(),
+          `@layer pigment.base {${styleArg.value}}`,
+          styleArg,
+        ]);
       }
     } else {
       const styleObjOrFn = values.get(styleArg.ex.name);
@@ -533,7 +537,7 @@ export class StyledProcessor extends BaseProcessor {
       );
       const className = this.getClassName();
       this.baseClasses.push(className);
-      this.collectedStyles.push([className, finalStyle, styleArg]);
+      this.collectedStyles.push([className, `@layer pigment.base {${finalStyle}}`, styleArg]);
     }
   }
 
@@ -563,12 +567,12 @@ export class StyledProcessor extends BaseProcessor {
         overrides[value.slot]) as string | CSSObject;
       const className = this.getClassName();
       if (typeof overrideStyle === 'string') {
-        this.collectedStyles.push([className, overrideStyle, null]);
+        this.collectedStyles.push([className, `@layer pigment.override {${overrideStyle}}`, null]);
         return;
       }
       const finalStyle = this.processCss(overrideStyle, null, variantsAccumulator);
       this.baseClasses.push(className);
-      this.collectedStyles.push([className, finalStyle, null]);
+      this.collectedStyles.push([className, `@layer pigment.override {${finalStyle}}`, null]);
     }
 
     if (!variantsAccumulator) {
@@ -593,7 +597,7 @@ export class StyledProcessor extends BaseProcessor {
     const styleObjOrFn = variant.style;
     const originalExpression = variant.originalExpression;
     const finalStyle = this.processCss(styleObjOrFn, originalExpression ?? null);
-    this.collectedStyles.push([className, finalStyle, null]);
+    this.collectedStyles.push([className, `@layer pigment.variant {${finalStyle}}`, null]);
     this.collectedVariants.push({
       props: variant.props,
       className,

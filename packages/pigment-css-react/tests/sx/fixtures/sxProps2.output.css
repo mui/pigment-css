@@ -1,35 +1,45 @@
-.sdbmcs3 {
-  display: block;
-  position: absolute;
-  border-radius: inherit;
-  background-color: currentColor;
-  opacity: 0.38;
-  font-size: 3rem;
-}
-.sdbmcs3-1 {
-  font-size: 3rem;
-}
-.si7ulc4 {
-  mb: 1px;
-}
-@media (prefers-color-scheme: dark) {
-  .si7ulc4 {
-    color: white;
+@layer pigment.base {
+  .sdbmcs3 {
+    display: block;
+    position: absolute;
+    border-radius: inherit;
+    background-color: currentColor;
+    opacity: 0.38;
+    font-size: 3rem;
   }
 }
-.sliig2s {
-  border-radius: 8px;
-  margin: 5px;
+@layer pigment.override {
+  .sdbmcs3-1 {
+    font-size: 3rem;
+  }
 }
-.sliig2s.MuiAutocomplete-option {
-  padding: 8px;
+@layer pigment.sx {
+  .si7ulc4 {
+    mb: 1px;
+  }
+  @media (prefers-color-scheme: dark) {
+    .si7ulc4 {
+      color: white;
+    }
+  }
 }
-.so956n {
-  color: red;
-  font-size: var(--so956n-0);
+@layer pigment.sx {
+  .sliig2s {
+    border-radius: 8px;
+    margin: 5px;
+  }
+  .sliig2s.MuiAutocomplete-option {
+    padding: 8px;
+  }
 }
-.so956n :hover {
-  background-color: rgb(0, 255, 0);
-  background-color: color(display-p3 0 1 0);
-  color: rgb(0, 255, 0);
+@layer pigment.sx {
+  .so956n {
+    color: red;
+    font-size: var(--so956n-0);
+  }
+  .so956n :hover {
+    background-color: rgb(0, 255, 0);
+    background-color: color(display-p3 0 1 0);
+    color: rgb(0, 255, 0);
+  }
 }

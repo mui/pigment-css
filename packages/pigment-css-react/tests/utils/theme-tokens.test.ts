@@ -12,7 +12,7 @@ describe('theme-tokens', () => {
           },
           fontSizes: [12, 14, 16, 20, 24, 32],
         }),
-      ).to.equal('');
+      ).to.equal('@layer pigment.base, pigment.variant, pigment.override, pigment.sx;');
     });
 
     it('should generate stylesheet correctly', () => {
@@ -41,7 +41,7 @@ describe('theme-tokens', () => {
           }),
         ),
       ).to.equal(
-        ':root{--radius-xs:4px;--radius-sm:8px;--radius-md:16px;}:root{--palette-primary:red;--palette-secondary:blue;}@media (prefers-color-scheme: dark){:root{--palette-primary:darkred;--palette-secondary:darkblue;}}',
+        '@layer pigment.base, pigment.variant, pigment.override, pigment.sx;:root{--radius-xs:4px;--radius-sm:8px;--radius-md:16px;}:root{--palette-primary:red;--palette-secondary:blue;}@media (prefers-color-scheme: dark){:root{--palette-primary:darkred;--palette-secondary:darkblue;}}',
       );
     });
   });
