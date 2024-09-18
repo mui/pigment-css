@@ -620,7 +620,7 @@ export class StyledProcessor extends BaseProcessor {
       );
     }
     if (styleObj.isProcessed) {
-      styleObj = styleObj.style
+      styleObj = styleObj.style;
     } else {
       delete styleObj.variants;
     }
