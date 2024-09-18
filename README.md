@@ -514,7 +514,7 @@ globalCss`
 `;
 ```
 
-The `globalCss` function should to be called at the top level of your javascript file, usually from the entry point of the application.
+The `globalCss` function should to be called at the top level of your JavaScript file, usually from the entry point of the application.
 
 Calling inside a function or a component will not work as expected. Also, the extraction of global styles will always take place regardless of conditional rendering.
 
@@ -725,7 +725,7 @@ declare module '@pigment-css/react/theme' {
 
 ## sx prop
 
-A special `sx` prop lets you apply styles directly to an element. When `sx` prop is specified on an element, Pigment CSS will replace it with `className` and `style` props at build time.
+A special `sx` prop lets you apply styles directly to an element. When `sx` prop is specified on an element, Pigment CSS will replace it with `className` and `style` props at build time.
 
 The `sx` prop works on any element, including HTML elements and 3rd-party custom components as long as it is JSX.
 

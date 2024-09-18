@@ -43,11 +43,11 @@ A big thanks to the 2 contributors who made this release possible.
 
 ### Docs
 
-- [docs] Fix Stack Overflow issue canned response @oliviertassinari
+- [docs] Fix Stack Overflow issue canned response @oliviertassinari
 - [docs] Fix outdated link to support page @oliviertassinari
 - [docs] Keep contributing guide simple (#213) @oliviertassinari
 - [docs] Fix description of eslint-plugin-material-ui @oliviertassinari
-- [docs] Hide a bit the notion of MUI Core @oliviertassinari
+- [docs] Hide a bit the notion of MUI Core @oliviertassinari
 
 All contributors of this release in alphabetical order: @oliviertassinari, @siriwatknp
 
@@ -82,7 +82,7 @@ A big thanks to the 3 contributors who made this release possible.
 
 ### Core
 
-- &#8203;<!-- 7 -->[core] Temporarily fallback to v5 of Material UI (#198) @brijeshb42
+- &#8203;<!-- 7 -->[core] Temporarily fallback to v5 of Material UI (#198) @brijeshb42
 - &#8203;<!-- 5 -->[core] Fix event naming convention @oliviertassinari
 
 All contributors of this release in alphabetical order: @brijeshb42, @oliviertassinari, @siriwatknp
@@ -222,17 +222,17 @@ A big thanks to the 6 contributors who made this release possible. Here are some
 
 ### `@pigment-css/react@0.0.12`
 
-- Add `createExtendSxProp` for Material UI integration (#112) @siriwatknp
+- Add `createExtendSxProp` for Material UI integration (#112) @siriwatknp
 - Add `globalCss` processor (#31) @siriwatknp
 - Implement useTheme processor and runtime theme (#105) @brijeshb42
 - Implement variant matching parity (#111) @DiegoAndai
 - Ignore urls starting with # (#106) @brijeshb42
-- Make theme optional in Pigment CSS config (#108) @brijeshb42
+- Make theme optional in Pigment CSS config (#108) @brijeshb42
 
 ### Docs
 
 - Add logo to the README (#121) @danilo-leal
-- Add badges like in Material UI @oliviertassinari
+- Add badges like in Material UI @oliviertassinari
 - Fix styleOverrides usage in README (#110) @brijeshb42
 - Improve wording (#70) @aarongarciah
 - Fix roadmap link (#60) @oliviertassinari
@@ -323,7 +323,7 @@ Starting with this release, all packages are going to be released under the `lat
 
 ### Docs
 
-- [react] Add How Pigment CSS works guide (#18) @brijeshb42
+- [react] Add How Pigment CSS works guide (#18) @brijeshb42
 - Update creating a new issue link (#20) @ZeeshanTamboli
 - Fix wrong header hash in the README.md (#26) @mnajdova
 
