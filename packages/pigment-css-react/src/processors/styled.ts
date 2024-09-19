@@ -607,7 +607,7 @@ export class StyledProcessor extends BaseProcessor {
     themeImportIdentifier?: string,
   ) {
     const { themeArgs = {} } = this.options as IOptions;
-    const styleObj = typeof styleObjOrFn === 'function' ? styleObjOrFn(themeArgs) : styleObjOrFn;
+    let styleObj = typeof styleObjOrFn === 'function' ? styleObjOrFn(themeArgs) : styleObjOrFn;
     if (!styleObj) {
       return '';
     }
@@ -619,7 +619,11 @@ export class StyledProcessor extends BaseProcessor {
         })),
       );
     }
-    delete styleObj.variants;
+    if (styleObj.isProcessed) {
+      styleObj = styleObj.style;
+    } else {
+      delete styleObj.variants;
+    }
     const res = cssFnValueToVariable({
       styleObj,
       expressionValue: styleArg,
