@@ -7,7 +7,7 @@
     "proptypes": "echo \"tsx ./scripts/generateProptypes.ts\"",
     "deduplicate": "pnpm dedupe",
     "build": "lerna run --no-private build",
-    "build:ci": "lerna run build --concurrency 8 --skip-nx-cache",
+    "build:ci": "lerna run build --concurrency 8 --skip-nx-cache && cd examples/test-vite-app && npm install && npm run build",
     "build:codesandbox": "NODE_OPTIONS=\"--max_old_space_size=4096\" lerna run --concurrency 8 --no-private build",
     "release:version": "lerna version --no-changelog --no-push --no-git-tag-version --no-private",
     "release:build": "lerna run --concurrency 8 --no-private build --skip-nx-cache",
@@ -144,7 +144,8 @@
     "@definitelytyped/utils": "^0.1.5",
     "@types/node": "^18.19.30",
     "@types/react": "^18.3.3",
-    "@types/react-dom": "18.2.24"
+    "@types/react-dom": "18.2.24",
+    "@pigment-css/react": "workspace:*"
   },
   "nyc": {
     "include": [
