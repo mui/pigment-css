@@ -1,5 +1,23 @@
 # [Versions](https://mui.com/versions/)
 
+## 0.0.24
+
+<!-- generated comparing v0.0.23..master -->
+
+_Sep 25, 2024_
+
+A big thanks to the 2 contributors who made this release possible. Here are some highlights ✨:
+
+### `@pigment-css/react@0.0.24`
+
+- &#8203;<!-- 2 -->feat: adapt to pre-processed styles (#243) @romgrk
+
+### Docs
+
+- &#8203;<!-- 1 -->[docs] Correctly configure Vale (#244) @oliviertassinari
+
+All contributors of this release in alphabetical order: @oliviertassinari, @romgrk
+
 ## 0.0.23
 
 <!-- generated comparing v0.0.22..master -->
