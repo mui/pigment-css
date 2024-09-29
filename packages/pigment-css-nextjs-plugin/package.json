@@ -49,5 +49,8 @@
     "zero-virtual.css",
     "package.json",
     "LICENSE"
-  ]
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  }
 }
