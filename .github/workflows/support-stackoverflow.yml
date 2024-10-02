@@ -24,7 +24,7 @@ jobs:
           issue-comment: |
             👋 Thanks for using this project!
 
-            We use GitHub issues exclusively as a bug and feature requests tracker, however,this issue appears to be a support request.
+            We use GitHub issues exclusively as a bug and feature requests tracker, however, this issue appears to be a support request.
 
             For support with Pigment CSS please check out https://mui.com/pigment-css/getting-started/support/. Thanks!
 
