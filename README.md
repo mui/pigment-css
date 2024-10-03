@@ -660,13 +660,13 @@ By default, when `colorSchemes` is defined, Pigment CSS uses the [`prefers-colo
 However, if you want to control the color scheme based on application logic, for example, using a button to switch between light and dark mode, you can customize the behavior by providing a `getSelector` function:
 
 ```diff
-  extendTheme({
-    colorSchemes: {
-      light: { ... },
-      dark: { ... },
-    },
-+   getSelector: (colorScheme) => colorScheme ? `.theme-${colorScheme}` : ':root',
-  });
+ extendTheme({
+   colorSchemes: {
+     light: { ... },
+     dark: { ... },
+   },
++  getSelector: (colorScheme) => colorScheme ? `.theme-${colorScheme}` : ':root',
+ });
 ```
 
 Note that you need to add the logic to a button by yourself. Here is an example of how to do it:
