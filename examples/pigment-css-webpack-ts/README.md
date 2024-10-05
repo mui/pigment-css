@@ -31,4 +31,4 @@ or:
 To learn more about this example:
 
 - [Pigment CSS documentation](https://github.com/mui/pigment-css/blob/master/README.md) - learn more about Pigment CSS features and APIs.
-- [Vite documentation](https://vitejs.dev/guide/) - learn about Vite features and APIs.
+- [Vite documentation](https://vite.dev/guide/) - learn about Vite features and APIs.
