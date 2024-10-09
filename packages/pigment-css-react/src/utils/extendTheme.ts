@@ -30,7 +30,7 @@ export interface ThemeInput<ColorScheme extends string = string> extends Record<
    *
    * @example
    * // data-* attribute selector
-   * (colorScheme) => colorScheme !== 'light' ? `[data-theme="${colorScheme}"`] : ":root"
+   * (colorScheme) => colorScheme !== 'light' ? `[data-theme="${colorScheme}"]` : ":root"
    */
   getSelector?: (
     colorScheme: ColorScheme | undefined,
