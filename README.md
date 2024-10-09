@@ -892,7 +892,7 @@ On the other hand, Pigment CSS extracts CSS at build time and replaces the Java
 
 Here are some common patterns and how to achieve them with Pigment CSS:
 
-1. **Fixed set of styles**
+#### 1. Fixed set of styles
 
 In Emotion or styled-components, you can use props to create styles conditionally:
 
@@ -935,7 +935,7 @@ const Flex = styled('div')((props) => ({
 
 > 💡 Keep in mind that the `variants` key is for fixed values of props, for example, a component's colors, sizes, and states.
 
-2. **Programatically generated styles**
+#### 2. Programatically generated styles
 
 For Emotion and styled-components, the styles are different on each render and instance because the styles are generated at runtime:
 
