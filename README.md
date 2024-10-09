@@ -351,43 +351,42 @@ There are two ways to achieve this (both involve using a CSS variable):
 
 1. Declare a CSS variable directly in the styles and set its value using inline styles:
 
-```jsx
-const Heading = styled('h1')({
-  color: 'var(--color)',
-});
+    ```jsx
+    const Heading = styled('h1')({
+      color: 'var(--color)',
+    });
 
-function Heading() {
-  const [color, setColor] = React.useState('red');
+    function Heading() {
+      const [color, setColor] = React.useState('red');
 
-  return <Heading style={{ '--color': color }} />;
-}
-```
+      return <Heading style={{ '--color': color }} />;
+    }
+    ```
 
 2. Use a callback function as a value to create a dynamic style for the specific CSS property:
+    ```jsx
+    const Heading = styled('h1')({
+      color: ({ isError }) => (isError ? 'red' : 'black'),
+    });
+    ```
 
-```jsx
-const Heading = styled('h1')({
-  color: ({ isError }) => (isError ? 'red' : 'black'),
-});
-```
+    Pigment CSS replaces the callback with a CSS variable and injects the value through inline styles. This makes it possible to create a static CSS file while still allowing dynamic styles.
 
-Pigment CSS replaces the callback with a CSS variable and injects the value through inline styles. This makes it possible to create a static CSS file while still allowing dynamic styles.
+    ```css
+    .Heading_class_akjsdfb {
+      color: var(--Heading_class_akjsdfb-0);
+    }
+    ```
 
-```css
-.Heading_class_akjsdfb {
-  color: var(--Heading_class_akjsdfb-0);
-}
-```
-
-```jsx
-<h1
-  style={{
-    '--Heading_class_akjsdfb-0': isError ? 'red' : 'black',
-  }}
->
-  Hello
-</h1>
-```
+    ```jsx
+    <h1
+      style={{
+        '--Heading_class_akjsdfb-0': isError ? 'red' : 'black',
+      }}
+    >
+      Hello
+    </h1>
+    ```
 
 #### Styled component as a CSS selector
 
