@@ -34,7 +34,7 @@ Pigment CSS is a zero-runtime CSS-in-JS library that extracts the colocated sty
 # Documentation
 
 - [Getting started](#getting-started)
-  - [Why this project exists?](#why-choose-pigmentcss)
+  - [Why choose Pigment CSS](#why-choose-pigmentcss)
   - [Start with Next.js](#start-with-nextjs)
   - [Start with Vite](#start-with-vite)
 - [Basic usage](#basic-usage)
@@ -43,17 +43,23 @@ Pigment CSS is a zero-runtime CSS-in-JS library that extracts the colocated sty
     - [Styling based on props](#styling-based-on-props)
     - [Styling based on runtime values](#styling-based-on-runtime-values)
     - [Styled component as a CSS selector](#styled-component-as-a-css-selector)
+    - [Media and Container queries](#media-and-container-queries)
     - [Typing props](#typing-props)
-- [sx prop](#sx-prop)
+  - [Creating animation keyframes](#creating-animation-keyframes)
+  - [Creating global styles](#creating-global-styles)
 - [Theming](#theming)
   - [Accessing theme values](#accessing-theme-values)
   - [CSS variables support](#css-variables-support)
+  - [Adding a prefix to CSS variables](#adding-a-prefix-to-css-variables)
   - [Color schemes](#color-schemes)
   - [Switching color schemes](#switching-color-schemes)
+  - [Styling based on color scheme](#styling-based-on-color-scheme)
   - [TypeScript](#typescript)
+- [sx prop](#sx-prop)
 - [Right-to-left support](#right-to-left-support)
 - [How-to guides](#how-to-guides)
   - [Coming from Emotion or styled-components](#coming-from-emotion-or-styled-components)
+- [Building reusable components for UI libraries](#building-reusable-components-for-ui-libraries)
 - [How Pigment CSS works](#how-pigmentcss-works)
 
 ## Getting started
@@ -345,43 +351,43 @@ There are two ways to achieve this (both involve using a CSS variable):
 
 1. Declare a CSS variable directly in the styles and set its value using inline styles:
 
-```jsx
-const Heading = styled('h1')({
-  color: 'var(--color)',
-});
+   ```jsx
+   const Heading = styled('h1')({
+     color: 'var(--color)',
+   });
 
-function Heading() {
-  const [color, setColor] = React.useState('red');
+   function Heading() {
+     const [color, setColor] = React.useState('red');
 
-  return <Heading style={{ '--color': color }} />;
-}
-```
+     return <Heading style={{ '--color': color }} />;
+   }
+   ```
 
 2. Use a callback function as a value to create a dynamic style for the specific CSS property:
 
-```jsx
-const Heading = styled('h1')({
-  color: ({ isError }) => (isError ? 'red' : 'black'),
-});
-```
+   ```jsx
+   const Heading = styled('h1')({
+     color: ({ isError }) => (isError ? 'red' : 'black'),
+   });
+   ```
 
-Pigment CSS replaces the callback with a CSS variable and injects the value through inline styles. This makes it possible to create a static CSS file while still allowing dynamic styles.
+   Pigment CSS replaces the callback with a CSS variable and injects the value through inline styles. This makes it possible to create a static CSS file while still allowing dynamic styles.
 
-```css
-.Heading_class_akjsdfb {
-  color: var(--Heading_class_akjsdfb-0);
-}
-```
+   ```css
+   .Heading_class_akjsdfb {
+     color: var(--Heading_class_akjsdfb-0);
+   }
+   ```
 
-```jsx
-<h1
-  style={{
-    '--Heading_class_akjsdfb-0': isError ? 'red' : 'black',
-  }}
->
-  Hello
-</h1>
-```
+   ```jsx
+   <h1
+     style={{
+       '--Heading_class_akjsdfb-0': isError ? 'red' : 'black',
+     }}
+   >
+     Hello
+   </h1>
+   ```
 
 #### Styled component as a CSS selector
 
@@ -887,7 +893,7 @@ On the other hand, Pigment CSS extracts CSS at build time and replaces the Java
 
 Here are some common patterns and how to achieve them with Pigment CSS:
 
-1. **Fixed set of styles**
+#### 1. Fixed set of styles
 
 In Emotion or styled-components, you can use props to create styles conditionally:
 
@@ -930,7 +936,7 @@ const Flex = styled('div')((props) => ({
 
 > 💡 Keep in mind that the `variants` key is for fixed values of props, for example, a component's colors, sizes, and states.
 
-2. **Programatically generated styles**
+#### 2. Programatically generated styles
 
 For Emotion and styled-components, the styles are different on each render and instance because the styles are generated at runtime:
 
