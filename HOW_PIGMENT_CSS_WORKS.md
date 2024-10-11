@@ -77,7 +77,7 @@ The above code is then evaluated through the use of the `node:module` [module](h
 
 ### 2. Transformation and runtime replacement
 
-Once it has access to the actual values of the styles, Pigment CSS then does source code [transformation](https://github.com/mui/material-ui/blob/next/packages/pigment-css-react/src/processors/css.ts) in place to remove the `css()` call from the source and replace it with a static class name string:
+Once it has access to the actual values of the styles, Pigment CSS then does source code [transformation](https://github.com/mui/pigment-css/blob/master/packages/pigment-css-react/src/processors/css.ts) in place to remove the `css()` call from the source and replace it with a static class name string:
 
 ```js
 // app.js
