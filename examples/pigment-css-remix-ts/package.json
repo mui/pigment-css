@@ -1,7 +1,6 @@
 {
   "name": "pigment-css-remix-ts",
   "private": true,
-  "sideEffects": false,
   "type": "module",
   "scripts": {
     "build": "remix vite:build",
