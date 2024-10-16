@@ -200,6 +200,9 @@
       "default": "./build/Grid.js"
     }
   },
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "nx": {
     "targets": {
       "test": {
