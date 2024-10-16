@@ -1,5 +1,5 @@
 {
-  "name": "@app/wp-app",
+  "name": "pigment-css-webpack-ts",
   "private": true,
   "type": "module",
   "scripts": {
