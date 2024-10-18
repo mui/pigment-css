@@ -13,8 +13,9 @@ export const removePropTypesPlugin = declare<{}>((api) => {
         const property = left.get('property');
         const isPropTypes = property.isIdentifier({ name: 'propTypes' });
         const isMuiName = property.isIdentifier({ name: 'muiName' });
+        const isDisplayName = property.isIdentifier({ name: 'displayName' });
 
-        if (!isPropTypes && !isMuiName) {
+        if (!isPropTypes && !isMuiName && !isDisplayName) {
           return;
         }
         const parentExpression = path.findParent((p) => p.isExpressionStatement());
