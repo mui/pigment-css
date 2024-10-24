@@ -356,10 +356,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
           code: result.code,
           map: result.sourceMap,
         };
-      } catch (e) {
-        const error = new Error((e as Error).message);
-        error.stack = (e as Error).stack;
-        throw error;
+      } catch(e) {
       }
     },
   };
