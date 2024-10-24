@@ -101,12 +101,12 @@ function traverseObjectExpression(
           localIdentifiers.push(id);
         });
         if (localIdentifiers.length) {
-          // eslint-disable-next-line no-nested-ternary
-          const cssKey = key.isIdentifier()
-            ? key.node.name
-            : key.isStringLiteral()
-              ? key.node.value
-              : '';
+          let cssKey = '';
+          if (key.isIdentifier()) {
+            cssKey = key.node.name;
+          } else if (key.isStringLiteral()) {
+            cssKey = key.node.value;
+          }
           const unitLess = isUnitLess(cssKey);
           const fnBody = arrayExpression([cloneNode(value.node), booleanLiteral(unitLess)]);
           // Serialize the actual AST as a string
