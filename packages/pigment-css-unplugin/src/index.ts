@@ -302,17 +302,17 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
           }
 
           // Valid names must start with a underscore or letter.
-          const layerName = `_${slug}`;
+          // const layerName = `_${slug}`;
 
-          // Fix for https://github.com/mui/pigment-css/issues/199
-          // Bring each file in its own layer so that the order is maintained between css modules
-          // shared between layout.tsx and page.tsx.
-          // TODO: Do this in a way that keeps the source map correct
-          cssText = `
-            @layer pigment.${layerName} {
-              ${cssText}
-            }
-          `;
+          // // Fix for https://github.com/mui/pigment-css/issues/199
+          // // Bring each file in its own layer so that the order is maintained between css modules
+          // // shared between layout.tsx and page.tsx.
+          // // TODO: Do this in a way that keeps the source map correct
+          // cssText = `
+          //   @layer pigment.${layerName} {
+          //     ${cssText}
+          //   }
+          // `;
         }
 
         if (sourceMap && result.cssSourceMapText) {
