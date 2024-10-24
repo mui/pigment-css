@@ -101,10 +101,7 @@ export class SxProcessor extends BaseProcessor {
             case 'ArrowFunctionExpression': {
               const fnBody = expression.body as Expression;
               // try to deserialize AST if possible
-              if (
-                fnBody.type === 'StringLiteral' &&
-                (fnBody.value[0] === '{' || fnBody.value[0] === '[')
-              ) {
+              if (fnBody.type === 'StringLiteral') {
                 try {
                   const body = JSON.parse(fnBody.value);
                   return t.objectProperty(t.stringLiteral(variableId), body);
