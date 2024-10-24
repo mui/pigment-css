@@ -1,6 +1,5 @@
 {
   "name": "pigment-css-nextjs-ts",
-  "version": "5.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
