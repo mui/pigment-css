@@ -113,7 +113,7 @@ process.env.NODE_ENV !== 'production'
        * Set to `false` to disable `maxWidth`.
        * @default 'lg'
        */
-      maxWidth: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs', false]),
+      maxWidth: PropTypes.oneOf(['lg', 'md', 'sm', 'uw', 'xl', 'xs', false]),
     })
   : void 0;
 export default Container;

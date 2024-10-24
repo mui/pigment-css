@@ -79,7 +79,7 @@ export class GenerateAtomicsProcessor extends BaseProcessor {
         };
         const sourceMapReplacements: Replacements = [
           {
-            length: cssText.length,
+            length: cssText?.length ?? 0,
             original: {
               start: {
                 column: this.location?.start.column ?? 0,
