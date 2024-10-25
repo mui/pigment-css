@@ -1,5 +1,36 @@
 # [Versions](https://mui.com/versions/)
 
+## 0.0.25
+
+<!-- generated comparing v0.0.24..master -->
+
+_Oct 25, 2024_
+
+A big thanks to the 5 contributors who made this release possible.
+
+### `@pigment-css/react@0.0.25`
+
+- Fix scoping issue with sx dynamic value transform (#286) @brijeshb42
+
+### Core
+
+- [code-infra] Remove releaseChangelog.mjs duplication (#273) @oliviertassinari
+- [core] Upgrade @mui/monorepo (#274) @oliviertassinari
+- [core] Remove <-- from changelog (#272) @oliviertassinari
+- [core] Link to production app for bundle size @oliviertassinari
+- [core] Bump npx update-browserslist-db@latest (#256) @oliviertassinari
+- [docs] Fix broken link (#260) @mnajdova
+- [docs] Fix syntax in JSDoc example (#261) @yoohahn
+- [docs] Readme tweaks (#266) @aarongarciah
+- [docs] Fix 301 redirections in docs @oliviertassinari
+- [docs] Fix git diff format (#245) @oliviertassinari
+- [examples] Fix webpack CLI instructions (#277) @oliviertassinari
+- [examples] Avoid git diff when playing with examples @oliviertassinari
+- [infra] Fix line break in Stack Overflow message @oliviertassinari
+- [infra] Fix line break in Stack Overflow message @oliviertassinari
+
+All contributors of this release in alphabetical order: @aarongarciah, @brijeshb42, @mnajdova, @oliviertassinari, @yoohahn
+
 ## 0.0.24
 
 <!-- generated comparing v0.0.23..master -->
