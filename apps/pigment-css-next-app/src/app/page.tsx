@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { styled, css } from '@pigment-css/react';
 import Stack from '@pigment-css/react/Stack';
-import Chip from '@mui/material/Chip';
 import styles from './page.module.css';
 
 declare global {
@@ -205,17 +204,6 @@ export default function Home() {
           </h2>
           <p>Instantly deploy your Next.js site to a shareable URL with Vercel.</p>
         </a>
-        <Chip
-          sx={{
-            color: 'red',
-            backgroundColor: 'blue',
-            '&:hover': {
-              color: 'blue',
-              backgroundColor: 'red',
-            },
-          }}
-          label="Hello"
-        />
       </div>
     </Main>
   );
