@@ -35,7 +35,7 @@ export interface CreateStyledComponent<
 > {
   (
     styles: TemplateStringsArray,
-    ...args: Array<(options: ThemeArgs) => Primitve | Primitve | React.ComponentClass>
+    ...args: Array<((options: ThemeArgs) => Primitve) | Primitve | React.ComponentClass>
   ): StyledComponent<OuterProps> & (Component extends string ? BaseDefaultProps : Component);
 
   /**

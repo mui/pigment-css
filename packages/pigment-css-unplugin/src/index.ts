@@ -325,11 +325,15 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
         // subsequent builds. So we use a placeholder CSS file with the actual CSS content
         // as part of the query params.
         if (isNext) {
-          const data = `${meta.placeholderCssFile}?${encodeURIComponent(
-            JSON.stringify({
-              filename: id.split(path.sep).pop(),
-              source: cssText.replaceAll('!important', '__IMP__'),
-            }),
+          const data = `${meta.placeholderCssFile}?${btoa(
+            encodeURI(
+              encodeURIComponent(
+                JSON.stringify({
+                  filename: id.split(path.sep).pop(),
+                  source: cssText,
+                }),
+              ),
+            ),
           )}`;
           return {
             // CSS import should be the last so that nested components produce correct CSS order injection.

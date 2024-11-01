@@ -1,4 +1,4 @@
-import type { CSSObject } from '@emotion/css';
+import type { CSSObject } from '@emotion/serialize';
 import { css, cache } from './emotion';
 import type { PluginCustomOptions } from './cssFnValueToVariable';
 
