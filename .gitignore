@@ -9,7 +9,7 @@
 !.vscode/extensions.json
 *.log
 *.tsbuildinfo
-/.eslintcache
+.eslintcache
 /.nyc_output
 /benchmark/**/dist
 /coverage
