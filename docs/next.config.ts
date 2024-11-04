@@ -1,7 +1,7 @@
 import type { NextConfig } from 'next';
 import { withPigment, extendTheme } from '@pigment-css/nextjs-plugin';
-import { theme as baseTheme } from './src/theme';
 import path from 'path';
+import { theme as baseTheme } from './src/theme';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 
@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
   },
   distDir: 'export',
   output: process.env.NODE_ENV === 'production' ? 'export' : undefined,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 const theme = extendTheme({

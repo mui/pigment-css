@@ -1,8 +1,8 @@
 import * as React from 'react';
+import { styled } from '@pigment-css/react';
 import packageJson from '../../../package.json';
 import { IconLinkButton } from './IconLinkButton';
 import { IconButton } from './IconButton';
-import { styled } from '@pigment-css/react';
 import { DocsVersionSelector } from './DocsVersionSelector';
 import { PigmentIcon } from './icons/Pigment';
 import { GitHubIcon } from './icons/Github';
@@ -54,7 +54,7 @@ export function AppBar() {
         }}
       >
         <IconLinkButton
-          href="https://github.com/mui/base-ui"
+          href="https://github.com/mui/pigment-css"
           target="_blank"
           label="GitHub"
           rel="noreferrer noopener"
