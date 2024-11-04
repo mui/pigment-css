@@ -10,18 +10,18 @@
   },
   "dependencies": {
     "@pigment-css/react": "workspace:^",
-    "@mui/material": "^5.16.6",
-    "@mui/material-nextjs": "^5.16.6",
+    "@mui/material": "^6.1.6",
+    "@mui/material-nextjs": "^6.1.6",
     "local-ui-lib": "workspace:^",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "next": "latest"
+    "next": "15.0.2"
   },
   "devDependencies": {
     "@pigment-css/nextjs-plugin": "workspace:^",
-    "@types/node": "^20.5.7",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.2.19",
+    "@types/node": "^18.19.63",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "eslint": "^8.57.0",
     "typescript": "^5.4.4"
   },

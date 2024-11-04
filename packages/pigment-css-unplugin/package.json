@@ -30,12 +30,12 @@
     "test:ci": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=lcov --report-dir=./coverage/pigment-css-unplugin mocha 'packages/pigment-css-unplugin/**/*.test.{js,ts,tsx}'"
   },
   "dependencies": {
-    "@babel/core": "^7.24.4",
+    "@babel/core": "^7.26.0",
     "@pigment-css/react": "workspace:^",
     "@wyw-in-js/shared": "^0.5.4",
     "@wyw-in-js/transform": "^0.5.4",
     "babel-plugin-define-var": "^0.1.0",
-    "unplugin": "^1.7.1"
+    "unplugin": "^1.15.0"
   },
   "devDependencies": {
     "@types/babel__core": "^7.20.5",
