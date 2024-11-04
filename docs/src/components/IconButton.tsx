@@ -1,7 +1,7 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import { Tooltip } from './Tooltip';
 import { css } from '@pigment-css/react';
+import { Tooltip } from './Tooltip';
 
 export const classes = {
   root: css`
@@ -27,9 +27,7 @@ export const classes = {
     }
 
     &:focus-visible {
-      outline-width: 2px;
-      outline-style: solid;
-      outline-color: black;
+      outline: black solid 2px;
       outline-offset: 2px;
     }
   `,

@@ -8,37 +8,6 @@ interface Props {
   skipFirstLevel?: boolean;
 }
 
-function renderTocEntry(entry: TocEntry, renderDepth: number, skipFirstLevel: boolean) {
-  if (entry.depth > renderDepth) {
-    return null;
-  }
-
-  return (
-    <React.Fragment key={entry.id}>
-      {entry.depth === 1 && skipFirstLevel ? null : (
-        <NavLink
-          href={`#${entry.id}`}
-          style={{ '--indent-level': entry.depth - 2 } as React.CSSProperties}
-        >
-          {entry.value}
-        </NavLink>
-      )}
-      {entry.children?.map((child) => renderTocEntry(child, renderDepth, skipFirstLevel))}
-    </React.Fragment>
-  );
-}
-
-export function TableOfContents(props: Props) {
-  const { toc, renderDepth = 2, skipFirstLevel = true } = props;
-
-  return (
-    <Root>
-      <SectionTitle>Contents</SectionTitle>
-      <nav>{toc.map((item) => renderTocEntry(item, renderDepth, skipFirstLevel))}</nav>
-    </Root>
-  );
-}
-
 const Root = styled.div`
   box-sizing: border-box;
   position: fixed;
@@ -89,3 +58,34 @@ const NavLink = styled.a`
     }
   }
 `;
+
+function renderTocEntry(entry: TocEntry, renderDepth: number, skipFirstLevel: boolean) {
+  if (entry.depth > renderDepth) {
+    return null;
+  }
+
+  return (
+    <React.Fragment key={entry.id}>
+      {entry.depth === 1 && skipFirstLevel ? null : (
+        <NavLink
+          href={`#${entry.id}`}
+          style={{ '--indent-level': entry.depth - 2 } as React.CSSProperties}
+        >
+          {entry.value}
+        </NavLink>
+      )}
+      {entry.children?.map((child) => renderTocEntry(child, renderDepth, skipFirstLevel))}
+    </React.Fragment>
+  );
+}
+
+export function TableOfContents(props: Props) {
+  const { toc, renderDepth = 2, skipFirstLevel = true } = props;
+
+  return (
+    <Root>
+      <SectionTitle>Contents</SectionTitle>
+      <nav>{toc.map((item) => renderTocEntry(item, renderDepth, skipFirstLevel))}</nav>
+    </Root>
+  );
+}

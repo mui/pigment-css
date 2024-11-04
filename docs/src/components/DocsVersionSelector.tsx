@@ -1,8 +1,8 @@
 'use client';
 import * as React from 'react';
 import * as Menu from '@base_ui/react/Menu';
-import { SelectIcon } from './icons/Select';
 import { styled } from '@pigment-css/react';
+import { SelectIcon } from './icons/Select';
 
 export interface DocumentationVersion {
   version: string;
@@ -72,7 +72,7 @@ const Popup = styled(Menu.Popup)(({ theme }) => ({
 }));
 
 const Adornment = styled.span`
-  top: 0px;
+  top: 0;
   right: 4px;
   height: 100%;
   display: flex;

@@ -14,6 +14,7 @@ function H2(props: React.HTMLAttributes<HTMLHeadingElement>) {
     );
   }
 
+  // eslint-disable-next-line jsx-a11y/heading-has-content
   return <h2 {...props} />;
 }
 
@@ -28,6 +29,7 @@ function H3(props: React.HTMLAttributes<HTMLHeadingElement>) {
     );
   }
 
+  // eslint-disable-next-line jsx-a11y/heading-has-content
   return <h3 {...props} />;
 }
 

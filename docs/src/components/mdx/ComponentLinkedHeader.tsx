@@ -1,5 +1,4 @@
 import * as React from 'react';
-import classes from './ComponentLinkHeader.module.css';
 import { styled } from '@pigment-css/react';
 
 export interface ComponentLinkHeaderProps {

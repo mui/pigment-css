@@ -92,6 +92,7 @@ export function SiblingPageLinks(props: SiblingPageLinksProps) {
 
 function flattenSitepmap(pages: readonly RouteMetadata[]): RouteMetadata[] {
   const flatPages: RouteMetadata[] = [];
+  // eslint-disable-next-line no-restricted-syntax
   for (const page of pages) {
     if (!page.children) {
       flatPages.push(page);

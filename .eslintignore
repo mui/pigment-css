@@ -5,6 +5,7 @@
 /docs/pages/playground/
 /packages/pigment-css-react/utils/
 /packages/pigment-css-react/processors/
+/packages/pigment-css-react/internal/
 /packages/pigment-css-react/exports/
 /packages/pigment-css-react/theme/
 /packages/pigment-css-react/tests/**/fixtures

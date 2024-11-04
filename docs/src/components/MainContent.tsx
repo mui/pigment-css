@@ -1,6 +1,6 @@
 import { styled } from '@pigment-css/react';
 
-export const MainContent = styled.div(({}) => ({
+export const MainContent = styled.div({
   boxSizing: 'content-box',
   maxWidth: '714px',
   paddingTop: 'var(--space-9)',
@@ -151,4 +151,4 @@ export const MainContent = styled.div(({}) => ({
       zIndex: -1,
     },
   },
-}));
+});

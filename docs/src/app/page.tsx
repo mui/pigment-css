@@ -5,8 +5,7 @@ import Link from 'next/link';
 const Page = styled.div`
   display: grid;
   grid-template-rows: 20px 1fr 20px;
-  align-items: center;
-  justify-items: center;
+  place-items: center center;
   min-height: 100svh;
   padding: 80px;
   gap: 64px;
@@ -15,9 +14,8 @@ const Page = styled.div`
   @media (prefers-color-scheme: dark) {
     & {
       --gray-rgb: 255, 255, 255;
-      --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-      --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-
+      --gray-alpha-200: rgb(var(--gray-rgb) 0.145);
+      --gray-alpha-100: rgb(var(--gray-rgb) 0.06);
       --button-primary-hover: #ccc;
       --button-secondary-hover: #1a1a1a;
     }

@@ -63,7 +63,6 @@ const link = css`
 `;
 
 const sublink = css`
-  composes: link;
   padding-left: var(--space-6);
 `;
 

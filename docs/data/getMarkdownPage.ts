@@ -32,7 +32,7 @@ async function getFileHandle(basePath: string, slug: string) {
         await fileHandle.close();
       },
     };
-  } catch (ex) {
+  } catch (ex1) {
     try {
       const fileHandle = await fs.open(mdFilePath);
       return {
@@ -42,7 +42,7 @@ async function getFileHandle(basePath: string, slug: string) {
           await fileHandle.close();
         },
       };
-    } catch (ex) {
+    } catch (ex2) {
       throw new Error('404');
     }
   }

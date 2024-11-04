@@ -1,6 +1,6 @@
+import routes from '@data/pages';
 import { AppBar } from '@/components/AppBar';
 import { Navigation } from '@/components/Navigation';
-import routes from '@data/pages';
 
 export default function ContentLayout({ children }: React.PropsWithChildren<{}>) {
   return (

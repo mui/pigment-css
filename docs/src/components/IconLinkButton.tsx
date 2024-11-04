@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { type UrlObject } from 'url';
 import Link from 'next/link';
-import { Tooltip } from './Tooltip';
 import clsx from 'clsx';
+import { Tooltip } from './Tooltip';
 import { classes } from './IconButton';
 
 export function IconLinkButton(props: IconLinkButton.Props) {
