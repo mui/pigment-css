@@ -4,20 +4,28 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "@pigment-css/react": "latest",
+    "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest"
   },
   "devDependencies": {
+    "@eslint/js": "latest",
     "@pigment-css/vite-plugin": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "@vitejs/plugin-react": "latest",
+    "@vitejs/plugin-react-swc": "latest",
+    "eslint": "latest",
+    "eslint-plugin-react-hooks": "latest",
+    "eslint-plugin-react-refresh": "latest",
+    "globals": "latest",
     "typescript": "latest",
+    "typescript-eslint": "latest",
     "vite": "latest"
   }
 }
