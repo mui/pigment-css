@@ -80,7 +80,7 @@ importers:
         version: 1.0.19(@babel/core@7.26.0)(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@mui/monorepo':
         specifier: github:mui/material-ui#a25a365a4c66738f358ecd745bf3727c0ca9d5b6
-        version: https://codeload.github.com/mui/material-ui/tar.gz/a25a365a4c66738f358ecd745bf3727c0ca9d5b6(encoding@0.1.13)
+        version: git+https://git@github.com:mui/material-ui.git#a25a365a4c66738f358ecd745bf3727c0ca9d5b6(encoding@0.1.13)
       '@next/eslint-plugin-next':
         specifier: ^15.0.2
         version: 15.0.2
@@ -2131,8 +2131,8 @@ packages:
       '@types/react':
         optional: true
 
-  '@mui/monorepo@https://codeload.github.com/mui/material-ui/tar.gz/a25a365a4c66738f358ecd745bf3727c0ca9d5b6':
-    resolution: {tarball: https://codeload.github.com/mui/material-ui/tar.gz/a25a365a4c66738f358ecd745bf3727c0ca9d5b6}
+  '@mui/monorepo@git+https://git@github.com:mui/material-ui.git#a25a365a4c66738f358ecd745bf3727c0ca9d5b6':
+    resolution: {commit: a25a365a4c66738f358ecd745bf3727c0ca9d5b6, repo: git@github.com:mui/material-ui.git, type: git}
     version: 6.1.3
     engines: {pnpm: 9.12.0}
 
@@ -10475,7 +10475,7 @@ snapshots:
       '@emotion/styled': 11.13.0(@emotion/react@11.13.3(@types/react@18.3.12)(react@18.3.1))(@types/react@18.3.12)(react@18.3.1)
       '@types/react': 18.3.12
 
-  '@mui/monorepo@https://codeload.github.com/mui/material-ui/tar.gz/a25a365a4c66738f358ecd745bf3727c0ca9d5b6(encoding@0.1.13)':
+  '@mui/monorepo@git+https://git@github.com:mui/material-ui.git#a25a365a4c66738f358ecd745bf3727c0ca9d5b6(encoding@0.1.13)':
     dependencies:
       '@googleapis/sheets': 9.3.1(encoding@0.1.13)
       '@netlify/functions': 2.8.2
