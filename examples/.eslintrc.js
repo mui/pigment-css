@@ -11,6 +11,7 @@ module.exports = {
     'import/order': 'off',
     // create-vite generates .jsx
     'react/jsx-filename-extension': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
   overrides: [
     {
