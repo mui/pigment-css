@@ -6,7 +6,6 @@ import { theme as baseTheme } from './src/theme';
 const DATA_DIR = path.join(process.cwd(), 'data');
 
 const nextConfig: NextConfig = {
-  /* config options here */
   trailingSlash: false,
   env: {
     DATA_DIR,
