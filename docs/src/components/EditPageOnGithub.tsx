@@ -1,22 +1,20 @@
-import { styled } from '@pigment-css/react';
+import { css } from '@pigment-css/react';
 import * as React from 'react';
+import Link from 'next/link';
+import { GitHubIcon } from './icons/Github';
 
 export interface EditPageOnGithubProps {
   category: string;
   slug: string;
+  isMd: boolean;
 }
 
-const REPO_ROOT = 'https://github.com/mui/pigment-css';
-// #default-branch-switch
-const DEFAULT_BRANCH = 'master';
-
-const Link = styled.a(({ theme }) => ({
+const linkClass = css(({ theme }) => ({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: theme.vars.space[1],
   cursor: 'pointer',
-  textDecoration: 'underline',
-  textDecorationLine: 'underline',
-  textDecorationStyle: 'solid',
-  textDecorationThickness: '1px',
-  textUnderlineOffset: 'calc(0.1em + 3px)',
+  textDecoration: 'none !important',
   color: 'inherit',
   position: 'relative',
   zIndex: 0,
@@ -27,12 +25,13 @@ const Link = styled.a(({ theme }) => ({
 }));
 
 export function EditPageOnGithub(props: EditPageOnGithubProps) {
-  const { category, slug } = props;
+  const { category, slug, isMd } = props;
 
-  const url = `${REPO_ROOT}/edit/${DEFAULT_BRANCH}/docs/data/${category}/${slug}/${slug}.mdx`;
+  const url = `${process.env.REPO_ROOT}/edit/${process.env.DEFAULT_BRANCH}/docs/data/${category}/${slug}/${slug}.${isMd ? 'md' : 'mdx'}`;
   return (
-    <Link href={url} target="_blank" rel="noopener nofollow">
-      Edit this page on GitHub
+    <Link href={url} className={linkClass} target="_blank" rel="noopener nofollow">
+      <GitHubIcon />
+      <span>Edit this page</span>
     </Link>
   );
 }
