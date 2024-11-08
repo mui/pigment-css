@@ -24,8 +24,8 @@ import {
   type Theme as BaseTheme,
   type PluginCustomOptions,
 } from '@pigment-css/react/utils';
-import type { ResolvePluginInstance } from 'webpack';
 import { styledEngineMockup } from '@pigment-css/react/internal';
+
 import { handleUrlReplacement, type AsyncResolver } from './utils';
 
 type NextMeta = {
@@ -185,32 +185,34 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
       return isZeroRuntimeProcessableFile(id, finalTransformLibraries);
     },
     webpack(compiler) {
-      const resolverPlugin: ResolvePluginInstance = {
-        apply(resolver) {
-          webpackResolver = function webpackAsyncResolve(
-            what: string,
-            importer: string,
-            stack: string[],
-          ) {
+      compiler.resolverFactory.hooks.resolver
+        .for('normal')
+        .tap(`${pluginName}Resolver`, (resolver) => {
+          webpackResolver = (what: string, importer: string, stack: string[]) => {
             const context = path.isAbsolute(importer)
               ? path.dirname(importer)
               : path.join(projectPath, path.dirname(importer));
             return new Promise((resolve, reject) => {
-              resolver.resolve({}, context, what, { stack: new Set(stack) }, (err, result) => {
-                if (err) {
-                  reject(err);
-                } else if (result) {
-                  resolve(result);
-                } else {
-                  reject(new Error(`${process.env.PACKAGE_NAME}: Cannot resolve ${what}`));
-                }
-              });
+              resolver.resolve(
+                {},
+                context,
+                what,
+                {
+                  stack: new Set(stack),
+                },
+                (err, result) => {
+                  if (typeof result !== 'string') {
+                    reject(new Error(`${process.env.PACKAGE_NAME}: Could not resolve ${what}`));
+                  } else if (result) {
+                    resolve(result);
+                  } else {
+                    reject(err);
+                  }
+                },
+              );
             });
           };
-        },
-      };
-      compiler.options.resolve.plugins = compiler.options.resolve.plugins || [];
-      compiler.options.resolve.plugins.push(resolverPlugin);
+        });
     },
     async transform(code, url) {
       const [filePath] = url.split('?');

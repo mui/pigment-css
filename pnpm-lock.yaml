@@ -2534,6 +2534,7 @@ packages:
 
   '@pigment-css/react@file:packages/pigment-css-react':
     resolution: {directory: packages/pigment-css-react, type: directory}
+    engines: {node: '>=14.0.0'}
     peerDependencies:
       react: 18.3.1
 
