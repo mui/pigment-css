@@ -1,5 +1,36 @@
 # [Versions](https://mui.com/versions/)
 
+## 0.0.26
+
+<!-- generated comparing v0.0.25..master -->
+
+_Nov 8, 2024_
+
+A big thanks to the 3 contributors who made this release possible.
+
+### `@pigment-css/react@0.0.26`
+
+- [react] Bump package versions and fix related TS errors (#294) @brijeshb42
+
+### `@pigment-css/nextjs-plugin@0.0.26`
+
+- [nextjs] Fix tsconfig's path resolving (#182) @brijeshb42
+
+### Docs
+
+- [docs] Remove next tag from installation instructions (#292) @tschaub
+- [docs] Setup a new next.js application for documentation (#299) @brijeshb42
+
+### Core
+
+- [core] Bump package versions (#294) @brijeshb42
+- [core] Fix Tidelift reference (#306) @oliviertassinari
+- [core] Increase the minimum Node.js version support to 14.0.0 (#254) @oliviertassinari
+- [core] Fix tools-public.mui.com redirection @oliviertassinari
+- [example] Update vite example (#300) @brijeshb42
+
+All contributors of this release in alphabetical order: @brijeshb42, @oliviertassinari, @tschaub
+
 ## 0.0.25
 
 <!-- generated comparing v0.0.24..master -->
