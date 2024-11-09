@@ -57,8 +57,8 @@ A big thanks to the 5 contributors who made this release possible.
 - [docs] Fix git diff format (#245) @oliviertassinari
 - [examples] Fix webpack CLI instructions (#277) @oliviertassinari
 - [examples] Avoid git diff when playing with examples @oliviertassinari
-- [infra] Fix line break in Stack Overflow message @oliviertassinari
-- [infra] Fix line break in Stack Overflow message @oliviertassinari
+- [infra] Fix line break in Stack Overflow message @oliviertassinari
+- [infra] Fix line break in Stack Overflow message @oliviertassinari
 
 All contributors of this release in alphabetical order: @aarongarciah, @brijeshb42, @mnajdova, @oliviertassinari, @yoohahn
 
