@@ -5,6 +5,7 @@ import * as jsxRuntime from 'react/jsx-runtime';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import remarkGfm from 'remark-gfm';
+import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import extractToc, { type Toc } from '@stefanprobst/rehype-extract-toc';
 import exportToc from '@stefanprobst/rehype-extract-toc/mdx';
@@ -26,6 +27,7 @@ async function getFileHandle(basePath: string, slug: string) {
   try {
     const fileHandle = await fs.open(mdxFilePath);
     return {
+      isMd: false,
       handle: fileHandle,
       path: mdxFilePath,
       [Symbol.asyncDispose]: async () => {
@@ -36,6 +38,7 @@ async function getFileHandle(basePath: string, slug: string) {
     try {
       const fileHandle = await fs.open(mdFilePath);
       return {
+        isMd: true,
         handle: fileHandle,
         path: mdFilePath,
         [Symbol.asyncDispose]: async () => {
@@ -61,7 +64,14 @@ export async function getMarkdownPage(basePath: string, slug: string) {
     ...jsxRuntime,
     remarkPlugins: [remarkGfm, remarkFrontmatter, remarkMdxFrontmatter],
     rehypePlugins: [
-      // [rehypePrettyCode, { theme: config.shikiThemes }],
+      [
+        rehypePrettyCode,
+        {
+          theme: { light: 'vitesse-light', dark: 'vitesse-dark' },
+          bypassInlineCode: true,
+          grid: false,
+        },
+      ],
       rehypeSlug,
       extractToc,
       exportToc,
@@ -75,6 +85,7 @@ export async function getMarkdownPage(basePath: string, slug: string) {
     } as PageMetadata,
     tableOfContents: tableOfContents as Toc,
     MDXContent,
+    isMd: file.isMd,
   };
 }
 

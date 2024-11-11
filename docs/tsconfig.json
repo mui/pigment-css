@@ -28,6 +28,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "next-env.d.ts",
+    "globals.d.ts",
     "export/types/**/*.ts"
   ],
   "exclude": ["node_modules"]

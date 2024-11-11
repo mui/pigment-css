@@ -1,18 +1,21 @@
 import { styled } from '@pigment-css/react';
 
-export const MainContent = styled.div({
+export const MainContentContainer = styled.div(({ theme }) => ({
   boxSizing: 'content-box',
-  maxWidth: '714px',
-  paddingTop: 'var(--space-9)',
-  paddingLeft: 'var(--space-6)',
-  paddingRight: 'var(--space-6)',
+  maxWidth: 714,
+  paddingTop: theme.vars.space[9],
+  paddingLeft: theme.vars.space[6],
+  paddingRight: theme.vars.space[6],
   marginLeft: 'auto',
   marginRight: 'auto',
-  marginBottom: 'var(--space-9)',
+  marginBottom: theme.vars.space[9],
   '@media (max-width: 1242px)': {
     marginRight: 'calc((100vw - 240px - 762px) / 2)',
   },
   '@media (max-width: 1002px)': { marginLeft: 'auto', marginRight: 'auto' },
+}));
+
+export const MainContent = styled.div({
   'p:not(.description)': {
     margin: '0',
     marginBottom: 'var(--space-4)',
@@ -71,6 +74,17 @@ export const MainContent = styled.div({
     letterSpacing: '-0.012em',
   },
   code: { fontFamily: 'var(--ff-code)' },
+  'pre[data-language]': {
+    position: 'relative',
+    '&::after': {
+      position: 'absolute',
+      top: 5,
+      right: 10,
+      opacity: 0.5,
+      fontSize: '0.8rem',
+      content: 'attr(data-language)',
+    },
+  },
   ':not(pre) > code': {
     marginLeft: '1px',
     marginRight: '1px',
@@ -105,7 +119,7 @@ export const MainContent = styled.div({
     whiteSpace: 'pre',
     color: 'var(--gray-text-1)',
     border: '1px solid var(--gray-outline-2)',
-    borderRadius: '12px',
+    borderRadius: 8,
   },
   kbd: {
     padding: '6px',

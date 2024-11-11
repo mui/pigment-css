@@ -45,7 +45,9 @@ export function AppBar() {
         <IconLinkButton useNextLink href="/" label="Pigment CSS" size={3}>
           <PigmentIcon />
         </IconLinkButton>
-        <DocsVersionSelector currentVersion={currentVersion} versions={supportedVersions} />
+        {supportedVersions.length > 1 && (
+          <DocsVersionSelector currentVersion={currentVersion} versions={supportedVersions} />
+        )}
       </div>
       <div
         sx={{
@@ -54,7 +56,7 @@ export function AppBar() {
         }}
       >
         <IconLinkButton
-          href="https://github.com/mui/pigment-css"
+          href={process.env.REPO_ROOT}
           target="_blank"
           label="GitHub"
           rel="noreferrer noopener"

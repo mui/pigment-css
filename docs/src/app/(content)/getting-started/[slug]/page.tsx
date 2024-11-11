@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { notFound } from 'next/navigation';
-import { getSlugs } from '@data/pages';
 import { Metadata } from 'next';
-import { getMarkdownPage, getMarkdownPageMetadata } from '@data/getMarkdownPage';
+import routes, { getSlugs } from '@data/pages';
+import { EditPageOnGithub } from '@/components/EditPageOnGithub';
+import { SiblingPageLinks } from '@/components/SiblingPageLinks';
 import { TableOfContents } from '@/components/TableOfContents';
 import { Description } from '@/components/mdx/Description';
 import { components } from '@/components/mdx/MDXComponents';
-import { MainContent } from '@/components/MainContent';
+import { MainContentContainer, MainContent } from '@/components/MainContent';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -16,8 +17,9 @@ const SEGMENT = 'getting-started';
 
 export default async function GettingStartedPage(props: Props) {
   const { slug } = await props.params;
+  const { getMarkdownPage } = await import('@/utils/getMarkdownPage');
   try {
-    const { MDXContent, metadata, tableOfContents } = await getMarkdownPage(SEGMENT, slug);
+    const { isMd, MDXContent, metadata, tableOfContents } = await getMarkdownPage(SEGMENT, slug);
     const allComponents = {
       ...components,
       Description: () => <Description className="description" text={metadata.description} />,
@@ -26,22 +28,31 @@ export default async function GettingStartedPage(props: Props) {
 
     return (
       <React.Fragment>
-        <MainContent as="main">
-          <MDXContent components={allComponents} />
-          {/* <div>
-            <div
-              sx={{
-                padding: 'var(--space-9) 0',
-              }}
-            >
-              <EditPageOnGithub category={SEGMENT} slug={slug} />
+        <MainContentContainer as="main">
+          <MainContent>
+            <MDXContent components={allComponents} />
+          </MainContent>
+          <footer
+            sx={{
+              padding: 'var(--space-9) 0',
+            }}
+          >
+            <div>
+              <EditPageOnGithub category={SEGMENT} slug={slug} isMd={isMd} />
             </div>
+            <hr
+              sx={{
+                margin: 'var(--space-4) 0',
+                borderWidth: '0 0 thin',
+                borderStyle: 'solid',
+                borderColor: 'var(--gray-outline-1)',
+              }}
+            />
             <div>
               <SiblingPageLinks currentSlug={`/${SEGMENT}/${slug}`} pages={routes} />
             </div>
-          </div> */}
-        </MainContent>
-
+          </footer>
+        </MainContentContainer>
         <TableOfContents toc={tableOfContents} />
       </React.Fragment>
     );
@@ -58,6 +69,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { getMarkdownPageMetadata } = await import('@/utils/getMarkdownPage');
   const { slug } = await params;
   const { title = 'Getting started', description } = await getMarkdownPageMetadata(SEGMENT, slug);
 
