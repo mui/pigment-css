@@ -524,14 +524,14 @@ importers:
         specifier: ^6.1.6
         version: 6.1.6(@types/react@18.3.12)(react@18.3.1)
       '@wyw-in-js/processor-utils':
-        specifier: ^0.5.4
-        version: 0.5.4
+        specifier: ^0.5.5
+        version: 0.5.5
       '@wyw-in-js/shared':
-        specifier: ^0.5.4
-        version: 0.5.4
+        specifier: ^0.5.5
+        version: 0.5.5
       '@wyw-in-js/transform':
-        specifier: ^0.5.4
-        version: 0.5.4(typescript@5.6.3)
+        specifier: ^0.5.5
+        version: 0.5.5(typescript@5.6.3)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -612,11 +612,11 @@ importers:
         specifier: workspace:^
         version: link:../pigment-css-react
       '@wyw-in-js/shared':
-        specifier: ^0.5.4
-        version: 0.5.4
+        specifier: ^0.5.5
+        version: 0.5.5
       '@wyw-in-js/transform':
-        specifier: ^0.5.4
-        version: 0.5.4(typescript@5.6.3)
+        specifier: ^0.5.5
+        version: 0.5.5(typescript@5.6.3)
       babel-plugin-define-var:
         specifier: ^0.1.0
         version: 0.1.0
@@ -652,11 +652,11 @@ importers:
         specifier: workspace:^
         version: link:../pigment-css-react
       '@wyw-in-js/shared':
-        specifier: ^0.5.4
-        version: 0.5.4
+        specifier: ^0.5.5
+        version: 0.5.5
       '@wyw-in-js/transform':
-        specifier: ^0.5.4
-        version: 0.5.4(typescript@5.6.3)
+        specifier: ^0.5.5
+        version: 0.5.5(typescript@5.6.3)
       babel-plugin-define-var:
         specifier: ^0.1.0
         version: 0.1.0
@@ -3161,16 +3161,16 @@ packages:
   '@webassemblyjs/wast-printer@1.12.1':
     resolution: {integrity: sha512-+X4WAlOisVWQMikjbcvY2e0rwPsKQ9F688lksZhBcPycBBuii3O7m8FACbDMWDojpAqvjIncrG8J0XHKyQfVeA==}
 
-  '@wyw-in-js/processor-utils@0.5.4':
-    resolution: {integrity: sha512-EVyLoZf2N48bQ/KcCytZzx6Jxgfl2txR9agbb9GYVTDCcVt2JXtlexd0lq4bgEpnvLE3GtpzY5rOTSqDyYExfg==}
+  '@wyw-in-js/processor-utils@0.5.5':
+    resolution: {integrity: sha512-L3IcAfoowhM0fw9Cnv2CNzfjWNLKpYl2CFqam6NvwpiXNR1kXz/GpO0AOiKvCs5h4Ps5kWxE2e8knXLpk8q/2g==}
     engines: {node: '>=16.0.0'}
 
-  '@wyw-in-js/shared@0.5.4':
-    resolution: {integrity: sha512-LIu2Aq/m9rN3UzU7ARAc17wRlpNjMumzwjXhbtweR9PMiSSnLpBztIA8GZ5vlUnzppaoKuiiDPTza2yVTFReFg==}
+  '@wyw-in-js/shared@0.5.5':
+    resolution: {integrity: sha512-Wnvp3RGfynHk81lrp/0fA+Yv5yuIr2Ej13N3lawQeqbK4KlMag3P9npyIljGrEiwK2Bv4byHuXsJFgLI0Fo8bw==}
     engines: {node: '>=16.0.0'}
 
-  '@wyw-in-js/transform@0.5.4':
-    resolution: {integrity: sha512-qwbEqO/7IYFPruRH3vscmejUgNvimEhpiI8Hgf9N0pT/fjhBp539QGPVhLQHI8885fWW/LBzbbyL/v9Q72kmoQ==}
+  '@wyw-in-js/transform@0.5.5':
+    resolution: {integrity: sha512-XMZjhS8poHpxfPg41rkc6eh3Mr2BZAFM7OzYN4jPZUicpJKv7uQAU2dLEqnyDcDllo04LbZIryb2fXwpr+pqPw==}
     engines: {node: '>=16.0.0'}
 
   '@xtuc/ieee754@1.2.0':
@@ -4012,9 +4012,6 @@ packages:
   css-what@6.1.0:
     resolution: {integrity: sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==}
     engines: {node: '>= 6'}
-
-  css.escape@1.5.1:
-    resolution: {integrity: sha512-YUifsXXuknHlUsmlgyY0PKzgPOr7/FjCePfHNt0jxm83wHZi44VDMQ7/fGNkjY3/jV1MC+1CmZbaHzugyeRtpg==}
 
   cssesc@3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
@@ -5117,8 +5114,9 @@ packages:
     engines: {node: '>=0.4.7'}
     hasBin: true
 
-  happy-dom@12.10.3:
-    resolution: {integrity: sha512-JzUXOh0wdNGY54oKng5hliuBkq/+aT1V3YpTM+lrN/GoLQTANZsMaIvmHiHe612rauHvPJnDZkZ+5GZR++1Abg==}
+  happy-dom@15.11.2:
+    resolution: {integrity: sha512-MZ8kazOz+8i9G+olnJS836mNaF96UhOTzuECmxdE56+1+juiubqaJHTJUf+1WZ6Vs09lKLdmfX2AxGslfj1XFg==}
+    engines: {node: '>=18.0.0'}
 
   hard-rejection@2.1.0:
     resolution: {integrity: sha512-VIZB+ibDhx7ObhAe7OVtoEbuP4h/MuOTHJ+J8h/eBXotJYl0fBgR72xDFCKgIh22OJZIOVNxBMWuhAr10r8HdA==}
@@ -8680,10 +8678,6 @@ packages:
       webpack-cli:
         optional: true
 
-  whatwg-encoding@2.0.0:
-    resolution: {integrity: sha512-p41ogyeMUrw3jWclHWTQg1k05DSVXPLcVxRTYsXUk+ZooOCZLcoYgPZ/HL/D/N+uQPOtcp1me1WhBEaX02mhWg==}
-    engines: {node: '>=12'}
-
   whatwg-encoding@3.1.1:
     resolution: {integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==}
     engines: {node: '>=18'}
@@ -11055,9 +11049,9 @@ snapshots:
       '@emotion/styled': 11.13.0(@emotion/react@11.13.3(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021))(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021)
       '@mui/system': 6.1.6(@emotion/react@11.13.3(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021))(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021))(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021)
       '@mui/utils': 6.1.6(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021)
-      '@wyw-in-js/processor-utils': 0.5.4
-      '@wyw-in-js/shared': 0.5.4
-      '@wyw-in-js/transform': 0.5.4(typescript@5.6.3)
+      '@wyw-in-js/processor-utils': 0.5.5
+      '@wyw-in-js/shared': 0.5.5
+      '@wyw-in-js/transform': 0.5.5(typescript@5.6.3)
       clsx: 2.1.1
       cssesc: 3.0.0
       csstype: 3.1.3
@@ -11809,14 +11803,14 @@ snapshots:
       '@webassemblyjs/ast': 1.12.1
       '@xtuc/long': 4.2.2
 
-  '@wyw-in-js/processor-utils@0.5.4':
+  '@wyw-in-js/processor-utils@0.5.5':
     dependencies:
       '@babel/generator': 7.26.2
-      '@wyw-in-js/shared': 0.5.4
+      '@wyw-in-js/shared': 0.5.5
     transitivePeerDependencies:
       - supports-color
 
-  '@wyw-in-js/shared@0.5.4':
+  '@wyw-in-js/shared@0.5.5':
     dependencies:
       debug: 4.3.7(supports-color@8.1.1)
       find-up: 5.0.0
@@ -11824,7 +11818,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@wyw-in-js/transform@0.5.4(typescript@5.6.3)':
+  '@wyw-in-js/transform@0.5.5(typescript@5.6.3)':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/generator': 7.26.2
@@ -11833,11 +11827,11 @@ snapshots:
       '@babel/template': 7.25.9
       '@babel/traverse': 7.25.9
       '@babel/types': 7.26.0
-      '@wyw-in-js/processor-utils': 0.5.4
-      '@wyw-in-js/shared': 0.5.4
+      '@wyw-in-js/processor-utils': 0.5.5
+      '@wyw-in-js/shared': 0.5.5
       babel-merge: 3.0.0(@babel/core@7.26.0)
       cosmiconfig: 8.3.6(typescript@5.6.3)
-      happy-dom: 12.10.3
+      happy-dom: 15.11.2
       source-map: 0.7.4
       stylis: 4.3.4
       ts-invariant: 0.10.3
@@ -12794,8 +12788,6 @@ snapshots:
       source-map-js: 1.2.1
 
   css-what@6.1.0: {}
-
-  css.escape@1.5.1: {}
 
   cssesc@3.0.0: {}
 
@@ -14297,13 +14289,10 @@ snapshots:
     optionalDependencies:
       uglify-js: 3.17.4
 
-  happy-dom@12.10.3:
+  happy-dom@15.11.2:
     dependencies:
-      css.escape: 1.5.1
       entities: 4.5.0
-      iconv-lite: 0.6.3
       webidl-conversions: 7.0.0
-      whatwg-encoding: 2.0.0
       whatwg-mimetype: 3.0.0
 
   hard-rejection@2.1.0: {}
@@ -18741,10 +18730,6 @@ snapshots:
       - '@swc/core'
       - esbuild
       - uglify-js
-
-  whatwg-encoding@2.0.0:
-    dependencies:
-      iconv-lite: 0.6.3
 
   whatwg-encoding@3.1.1:
     dependencies:
