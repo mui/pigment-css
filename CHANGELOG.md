@@ -1,5 +1,30 @@
 # [Versions](https://mui.com/versions/)
 
+## 0.0.27
+
+<!-- generated comparing v0.0.26..master -->
+
+_Nov 13, 2024_
+
+A big thanks to the 2 contributors who made this release possible.
+
+### `@pigment-css/react@0.0.27`
+
+- Bump wyw versions (#320) @brijeshb42
+
+### `@pigment-css/nextjs-plugin@0.0.27`
+
+- Fix path resolution (#310) @brijeshb42
+- Bump wyw versions (#320) @brijeshb42
+
+### Core
+
+- [core] Fix webpack capitalization (#311) @oliviertassinari
+- [core] Fix Stack Overflow mention (dea4b14) @oliviertassinari
+- [docs-infra] More docs infra changes (#304) @brijeshb42
+
+All contributors of this release in alphabetical order: @brijeshb42, @oliviertassinari
+
 ## 0.0.26
 
 <!-- generated comparing v0.0.25..master -->
