@@ -100,7 +100,6 @@ function parseAndWrapExpression(
 }
 
 function transformThemeKeysInFn(
-  styleKey: string,
   functionString: string,
   options: PluginCustomOptions,
   filename?: string,
@@ -182,7 +181,6 @@ function iterateAndReplaceFunctions(
     try {
       const fnString = value.toString();
       const expression = transformThemeKeysInFn(
-        key,
         fnString,
         options,
         filename,

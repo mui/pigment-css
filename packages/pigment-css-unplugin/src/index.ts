@@ -8,7 +8,7 @@ import {
   transform,
   createFileReporter,
 } from '@wyw-in-js/transform';
-import { asyncResolveFallback, slugify } from '@wyw-in-js/shared';
+import { slugify } from '@wyw-in-js/shared';
 import {
   UnpluginFactoryOutput,
   WebpackPluginInstance,
@@ -24,7 +24,6 @@ import {
   type Theme as BaseTheme,
   type PluginCustomOptions,
 } from '@pigment-css/react/utils';
-import type { ResolvePluginInstance } from 'webpack';
 import { styledEngineMockup } from '@pigment-css/react/internal';
 import { handleUrlReplacement, type AsyncResolver } from './utils';
 
@@ -158,19 +157,6 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
   };
   const projectPath = meta?.type === 'next' ? meta.projectPath : process.cwd();
 
-  let webpackResolver: AsyncResolver;
-
-  const asyncResolve: AsyncResolver = async (what, importer, stack) => {
-    const result = await asyncResolveOpt?.(what, importer, stack);
-    if (typeof result === 'string') {
-      return result;
-    }
-    if (webpackResolver) {
-      return webpackResolver(what, importer, stack);
-    }
-    return asyncResolveFallback(what, importer, stack);
-  };
-
   const withRtl = (selector: string, cssText: string) => {
     return basePreprocessor(selector, cssText, css);
   };
@@ -184,39 +170,41 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
     transformInclude(id) {
       return isZeroRuntimeProcessableFile(id, finalTransformLibraries);
     },
-    webpack(compiler) {
-      const resolverPlugin: ResolvePluginInstance = {
-        apply(resolver) {
-          webpackResolver = function webpackAsyncResolve(
-            what: string,
-            importer: string,
-            stack: string[],
-          ) {
-            const context = path.isAbsolute(importer)
-              ? path.dirname(importer)
-              : path.join(projectPath, path.dirname(importer));
-            return new Promise((resolve, reject) => {
-              resolver.resolve({}, context, what, { stack: new Set(stack) }, (err, result) => {
-                if (err) {
-                  reject(err);
-                } else if (result) {
-                  resolve(result);
-                } else {
-                  reject(new Error(`${process.env.PACKAGE_NAME}: Cannot resolve ${what}`));
-                }
-              });
-            });
-          };
-        },
-      };
-      compiler.options.resolve.plugins = compiler.options.resolve.plugins || [];
-      compiler.options.resolve.plugins.push(resolverPlugin);
-    },
     async transform(code, url) {
       const [filePath] = url.split('?');
       // Converts path separator as per platform, even on Windows, path segments have `/` instead of the usual `\`,
       // so this function replaces such path separators.
       const id = path.normalize(filePath);
+      // @ts-ignore
+      const nativeContext = this.getNativeBuildContext();
+      if (nativeContext?.framework !== 'webpack') {
+        throw new Error('This plugin should only be used with Webpack/Next.js.');
+      }
+      const asyncResolve = async (
+        token: string,
+        importer: string,
+        stack: string[],
+      ): Promise<string> => {
+        const njsResult = await asyncResolveOpt?.(token, importer, stack);
+        if (typeof njsResult === 'string') {
+          return njsResult;
+        }
+        const context = path.isAbsolute(importer)
+          ? path.dirname(importer)
+          : path.join(projectPath, path.dirname(importer));
+        return new Promise((resolve, reject) => {
+          nativeContext.loaderContext!.resolve(context, token, (err, result) => {
+            if (err) {
+              reject(err);
+            } else if (result) {
+              nativeContext.loaderContext!.addDependency(result);
+              resolve(result);
+            } else {
+              reject(new Error(`${process.env.PACKAGE_NAME}: Cannot resolve ${token}`));
+            }
+          });
+        });
+      };
       const transformServices = {
         options: {
           filename: id,
@@ -325,11 +313,15 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
         // subsequent builds. So we use a placeholder CSS file with the actual CSS content
         // as part of the query params.
         if (isNext) {
-          const data = `${meta.placeholderCssFile}?${encodeURIComponent(
-            JSON.stringify({
-              filename: id.split(path.sep).pop(),
-              source: cssText.replaceAll('!important', '__IMP__'),
-            }),
+          const data = `${meta.placeholderCssFile}?${btoa(
+            encodeURI(
+              encodeURIComponent(
+                JSON.stringify({
+                  filename: id.split(path.sep).pop(),
+                  source: cssText,
+                }),
+              ),
+            ),
           )}`;
           return {
             // CSS import should be the last so that nested components produce correct CSS order injection.
@@ -338,13 +330,13 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
           };
         }
 
-        const rootPath = process.cwd();
-
         const cssFilename = path
           .normalize(`${id.replace(/\.[jt]sx?$/, '')}-${slug}.pigment.css`)
           .replace(/\\/g, path.posix.sep);
 
-        const cssRelativePath = path.relative(rootPath, cssFilename).replace(/\\/g, path.posix.sep);
+        const cssRelativePath = path
+          .relative(projectPath, cssFilename)
+          .replace(/\\/g, path.posix.sep);
         // Starting with null character so that it calls the resolver method (resolveId in line:430)
         // Otherwise, webpack tries to resolve the path directly
         const cssId = `\0${cssRelativePath}`;

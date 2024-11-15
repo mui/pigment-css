@@ -1,5 +1,92 @@
 # [Versions](https://mui.com/versions/)
 
+## 0.0.27
+
+<!-- generated comparing v0.0.26..master -->
+
+_Nov 13, 2024_
+
+A big thanks to the 2 contributors who made this release possible.
+
+### `@pigment-css/react@0.0.27`
+
+- Bump wyw versions (#320) @brijeshb42
+
+### `@pigment-css/nextjs-plugin@0.0.27`
+
+- Fix path resolution (#310) @brijeshb42
+- Bump wyw versions (#320) @brijeshb42
+
+### Core
+
+- [core] Fix webpack capitalization (#311) @oliviertassinari
+- [core] Fix Stack Overflow mention (dea4b14) @oliviertassinari
+- [docs-infra] More docs infra changes (#304) @brijeshb42
+
+All contributors of this release in alphabetical order: @brijeshb42, @oliviertassinari
+
+## 0.0.26
+
+<!-- generated comparing v0.0.25..master -->
+
+_Nov 8, 2024_
+
+A big thanks to the 3 contributors who made this release possible.
+
+### `@pigment-css/react@0.0.26`
+
+- [react] Bump package versions and fix related TS errors (#294) @brijeshb42
+
+### `@pigment-css/nextjs-plugin@0.0.26`
+
+- [nextjs] Fix tsconfig's path resolving (#182) @brijeshb42
+
+### Docs
+
+- [docs] Remove next tag from installation instructions (#292) @tschaub
+- [docs] Setup a new next.js application for documentation (#299) @brijeshb42
+
+### Core
+
+- [core] Bump package versions (#294) @brijeshb42
+- [core] Fix Tidelift reference (#306) @oliviertassinari
+- [core] Increase the minimum Node.js version support to 14.0.0 (#254) @oliviertassinari
+- [core] Fix tools-public.mui.com redirection @oliviertassinari
+- [example] Update vite example (#300) @brijeshb42
+
+All contributors of this release in alphabetical order: @brijeshb42, @oliviertassinari, @tschaub
+
+## 0.0.25
+
+<!-- generated comparing v0.0.24..master -->
+
+_Oct 25, 2024_
+
+A big thanks to the 5 contributors who made this release possible.
+
+### `@pigment-css/react@0.0.25`
+
+- Fix scoping issue with sx dynamic value transform (#286) @brijeshb42
+
+### Core
+
+- [code-infra] Remove releaseChangelog.mjs duplication (#273) @oliviertassinari
+- [core] Upgrade @mui/monorepo (#274) @oliviertassinari
+- [core] Remove <-- from changelog (#272) @oliviertassinari
+- [core] Link to production app for bundle size @oliviertassinari
+- [core] Bump npx update-browserslist-db@latest (#256) @oliviertassinari
+- [docs] Fix broken link (#260) @mnajdova
+- [docs] Fix syntax in JSDoc example (#261) @yoohahn
+- [docs] Readme tweaks (#266) @aarongarciah
+- [docs] Fix 301 redirections in docs @oliviertassinari
+- [docs] Fix git diff format (#245) @oliviertassinari
+- [examples] Fix webpack CLI instructions (#277) @oliviertassinari
+- [examples] Avoid git diff when playing with examples @oliviertassinari
+- [infra] Fix line break in Stack Overflow message @oliviertassinari
+- [infra] Fix line break in Stack Overflow message @oliviertassinari
+
+All contributors of this release in alphabetical order: @aarongarciah, @brijeshb42, @mnajdova, @oliviertassinari, @yoohahn
+
 ## 0.0.24
 
 <!-- generated comparing v0.0.23..master -->
@@ -10,11 +97,11 @@ A big thanks to the 2 contributors who made this release possible. Here are some
 
 ### `@pigment-css/react@0.0.24`
 
-- &#8203;<!-- 2 -->feat: adapt to pre-processed styles (#243) @romgrk
+- feat: adapt to pre-processed styles (#243) @romgrk
 
 ### Docs
 
-- &#8203;<!-- 1 -->[docs] Correctly configure Vale (#244) @oliviertassinari
+- [docs] Correctly configure Vale (#244) @oliviertassinari
 
 All contributors of this release in alphabetical order: @oliviertassinari, @romgrk
 
@@ -28,23 +115,23 @@ A big thanks to the 5 contributors who made this release possible. This PR mainl
 
 ### `@pigment-css/react@0.0.23`
 
-- &#8203;<!-- 10 -->Support null as a value for CSS object (#229) @siriwatknp
-- &#8203;<!-- 01 -->[styled] Fix css extraction for transformed styled tagged-template call (#234) @brijeshb42
-- &#8203;<!-- 07 -->[Grid] ignore RSC error (#233) @siriwatknp
+- Support null as a value for CSS object (#229) @siriwatknp
+- [styled] Fix css extraction for transformed styled tagged-template call (#234) @brijeshb42
+- [Grid] ignore RSC error (#233) @siriwatknp
 
 ### `@pigment-css/nextjs-plugin@0.0.23`
 
-- &#8203;<!-- 04 -->[nextjs] Wrap all generated CSS with a cascade layer (WIP) (#226) @Janpot
-- &#8203;<!-- 03 -->[nextjs] Fix react import check bug introduced in #228 (#236) @brijeshb42
-- &#8203;<!-- 02 -->[nextjs] Move the import startsWith next check at end (#228) @brijeshb42
+- [nextjs] Wrap all generated CSS with a cascade layer (WIP) (#226) @Janpot
+- [nextjs] Fix react import check bug introduced in #228 (#236) @brijeshb42
+- [nextjs] Move the import startsWith next check at end (#228) @brijeshb42
 
 ### Core
 
-- &#8203;<!-- 09 -->[core] Fix 301 link to Next.js and git diff @oliviertassinari
-- &#8203;<!-- 08 -->[core] Fix package.json repository rule @oliviertassinari
-- &#8203;<!-- 07 -->[core] Remove legacy yarn file @oliviertassinari
-- &#8203;<!-- 06 -->[infra] Adds reusable workflow for close issue message (#231) @michelengelen
-- &#8203;<!-- 05 -->[infra] Adds reusable workflow for new issue cleanup (#230) @michelengelen
+- [core] Fix 301 link to Next.js and git diff @oliviertassinari
+- [core] Fix package.json repository rule @oliviertassinari
+- [core] Remove legacy yarn file @oliviertassinari
+- [infra] Adds reusable workflow for close issue message (#231) @michelengelen
+- [infra] Adds reusable workflow for new issue cleanup (#230) @michelengelen
 
 All contributors of this release in alphabetical order: @brijeshb42, @Janpot, @michelengelen, @oliviertassinari, @siriwatknp
 
@@ -58,18 +145,18 @@ A big thanks to the 3 contributors who made this release possible.
 
 ### `@pigment-css/vite-plugin@0.0.22`
 
-- &#8203;<!-- 1 -->Fix bug related to path separator on Windows (#218) @brijeshb42
-- &#8203;<!-- 4 -->Fix styled-engine new internals (#220) @romgrk
+- Fix bug related to path separator on Windows (#218) @brijeshb42
+- Fix styled-engine new internals (#220) @romgrk
 
 ### `@pigment-css/unplugin@0.0.22`
 
-- &#8203;<!-- 1 -->Fix bug related to path separator on Windows (#218) @brijeshb42
-- &#8203;<!-- 4 -->Fix styled-engine new internals (#220) @romgrk
+- Fix bug related to path separator on Windows (#218) @brijeshb42
+- Fix styled-engine new internals (#220) @romgrk
 
 ### Core
 
-- &#8203;<!-- 3 -->[core] Pin GitHub action dependency (#221) @oliviertassinari
-- &#8203;<!-- 2 -->[core] Fix CI with fake docs (#222) @oliviertassinari
+- [core] Pin GitHub action dependency (#221) @oliviertassinari
+- [core] Fix CI with fake docs (#222) @oliviertassinari
 
 All contributors of this release in alphabetical order: @brijeshb42, @oliviertassinari, @romgrk
 
@@ -107,7 +194,7 @@ _Aug 8, 2024_
 
 A big thanks to the 1 contributors who made this release possible.
 
-- &#8203;<!-- 1 -->[typescript] Fix `sx` types (#200) @siriwatknp
+- [typescript] Fix `sx` types (#200) @siriwatknp
 
 All contributors of this release in alphabetical order: @siriwatknp
 
@@ -121,17 +208,17 @@ A big thanks to the 3 contributors who made this release possible.
 
 ### `@pigment-css/react@0.0.19`
 
-- &#8203;<!-- 6 -->[react] Fix thrown error during eval phase (#196) @brijeshb42
-- &#8203;<!-- 1 -->[TypeScript] Fix `sx` types and missing `style` prop from layout components (#191) @siriwatknp
+- [react] Fix thrown error during eval phase (#196) @brijeshb42
+- [TypeScript] Fix `sx` types and missing `style` prop from layout components (#191) @siriwatknp
 
 ### Docs
 
-- &#8203;<!-- 4 -->[docs] Clarify security policy @oliviertassinari
+- [docs] Clarify security policy @oliviertassinari
 
 ### Core
 
-- &#8203;<!-- 7 -->[core] Temporarily fallback to v5 of Material UI (#198) @brijeshb42
-- &#8203;<!-- 5 -->[core] Fix event naming convention @oliviertassinari
+- [core] Temporarily fallback to v5 of Material UI (#198) @brijeshb42
+- [core] Fix event naming convention @oliviertassinari
 
 All contributors of this release in alphabetical order: @brijeshb42, @oliviertassinari, @siriwatknp
 
@@ -145,13 +232,13 @@ A big thanks to the 3 contributors who made this release possible. Here are some
 
 ## `@pigment-css/react@0.0.18`
 
-- &#8203;<!-- 4 -->Replace global JSX (#183) @DiegoAndai
-- &#8203;<!-- 3 -->Normalize rest / other to match the most common used @oliviertassinari
-- &#8203;<!-- 2 -->Normalize rest / other to match the most common used @oliviertassinari
+- Replace global JSX (#183) @DiegoAndai
+- Normalize rest / other to match the most common used @oliviertassinari
+- Normalize rest / other to match the most common used @oliviertassinari
 
 ## `@pigment-css/unplugin@0.0.18`
 
-- &#8203;<!-- 1 -->[webpack] Fix support for webpack and add example app (#174) @brijeshb42
+- [webpack] Fix support for webpack and add example app (#174) @brijeshb42
 
 All contributors of this release in alphabetical order: @brijeshb42, @DiegoAndai, @oliviertassinari
 
@@ -165,17 +252,17 @@ A big thanks to the 3 contributors who made this release possible.
 
 ### `@pigment-css/vite-plugin@0.0.17`
 
-- &#8203;<!-- 2 -->[vite] Allow package authors to specify packages to include in vite (#172) @brijeshb42
-- &#8203;<!-- 1 -->[vite] Pass down `transformLibraries` (#169) @siriwatknp
+- [vite] Allow package authors to specify packages to include in vite (#172) @brijeshb42
+- [vite] Pass down `transformLibraries` (#169) @siriwatknp
 
 ### `@pigment-css/unplugin@0.0.17`
 
-- &#8203;<!-- 3 -->[plugin] Allow runtime libraries to have their own theme and styles css path (#165) @brijeshb42
+- [plugin] Allow runtime libraries to have their own theme and styles css path (#165) @brijeshb42
 
 ### Core
 
-- &#8203;<!-- 5 -->[core] Simpler pnpm dedupe error message to act on @oliviertassinari
-- &#8203;<!-- 4 -->[examples] Rename next.config.js to next.config.mjs (#157) @brijeshb42
+- [core] Simpler pnpm dedupe error message to act on @oliviertassinari
+- [examples] Rename next.config.js to next.config.mjs (#157) @brijeshb42
 
 All contributors of this release in alphabetical order: @brijeshb42, @oliviertassinari, @siriwatknp
 

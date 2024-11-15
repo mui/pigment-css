@@ -7,7 +7,7 @@ import {
 } from '@wyw-in-js/processor-utils';
 import { ValueType, type ExpressionValue, type Replacements, type Rules } from '@wyw-in-js/shared';
 
-import { CSSInterpolation } from '@emotion/css';
+import type { CSSInterpolation } from '@emotion/serialize';
 import BaseProcessor from './base-processor';
 import type { IOptions } from './styled';
 import {

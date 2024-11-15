@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { styled, css, keyframes } from '@pigment-css/react';
 
 const scale = keyframes({

@@ -9,7 +9,7 @@ import type {
 } from '@wyw-in-js/processor-utils';
 import type { Replacements, Rules } from '@wyw-in-js/shared';
 import { ValueType } from '@wyw-in-js/shared';
-import type { CSSInterpolation } from '@emotion/css';
+import type { CSSInterpolation } from '@emotion/serialize';
 import deepMerge from 'lodash/merge';
 import BaseProcessor from './base-processor';
 import type { IOptions } from './styled';

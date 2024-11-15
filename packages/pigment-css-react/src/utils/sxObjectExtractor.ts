@@ -1,5 +1,11 @@
 import type { NodePath } from '@babel/core';
-import { arrowFunctionExpression, cloneNode } from '@babel/types';
+import {
+  arrayExpression,
+  arrowFunctionExpression,
+  booleanLiteral,
+  cloneNode,
+  stringLiteral,
+} from '@babel/types';
 import type {
   ArrowFunctionExpression,
   Expression,
@@ -9,6 +15,7 @@ import type {
 } from '@babel/types';
 import { findIdentifiers } from '@wyw-in-js/transform';
 import { isStaticObjectOrArrayExpression } from './checkStaticObjectOrArray';
+import { isUnitLess } from './isUnitLess';
 
 function validateObjectKey(
   keyPath: NodePath<PrivateName | Expression>,
@@ -66,7 +73,8 @@ function traverseObjectExpression(
   const properties = nodePath.get('properties');
   properties.forEach((property) => {
     if (property.isObjectProperty()) {
-      validateObjectKey(property.get('key'), parentCall);
+      const key = property.get('key');
+      validateObjectKey(key, parentCall);
 
       const value = property.get('value');
       if (!value.isExpression()) {
@@ -93,10 +101,17 @@ function traverseObjectExpression(
           localIdentifiers.push(id);
         });
         if (localIdentifiers.length) {
-          const arrowFn = arrowFunctionExpression(
-            localIdentifiers.map((i) => i.node),
-            cloneNode(value.node),
-          );
+          let cssKey = '';
+          if (key.isIdentifier()) {
+            cssKey = key.node.name;
+          } else if (key.isStringLiteral()) {
+            cssKey = key.node.value;
+          }
+          const unitLess = isUnitLess(cssKey);
+          const fnBody = arrayExpression([cloneNode(value.node), booleanLiteral(unitLess)]);
+          // Serialize the actual AST as a string
+          // which then gets deserialized in sx.ts
+          const arrowFn = arrowFunctionExpression([], stringLiteral(JSON.stringify(fnBody)));
           value.replaceWith(arrowFn);
         }
       }
