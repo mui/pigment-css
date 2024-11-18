@@ -24,8 +24,7 @@ Pigment CSS is a zero-runtime CSS-in-JS library that extracts the colocated sty
 [![Renovate status](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://github.com/mui/pigment-css/issues/2)
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/mui/pigment-css.svg)](https://isitmaintained.com/project/mui/pigment-css 'Average time to resolve an issue')
 [![Open Collective backers and sponsors](https://img.shields.io/opencollective/all/mui-org)](https://opencollective.com/mui-org)
-
-<!-- [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/8715/badge)](https://www.bestpractices.dev/projects/8715) -->
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9161/badge)](https://www.bestpractices.dev/projects/9161)
 
 </div>
 
