@@ -1,5 +1,25 @@
 # [Versions](https://mui.com/versions/)
 
+## 0.0.28
+
+<!-- generated comparing v0.0.27..master -->
+
+_Nov 25, 2024_
+
+A big thanks to the 3 contributors who made this release possible.
+
+### `@pigment-css/react@0.0.28`
+
+- [react] Mark prop-types as direct dependency (#330) @brijeshb42
+
+### Core
+
+- [core] Add OpenSSF badge (#325) @oliviertassinari
+- [core] Fix test_types_next job (#271) @Janpot
+- [infra] Improve bug template for reproductions (e9bef97) @oliviertassinari
+
+All contributors of this release in alphabetical order: @brijeshb42, @Janpot, @oliviertassinari
+
 ## 0.0.27
 
 <!-- generated comparing v0.0.26..master -->
