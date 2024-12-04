@@ -22,6 +22,9 @@ const theme = extendTheme({
       },
     },
   },
+  getSelector: (colorScheme: string) => {
+    return `.${colorScheme}`;
+  },
 });
 
 // https://vite.dev/config/

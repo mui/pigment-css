@@ -17,3 +17,14 @@ declare module '@pigment-css/react/theme' {
     }>;
   }
 }
+
+declare global {
+  namespace React {
+    interface HTMLAttributes {
+      sx?: SxProps<Theme>;
+    }
+    interface SVGProps {
+      sx?: SxProps<Theme>;
+    }
+  }
+}
