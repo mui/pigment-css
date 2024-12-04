@@ -85,13 +85,6 @@ function ColorSchemeToggleButton() {
   );
 }
 
-function getCookie(name: string) {
-  return document.cookie
-    .split('; ')
-    .find((row) => row.startsWith(`${name}=`))
-    ?.split('=')[1];
-}
-
 function Home() {
   const { colorScheme } = useColorScheme();
 
@@ -233,11 +226,12 @@ function Home() {
     </main>
   );
 }
-export default function App() {
-  const colorScheme = getCookie('colorScheme') || 'light';
 
+const defaultColorScheme = localStorage.getItem('colorScheme') ?? 'light';
+
+export default function App() {
   return (
-    <ColorSchemeProvider colorScheme={colorScheme}>
+    <ColorSchemeProvider colorScheme={defaultColorScheme}>
       <Home />
     </ColorSchemeProvider>
   );

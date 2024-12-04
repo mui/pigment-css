@@ -8,16 +8,6 @@ const ColorSchemeContext = React.createContext<{
   setColorScheme: () => '',
 });
 
-function setCookie(name: string, value: string, days: number = 100) {
-  let expires = '';
-  if (days) {
-    const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    expires = `; expires=${date.toUTCString()}`;
-  }
-  document.cookie = `${name}=${value || ''}${expires}; path=/`;
-}
-
 export function ColorSchemeProvider({
   colorScheme: initialColorScheme,
   children,
@@ -31,7 +21,6 @@ export function ColorSchemeProvider({
 
   // Set the colorScheme in localStorage
   React.useEffect(() => {
-    setCookie('colorScheme', colorScheme);
     localStorage.setItem('colorScheme', colorScheme);
   }, [colorScheme]);
 
