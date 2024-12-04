@@ -12,6 +12,7 @@ module.exports = {
     // create-vite generates .jsx
     'react/jsx-filename-extension': 'off',
     'react/react-in-jsx-scope': 'off',
+    "react/no-unknown-property": ["error", { "ignore": ["sx"] }],
   },
   overrides: [
     {
