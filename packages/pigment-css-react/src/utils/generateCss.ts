@@ -7,7 +7,7 @@ export function generateTokenCss(theme?: Theme) {
   }
   // use emotion to serialize the object to css string
   const { styles } = serializeStyles(theme.generateStyleSheets?.() || []);
-  return styles;
+  return `@layer pigment.base, pigment.variant, pigment.override, pigment.sx;${styles}`;
 }
 
 export function generateThemeTokens(theme?: Theme) {
