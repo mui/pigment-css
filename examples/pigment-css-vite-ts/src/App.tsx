@@ -1,4 +1,5 @@
 import { styled, css, keyframes } from '@pigment-css/react';
+import { ColorSchemeProvider, useColorScheme } from './components/ColorSchemeProvider';
 
 const scale = keyframes({
   to: { scale: 'var(--s2)' },
@@ -58,139 +59,180 @@ function generateBubbleVars() {
   `;
 }
 
-export default function Home() {
+const IconButton = styled('button')({
+  background: 'transparent',
+  border: 'none',
+  cursor: 'pointer',
+  padding: '0',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+function ColorSchemeToggleButton() {
+  const { colorScheme, setColorScheme } = useColorScheme();
+
+  const toggleColorScheme = () => {
+    setColorScheme(colorScheme === 'dark' ? 'light' : 'dark');
+  };
+
   return (
-    <main
-      className={css({
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100lvh',
-        padding: '20px',
-        color: 'hsl(var(--palette-foreground))',
-        backgroundColor: 'hsl(var(--palette-background))',
-        fontFamily:
-          "system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
-      })}
-    >
-      <h1
-        className={`my-custom-class ${css(({ theme }) => ({
-          fontFamily: 'system-ui, sans-serif',
-          fontSize: '4rem',
-          fontWeight: 500,
-          textAlign: 'center',
-          position: 'relative',
+    <div sx={{ position: 'absolute', top: 10, right: 10 }}>
+      <IconButton sx={{ fontSize: 20, px: 1.5 }} onClick={toggleColorScheme}>
+        {colorScheme === 'light' ? '🌙' : '🔆'}
+      </IconButton>
+    </div>
+  );
+}
+
+function Home() {
+  const { colorScheme } = useColorScheme();
+
+  return (
+    <main className={colorScheme}>
+      <div
+        className={css({
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
-          color: '#888',
-          marginBottom: '1rem',
-          ...theme.applyStyles('dark', { color: '#fff' }),
-        }))}`}
-      >
-        Pigment&nbsp;CSS
-        <span
-          className={css(({ theme }) => ({
-            position: 'absolute',
-            inset: '0',
-            background: 'white',
-            mixBlendMode: 'color-burn',
-            overflow: 'hidden',
-            pointerEvents: 'none',
-            ...theme.applyStyles('dark', {
-              mixBlendMode: 'darken',
-              filter: 'brightness(2)',
-            }),
-          }))}
-        >
-          <Bubble
-            className={css`
-              ${generateBubbleVars()}
-            `}
-          />
-          <Bubble
-            className={css`
-              ${generateBubbleVars()}
-            `}
-          />
-          <Bubble
-            className={css`
-              ${generateBubbleVars()}
-            `}
-          />
-          <Bubble
-            className={css`
-              ${generateBubbleVars()}
-            `}
-          />
-          <Bubble
-            className={css`
-              ${generateBubbleVars()}
-            `}
-          />
-          <Bubble
-            className={css`
-              ${generateBubbleVars()}
-            `}
-          />
-          <Bubble
-            className={css`
-              ${generateBubbleVars()}
-            `}
-          />
-          <Bubble
-            className={css`
-              ${generateBubbleVars()}
-            `}
-          />
-          <Bubble
-            className={css`
-              ${generateBubbleVars()}
-            `}
-          />
-          <Bubble
-            className={css`
-              ${generateBubbleVars()}
-            `}
-          />
-        </span>
-      </h1>
-      <div
-        className={css({
-          fontFamily: 'system-ui, sans-serif',
-          letterSpacing: '2px',
-          opacity: 0.6,
-          lineHeight: 2,
-          textAlign: 'center',
-          textWrap: 'balance',
+          justifyContent: 'center',
+          height: '100lvh',
+          padding: '20px',
+          color: 'hsl(var(--palette-foreground))',
+          backgroundColor: 'hsl(var(--palette-background))',
+          fontFamily:
+            "system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
         })}
       >
-        CSS-in-JS library with static extraction
-      </div>
-      <div
-        className={css({
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '1rem',
-          marginTop: '2rem',
-        })}
-      >
-        <Link
-          href="https://github.com/mui/pigment-css/blob/master/README.md"
-          target="_blank"
-          rel="noopener noreferrer"
+        <ColorSchemeToggleButton />
+        <h1
+          className={`my-custom-class ${css(({ theme }) => ({
+            fontFamily: 'system-ui, sans-serif',
+            fontSize: '4rem',
+            fontWeight: 500,
+            textAlign: 'center',
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            color: '#888',
+            marginBottom: '1rem',
+            ...theme.applyStyles('dark', { color: '#fff' }),
+          }))}`}
         >
-          Documentation
-        </Link>
-        <Link
-          outlined
-          href="https://github.com/orgs/mui/projects/27/views/3"
-          target="_blank"
-          rel="noopener noreferrer"
+          Pigment&nbsp;CSS
+          <span
+            className={css(({ theme }) => ({
+              position: 'absolute',
+              inset: '0',
+              background: 'white',
+              mixBlendMode: 'color-burn',
+              overflow: 'hidden',
+              pointerEvents: 'none',
+              ...theme.applyStyles('dark', {
+                mixBlendMode: 'darken',
+                filter: 'brightness(2)',
+              }),
+            }))}
+          >
+            <Bubble
+              className={css`
+                ${generateBubbleVars()}
+              `}
+            />
+            <Bubble
+              className={css`
+                ${generateBubbleVars()}
+              `}
+            />
+            <Bubble
+              className={css`
+                ${generateBubbleVars()}
+              `}
+            />
+            <Bubble
+              className={css`
+                ${generateBubbleVars()}
+              `}
+            />
+            <Bubble
+              className={css`
+                ${generateBubbleVars()}
+              `}
+            />
+            <Bubble
+              className={css`
+                ${generateBubbleVars()}
+              `}
+            />
+            <Bubble
+              className={css`
+                ${generateBubbleVars()}
+              `}
+            />
+            <Bubble
+              className={css`
+                ${generateBubbleVars()}
+              `}
+            />
+            <Bubble
+              className={css`
+                ${generateBubbleVars()}
+              `}
+            />
+            <Bubble
+              className={css`
+                ${generateBubbleVars()}
+              `}
+            />
+          </span>
+        </h1>
+        <div
+          className={css({
+            fontFamily: 'system-ui, sans-serif',
+            letterSpacing: '2px',
+            opacity: 0.6,
+            lineHeight: 2,
+            textAlign: 'center',
+            textWrap: 'balance',
+          })}
         >
-          Roadmap
-        </Link>
+          CSS-in-JS library with static extraction
+        </div>
+        <div
+          className={css({
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '1rem',
+            marginTop: '2rem',
+          })}
+        >
+          <Link
+            href="https://github.com/mui/pigment-css/blob/master/README.md"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Documentation
+          </Link>
+          <Link
+            outlined
+            href="https://github.com/orgs/mui/projects/27/views/3"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Roadmap
+          </Link>
+        </div>
       </div>
     </main>
+  );
+}
+
+const defaultColorScheme = localStorage.getItem('colorScheme') ?? 'light';
+
+export default function App() {
+  return (
+    <ColorSchemeProvider colorScheme={defaultColorScheme}>
+      <Home />
+    </ColorSchemeProvider>
   );
 }
