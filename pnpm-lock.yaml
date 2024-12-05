@@ -603,6 +603,15 @@ importers:
         specifier: 18.3.1
         version: 18.3.1
 
+  packages/pigment-css-theme:
+    devDependencies:
+      '@types/chai':
+        specifier: ^4.3.14
+        version: 4.3.14
+      chai:
+        specifier: ^4.4.1
+        version: 4.5.0
+
   packages/pigment-css-unplugin:
     dependencies:
       '@babel/core':

@@ -1,0 +1,82 @@
+{
+  "name": "@pigment-css/theme",
+  "version": "0.0.27",
+  "main": "build/index.js",
+  "module": "build/index.mjs",
+  "types": "build/index.d.ts",
+  "author": "MUI Team",
+  "description": "Theme related JS and TS utilities to be shared across other Pigment CSS libraries.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mui/pigment-css.git",
+    "directory": "packages/pigment-css-theme"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mui/pigment-css/issues"
+  },
+  "homepage": "https://github.com/mui/pigment-css/tree/master/README.md",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/mui-org"
+  },
+  "scripts": {
+    "clean": "rimraf build types processors utils",
+    "watch": "tsup --watch --clean false",
+    "copy-license": "node ../../scripts/pigment-license.mjs",
+    "build": "tsup",
+    "test": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=text mocha 'packages/pigment-css-theme/**/*.test.{js,ts,tsx}'",
+    "test:update": "cd ../../ && cross-env NODE_ENV=test UPDATE_FIXTURES=true mocha 'packages/pigment-css-theme/**/*.test.{js,ts,tsx}'",
+    "test:ci": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=lcov --report-dir=./coverage/pigment-css-theme mocha 'packages/pigment-css-theme/**/*.test.{js,ts,tsx}'",
+    "typescript": "tsc --noEmit -p ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/chai": "^4.3.14",
+    "chai": "^4.4.1"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "build",
+    "src",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": {
+        "types": "./build/index.d.mts",
+        "default": "./build/index.mjs"
+      },
+      "require": "./build/index.js",
+      "default": "./theme/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "targets": {
+      "test": {
+        "cache": false,
+        "dependsOn": [
+          "build"
+        ]
+      },
+      "test:ci": {
+        "cache": false,
+        "dependsOn": [
+          "build"
+        ]
+      },
+      "build": {
+        "outputs": [
+          "{projectRoot}/build"
+        ]
+      }
+    }
+  }
+}
