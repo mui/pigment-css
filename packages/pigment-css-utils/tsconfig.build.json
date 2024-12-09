@@ -3,5 +3,11 @@
   "compilerOptions": {
     "composite": false
   },
-  "exclude": ["./tsup.config.ts", "src/**/*.d.ts", "tests"]
+  "exclude": ["./tsup.config.ts", "src/**/*.d.ts", "tests"],
+
+  "references": [
+    {
+      "path": "../pigment-css-theme/tsconfig.build.json"
+    }
+  ]
 }

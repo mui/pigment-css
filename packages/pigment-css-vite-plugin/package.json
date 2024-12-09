@@ -25,7 +25,7 @@
     "watch": "tsup --watch",
     "copy-license": "node ../../scripts/pigment-license.mjs",
     "build": "tsup",
-    "typecheck": "tsc --noEmit -p ."
+    "typescript": "tsc --noEmit -p ."
   },
   "dependencies": {
     "@babel/core": "^7.26.0",

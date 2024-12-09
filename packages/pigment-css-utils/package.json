@@ -91,6 +91,9 @@
       "build": {
         "outputs": [
           "{projectRoot}/build"
+        ],
+        "dependsOn": [
+          "^build"
         ]
       }
     }
