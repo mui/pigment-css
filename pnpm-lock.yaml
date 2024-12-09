@@ -451,6 +451,46 @@ importers:
         specifier: ^7.5.0
         version: 7.6.0(eslint@8.57.0)(typescript@5.6.3)
 
+  packages/pigment-css-core:
+    dependencies:
+      '@babel/types':
+        specifier: ^7.26.0
+        version: 7.26.0
+      '@emotion/css':
+        specifier: ^11.13.4
+        version: 11.13.4
+      '@pigment-css/theme':
+        specifier: workspace:^
+        version: link:../pigment-css-theme
+      '@pigment-css/utils':
+        specifier: workspace:*
+        version: link:../pigment-css-utils
+      '@wyw-in-js/processor-utils':
+        specifier: ^0.5.5
+        version: 0.5.5
+      '@wyw-in-js/shared':
+        specifier: ^0.5.5
+        version: 0.5.5
+      '@wyw-in-js/transform':
+        specifier: ^0.5.5
+        version: 0.5.5(typescript@5.6.3)
+      csstype:
+        specifier: ^3.1.3
+        version: 3.1.3
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+    devDependencies:
+      '@types/chai':
+        specifier: ^4.3.14
+        version: 4.3.14
+      chai:
+        specifier: ^4.4.1
+        version: 4.5.0
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
+
   packages/pigment-css-nextjs-plugin:
     dependencies:
       '@pigment-css/unplugin':
