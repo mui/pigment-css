@@ -92,6 +92,14 @@
         "outputs": [
           "{projectRoot}/build"
         ]
+      },
+      "typescript": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/build"
+        ]
       }
     }
   }
