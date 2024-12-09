@@ -10,12 +10,6 @@
     "types": ["node", "mocha"],
     "jsx": "react-jsx"
   },
-  "include": [
-    "src/**/*.tsx",
-    "src/**/*.js",
-    "src/**/*.ts",
-    "tests/**/*.spec.ts",
-    "tests/**/*.spec.tsx"
-  ],
+  "include": ["src/**/*.js", "src/**/*.ts", "tests/**/*.spec.ts"],
   "exclude": ["./tsup.config.ts"]
 }

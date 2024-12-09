@@ -1,0 +1,32 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2015",
+    "allowJs": true,
+    "lib": ["ES2017", "ES2021.String"],
+    "composite": true,
+    "noEmit": false,
+    "resolveJsonModule": true,
+    "types": ["node", "mocha"],
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "paths": {
+      "@babel/parser": ["./node_modules/@babel/parser/typings/babel-parser.d.ts"],
+      "@pigment-css/theme": ["../pigment-css-theme/src"],
+      "@pigment-css/theme/*": ["../pigment-css-theme/src/*"]
+    }
+  },
+  "include": [
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.ts",
+    "tests/**/*.spec.ts",
+    "tests/**/*.spec.tsx"
+  ],
+  "exclude": ["./tsup.config.ts"],
+  "references": [
+    {
+      "path": "../pigment-css-theme"
+    }
+  ]
+}
