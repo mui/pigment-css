@@ -53,7 +53,6 @@
   "wyw-in-js": {
     "tags": {
       "keyframes": "./exports/keyframes.js",
-      "generateAtomics": "./exports/generateAtomics.js",
       "css": "./exports/css.js"
     }
   },

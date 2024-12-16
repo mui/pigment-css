@@ -43,7 +43,7 @@ export type TemplateCallback = (params: Record<string, unknown> | undefined) => 
 
 type GetClassName = () => string;
 
-abstract class BaseCssProcessor {
+export abstract class BaseCssProcessor {
   public tempMetaClass = (Math.random() + 1).toString(36).substring(10);
 
   readonly artifacts: Artifact[] = [];

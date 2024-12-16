@@ -42,3 +42,46 @@ export const styles = (theme) => ({
 });
 const gradientKeyframe3 = keyframes((_c = ({ theme }) => styles(theme)));
 var _c;
+
+const key1 = keyframes`
+  0% {
+    background: ${({ theme }) => theme.palette.main};
+  }
+
+  50% {
+    background: green;
+  }
+
+  100% {
+    background: ${({ theme }) => {
+      // @ts-expect-error secondary does not exist on theme.
+      return theme.palette.secondary.main;
+    }};
+  }
+`;
+
+const key2 = keyframes({
+  className: 'loop',
+})`
+  0% {
+    background: ${({ theme }) => theme.palette.main};
+  }
+
+  50% {
+    background: green;
+  }
+`;
+
+const key3 = keyframes(
+  {
+    className: 'loop1',
+  },
+  ({ theme }) => ({
+    '0%': {
+      background: theme.palette.main,
+    },
+    '50%': {
+      background: 'green',
+    },
+  }),
+);

@@ -40,10 +40,12 @@
     "@wyw-in-js/shared": "^0.5.5",
     "@wyw-in-js/transform": "^0.5.5",
     "cssesc": "^3.0.0",
-    "lodash": "4.17.21"
+    "lodash": "4.17.21",
+    "stylis": "^4.3.4"
   },
   "devDependencies": {
     "@types/cssesc": "3.0.2",
+    "@types/stylis": "^4.2.7",
     "chai": "^4.4.1"
   },
   "sideEffects": false,

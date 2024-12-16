@@ -5,6 +5,7 @@ import { Theme } from '@pigment-css/theme';
 import { asyncResolveFallback } from '@wyw-in-js/shared';
 import { TransformCacheCollection, createFileReporter, transform } from '@wyw-in-js/transform';
 import * as prettier from 'prettier';
+import { preprocessor } from '@pigment-css/utils';
 
 import pkgJson from '../package.json';
 
@@ -67,6 +68,7 @@ export async function runTransformation(absolutePath: string, options?: Transfor
       options: {
         filename: inputFilePath,
         // preprocessor: (selector, css) => preprocessor(selector, css, options?.css),
+        preprocessor,
         pluginOptions,
       },
       cache,

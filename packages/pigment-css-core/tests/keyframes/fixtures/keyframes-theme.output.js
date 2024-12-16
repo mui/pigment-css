@@ -16,3 +16,6 @@ export const styles = (theme) => ({
 });
 const gradientKeyframe3 = 'g1611ti3';
 var _c;
+const key1 = 'k1gqc21d';
+const key2 = 'k1tlnvmz';
+const key3 = 'k1jjo2js';

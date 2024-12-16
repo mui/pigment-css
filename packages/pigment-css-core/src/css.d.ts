@@ -7,9 +7,12 @@ type IVariant = {
 type CssObj = CSSObjectNoCallback & IVariant;
 
 type CssArg = ((themeArgs: ThemeArgs) => CssObj | string) | CssObj | string;
-type CssFn = (themeArgs: ThemeArgs) => string | number;
+export type CssFn = (themeArgs: ThemeArgs) => string | number;
 
-interface BaseInterface {
+export interface BaseInterface {
+  /**
+   * Corresponds to css class name for `css` function call and keyframe name when passed to `keyframes`
+   */
   className: string;
 }
 
