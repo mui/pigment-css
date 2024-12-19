@@ -115,7 +115,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
     theme,
     meta,
     transformLibraries = [],
-    preprocessor = basePreprocessor,
+    preprocessor,
     asyncResolve: asyncResolveOpt,
     debug = false,
     sourceMap = false,

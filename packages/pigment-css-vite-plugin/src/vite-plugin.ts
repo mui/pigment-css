@@ -20,7 +20,11 @@ import {
   type PluginOptions,
   type IFileReporterOptions,
 } from '@wyw-in-js/transform';
-import { matchAdapterPath, type PluginCustomOptions } from '@pigment-css/react/utils';
+import {
+  matchAdapterPath,
+  type PluginCustomOptions,
+  preprocessor as basePreprocessor,
+} from '@pigment-css/react/utils';
 import { styledEngineMockup } from '@pigment-css/react/internal';
 
 export type VitePluginOptions = {
@@ -73,6 +77,10 @@ export default function wywVitePlugin({
   let devServer: ViteDevServer;
 
   const { emitter, onDone } = createFileReporter(debug ?? false);
+
+  const withRtl = (selector: string, cssText: string) => {
+    return basePreprocessor(selector, cssText, cssConfig);
+  };
 
   // <dependency id, targets>
   const targets: { dependencies: string[]; id: string }[] = [];
@@ -198,7 +206,7 @@ export default function wywVitePlugin({
             options: {
               filename: id,
               root: process.cwd(),
-              preprocessor,
+              preprocessor: preprocessor ?? withRtl,
               pluginOptions: {
                 ...other,
                 features: {
