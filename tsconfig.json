@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
     "module": "esnext",
-    "target": "es5",
-    "lib": ["es2020", "dom"],
+    // aligning with Node18 recommendation: https://www.npmjs.com/package/@tsconfig/node18
+    "target": "es2022",
+    "lib": ["es2020", "dom", "ES2021.String"],
     "jsx": "preserve",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noEmit": true,
@@ -17,16 +18,23 @@
       "@pigment-css/nextjs-plugin": ["./packages/pigment-css-nextjs-plugin/src"],
       "@pigment-css/nextjs-plugin/*": ["./packages/pigment-css-nextjs-plugin/src/*"],
       "@pigment-css/react": ["./packages/pigment-css-react/src"],
+      "@pigment-css/react/utils": ["./packages/pigment-css-react/src/utils"],
+      "@pigment-css/react/internal": ["./packages/pigment-css-react/src/internal"],
       "@pigment-css/react/*": ["./packages/pigment-css-react/src/*"],
+      "@pigment-css/unplugin": ["./packages/pigment-css-unplugin/src"],
       "@pigment-css/vite-plugin": ["./packages/pigment-css-vite-plugin/src"],
       "@pigment-css/vite-plugin/*": ["./packages/pigment-css-vite-plugin/src/*"],
       "@mui-internal/api-docs-builder": ["./node_modules/@mui/monorepo/packages/api-docs-builder"],
       "@mui-internal/api-docs-builder/*": [
         "./node_modules/@mui/monorepo/packages/api-docs-builder/*"
-      ]
+      ],
+      "@pigment-css/theme": ["./packages/pigment-css-theme/src"],
+      "@pigment-css/theme/*": ["./packages/pigment-css-theme/src/*"],
+      "@pigment-css/utils": ["./packages/pigment-css-utils/src"],
+      "@pigment-css/utils/*": ["./packages/pigment-css-utils/src/*"]
     },
     // Otherwise we get react-native typings which conflict with dom.lib.
-    "types": ["node", "react"]
+    "types": ["node", "react", "mocha"]
   },
   "exclude": ["**/.*/", "**/build", "**/node_modules", "docs/export"]
 }
