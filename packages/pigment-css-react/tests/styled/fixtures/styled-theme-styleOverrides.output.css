@@ -1,6 +1,10 @@
-.njazm0b {
-  border-color: red;
+@layer pigment.base {
+  .njazm0b {
+    border-color: red;
+  }
 }
-.njazm0b-1 {
-  border: none;
+@layer pigment.override {
+  .njazm0b-1 {
+    border: none;
+  }
 }
