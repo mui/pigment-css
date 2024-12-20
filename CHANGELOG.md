@@ -1,5 +1,30 @@
 # [Versions](https://mui.com/versions/)
 
+## 0.0.29
+
+<!-- generated comparing v0.0.28..master -->
+
+_Dec 20, 2024_
+
+A big thanks to the 3 contributors who made this release possible.
+
+### `@pigment-css/react@0.0.29`
+
+- fix: use the correct serializer based on the direction value (#350) @brijeshb42
+- Fix `useTheme` return type (#338) @mnajdova
+- chore: Add react 19 as a peer dependency (#347) @brijeshb42
+
+### `@pigment-css/theme@0.0.29`
+
+- feat: Implement @pigment-css/theme package (#341) @brijeshb42
+
+### Core
+
+- docs(readme): fix quickstart command (#351) @yash49
+- [examples] Fix vite example & add dark mode support (#340) @mnajdova
+
+All contributors of this release in alphabetical order: @brijeshb42, @mnajdova, @yash49
+
 ## 0.0.28
 
 <!-- generated comparing v0.0.27..master -->
