@@ -1,6 +1,6 @@
 {
   "name": "@pigment-css/theme",
-  "version": "0.0.27",
+  "version": "0.0.29",
   "main": "build/index.js",
   "module": "build/index.mjs",
   "types": "build/index.d.ts",
@@ -30,7 +30,6 @@
     "test:ci": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=lcov --report-dir=./coverage/pigment-css-theme mocha 'packages/pigment-css-theme/**/*.test.{js,ts,tsx}'",
     "typescript": "tsc --noEmit -p ."
   },
-  "dependencies": {},
   "devDependencies": {
     "@types/chai": "^4.3.14",
     "chai": "^4.4.1"
