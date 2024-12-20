@@ -1,13 +1,5 @@
 {
   "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "target": "ES2022",
-    "paths": {
-      "@babel/core": ["./node_modules/@babel/core"],
-      "@pigment-css/react": ["./packages/pigment-css-react/src"],
-      "@pigment-css/react/*": ["./packages/pigment-css-react/src/*"]
-    }
-  },
   "include": ["src/**/*"],
   "exclude": ["./tsup.config.ts"]
 }
