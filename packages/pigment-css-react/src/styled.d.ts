@@ -36,7 +36,12 @@ export interface CreateStyledComponent<
   // Template Literal case
   (
     styles: TemplateStringsArray,
-    ...args: Array<((options: ThemeArgs) => Primitve)| Primitve | React.ComponentClass | StyledArgument<OuterProps>>
+    ...args: Array<
+      | ((options: ThemeArgs) => Primitve)
+      | Primitve
+      | React.ComponentClass
+      | StyledArgument<OuterProps>
+    >
   ): StyledComponent<OuterProps> & (Component extends string ? BaseDefaultProps : Component);
 
   /**
