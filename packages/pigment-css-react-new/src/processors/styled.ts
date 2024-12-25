@@ -1,13 +1,13 @@
 /**
- * This processor for `keyframes` calls handles a lot of the scenarios.
- * There is `KeyframesProcessor` which is actually called by wyw. In its
+ * This processor for `css` calls handles a lot of the scenarios.
+ * There is `CssProcessor` which is actually called by wyw. In its
  * initialization, it checks for the type of parameters and depending
  * on whether any one of the params is a template type, it
- * internally creates `KeyframesTaggedTemplateProcessor` or `KeyframesObjectProcessor`
+ * internally creates `StyledTaggedTemplateProcessor` or `StyledObjectProcessor`
  * if the css is called with object values.
  * These both processors internally handle their own relevant logic.
  * They implement a common interface which is what is called by the main
- * KeyframesProcessor.
+ * CssProcessor.
  */
 
 import { SourceLocation, TemplateElement } from '@babel/types';
@@ -18,6 +18,7 @@ import {
   processStyleObjects,
   serializeStyles,
   StyleObjectReturn,
+  valueToLiteral,
 } from '@pigment-css/utils';
 import {
   type Expression,
@@ -27,6 +28,7 @@ import {
   validateParams,
 } from '@wyw-in-js/processor-utils';
 import {
+  Artifact,
   ExpressionValue,
   FunctionValue,
   LazyValue,
@@ -34,23 +36,53 @@ import {
   Rules,
   ValueType,
 } from '@wyw-in-js/shared';
-import { Primitive, ThemeArgs } from '../base';
-import { BaseCssProcessor } from './css';
+import { ThemeArgs, Primitive } from '@pigment-css/core';
 
 export type TemplateCallback = (params: Record<string, unknown> | undefined) => string | number;
 
 type GetClassName = () => string;
 
-abstract class BaseKeyframesProcessor extends BaseCssProcessor {
-  doEvaltimeReplacement() {
-    this.replacer(this.astService.stringLiteral(this.getClassName()), false);
+export abstract class BaseStyledProcessor {
+  public tempMetaClass = (Math.random() + 1).toString(36).substring(10);
+
+  readonly artifacts: Artifact[] = [];
+
+  readonly classNames: string[] = [];
+
+  constructor(
+    public readonly params: Params,
+    public readonly getClassName: GetClassName,
+    public readonly tagSource: TailProcessorParams[0],
+    public readonly astService: TailProcessorParams[1],
+    public readonly location: TailProcessorParams[2],
+    public readonly replacer: TailProcessorParams[3],
+    public readonly displayName: TailProcessorParams[4],
+    public readonly isReferenced: TailProcessorParams[5],
+    public readonly idx: TailProcessorParams[6],
+    public readonly options: TailProcessorParams[7],
+    public readonly context: TailProcessorParams[8],
+  ) {}
+
+  abstract getDependencies(): ExpressionValue[];
+
+  abstract build(values: ValueCache): void;
+
+  doRuntimeReplacement() {
+    this.replacer(this.astService.stringLiteral(this.classNames.join(' ')), false);
+  }
+
+  getBaseClass(): string | undefined {
+    if (!this.tempMetaClass) {
+      return this.getClassName();
+    }
+    return this.tempMetaClass;
   }
 }
 
 /**
- * Only deals with css`` or css(metadata)`` calls.
+ * Only deals with styled.div`` or styled('div', metadata)`` calls.
  */
-class KeyframesTaggedTemplateProcessor extends BaseKeyframesProcessor {
+class StyledTaggedTemplateProcessor extends BaseStyledProcessor {
   constructor(params: Params, getClassName: GetClassName, ...args: TailProcessorParams) {
     super(params, getClassName, ...args);
 
@@ -127,9 +159,8 @@ class KeyframesTaggedTemplateProcessor extends BaseKeyframesProcessor {
     const { styles } = serializeStyles(
       templateExpressions.length > 0 ? [templateStrs, ...templateExpressions] : [templateStrs],
     );
-    const keyframe = `@keyframes ${this.getClassName()} {${styles}}`;
 
-    const cssText = useLayer ? `@layer pigment.base{${keyframe}}` : keyframe;
+    const cssText = useLayer ? `@layer pigment.base{${styles}}` : styles;
     const className = this.getClassName();
     const rules: Rules = {
       [`.${className}`]: {
@@ -158,12 +189,21 @@ class KeyframesTaggedTemplateProcessor extends BaseKeyframesProcessor {
     this.classNames.push(className);
     this.artifacts.push(['css', [rules, sourceMapReplacements]]);
   }
+
+  doRuntimeReplacement() {
+    const baseClasses = this.astService.stringLiteral(this.classNames.join(' '));
+    const cssCallId = this.astService.addNamedImport('css', '@pigment-css/core/runtime');
+    const args = this.astService.objectExpression([
+      this.astService.objectProperty(this.astService.identifier('classes'), baseClasses),
+    ]);
+    this.replacer(this.astService.callExpression(cssCallId, [args]), true);
+  }
 }
 
 /**
- * Only deals with css(...styleObjects) or or css(styleObject) css(metadata, [...styleObjects]) calls.
+ * Only deals with styled.div(...styleObjects) or or styled('div')(styleObject) calls.
  */
-class KeyframesObjectProcessor extends BaseKeyframesProcessor {
+class StyledObjectProcessor extends BaseStyledProcessor {
   variants: { $$cls: string; props: Record<string, string | number> }[] = [];
 
   getDependencies(): ExpressionValue[] {
@@ -232,8 +272,8 @@ class KeyframesObjectProcessor extends BaseKeyframesProcessor {
       const rules: Rules = {};
       s.forEach((style, index) => {
         const location = locations[index] ?? locations[0];
-        const keyframe = `@keyframes ${this.getClassName()} {${style.cssText}}`;
-        const cssText = layer && useLayer ? `@layer pigment.${layer} {${keyframe}}` : keyframe;
+        const cssText =
+          layer && useLayer ? `@layer pigment.${layer} {${style.cssText}}` : style.cssText;
         rules[`.${style.className}`] = {
           className: style.className,
           cssText,
@@ -272,6 +312,26 @@ class KeyframesObjectProcessor extends BaseKeyframesProcessor {
     };
     this.classNames.push(...result.base.map((item) => item.className));
     addStyles(result.base, 'base');
+    addStyles(result.variants, 'variants');
+    addStyles(result.compoundVariants, 'compoundvariants');
+  }
+
+  doRuntimeReplacement() {
+    const baseClasses = this.astService.stringLiteral(this.classNames.join(' '));
+    const cssCallId = this.astService.addNamedImport('css', '@pigment-css/core/runtime');
+    const [, [, ...callParams]] = this.params;
+    const args = this.astService.objectExpression([
+      this.astService.objectProperty(this.astService.identifier('classes'), baseClasses),
+    ]);
+    if (this.variants.length > 0) {
+      args.properties.push(
+        this.astService.objectProperty(
+          this.astService.identifier('variants'),
+          valueToLiteral(this.variants, callParams[1] as ExpressionValue),
+        ),
+      );
+    }
+    this.replacer(this.astService.callExpression(cssCallId, [args]), true);
   }
 }
 
@@ -289,8 +349,8 @@ class KeyframesObjectProcessor extends BaseKeyframesProcessor {
  *
  * <html className={class1} />
  */
-export class KeyframesProcessor extends BaseProcessor {
-  processor: BaseKeyframesProcessor;
+export class StyledProcessor extends BaseProcessor {
+  processor: BaseStyledProcessor;
 
   constructor(params: Params, ...args: TailProcessorParams) {
     super([params[0]], ...args);
@@ -313,13 +373,9 @@ export class KeyframesProcessor extends BaseProcessor {
     const getClassName = () => this.getBaseClass();
     const [calleeParam, callParams, maybeTemplate] = params;
     if (callParams[0] === 'template' || maybeTemplate?.[0] === 'template') {
-      this.processor = new KeyframesTaggedTemplateProcessor(params, getClassName, ...args);
+      this.processor = new StyledTaggedTemplateProcessor(params, getClassName, ...args);
     } else {
-      this.processor = new KeyframesObjectProcessor(
-        [calleeParam, callParams],
-        getClassName,
-        ...args,
-      );
+      this.processor = new StyledObjectProcessor([calleeParam, callParams], getClassName, ...args);
     }
 
     this.dependencies.push(...this.processor.getDependencies());
@@ -339,11 +395,11 @@ export class KeyframesProcessor extends BaseProcessor {
   }
 
   get value(): Expression {
-    return this.astService.stringLiteral(this.getBaseClass());
+    return this.astService.stringLiteral(`.${this.getBaseClass()}`);
   }
 
   doEvaltimeReplacement(): void {
-    this.processor.doEvaltimeReplacement();
+    this.replacer(this.value, false);
   }
 
   doRuntimeReplacement(): void {

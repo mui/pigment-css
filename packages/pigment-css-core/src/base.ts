@@ -24,4 +24,4 @@ export type CSSObjectNoCallback =
 export type ThemeArgs = {
   theme: Theme;
 };
-export type Primitve = string | null | undefined | boolean | number;
+export type Primitive = string | null | undefined | boolean | number;

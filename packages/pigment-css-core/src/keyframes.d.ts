@@ -1,4 +1,4 @@
-import type { CSSProperties, Primitve, ThemeArgs } from './base';
+import type { CSSProperties, Primitive, ThemeArgs } from './base';
 import { BaseInterface, CssFn } from './css';
 
 interface KeyframesObject {
@@ -13,10 +13,10 @@ interface Keyframes {
   /**
    * @returns {string} The generated keyframe name to be referenced.
    */
-  (arg: TemplateStringsArray, ...templateArgs: (Primitve | CssFn)[]): string;
+  (arg: TemplateStringsArray, ...templateArgs: (Primitive | CssFn)[]): string;
   <M extends BaseInterface>(
     metadata: M,
-  ): (arg: TemplateStringsArray, ...templateArgs: (Primitve | CssFn)[]) => string;
+  ): (arg: TemplateStringsArray, ...templateArgs: (Primitive | CssFn)[]) => string;
   /**
    * @returns {string} The generated keyframe name to be referenced.
    */

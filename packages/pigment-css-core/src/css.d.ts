@@ -1,4 +1,4 @@
-import { CSSObjectNoCallback, Primitve, ThemeArgs } from './base';
+import { CSSObjectNoCallback, Primitive, ThemeArgs } from './base';
 
 type IVariant = {
   variants?: Record<string, Record<string, CSSObjectNoCallback>>;
@@ -20,10 +20,10 @@ interface Css {
   /**
    * @returns {string} The generated css class name to be referenced.
    */
-  (arg: TemplateStringsArray, ...templateArgs: (Primitve | CssFn)[]): string;
+  (arg: TemplateStringsArray, ...templateArgs: (Primitive | CssFn)[]): string;
   <M extends BaseInterface>(
     metadata: M,
-  ): (arg: TemplateStringsArray, ...templateArgs: (Primitve | CssFn)[]) => string;
+  ): (arg: TemplateStringsArray, ...templateArgs: (Primitive | CssFn)[]) => string;
 
   /**
    * @returns {string} The generated css class name to be referenced.
