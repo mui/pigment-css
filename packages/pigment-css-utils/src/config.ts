@@ -1,5 +1,5 @@
 import { Theme } from '@pigment-css/theme';
-import { IOptions } from '@wyw-in-js/processor-utils';
+import { PluginOptions } from '@wyw-in-js/transform';
 
 export type GenerateClassData<M, E> = {
   /**
@@ -37,10 +37,66 @@ type PigmentFeature = {
 /**
  * This is the base Pigment Config that'll be used by bundler package with some extra bundler specific options.
  */
-export type PigmentConfig = IOptions & {
+export type PigmentConfig = Omit<Partial<PluginOptions>, 'features'> & {
+  wywFeatures?: PluginOptions['features'];
   features?: PigmentFeature;
-  generateClassName<M, E>(data: GenerateClassData<M, E>): string;
   themeArgs?: {
     theme: Theme;
   };
+  /**
+   *
+   * @param {string} tag The function that was imported
+   * @param {string} source The path that the function was imported from
+   *
+   * If returning a string, this will be used as the import path in the final transform.
+   *
+   * @example
+   *
+   * __Input Code__
+   *
+   * ```js
+   * import { css } from '@pigment-css/core';
+   *
+   * const cls1 = css({});
+   * ```
+   * __config__
+   * ```js
+   * {
+   *   runtimeReplacementPath(tag, source) {
+   *     if (tag === 'css') {
+   *       return `@my-lib/runtime/css`;
+   *     }
+   *     return null;
+   *   }
+   * }
+   *```
+   * __Output__
+   *
+   * ```js
+   * import { css } from '@my-lib/runtime/css';
+   *
+   * const cls1 = css({});
+   * ```
+   */
+  runtimeReplacementPath?: (tag: string, source: string) => string | null;
 };
+
+/**
+ * @internal
+ */
+export type TransformedInternalConfig = Omit<PigmentConfig, 'wywFeatures' | 'features'> & {
+  feautres?: PluginOptions['features'];
+  pigmentFeatures?: PigmentFeature;
+};
+
+/**
+ * Internal utility to convert Pigment CSS configuration object to be usable by WyW
+ */
+export function transformPigmentConfig(config?: PigmentConfig): TransformedInternalConfig {
+  const { features, wywFeatures, ...rest } = config ?? {};
+  return {
+    ...rest,
+    pigmentFeatures: features,
+    feautres: wywFeatures,
+  };
+}
