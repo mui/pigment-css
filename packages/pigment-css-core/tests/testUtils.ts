@@ -1,23 +1,16 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { expect as chaiExpect } from 'chai';
-import { Theme } from '@pigment-css/theme';
 import { asyncResolveFallback } from '@wyw-in-js/shared';
 import { TransformCacheCollection, createFileReporter, transform } from '@wyw-in-js/transform';
 import * as prettier from 'prettier';
-import { preprocessor } from '@pigment-css/utils';
+import { PigmentConfig, preprocessor } from '@pigment-css/utils';
 
 import pkgJson from '../package.json';
 
 type TransformOptions = {
   outputDir?: string;
-  /**
-   * Object to pass as parameter to the styled css callback functions.
-   */
-  themeArgs?: {
-    theme?: Theme;
-  };
-};
+} & PigmentConfig;
 
 const shouldUpdateOutput = process.env.UPDATE_FIXTURES === 'true';
 
@@ -25,7 +18,7 @@ export async function runTransformation(absolutePath: string, options?: Transfor
   const cache = new TransformCacheCollection();
   const { emitter: eventEmitter } = createFileReporter(false);
   const inputFilePath = absolutePath;
-  const { outputDir, ...restOptions } = options ?? {};
+  const { outputDir, features, ...restOptions } = options ?? {};
   let outputFilePath = (
     outputDir ? path.join(outputDir, inputFilePath.split(path.sep).pop() as string) : absolutePath
   ).replace('.input.', '.output.');
