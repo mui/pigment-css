@@ -4,7 +4,7 @@ import { expect as chaiExpect } from 'chai';
 import { asyncResolveFallback } from '@wyw-in-js/shared';
 import { TransformCacheCollection, createFileReporter, transform } from '@wyw-in-js/transform';
 import * as prettier from 'prettier';
-import { PigmentConfig, preprocessor } from '@pigment-css/utils';
+import { PigmentConfig, preprocessor, transformPigmentConfig } from '@pigment-css/utils';
 
 import pkgJson from '../package.json';
 
@@ -18,7 +18,7 @@ export async function runTransformation(absolutePath: string, options?: Transfor
   const cache = new TransformCacheCollection();
   const { emitter: eventEmitter } = createFileReporter(false);
   const inputFilePath = absolutePath;
-  const { outputDir, features, ...restOptions } = options ?? {};
+  const { outputDir, ...restOptions } = options ?? {};
   let outputFilePath = (
     outputDir ? path.join(outputDir, inputFilePath.split(path.sep).pop() as string) : absolutePath
   ).replace('.input.', '.output.');
@@ -42,7 +42,7 @@ export async function runTransformation(absolutePath: string, options?: Transfor
     ? fs.readFileSync(outputCssFilePath, 'utf8')
     : '';
 
-  const pluginOptions = {
+  const pluginOptions = transformPigmentConfig({
     babelOptions: {
       configFile: false,
       babelrc: false,
@@ -54,7 +54,7 @@ export async function runTransformation(absolutePath: string, options?: Transfor
       return require.resolve(`../${pkgJson['wyw-in-js'].tags[tag]}`);
     },
     ...restOptions,
-  };
+  });
 
   const result = await transform(
     {

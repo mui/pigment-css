@@ -35,8 +35,8 @@ export function preprocessor(selector: string, cssText: string) {
   const isGlobal = selector.startsWith(getGlobalSelector(''));
 
   if (!isGlobal && cssText.startsWith('@keyframes')) {
-    css += stylis(cssText.replace('@keyframes', `@keyframes ${selector}`));
-    return css;
+    // Keyframes are already pre-processed.
+    return cssText;
   }
   css += stylis(!isGlobal ? `${selector}{${cssText}}` : cssText);
 

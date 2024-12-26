@@ -12,7 +12,7 @@
 
 import { SourceLocation, TemplateElement } from '@babel/types';
 import {
-  type PigmentConfig,
+  type TransformedInternalConfig,
   BaseProcessor,
   parseArray,
   processStyleObjects,
@@ -83,7 +83,8 @@ class KeyframesTaggedTemplateProcessor extends BaseKeyframesProcessor {
   }
 
   build(values: ValueCache): void {
-    const { themeArgs, features: { useLayer = true } = {} } = this.options as PigmentConfig;
+    const { themeArgs, pigmentFeatures: { useLayer = true } = {} } = this
+      .options as TransformedInternalConfig;
     const [, callOrTemplate, template] = this.params;
     // @ts-ignore @TODO - Fix this. No idea how to initialize a Tagged String array.
     const templateStrs: string[] = [];
@@ -173,7 +174,8 @@ class KeyframesObjectProcessor extends BaseKeyframesProcessor {
 
   build(values: ValueCache): void {
     const [, [, ...callParams]] = this.params;
-    const { themeArgs, features: { useLayer = true } = {} } = this.options as PigmentConfig;
+    const { themeArgs, pigmentFeatures: { useLayer = true } = {} } = this
+      .options as TransformedInternalConfig;
 
     const evaluatedValues = (callParams as (LazyValue | FunctionValue)[]).map((param) =>
       values.get(param.ex.name),

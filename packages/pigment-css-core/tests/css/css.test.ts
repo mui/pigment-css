@@ -47,4 +47,20 @@ describe('Pigment CSS - css', () => {
     expect(output.js).to.equal(fixture.js);
     expect(output.css).to.equal(fixture.css);
   });
+
+  it('should not use css layers if the feature is disabled', async () => {
+    const { output, fixture } = await runTransformation(
+      path.join(__dirname, 'fixtures/css-no-layers.input.js'),
+      {
+        themeArgs: {
+          theme,
+        },
+        features: {
+          useLayer: false,
+        },
+      },
+    );
+    expect(output.js).to.equal(fixture.js);
+    expect(output.css).to.equal(fixture.css);
+  });
 });
