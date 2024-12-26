@@ -30,3 +30,4 @@ docs/public/static/blog/feed/*
 # vale downloaded config
 .github/styles/
 .nx/cache
+packages/**/LICENSE
