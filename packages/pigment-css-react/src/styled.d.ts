@@ -6,8 +6,8 @@ import { Primitve } from './keyframes';
 
 type Falsy = false | 0 | '' | null | undefined;
 
-export interface StyledVariants<Props extends BaseDefaultProps> {
-  props: Partial<Props> | ((props: Props) => boolean);
+export interface StyledVariants<Props extends BaseDefaultProps & { ownerState?: object }> {
+  props: Partial<Props> | Partial<Props['ownerState']> | ((props: Props) => boolean);
   style: CSSObject<Props>;
 }
 
