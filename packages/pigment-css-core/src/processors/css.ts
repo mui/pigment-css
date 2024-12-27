@@ -10,20 +10,24 @@
  * CssProcessor.
  */
 
-import { SourceLocation, TemplateElement } from '@babel/types';
+import { SourceLocation } from '@babel/types';
 import {
   type TransformedInternalConfig,
+  type StyleObjectReturn,
+  type ClassNameOptions,
   BaseProcessor,
   parseArray,
   processStyleObjects,
   serializeStyles,
-  StyleObjectReturn,
   valueToLiteral,
+  evaluateClassNameArg,
 } from '@pigment-css/utils';
 import {
+  CallParam,
   type Expression,
   type Params,
   type TailProcessorParams,
+  TemplateParam,
   type ValueCache,
   validateParams,
 } from '@wyw-in-js/processor-utils';
@@ -37,24 +41,26 @@ import {
   ValueType,
 } from '@wyw-in-js/shared';
 import { ThemeArgs } from '../base';
+import { BaseInterface } from '../css';
 
 export type Primitive = string | number | boolean | null | undefined;
 export type TemplateCallback = (params: Record<string, unknown> | undefined) => string | number;
 
-type GetClassName = () => string;
-
 export abstract class BaseCssProcessor {
   public variants: { $$cls: string; props: Record<string, string | number> }[] = [];
 
-  public tempMetaClass = (Math.random() + 1).toString(36).substring(10);
+  public variables: StyleObjectReturn['variables'] = {};
 
   readonly artifacts: Artifact[] = [];
 
   readonly classNames: string[] = [];
 
+  public staticClass: BaseInterface | null = null;
+
   constructor(
     public readonly params: Params,
-    public readonly getClassName: GetClassName,
+    public readonly slugClass: string,
+    public readonly wrapStyle: (style: string, selector: string) => string,
     public readonly tagSource: TailProcessorParams[0],
     public readonly astService: TailProcessorParams[1],
     public readonly location: TailProcessorParams[2],
@@ -70,66 +76,70 @@ export abstract class BaseCssProcessor {
 
   abstract build(values: ValueCache): void;
 
+  doEvaltimeReplacement(): void {
+    this.replacer(this.astService.stringLiteral(this.getBaseClass()), false);
+  }
+
   doRuntimeReplacement() {
     this.replacer(this.astService.stringLiteral(this.classNames.join(' ')), false);
   }
 
-  getBaseClass(): string | undefined {
-    if (!this.tempMetaClass) {
-      return this.getClassName();
+  getBaseClass() {
+    if (this.staticClass?.className) {
+      if (typeof this.staticClass.className === 'string') {
+        return this.staticClass.className;
+      }
+      return this.staticClass.className();
     }
-    return this.tempMetaClass;
+    return this.slugClass;
+  }
+
+  getClassName(opts?: ClassNameOptions): string {
+    const baseClass = this.getBaseClass();
+    if (!opts) {
+      return baseClass;
+    }
+    if ('variantName' in opts) {
+      return typeof this.staticClass?.className === 'function'
+        ? this.staticClass.className(opts)
+        : `${baseClass}-${opts.variantName}-${opts.variantValue}`;
+    }
+    return baseClass;
   }
 }
+
+type BaseCssProcessorConstructorParams = ConstructorParameters<typeof BaseCssProcessor>;
+export type CssTailProcessorParams = BaseCssProcessorConstructorParams extends [Params, ...infer T]
+  ? T
+  : never;
 
 /**
  * Only deals with css`` or css(metadata)`` calls.
  */
-class CssTaggedTemplateProcessor extends BaseCssProcessor {
-  constructor(params: Params, getClassName: GetClassName, ...args: TailProcessorParams) {
-    super(params, getClassName, ...args);
+export class CssTaggedTemplateProcessor extends BaseCssProcessor {
+  templateParam: TemplateParam;
 
-    const [, callOrTemplate] = this.params;
-    if (callOrTemplate[0] === 'template') {
-      this.tempMetaClass = '';
-    }
+  constructor(params: [TemplateParam], ...args: CssTailProcessorParams) {
+    super(params, ...args);
+    this.templateParam = params[0];
   }
 
   getDependencies(): ExpressionValue[] {
-    const [, callOrTemplate, template] = this.params;
-    const deps: ExpressionValue[] = [];
-    if (callOrTemplate[0] === 'call') {
-      deps.push(callOrTemplate[1]);
-    } else if (callOrTemplate[0] === 'template') {
-      deps.push(
-        ...callOrTemplate[1].filter(
-          (arg): arg is ExpressionValue => 'kind' in arg && arg.kind !== ValueType.CONST,
-        ),
-      );
-    }
-    if (template?.[0] === 'template') {
-      deps.push(
-        ...template[1].filter(
-          (arg): arg is ExpressionValue => 'kind' in arg && arg.kind !== ValueType.CONST,
-        ),
-      );
-    }
-    return deps;
+    const [, elementOrExpression] = this.templateParam;
+    return elementOrExpression.filter(
+      (arg): arg is ExpressionValue => 'kind' in arg && arg.kind !== ValueType.CONST,
+    );
   }
 
   build(values: ValueCache): void {
     const { themeArgs, pigmentFeatures: { useLayer = true } = {} } = this
       .options as TransformedInternalConfig;
-    const [, callOrTemplate, template] = this.params;
+    const [, templateParams] = this.templateParam;
     // @ts-ignore @TODO - Fix this. No idea how to initialize a Tagged String array.
     const templateStrs: string[] = [];
     // @ts-ignore @TODO - Fix this. No idea how to initialize a Tagged String array.
     templateStrs.raw = [];
     const templateExpressions: Primitive[] = [];
-    const templateParams = (callOrTemplate[0] === 'call' ? template[1] : callOrTemplate[1]) as (
-      | ExpressionValue
-      | TemplateElement
-    )[];
     templateParams.forEach((param) => {
       if ('kind' in param) {
         switch (param.kind) {
@@ -164,7 +174,9 @@ class CssTaggedTemplateProcessor extends BaseCssProcessor {
       templateExpressions.length > 0 ? [templateStrs, ...templateExpressions] : [templateStrs],
     );
 
-    const cssText = useLayer ? `@layer pigment.base{${styles}}` : styles;
+    const cssText = useLayer
+      ? `@layer pigment.base{${this.wrapStyle(styles, '')}}`
+      : this.wrapStyle(styles, '');
     const className = this.getClassName();
     const rules: Rules = {
       [`.${className}`]: {
@@ -198,14 +210,21 @@ class CssTaggedTemplateProcessor extends BaseCssProcessor {
 /**
  * Only deals with css(...styleObjects) or or css(styleObject) css(metadata, [...styleObjects]) calls.
  */
-class CssObjectProcessor extends BaseCssProcessor {
+export class CssObjectProcessor extends BaseCssProcessor {
+  callParam: CallParam;
+
+  constructor(params: [CallParam], ...args: CssTailProcessorParams) {
+    super(params, ...args);
+    this.callParam = params[0];
+  }
+
   getDependencies(): ExpressionValue[] {
-    const [, [, ...callParams]] = this.params;
-    return callParams as ExpressionValue[];
+    const [, ...params] = this.callParam;
+    return params;
   }
 
   build(values: ValueCache): void {
-    const [, [, ...callParams]] = this.params;
+    const [, ...callParams] = this.callParam;
     const { themeArgs, pigmentFeatures: { useLayer = true } = {} } = this
       .options as TransformedInternalConfig;
 
@@ -250,11 +269,8 @@ class CssObjectProcessor extends BaseCssProcessor {
     );
     let count = 0;
     const result = processStyleObjects(styles, {
-      getClassName: (variantName: string | undefined, variantValue: string | undefined) => {
-        if (!variantName) {
-          return this.getClassName();
-        }
-        return `${this.getClassName()}-${variantName}-${variantValue}`;
+      getClassName: (opts?: ClassNameOptions) => {
+        return this.getClassName(opts);
       },
       getVariableName: () => {
         count += 1;
@@ -267,7 +283,9 @@ class CssObjectProcessor extends BaseCssProcessor {
       s.forEach((style, index) => {
         const location = locations[index] ?? locations[0];
         const cssText =
-          layer && useLayer ? `@layer pigment.${layer} {${style.cssText}}` : style.cssText;
+          layer && useLayer
+            ? `@layer pigment.${layer} {${this.wrapStyle(style.cssText, '')}}`
+            : this.wrapStyle(style.cssText, '');
         rules[`.${style.className}`] = {
           className: style.className,
           cssText,
@@ -309,24 +327,6 @@ class CssObjectProcessor extends BaseCssProcessor {
     addStyles(result.variants, 'variants');
     addStyles(result.compoundVariants, 'compoundvariants');
   }
-
-  doRuntimeReplacement() {
-    const baseClasses = this.astService.stringLiteral(this.classNames.join(' '));
-    const cssCallId = this.astService.addNamedImport('css', '@pigment-css/core/runtime');
-    const [, [, ...callParams]] = this.params;
-    const args = this.astService.objectExpression([
-      this.astService.objectProperty(this.astService.identifier('classes'), baseClasses),
-    ]);
-    if (this.variants.length > 0) {
-      args.properties.push(
-        this.astService.objectProperty(
-          this.astService.identifier('variants'),
-          valueToLiteral(this.variants, callParams[1] as ExpressionValue),
-        ),
-      );
-    }
-    this.replacer(this.astService.callExpression(cssCallId, [args]), true);
-  }
 }
 
 /**
@@ -346,34 +346,69 @@ class CssObjectProcessor extends BaseCssProcessor {
 export class CssProcessor extends BaseProcessor {
   processor: BaseCssProcessor;
 
-  params: Params;
+  // eslint-disable-next-line class-methods-use-this
+  wrapStyle(style: string) {
+    return style;
+  }
+
+  get asSelector(): string {
+    return this.processor.getBaseClass();
+  }
 
   constructor(params: Params, ...args: TailProcessorParams) {
     super([params[0]], ...args);
 
-    this.params = params;
     validateParams(params, ['callee', '...'], BaseProcessor.SKIP);
 
-    if (params.length === 3) {
-      validateParams(
-        params,
-        ['callee', 'call', 'template'],
-        `Invalid use of ${this.tagSource.imported} function.`,
-      );
-    } else {
+    const wrapStyle = this.wrapStyle.bind(this);
+    if (params.length === 2) {
       validateParams(
         params,
         ['callee', ['call', 'template']],
         `Invalid use of ${this.tagSource.imported} function.`,
       );
-    }
+      const [, callOrTemplate] = params;
+      if (callOrTemplate[0] === 'template') {
+        this.processor = new CssTaggedTemplateProcessor(
+          [callOrTemplate],
+          this.className,
+          wrapStyle,
+          ...args,
+        );
+      } else {
+        this.processor = new CssObjectProcessor(
+          [callOrTemplate],
+          this.className,
+          wrapStyle,
+          ...args,
+        );
+      }
+    } else if (params.length === 3) {
+      validateParams(
+        params,
+        ['callee', ['call'], ['call', 'template']],
+        `Invalid use of ${this.tagSource.imported} function.`,
+      );
 
-    const getClassName = () => this.getBaseClass();
-    const [calleeParam, callParams, maybeTemplate] = params;
-    if (callParams[0] === 'template' || maybeTemplate?.[0] === 'template') {
-      this.processor = new CssTaggedTemplateProcessor(params, getClassName, ...args);
+      const [, [, callOpt], callOrTemplate] = params;
+      if (callOrTemplate[0] === 'template') {
+        this.processor = new CssTaggedTemplateProcessor(
+          [callOrTemplate],
+          this.className,
+          wrapStyle,
+          ...args,
+        );
+      } else {
+        this.processor = new CssObjectProcessor(
+          [callOrTemplate],
+          this.className,
+          wrapStyle,
+          ...args,
+        );
+      }
+      this.processor.staticClass = evaluateClassNameArg(callOpt.source) as BaseInterface;
     } else {
-      this.processor = new CssObjectProcessor([calleeParam, callParams], getClassName, ...args);
+      throw new Error('Invalid call to `css` function.');
     }
 
     this.dependencies.push(...this.processor.getDependencies());
@@ -384,16 +419,8 @@ export class CssProcessor extends BaseProcessor {
     this.artifacts.push(...this.processor.artifacts);
   }
 
-  getBaseClass(): string {
-    return this.className;
-  }
-
-  get asSelector(): string {
-    return this.getBaseClass();
-  }
-
   get value(): Expression {
-    return this.astService.stringLiteral(this.getBaseClass());
+    return this.astService.stringLiteral(this.processor.getBaseClass());
   }
 
   doEvaltimeReplacement(): void {
@@ -402,19 +429,19 @@ export class CssProcessor extends BaseProcessor {
 
   doRuntimeReplacement(): void {
     const t = this.astService;
-    const options = this.options as TransformedInternalConfig;
+    const { runtimeReplacementPath } = this.options as TransformedInternalConfig;
     const baseClasses = t.stringLiteral(this.processor.classNames.join(' '));
     const importPath =
-      options.runtimeReplacementPath?.(this.tagSource.imported, this.tagSource.source) ??
+      runtimeReplacementPath?.(this.tagSource.imported, this.tagSource.source) ??
       `${process.env.PACKAGE_NAME}/runtime`;
     const callId = t.addNamedImport('css', importPath);
-    const [, [, ...callParams]] = this.params;
+    // const [, [, ...callParams]] = this.params;
     const args = t.objectExpression([t.objectProperty(t.identifier('classes'), baseClasses)]);
     if (this.processor.variants.length > 0) {
       args.properties.push(
         t.objectProperty(
           t.identifier('variants'),
-          valueToLiteral(this.processor.variants, callParams[1] as ExpressionValue),
+          valueToLiteral(this.processor.variants), // , callParams[1] as ExpressionValue),
         ),
       );
     }

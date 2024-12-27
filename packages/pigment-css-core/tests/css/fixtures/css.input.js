@@ -39,7 +39,7 @@ export const cls3 = css({
   background-color: ${ab};
 `;
 
-export const cls4 = css({ className: 'Test-class2' }, [
+export const cls4 = css({ className: 'Test-class2' })(
   {
     $$flex: 41,
     $$testVar: 'red',
@@ -82,9 +82,9 @@ export const cls4 = css({ className: 'Test-class2' }, [
     font-size: 1rem;
     background-color: ${ab};
   `,
-]);
+);
 
-export const cls5 = css({ className: 'Test-class3' }, ({ theme }) => ({
+export const cls5 = css({ className: 'Test-class3' })(({ theme }) => ({
   $$flex: 51,
   $$testVar: 'red',
   backgroundColor: '$$testVar',

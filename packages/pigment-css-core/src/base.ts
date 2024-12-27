@@ -1,7 +1,10 @@
 import type * as CSS from 'csstype';
 import { Theme, ThemeKey } from '@pigment-css/theme';
 
-export type CSSProperties = CSS.PropertiesFallback<number | string>;
+export type CSSProperties = CSS.PropertiesFallback<number | string> & {
+  [index: `--${string}`]: string;
+  [index: `$${string}`]: string;
+};
 
 export type CSSPropertiesMultiValue = {
   [K in keyof CSSProperties]:

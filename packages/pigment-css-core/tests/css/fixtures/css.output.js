@@ -12,25 +12,25 @@ export const cls2 = /*#__PURE__*/ _css2({
   classes: 'c1aq99o6 c1aq99o6-1',
 });
 export const cls3 = /*#__PURE__*/ _css3({
-  classes: 'cuccxpq',
+  classes: 'Test-class',
 });
 export const cls4 = /*#__PURE__*/ _css4({
-  classes: 'c1v5vhpp c1v5vhpp-1 c1v5vhpp-2 c1v5vhpp-3',
+  classes: 'Test-class2 Test-class2-1 Test-class2-2 Test-class2-3',
   variants: [
     {
-      $$cls: 'c1v5vhpp-size-small-1',
+      $$cls: 'Test-class2-size-small-1',
       props: {
         size: 'small',
       },
     },
     {
-      $$cls: 'c1v5vhpp-size-medium-1',
+      $$cls: 'Test-class2-size-medium-1',
       props: {
         size: 'medium',
       },
     },
     {
-      $$cls: 'c1v5vhpp-size-large-1',
+      $$cls: 'Test-class2-size-large-1',
       props: {
         size: 'large',
       },
@@ -38,40 +38,40 @@ export const cls4 = /*#__PURE__*/ _css4({
   ],
 });
 export const cls5 = /*#__PURE__*/ _css5({
-  classes: 'c1vz5z87',
+  classes: 'Test-class3',
   variants: [
     {
-      $$cls: 'c1vz5z87-size-small',
+      $$cls: 'Test-class3-size-small',
       props: {
         size: 'small',
       },
     },
     {
-      $$cls: 'c1vz5z87-size-medium',
+      $$cls: 'Test-class3-size-medium',
       props: {
         size: 'medium',
       },
     },
     {
-      $$cls: 'c1vz5z87-size-large',
+      $$cls: 'Test-class3-size-large',
       props: {
         size: 'large',
       },
     },
     {
-      $$cls: 'c1vz5z87-color-primary',
+      $$cls: 'Test-class3-color-primary',
       props: {
         color: 'primary',
       },
     },
     {
-      $$cls: 'c1vz5z87-color-secondary',
+      $$cls: 'Test-class3-color-secondary',
       props: {
         color: 'secondary',
       },
     },
     {
-      $$cls: 'c1vz5z87-cv',
+      $$cls: 'Test-class3-cv',
       props: {
         size: 'small',
         color: 'primary',

@@ -1,4 +1,5 @@
-import { CSSObjectNoCallback, Primitive, ThemeArgs } from './base';
+import { ClassNameOptions } from '@pigment-css/utils';
+import { CSSObjectNoCallback, CSSProperties, Primitive, ThemeArgs } from './base';
 
 type IVariant = {
   variants?: Record<string, Record<string, CSSObjectNoCallback>>;
@@ -13,25 +14,31 @@ export interface BaseInterface {
   /**
    * Corresponds to css class name for `css` function call and keyframe name when passed to `keyframes`
    */
+  className?: string | ((opts?: ClassNameOptions) => string);
+}
+
+/**
+ * New CSS
+ */
+
+type CssReturn = {
   className: string;
+  style?: CSSProperties;
+};
+
+interface CssNoOption {
+  (arg: TemplateStringsArray, ...templateArgs: (Primitive | CssFn)[]): CssReturn;
+  (...args: CssArg[]): CssReturn;
 }
 
-interface Css {
-  /**
-   * @returns {string} The generated css class name to be referenced.
-   */
-  (arg: TemplateStringsArray, ...templateArgs: (Primitive | CssFn)[]): string;
-  <M extends BaseInterface>(
-    metadata: M,
-  ): (arg: TemplateStringsArray, ...templateArgs: (Primitive | CssFn)[]) => string;
-
-  /**
-   * @returns {string} The generated css class name to be referenced.
-   */
-  (...args: CssArg[]): () => string;
-  <M extends BaseInterface>(metadata: M, args: CssArg | CssArg[]): string;
+interface CssFunction {
+  (arg: TemplateStringsArray, ...templateArgs: (Primitive | CssFn)[]): CssReturn;
+  (...args: CssArg[]): CssReturn;
 }
 
-declare const css: Css;
+interface CssWithOption {
+  <M extends BaseInterface>(metadata: M): CssFunction;
+}
 
+declare const css: CssNoOption & CssWithOption;
 export default css;

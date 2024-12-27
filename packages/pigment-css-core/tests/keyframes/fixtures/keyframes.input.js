@@ -9,7 +9,7 @@ const rotateKeyframe = keyframes({
   },
 });
 
-const rotateKeyframe2 = keyframes`
+const rotateKeyframe2 = keyframes({ className: 'rotate' })`
   from {
     transform: rotate(360deg);
   }
