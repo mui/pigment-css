@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { processStyle, processStyleObjects } from '../../src/utils';
+import { ClassNameOptions, processStyle, processStyleObjects } from '../../src/utils';
 
 describe('processStyle', () => {
   describe('processStyle', () => {
@@ -54,13 +54,17 @@ describe('processStyle', () => {
           varCount += 1;
           return `var-${varCount}`;
         },
-        getClassName(
-          variantName: string | undefined,
-          variantValue: string | undefined,
-          isCv: boolean | undefined,
-        ) {
-          // return `class-${variantName ?? ''}-${variantValue ?? ''}-${isCv : 'cv' : ''}`;
-          return `class${variantName ? `-${variantName}` : ''}${variantValue ? `-${variantValue}` : ''}${isCv ? '-cv' : ''}`;
+        getClassName(opts?: ClassNameOptions) {
+          if (!opts) {
+            return 'class';
+          }
+          if ('isCv' in opts && opts.isCv) {
+            return `class-cv`;
+          }
+          if ('variantName' in opts) {
+            return `class-${opts.variantName}-${opts.variantValue}`;
+          }
+          return 'class';
         },
       };
       const result = processStyleObjects(
@@ -102,9 +106,7 @@ describe('processStyle', () => {
               {
                 size: 'small',
                 color: 'primary',
-                css: `
-                borderRadius: '100%'
-                `,
+                css: `borderRadius: '100%'`,
               },
             ],
           },
@@ -156,7 +158,7 @@ describe('processStyle', () => {
         compoundVariants: [
           {
             className: 'class-cv',
-            cssText: "\n                borderRadius: '100%'\n                ",
+            cssText: "borderRadius: '100%'",
             variables: {},
             serializables: { size: 'small', color: 'primary' },
           },
