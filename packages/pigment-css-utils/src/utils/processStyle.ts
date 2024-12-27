@@ -26,12 +26,17 @@ export type ProcessStyleReturn<T> = {
   variables: Record<string, [Function, 1 | 0]>;
 };
 
+export type ClassNameOptions =
+  | {
+      variantName: string;
+      variantValue: string;
+    }
+  | {
+      isCv: true;
+    };
+
 export type ProcessStyleObjectsOptions = ProcessStyleOptions & {
-  getClassName: (
-    variantName: string | undefined,
-    variantValue: string | undefined,
-    isCv?: boolean,
-  ) => string;
+  getClassName: (opts?: ClassNameOptions) => string;
 };
 
 export type StyleObjectReturn = {
@@ -138,7 +143,7 @@ function getCss(
   if (typeof style === 'string') {
     result.base.push({
       cssText: serializeStyles([style]).styles,
-      className: cssesc(getClassName(undefined, undefined)),
+      className: cssesc(getClassName()),
       variables: {},
       serializables: {},
     });
@@ -152,7 +157,7 @@ function getCss(
   const { result: baseObj, variables } = processStyle(style, { getVariableName });
   const cssText = serializeStyles([baseObj as any]).styles;
   result.base.push({
-    className: getClassName(undefined, undefined),
+    className: getClassName(),
     cssText,
     variables,
     serializables: {},
@@ -163,7 +168,10 @@ function getCss(
       const variantData = variants[variantName];
       Object.keys(variantData).forEach((variantValue) => {
         const cssObjOrStr = variantData[variantValue];
-        const className = getClassName(variantName, variantValue);
+        const className = getClassName({
+          variantName,
+          variantValue,
+        });
         const serializables = {
           [variantName]: variantValue,
         };
@@ -190,7 +198,7 @@ function getCss(
   }
   if (compoundVariants && compoundVariants.length > 0) {
     compoundVariants.forEach(({ css, ...rest }, cvIndex) => {
-      const className = `${getClassName(undefined, undefined, true)}-cv${cvIndex ? `-${cvIndex}` : ''}`;
+      const className = `${getClassName({ isCv: true })}-cv${cvIndex ? `-${cvIndex}` : ''}`;
       const serializables = rest;
       if (typeof css === 'string') {
         result.compoundVariants.push({
@@ -231,12 +239,9 @@ export function processStyleObjects(
   styles.reduce((acc, style, index) => {
     const res = getCss(style, {
       ...options,
-      getClassName: (
-        variantName: string | undefined,
-        variantValue: string | undefined,
-        isCv?: boolean,
-      ) => {
-        const base = options.getClassName(variantName, variantValue);
+      getClassName: (opts?: ClassNameOptions) => {
+        const isCv = opts && 'isCv' in opts && opts.isCv;
+        const base = options.getClassName(opts);
         if (index > 0) {
           return `${base}${isCv ? '-cv' : ''}-${index}`;
         }
