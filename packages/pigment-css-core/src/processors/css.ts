@@ -104,6 +104,9 @@ export abstract class BaseCssProcessor {
         ? this.staticClass.className(opts)
         : `${baseClass}-${opts.variantName}-${opts.variantValue}`;
     }
+    if ('isCv' in opts) {
+      return `${baseClass}-cv`;
+    }
     return baseClass;
   }
 }
@@ -346,6 +349,8 @@ export class CssObjectProcessor extends BaseCssProcessor {
 export class CssProcessor extends BaseProcessor {
   processor: BaseCssProcessor;
 
+  basePath = `${process.env.PACKAGE_NAME}/runtime`;
+
   // eslint-disable-next-line class-methods-use-this
   wrapStyle(style: string) {
     return style;
@@ -408,7 +413,7 @@ export class CssProcessor extends BaseProcessor {
       }
       this.processor.staticClass = evaluateClassNameArg(callOpt.source) as BaseInterface;
     } else {
-      throw new Error('Invalid call to `css` function.');
+      throw new Error(`Invalid call to "${this.tagSource.imported}" function.`);
     }
 
     this.dependencies.push(...this.processor.getDependencies());
@@ -432,8 +437,7 @@ export class CssProcessor extends BaseProcessor {
     const { runtimeReplacementPath } = this.options as TransformedInternalConfig;
     const baseClasses = t.stringLiteral(this.processor.classNames.join(' '));
     const importPath =
-      runtimeReplacementPath?.(this.tagSource.imported, this.tagSource.source) ??
-      `${process.env.PACKAGE_NAME}/runtime`;
+      runtimeReplacementPath?.(this.tagSource.imported, this.tagSource.source) ?? this.basePath;
     const callId = t.addNamedImport('css', importPath);
     // const [, [, ...callParams]] = this.params;
     const args = t.objectExpression([t.objectProperty(t.identifier('classes'), baseClasses)]);

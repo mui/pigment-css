@@ -74,8 +74,15 @@
     },
     "./package.json": "./package.json",
     "./styles.css": "./styles.css",
-    "./processors/*": {
-      "default": "./build/processors/*.js"
+    "./processors/css": {
+      "import": "./build/processors/css.mjs",
+      "require": "./build/processors/css.js",
+      "default": "./build/processors/css.js"
+    },
+    "./processors/keyframes": {
+      "import": "./build/processors/keyframes.mjs",
+      "require": "./build/processors/keyframes.js",
+      "default": "./build/processors/keyframes.js"
     },
     "./exports/*": {
       "default": "./exports/*.js"

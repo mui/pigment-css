@@ -77,5 +77,12 @@ export const cls5 = /*#__PURE__*/ _css5({
         color: 'primary',
       },
     },
+    {
+      $$cls: 'Test-class3-cv-1',
+      props: {
+        size: 'large',
+        color: 'primary',
+      },
+    },
   ],
 });

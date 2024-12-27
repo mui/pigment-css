@@ -122,6 +122,15 @@ export const cls5 = css({ className: 'Test-class3' })(({ theme }) => ({
       size: 'small',
       color: 'primary',
       css: {
+        $$flex: 57,
+        borderRadius: '100%',
+      },
+    },
+    {
+      size: 'large',
+      color: 'primary',
+      css: {
+        $$flex: 58,
         borderRadius: '100%',
       },
     },
