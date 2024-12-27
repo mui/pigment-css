@@ -198,7 +198,7 @@ function getCss(
   }
   if (compoundVariants && compoundVariants.length > 0) {
     compoundVariants.forEach(({ css, ...rest }, cvIndex) => {
-      const className = `${getClassName({ isCv: true })}-cv${cvIndex ? `-${cvIndex}` : ''}`;
+      const className = `${getClassName({ isCv: true })}${cvIndex ? `-${cvIndex}` : ''}`;
       const serializables = rest;
       if (typeof css === 'string') {
         result.compoundVariants.push({
@@ -240,10 +240,9 @@ export function processStyleObjects(
     const res = getCss(style, {
       ...options,
       getClassName: (opts?: ClassNameOptions) => {
-        const isCv = opts && 'isCv' in opts && opts.isCv;
         const base = options.getClassName(opts);
         if (index > 0) {
-          return `${base}${isCv ? '-cv' : ''}-${index}`;
+          return `${base}-${index}`;
         }
         return base;
       },
