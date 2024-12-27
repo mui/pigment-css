@@ -343,35 +343,50 @@
     --Grid-self-margin-left: var(--Grid-self-margin-left-xl);
   }
 }
-.g1i5ygey {
-  --Grid-fixed-width: calc(
-    100% * var(--Grid-self-column-span) / var(--Grid-parent-column-count) -
-      (var(--Grid-parent-column-count) - var(--Grid-self-column-span)) *
-      var(--Grid-parent-column-spacing) / var(--Grid-parent-column-count)
-  );
-  --Grid-fixed-offset: calc(
-    100% * var(--Grid-self-offset) / var(--Grid-parent-column-count) +
-      var(--Grid-parent-column-spacing) * var(--Grid-self-offset) / var(--Grid-parent-column-count)
-  );
+@layer pigment.base {
+  .g1i5ygey {
+    --Grid-fixed-width: calc(
+      100% * var(--Grid-self-column-span) / var(--Grid-parent-column-count) -
+        (var(--Grid-parent-column-count) - var(--Grid-self-column-span)) *
+        var(--Grid-parent-column-spacing) / var(--Grid-parent-column-count)
+    );
+    --Grid-fixed-offset: calc(
+      100% * var(--Grid-self-offset) / var(--Grid-parent-column-count) +
+        var(--Grid-parent-column-spacing) * var(--Grid-self-offset) /
+        var(--Grid-parent-column-count)
+    );
+  }
 }
-.g1i5ygey-1 {
-  display: flex;
-  gap: var(--Grid-self-row-spacing) var(--Grid-self-column-spacing);
+@layer pigment.variant {
+  .g1i5ygey-1 {
+    display: flex;
+    gap: var(--Grid-self-row-spacing) var(--Grid-self-column-spacing);
+  }
 }
-.g1i5ygey-2 {
-  width: var(--Grid-self-width);
-  max-width: var(--Grid-self-max-width);
-  flex: var(--Grid-self-flex);
+@layer pigment.variant {
+  .g1i5ygey-2 {
+    width: var(--Grid-self-width);
+    max-width: var(--Grid-self-max-width);
+    flex: var(--Grid-self-flex);
+  }
 }
-.g1i5ygey-3 {
-  margin-left: var(--Grid-self-margin-left);
+@layer pigment.variant {
+  .g1i5ygey-3 {
+    margin-left: var(--Grid-self-margin-left);
+  }
 }
-.g1i5ygey-4 {
-  flex-wrap: nowrap;
+@layer pigment.variant {
+  .g1i5ygey-4 {
+    flex-wrap: nowrap;
+  }
 }
-.g1i5ygey-5 {
-  flex-wrap: wrap-reverse;
+@layer pigment.variant {
+  .g1i5ygey-5 {
+    flex-wrap: wrap-reverse;
+  }
 }
-.g1i5ygey-6 {
-  flex-wrap: wrap;
+@layer pigment.variant {
+  .g1i5ygey-6 {
+    flex-wrap: wrap;
+  }
 }

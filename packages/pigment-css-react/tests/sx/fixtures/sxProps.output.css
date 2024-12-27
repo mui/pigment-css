@@ -1,50 +1,68 @@
-.sjfloo5 {
-  display: block;
-  position: absolute;
-  border-radius: inherit;
-  background-color: currentColor;
-  opacity: 0.38;
-  font-size: 3rem;
+@layer pigment.base {
+  .sjfloo5 {
+    display: block;
+    position: absolute;
+    border-radius: inherit;
+    background-color: currentColor;
+    opacity: 0.38;
+    font-size: 3rem;
+  }
 }
-.sjfloo5-1 {
-  font-size: 3rem;
+@layer pigment.override {
+  .sjfloo5-1 {
+    font-size: 3rem;
+  }
 }
-.s1o8xp19 {
-  color: red;
+@layer pigment.sx {
+  .s1o8xp19 {
+    color: red;
+  }
 }
-.s1xbsywq {
-  color: var(--s1xbsywq-0);
+@layer pigment.sx {
+  .s1xbsywq {
+    color: var(--s1xbsywq-0);
+  }
 }
-.s1wnk6s5 {
-  background-color: blue;
-  color: white;
+@layer pigment.sx {
+  .s1wnk6s5 {
+    background-color: blue;
+    color: white;
+  }
 }
-.stzaibv {
-  color: var(--stzaibv-0);
+@layer pigment.sx {
+  .stzaibv {
+    color: var(--stzaibv-0);
+  }
 }
-.sazg8ol {
-  margin-bottom: 1px;
-  text-align: center;
+@layer pigment.sx {
+  .sazg8ol {
+    margin-bottom: 1px;
+    text-align: center;
+  }
 }
-.s1v3ec1v {
-  border: none;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
+@layer pigment.sx {
+  .s1v3ec1v {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
 }
-.s1ojh0i1 {
-  border: none;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
+@layer pigment.sx {
+  .s1ojh0i1 {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
 }
