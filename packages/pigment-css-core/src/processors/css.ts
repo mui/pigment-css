@@ -223,7 +223,7 @@ export class CssObjectProcessor extends BaseCssProcessor {
 
   getDependencies(): ExpressionValue[] {
     const [, ...params] = this.callParam;
-    return params;
+    return params.flat().filter((param) => 'kind' in param);
   }
 
   build(values: ValueCache): void {
@@ -322,6 +322,10 @@ export class CssObjectProcessor extends BaseCssProcessor {
           });
         }
 
+        this.variables = {
+          ...this.variables,
+          ...style.variables,
+        };
         this.artifacts.push(['css', [rules, sourceMapReplacements]]);
       });
     };
@@ -349,7 +353,12 @@ export class CssObjectProcessor extends BaseCssProcessor {
 export class CssProcessor extends BaseProcessor {
   processor: BaseCssProcessor;
 
-  basePath = `${process.env.PACKAGE_NAME}/runtime`;
+  // eslint-disable-next-line class-methods-use-this
+  get packageName() {
+    return process.env.PACKAGE_NAME as string;
+  }
+
+  basePath = `${this.packageName}/runtime`;
 
   // eslint-disable-next-line class-methods-use-this
   wrapStyle(style: string) {
@@ -370,7 +379,7 @@ export class CssProcessor extends BaseProcessor {
       validateParams(
         params,
         ['callee', ['call', 'template']],
-        `Invalid use of ${this.tagSource.imported} function.`,
+        `${this.packageName}: Invalid use of ${this.tagSource.imported} function.`,
       );
       const [, callOrTemplate] = params;
       if (callOrTemplate[0] === 'template') {
@@ -392,7 +401,7 @@ export class CssProcessor extends BaseProcessor {
       validateParams(
         params,
         ['callee', ['call'], ['call', 'template']],
-        `Invalid use of ${this.tagSource.imported} function.`,
+        `${this.packageName}: Invalid use of ${this.tagSource.imported} function.`,
       );
 
       const [, [, callOpt], callOrTemplate] = params;
@@ -413,7 +422,9 @@ export class CssProcessor extends BaseProcessor {
       }
       this.processor.staticClass = evaluateClassNameArg(callOpt.source) as BaseInterface;
     } else {
-      throw new Error(`Invalid call to "${this.tagSource.imported}" function.`);
+      throw new Error(
+        `${this.packageName}: Invalid call to "${this.tagSource.imported}" function.`,
+      );
     }
 
     this.dependencies.push(...this.processor.getDependencies());
@@ -432,14 +443,9 @@ export class CssProcessor extends BaseProcessor {
     this.replacer(this.value, false);
   }
 
-  doRuntimeReplacement(): void {
+  getStyleArgs() {
     const t = this.astService;
-    const { runtimeReplacementPath } = this.options as TransformedInternalConfig;
     const baseClasses = t.stringLiteral(this.processor.classNames.join(' '));
-    const importPath =
-      runtimeReplacementPath?.(this.tagSource.imported, this.tagSource.source) ?? this.basePath;
-    const callId = t.addNamedImport('css', importPath);
-    // const [, [, ...callParams]] = this.params;
     const args = t.objectExpression([t.objectProperty(t.identifier('classes'), baseClasses)]);
     if (this.processor.variants.length > 0) {
       args.properties.push(
@@ -449,6 +455,28 @@ export class CssProcessor extends BaseProcessor {
         ),
       );
     }
-    this.replacer(t.callExpression(callId, [args]), true);
+    if (Object.keys(this.processor.variables).length > 0) {
+      args.properties.push(
+        t.objectProperty(t.identifier('vars'), valueToLiteral(this.processor.variables)),
+      );
+    }
+    return args;
+  }
+
+  getImportPath() {
+    const { runtimeReplacementPath } = this.options as TransformedInternalConfig;
+    const importPath =
+      runtimeReplacementPath?.(this.tagSource.imported, this.tagSource.source) ?? this.basePath;
+    return importPath;
+  }
+
+  createReplacement() {
+    const t = this.astService;
+    const callId = t.addNamedImport('css', this.getImportPath());
+    return t.callExpression(callId, [this.getStyleArgs()]);
+  }
+
+  doRuntimeReplacement(): void {
+    this.replacer(this.createReplacement(), true);
   }
 }
