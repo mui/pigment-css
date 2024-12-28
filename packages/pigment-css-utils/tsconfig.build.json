@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "composite": false
+  },
+  "exclude": ["./tsup.config.ts", "src/**/*.d.ts", "tests"],
+
+  "references": [
+    {
+      "path": "../pigment-css-theme/tsconfig.build.json"
+    }
+  ]
+}

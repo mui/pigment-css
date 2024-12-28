@@ -25,7 +25,7 @@
     "watch": "tsup --watch --tsconfig tsconfig.build.json",
     "copy-license": "node ../../scripts/pigment-license.mjs",
     "build": "tsup --tsconfig tsconfig.build.json",
-    "typecheck": "tsc --noEmit -p .",
+    "typescript": "tsc --noEmit -p .",
     "test": "cd ../../ && cross-env NODE_ENV=test mocha 'packages/pigment-css-unplugin/**/*.test.{js,ts,tsx}'",
     "test:ci": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=lcov --report-dir=./coverage/pigment-css-unplugin mocha 'packages/pigment-css-unplugin/**/*.test.{js,ts,tsx}'"
   },
