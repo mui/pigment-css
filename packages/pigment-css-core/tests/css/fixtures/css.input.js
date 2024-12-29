@@ -136,3 +136,30 @@ export const cls5 = css({ className: 'Test-class3' })(({ theme }) => ({
     },
   ],
 }));
+
+export const cls6 = css(({ theme }) => ({
+  color: '$palette.main',
+  // @ts-expect-error main1 does not exists in theme.palette
+  backgroundColor: theme.palette.main1,
+  border: `1px solid ${t('$palette.main')}`,
+  variants: {
+    palette: {
+      primary: {
+        color: 'red',
+        borderColor: 'pink',
+      },
+      secondary: {
+        color: 'red',
+        borderColor: 'pink',
+      },
+    },
+  },
+  compoundVariants: [
+    {
+      palette: 'secondary',
+      css: {
+        borderWidth: 1,
+      },
+    },
+  ],
+}));

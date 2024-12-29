@@ -1,43 +1,69 @@
-import { ClassNameOptions } from '@pigment-css/utils';
 import { CSSObjectNoCallback, CSSProperties, Primitive, ThemeArgs } from './base';
 
-type IVariant = {
-  variants?: Record<string, Record<string, CSSObjectNoCallback>>;
+export type CssFn<Props extends object> = (props: Props) => string | number;
+
+type Variants = {
+  [VariantGroup: string]: {
+    [VariantName: string]: CSSObjectNoCallback;
+  };
 };
 
-type CssObj = CSSObjectNoCallback & IVariant;
+type VariantNames<T extends Variants> = {
+  [K in keyof T]?: keyof T[K];
+};
 
-type CssArg = ((themeArgs: ThemeArgs) => CssObj | string) | CssObj | string;
-export type CssFn = (themeArgs: ThemeArgs) => string | number;
+type CompoundVariant<T extends Variants> = VariantNames<T> & {
+  css: CSSProperties;
+};
+
+type CVAConfig<V extends Variants> = {
+  variants?: V;
+  compoundVariants?: CompoundVariant<V>[];
+  defaultVariants?: VariantNames<V>;
+};
+
+export type ClassNameOptions =
+  | {
+      variantName: string;
+      variantValue: string;
+    }
+  | {
+      isCv: true;
+    };
 
 export interface BaseInterface {
   /**
-   * Corresponds to css class name for `css` function call and keyframe name when passed to `keyframes`
+   * Corresponds to css class name for `css` or `styled` function calls and keyframe name for `keyframes` function call.
    */
   className?: string | ((opts?: ClassNameOptions) => string);
 }
 
-/**
- * New CSS
- */
+type TemplateLiteralItems = Primitive | CSSProperties;
+
+type CSSWithVariants<V extends Variants> = CSSObjectNoCallback & CVAConfig<V>;
+
+type CssValue<V extends Variants> = CSSWithVariants<V> | string;
+
+type CssArg<V extends Variants> = ((themeArgs: ThemeArgs) => CssValue<V>) | CssValue<V>;
 
 type CssReturn = {
   className: string;
   style?: CSSProperties;
 };
 
-interface CssNoOption {
-  (arg: TemplateStringsArray, ...templateArgs: (Primitive | CssFn)[]): CssReturn;
-  (...args: CssArg[]): CssReturn;
-}
+type CssReturnFn<Props extends {}> = (props: Props) => CssReturn;
 
-interface CssFunction {
-  (arg: TemplateStringsArray, ...templateArgs: (Primitive | CssFn)[]): CssReturn;
-  (...args: CssArg[]): CssReturn;
+interface CssNoOption {
+  (
+    arg: TemplateStringsArray,
+    ...templateArgs: (TemplateLiteralItems | CssFn<{}>)[]
+  ): CssReturnFn<{}>;
+
+  <V extends Variants>(...args: CssArg<V>[]): CssReturnFn<VariantNames<V>>;
 }
 
 interface CssWithOption {
-  <M extends BaseInterface>(metadata: M): CssFunction;
+  <M extends BaseInterface>(metadata: M): CssNoOption;
 }
 
 declare const css: CssNoOption & CssWithOption;

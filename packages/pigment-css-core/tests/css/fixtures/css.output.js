@@ -4,6 +4,7 @@ import {
   css as _css3,
   css as _css4,
   css as _css5,
+  css as _css6,
 } from '@pigment-css/core/runtime';
 export const cls1 = /*#__PURE__*/ _css({
   classes: 'cx3ztpe',
@@ -82,6 +83,29 @@ export const cls5 = /*#__PURE__*/ _css5({
       props: {
         size: 'large',
         color: 'primary',
+      },
+    },
+  ],
+});
+export const cls6 = /*#__PURE__*/ _css6({
+  classes: 'c1qxs0o9',
+  variants: [
+    {
+      $$cls: 'c1qxs0o9-palette-primary',
+      props: {
+        palette: 'primary',
+      },
+    },
+    {
+      $$cls: 'c1qxs0o9-palette-secondary',
+      props: {
+        palette: 'secondary',
+      },
+    },
+    {
+      $$cls: 'c1qxs0o9-cv',
+      props: {
+        palette: 'secondary',
       },
     },
   ],

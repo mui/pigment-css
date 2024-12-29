@@ -1,15 +1,3 @@
-/**
- * This processor for `keyframes` calls handles a lot of the scenarios.
- * There is `KeyframesProcessor` which is actually called by wyw. In its
- * initialization, it checks for the type of parameters and depending
- * on whether any one of the params is a template type, it
- * internally creates `KeyframesTaggedTemplateProcessor` or `KeyframesObjectProcessor`
- * if the css is called with object values.
- * These both processors internally handle their own relevant logic.
- * They implement a common interface which is what is called by the main
- * KeyframesProcessor.
- */
-
 import { Params, TailProcessorParams, validateParams } from '@wyw-in-js/processor-utils';
 import { evaluateClassNameArg } from '@pigment-css/utils';
 import { CssProcessor } from './css';

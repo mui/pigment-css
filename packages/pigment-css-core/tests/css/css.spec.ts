@@ -19,6 +19,30 @@ const cls2 = css(({ theme }) => ({
   // @ts-expect-error main1 does not exists in theme.palette
   backgroundColor: theme.palette.main1,
   border: `1px solid ${t('$palette.main')}`,
+  variants: {
+    palette: {
+      primary: {
+        color: 'red',
+        borderColor: 'pink',
+      },
+      secondary: {
+        color: 'red',
+        borderColor: 'pink',
+      },
+    },
+    size: {
+      large: {},
+      small: {},
+    },
+  },
+  compoundVariants: [
+    {
+      palette: 'secondary',
+      css: {
+        borderWidth: 1,
+      },
+    },
+  ],
 }));
 
 const cls2WithMetadata = css({
@@ -35,7 +59,7 @@ export const cls3WithMetadata = css({
 })(
   ({ theme }) => ({
     color: '$palette.main',
-    // @ts-expect-error main1 does not exists in theme.palette
+    // @ts-expect-error main1 does not exist in theme.palette
     backgroundColor: theme.palette.main1,
     border: `1px solid ${t('$palette.main')}`,
   }),
@@ -57,4 +81,8 @@ const cls4WithMetadata = css({
 })`
   color: red;
   background-color: ${t('$palette.main')};
+  border-color: ${
+    // @ts-expect-error main1 does not exists in theme.palette
+    t('$palette.main1')
+  };
 `;

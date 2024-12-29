@@ -1,8 +1,18 @@
+import { t } from '@pigment-css/theme';
 import { keyframes } from '../../src';
 
-keyframes`
+declare module '@pigment-css/theme' {
+  interface Theme {
+    palette: {
+      main: string;
+    };
+  }
+}
+
+keyframes(
+  ({ theme }) => `
   0% {
-    background: ${({ theme }) => theme.palette.main};
+    background: ${theme.palette.main};
   }
 
   50% {
@@ -10,49 +20,49 @@ keyframes`
   }
 
   100% {
-    background: ${({ theme }) => {
+    background: ${
       // @ts-expect-error secondary does not exist on theme.
-      return theme.palette.secondary.main;
-    }};
+      theme.palette.secondary.main
+    };
   }
-`;
+`,
+);
+
+const res = keyframes({
+  className: 'loop',
+})(
+  ({ theme }) => `
+  0% {
+    background: ${theme.palette.main};
+  }
+
+  50% {
+    background: green;
+  }
+
+  100% {
+    background: ${
+      // @ts-expect-error secondary does not exist on theme.
+      theme.palette.secondary.main
+    };
+  }
+`,
+);
 
 keyframes({
   className: 'loop',
-})`
-  0% {
-    background: ${({ theme }) => theme.palette.main};
-  }
-
-  50% {
-    background: green;
-  }
-
-  100% {
-    background: ${({ theme }) => {
-      // @ts-expect-error secondary does not exist on theme.
-      return theme.palette.secondary.main;
-    }};
-  }
-`;
-
-keyframes(
-  {
-    className: 'loop',
+})({
+  '0%': {
+    background: t('$palette.main'),
   },
-  ({ theme }) => ({
-    '0%': {
-      background: theme.palette.main,
-    },
-    '50%': {
-      background: 'green',
-    },
-    '100%': {
-      // @ts-expect-error secondary does not exist on theme.
-      background: theme.palette.secondary.main,
-    },
-  }),
-);
+  '50%': {
+    background: 'green',
+  },
+  '100%': {
+    // @ts-expect-error secondary does not exist on theme.
+    background: theme.palette.secondary.main,
+  },
+});
 
 keyframes(({ theme }) => ({
   '0%': {
