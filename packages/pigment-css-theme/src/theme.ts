@@ -1,15 +1,17 @@
 export interface Theme {}
 
-type Join<K extends string | number, P extends string> = K extends string | number
-  ? P extends ''
-    ? `${K}`
-    : `${P}.${K}`
+type Join<Left, Right, Separator extends string = '.'> = Left extends string | number
+  ? Right extends string | number
+    ? `${Left}${Right extends '' ? '' : Separator}${Right}`
+    : never
   : never;
 
-type PathsToLeaves<T extends object, P extends string = ''> = {
-  [K in keyof T]: T[K] extends object
-    ? PathsToLeaves<T[K], Join<K & string, P>>
-    : Join<K & string, P>;
+type PathsToLeaves<T extends object> = {
+  [K in keyof T]: K extends string | number
+    ? T[K] extends object
+      ? Join<K, PathsToLeaves<T[K]>>
+      : `${K}`
+    : never;
 }[keyof T];
 
 export type ThemeKey = `$${PathsToLeaves<Theme>}`;
@@ -28,7 +30,7 @@ export type ThemeKey = `$${PathsToLeaves<Theme>}`;
  * // override Theme type as per docs
  *
  * const cls1 = css({
- *   border: `1px solid t('$palette.main')`,
+ *   border: `1px solid ${t('$palette.main')}`,
  * })
  * ```
  */
