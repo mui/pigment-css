@@ -611,6 +611,7 @@ export class StyledProcessor extends BaseProcessor {
     if (!styleObj) {
       return '';
     }
+    styleObj = { ...styleObj };
     if (styleObj.variants) {
       variantsAccumulator?.push(
         ...styleObj.variants.map((variant: Omit<VariantData, 'originalExpression'>) => ({
