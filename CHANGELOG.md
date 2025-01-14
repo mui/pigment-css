@@ -1,5 +1,32 @@
 # [Versions](https://mui.com/versions/)
 
+## 0.0.30
+
+<!-- generated comparing v0.0.29..master -->
+
+_Jan 14, 2025_
+
+A big thanks to the 4 contributors who made this release possible.
+
+### `@pigment-css/react@0.0.30`
+
+- fix: spread style object before deleting variants (#364) @brijeshb42
+- fix: type CreateStyledComponent to accept string and object (#354) @FourwingsY
+
+### `@pigment-css/theme@0.0.30`
+
+- fix(theme): Allow listing values with number keys (#360) @brijeshb42
+
+### `@pigment-css/vite-plugin@0.0.30`
+
+- Bump Vite to v6 (#355) @bogdanyluk
+
+### Core
+
+- [docs] Fix Vale error (a538810) @oliviertassinari
+
+All contributors of this release in alphabetical order: @bogdanyluk, @brijeshb42, @FourwingsY, @oliviertassinari
+
 ## 0.0.29
 
 <!-- generated comparing v0.0.28..master -->
