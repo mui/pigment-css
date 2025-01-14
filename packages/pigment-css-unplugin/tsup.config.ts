@@ -6,6 +6,7 @@ const baseConfig: Options = {
   ...(config as Options),
   tsconfig: './tsconfig.build.json',
   env: {
+    ...(config as Options).env,
     RUNTIME_PACKAGE_NAME: runtimePackageJson.name,
   },
 };

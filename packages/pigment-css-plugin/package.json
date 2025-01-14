@@ -1,0 +1,102 @@
+{
+  "name": "@pigment-css/plugin",
+  "version": "0.0.30",
+  "author": "MUI Team",
+  "description": "Bundler plugins for Pigment CSS.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mui/pigment-css.git",
+    "directory": "packages/pigment-css-plugin"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mui/pigment-css/issues"
+  },
+  "homepage": "https://github.com/mui/pigment-css/tree/master/README.md",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/mui-org"
+  },
+  "scripts": {
+    "clean": "rimraf build types",
+    "watch": "tsup --watch --tsconfig tsconfig.build.json",
+    "copy-license": "node ../../scripts/pigment-license.mjs",
+    "build": "tsup --tsconfig tsconfig.build.json && node scripts/generateExports.mjs",
+    "typescript": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-typescript": "^7.26.0",
+    "@pigment-css/theme": "workspace:*",
+    "@pigment-css/utils": "workspace:*",
+    "@wyw-in-js/shared": "^0.5.5",
+    "@wyw-in-js/transform": "^0.5.5",
+    "babel-plugin-define-var": "^0.1.0",
+    "unplugin": "2.1.2"
+  },
+  "devDependencies": {
+    "@types/babel__core": "^7.20.5",
+    "next": "^15.1.4",
+    "vite": "^6.0.7",
+    "webpack": "^5.97.1"
+  },
+  "peerDependencies": {
+    "next": "*",
+    "vite": "*",
+    "webpack": "^5"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    },
+    "vite": {
+      "optional": true
+    },
+    "webpack": {
+      "optional": true
+    }
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "build",
+    "exports",
+    "nextjs-atifacts",
+    "src",
+    "loader.js",
+    "package.json",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    "./vite": {
+      "types": "./exports/vite.d.ts",
+      "import": {
+        "types": "./exports/vite.d.mts",
+        "default": "./exports/vite.mjs"
+      },
+      "default": "./exports/vite.js"
+    },
+    "./webpack": {
+      "types": "./exports/webpack.d.ts",
+      "import": {
+        "types": "./exports/webpack.d.mts",
+        "default": "./exports/webpack.mjs"
+      },
+      "default": "./exports/webpack.js"
+    },
+    "./nextjs": {
+      "types": "./exports/nextjs.d.ts",
+      "import": {
+        "types": "./exports/nextjs.d.mts",
+        "default": "./exports/nextjs.mjs"
+      },
+      "default": "./exports/nextjs.js"
+    }
+  }
+}

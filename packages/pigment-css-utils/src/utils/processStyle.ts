@@ -13,7 +13,7 @@ type ExtendedStyleObj = {
 };
 type BaseStyleObject = ExtendedStyleObj & Record<string, string | object>;
 
-function isUnitLess(cssKey: string) {
+export function isUnitLess(cssKey: string) {
   return unitlessKeys[cssKey] === 1;
 }
 
