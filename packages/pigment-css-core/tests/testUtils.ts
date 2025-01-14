@@ -14,6 +14,15 @@ type TransformOptions = {
 
 const shouldUpdateOutput = process.env.UPDATE_FIXTURES === 'true';
 
+function replaceAbsolutePathInSourceMap(sourcemap: string) {
+  const sourceMapJson = JSON.parse(sourcemap) as { sources: string[]; file: string };
+  sourceMapJson.sources = sourceMapJson.sources.map((absPath) =>
+    absPath.replace(process.cwd(), ''),
+  );
+  sourceMapJson.file = sourceMapJson.file.replace(process.cwd(), '');
+  return JSON.stringify(sourceMapJson);
+}
+
 export async function runTransformation(absolutePath: string, options?: TransformOptions) {
   const cache = new TransformCacheCollection();
   const { emitter: eventEmitter } = createFileReporter(false);
@@ -85,7 +94,7 @@ export async function runTransformation(absolutePath: string, options?: Transfor
   const formattedCss =
     (result.cssText ?? '') +
     (result.cssSourceMapText
-      ? `/*# sourceMappingURL=data:application/json;base64,${Buffer.from(result.cssSourceMapText).toString('base64')}*/`
+      ? `/*# sourceMappingURL=data:application/json;base64,${Buffer.from(replaceAbsolutePathInSourceMap(result.cssSourceMapText)).toString('base64')}*/`
       : '');
 
   if (!outputContent || shouldUpdateOutput) {
