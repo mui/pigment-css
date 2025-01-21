@@ -454,8 +454,8 @@ importers:
   packages/pigment-css-core:
     dependencies:
       '@babel/types':
-        specifier: ^7.26.0
-        version: 7.26.0
+        specifier: ^7.25.8
+        version: 7.26.5
       '@pigment-css/theme':
         specifier: workspace:^
         version: link:../pigment-css-theme
