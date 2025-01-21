@@ -30,7 +30,7 @@ export type GenerateClassData<M, E> = {
 /**
  * Feature flags that user can choose to enable/disable to control the output
  */
-type PigmentFeature = {
+type PigmentFeatures = {
   useLayer?: boolean;
 };
 
@@ -39,7 +39,7 @@ type PigmentFeature = {
  */
 export type PigmentConfig = Omit<Partial<PluginOptions>, 'features'> & {
   wywFeatures?: PluginOptions['features'];
-  features?: PigmentFeature;
+  features?: PigmentFeatures;
   themeArgs?: {
     theme: Theme;
   };
@@ -86,7 +86,7 @@ export type PigmentConfig = Omit<Partial<PluginOptions>, 'features'> & {
  */
 export type TransformedInternalConfig = Omit<PigmentConfig, 'wywFeatures' | 'features'> & {
   feautres?: PluginOptions['features'];
-  pigmentFeatures?: PigmentFeature;
+  pigmentFeatures?: PigmentFeatures;
 };
 
 /**
