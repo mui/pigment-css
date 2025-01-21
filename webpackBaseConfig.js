@@ -9,6 +9,8 @@ module.exports = {
   resolve: {
     modules: [__dirname, 'node_modules'],
     alias: {
+      '@pigment-css/theme': path.resolve(__dirname, './packages/pigment-css-theme/src'),
+      '@pigment-css/utils': path.resolve(__dirname, './packages/pigment-css-utils/src'),
       '@pigment-css/react': path.resolve(__dirname, './packages/pigment-css-react/src'),
       docs: path.resolve(__dirname, './docs'),
       '@mui-internal/api-docs-builder': path.resolve(

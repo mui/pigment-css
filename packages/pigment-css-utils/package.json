@@ -1,0 +1,101 @@
+{
+  "name": "@pigment-css/utils",
+  "version": "0.0.28",
+  "main": "build/index.js",
+  "module": "build/index.mjs",
+  "types": "build/index.d.ts",
+  "author": "MUI Team",
+  "description": "Utilities to be used internally across different Pigment CSS packages.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mui/pigment-css.git",
+    "directory": "packages/pigment-css-utils"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mui/pigment-css/issues"
+  },
+  "homepage": "https://github.com/mui/pigment-css/tree/master/README.md",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/mui-org"
+  },
+  "scripts": {
+    "clean": "rimraf build types processors utils",
+    "watch": "tsup --watch --clean false",
+    "copy-license": "node ../../scripts/pigment-license.mjs",
+    "build": "tsup",
+    "test": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=text mocha 'packages/pigment-css-utils/**/*.test.{js,ts,tsx}'",
+    "test:update": "cd ../../ && cross-env NODE_ENV=test UPDATE_FIXTURES=true mocha 'packages/pigment-css-utils/**/*.test.{js,ts,tsx}'",
+    "test:ci": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=lcov --report-dir=./coverage/pigment-css-utils mocha 'packages/pigment-css-utils/**/*.test.{js,ts,tsx}'",
+    "typescript": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@babel/types": "^7.26.5",
+    "@babel/parser": "^7.26.5",
+    "@emotion/unitless": "0.10.0",
+    "@emotion/serialize": "^1.3.3",
+    "@pigment-css/theme": "workspace:*",
+    "@wyw-in-js/processor-utils": "^0.5.5",
+    "@wyw-in-js/shared": "^0.5.5",
+    "@wyw-in-js/transform": "^0.5.5",
+    "cssesc": "^3.0.0",
+    "lodash": "4.17.21"
+  },
+  "devDependencies": {
+    "@types/cssesc": "3.0.2",
+    "chai": "^4.4.1"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src",
+    "build",
+    "package.json",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": {
+        "types": "./build/index.d.mts",
+        "default": "./build/index.mjs"
+      },
+      "require": "./build/index.js",
+      "default": "./build/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "targets": {
+      "test": {
+        "cache": false,
+        "dependsOn": [
+          "build"
+        ]
+      },
+      "test:update": {
+        "cache": false,
+        "dependsOn": [
+          "build"
+        ]
+      },
+      "test:ci": {
+        "cache": false,
+        "dependsOn": [
+          "build"
+        ]
+      },
+      "build": {
+        "outputs": [
+          "{projectRoot}/build"
+        ],
+        "dependsOn": [
+          "^build"
+        ]
+      }
+    }
+  }
+}
