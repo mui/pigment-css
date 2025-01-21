@@ -4,6 +4,7 @@ import {
   generateCssFromTheme,
   babelPlugin as sxBabelPlugin,
   generateThemeWithCssVars,
+  preprocessor as basePreProcessor,
 } from '@pigment-css/utils';
 import type { PigmentConfig } from '@pigment-css/utils';
 import type { Theme } from '@pigment-css/theme';
@@ -12,6 +13,7 @@ import {
   createFileReporter,
   getFileIdx,
   IFileReporterOptions,
+  Result,
   TransformCacheCollection,
   transform as wywTransform,
 } from '@wyw-in-js/transform';
@@ -33,6 +35,7 @@ type BundlerConfig = Omit<PigmentConfig, 'themeArgs'> & {
   sourceMap?: boolean;
   asyncResolve?: AsyncResolver;
   createResolver?: (ctx: any, projectPath: string, config?: any) => AsyncResolver;
+  postTransform?: (result: Result, fileName: string, cssFilename: string) => Promise<void>;
 };
 
 const DEFAULT_CORE_PACKAGES = ['@pigment-css/core', '@pigment-css/react-new'];
@@ -130,11 +133,11 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
     tagResolver,
     asyncResolve: asyncResolveOpt,
     sourceMap = false,
+    postTransform,
     createResolver,
     ...rest
   } = options;
   const runtimePackages = Array.from(new Set(DEFAULT_CORE_PACKAGES.concat(corePackages)));
-  const cssLookup = new Map<string, string>();
   const cssFileLookup = nextJsOptions ? globalCssFileLookup : new Map<string, string>();
   const baseName = `${process.env.PACKAGE_NAME}/${meta.framework}`;
   const cache = new TransformCacheCollection();
@@ -169,7 +172,7 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
                 id.endsWith(`${lib}${path.sep}styles.css`) || id.includes(`${lib}${path.sep}theme`),
             );
           },
-          transform(code, id) {
+          transform(_code, id) {
             if (id.endsWith('styles.css')) {
               return generateCssFromTheme('vars' in theme ? theme.vars : theme);
             }
@@ -258,11 +261,18 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
         return pluginResolver(what, importer, stack) ?? null;
       };
 
+      const babelPlugins = [
+        meta.framework === 'vite' ? '@babel/plugin-syntax-typescript' : '',
+        'babel-plugin-define-var',
+        ...(rest.babelOptions?.plugins ?? []),
+      ].filter(Boolean);
       const result = await wywTransform(
         {
           options: {
             filename,
             root: projectPath,
+            // @TODO - Handle RTL processing
+            preprocessor: basePreProcessor,
             pluginOptions: {
               ...rest,
               // @ts-ignore WyW does not identify this property
@@ -275,7 +285,7 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
               },
               babelOptions: {
                 ...rest.babelOptions,
-                plugins: ['babel-plugin-define-var', ...(rest.babelOptions?.plugins ?? [])],
+                plugins: babelPlugins,
                 presets: !(filename.endsWith('ts') || filename.endsWith('tsx'))
                   ? Array.from(presets)
                   : Array.from(presets).concat('@babel/preset-typescript'),
@@ -306,9 +316,7 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
         asyncResolver,
       );
 
-      let { cssText, dependencies = [] } = result;
-
-      if (typeof cssText !== 'string') {
+      if (typeof result.cssText !== 'string') {
         return null;
       }
 
@@ -319,13 +327,18 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
         };
       }
 
-      if (nextJsOptions && cssText.includes('url(')) {
-        cssText = await handleUrlReplacement(cssText, filename, asyncResolver, projectPath);
+      if (nextJsOptions && result.cssText.includes('url(')) {
+        result.cssText = await handleUrlReplacement(
+          result.cssText,
+          filename,
+          asyncResolver,
+          projectPath,
+        );
       }
 
       if (sourceMap && result.cssSourceMapText) {
         const map = Buffer.from(result.cssSourceMapText).toString('base64');
-        cssText += `/*# sourceMappingURL=data:application/json;base64,${map}*/`;
+        result.cssText += `/*# sourceMappingURL=data:application/json;base64,${map}*/`;
       }
 
       if (nextJsOptions) {
@@ -334,7 +347,7 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
             encodeURIComponent(
               JSON.stringify({
                 filename: filename.split(path.sep).pop(),
-                source: cssText,
+                source: result.cssText,
               }),
             ),
           ),
@@ -344,15 +357,23 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
           code: `${result.code}\nimport ${JSON.stringify(data)};`,
           map: result.sourceMap,
         };
-      } else {
-        const cssFilename = path
-          .normalize(`${filename.replace(/\.[jt]sx?$/, '')}.pigment.css`)
-          .replace(/\\/g, path.posix.sep);
+      }
+      const cssFilename = path
+        .normalize(`${filename.replace(/\.[jt]sx?$/, '')}.virtual.pigment.css`)
+        .replace(/\\/g, path.posix.sep);
 
-        const cssRelativePath = path
-          .relative(projectPath, cssFilename)
-          .replace(/\\/g, path.posix.sep);
-        const cssId = `/${cssRelativePath}`;
+      const cssRelativePath = path
+        .relative(projectPath, cssFilename)
+        .replace(/\\/g, path.posix.sep);
+      // Starting with null character so that it calls the resolver method (resolveId in line:430)
+      // Otherwise, webpack tries to resolve the path directly
+      const cssId = `\0${cssRelativePath}`;
+
+      cssFileLookup.set(cssId, result.cssText);
+      result.code += `\nimport ${JSON.stringify(cssId)};`;
+
+      if (postTransform) {
+        await postTransform.call(this, result, filename, cssId);
       }
 
       return {
@@ -360,7 +381,6 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
         map: result.sourceMap,
       };
     },
-    // ...(!nextJsOptions ? {} : {}),
   };
 
   if (!nextJsOptions) {
