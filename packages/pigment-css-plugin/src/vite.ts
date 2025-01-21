@@ -1,16 +1,15 @@
 import { existsSync } from 'node:fs';
-import { type Rollup, optimizeDeps, Plugin, ViteDevServer } from 'vite';
+import type { Rollup, ResolvedConfig, ViteDevServer } from 'vite';
+import { optimizeDeps } from 'vite';
 import { syncResolve } from '@wyw-in-js/shared';
 
 import { plugin } from './unplugin';
 import { AsyncResolver } from './utils';
 
 export function pigment(config: Parameters<(typeof plugin)['vite']>[0]) {
-  function createResolver(
-    ctx: Rollup.TransformPluginContext,
-    _projectPath: string,
-    viteConfig?: any,
-  ): AsyncResolver {
+  let viteConfig: ResolvedConfig;
+
+  function createResolver(ctx: Rollup.TransformPluginContext): AsyncResolver {
     return async (what, importer, stack) => {
       const resolved = await ctx.resolve(what, importer);
       if (resolved) {
@@ -40,6 +39,7 @@ export function pigment(config: Parameters<(typeof plugin)['vite']>[0]) {
       throw new Error(`Could not resolve ${what}`);
     };
   }
+
   const targets: { dependencies: string[]; id: string }[] = [];
 
   let devServer: ViteDevServer;
@@ -75,5 +75,20 @@ export function pigment(config: Parameters<(typeof plugin)['vite']>[0]) {
     },
   });
 
-  return vitePlugin;
+  const devServerPlugin: typeof vitePlugin = {
+    name: `${process.env.PACKAGE_NAME}/vite/dev-server`,
+    enforce: 'pre',
+    configResolved(resolvedConfig) {
+      viteConfig = resolvedConfig as unknown as ResolvedConfig;
+    },
+    configureServer(server) {
+      devServer = server as unknown as ViteDevServer;
+    },
+  };
+
+  if (Array.isArray(vitePlugin)) {
+    vitePlugin.push(devServerPlugin);
+    return vitePlugin;
+  }
+  return [vitePlugin, devServerPlugin];
 }
