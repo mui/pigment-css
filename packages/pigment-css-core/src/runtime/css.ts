@@ -3,12 +3,12 @@
  */
 type Props = Record<string, string | number>;
 
-type VariantInfo = {
+export type VariantInfo = {
   $$cls: string;
   props: Props;
 };
 
-type ClassInfo = {
+export type ClassInfo = {
   classes: string;
   variants?: VariantInfo[];
 };

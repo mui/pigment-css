@@ -48,4 +48,4 @@ export type CSSObject<Props extends object> =
 export type ThemeArgs = {
   theme: Theme;
 };
-export type Primitive = string | null | undefined | boolean | number;
+export type Primitive = string | String | null | undefined | boolean | number;

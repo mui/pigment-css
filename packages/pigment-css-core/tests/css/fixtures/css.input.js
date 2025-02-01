@@ -69,6 +69,9 @@ export const cls4 = css({ className: 'Test-class2' })(
         },
       },
     },
+    defaultVariants: {
+      size: 'medium',
+    },
   }),
   ({ theme }) => `
     ---flex: 43;
@@ -139,7 +142,6 @@ export const cls5 = css({ className: 'Test-class3' })(({ theme }) => ({
 
 export const cls6 = css(({ theme }) => ({
   color: '$palette.main',
-  // @ts-expect-error main1 does not exists in theme.palette
   backgroundColor: theme.palette.main1,
   border: `1px solid ${t('$palette.main')}`,
   variants: {

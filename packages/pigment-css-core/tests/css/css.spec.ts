@@ -43,7 +43,15 @@ const cls2 = css(({ theme }) => ({
       },
     },
   ],
+  defaultVariants: {
+    palette: 'primary',
+  },
 }));
+
+const res = cls2({
+  palette: 'primary',
+  size: 'large',
+});
 
 const cls2WithMetadata = css({
   className: 'Test1',

@@ -37,6 +37,9 @@ export const cls4 = /*#__PURE__*/ _css4({
       },
     },
   ],
+  defaultVariants: {
+    size: 'medium',
+  },
 });
 export const cls5 = /*#__PURE__*/ _css5({
   classes: 'Test-class3',

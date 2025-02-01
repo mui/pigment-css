@@ -1,6 +1,6 @@
 const BUNDLER_MESSAGE =
-  'Make sure to install the bundler specific plugin and use it. @pigment-css/vite-plugin for Vite integration or @pigment-css/nextjs-plugin for Next.js integration.';
+  'Make sure to install the Pigment CSS plugin package and configure it. @pigment-css/plugin/vite for Vite integration or @pigment-css/plugin/nextjs for Next.js integration.';
 
-export function generateErrorMessage(fnName: string) {
-  return `${process.env.PACKAGE_NAME}: You were trying to call "${fnName}" function without configuring your bundler. ${BUNDLER_MESSAGE}`;
+export function generateErrorMessage(fnName: string, packageName = process.env.PACKAGE_NAME) {
+  return `${packageName}: You were trying to call "${fnName}" function without configuring your bundler. ${BUNDLER_MESSAGE}`;
 }

@@ -21,6 +21,7 @@ import {
   serializeStyles,
   valueToLiteral,
   evaluateClassNameArg,
+  getCSSVar,
 } from '@pigment-css/utils';
 import {
   CallParam,
@@ -48,6 +49,8 @@ export type TemplateCallback = (params: Record<string, unknown> | undefined) => 
 
 export abstract class BaseCssProcessor {
   public variants: { $$cls: string; props: Record<string, string | number> }[] = [];
+
+  public defaultVariants: Record<string, unknown> = {};
 
   public variables: StyleObjectReturn['variables'] = {};
 
@@ -159,6 +162,12 @@ export class CssTaggedTemplateProcessor extends BaseCssProcessor {
             const evaluatedValue = values.get(param.ex.name);
             if (typeof evaluatedValue === 'function') {
               templateExpressions.push(evaluatedValue(themeArgs));
+            } else if (
+              typeof evaluatedValue === 'object' &&
+              evaluatedValue &&
+              (evaluatedValue as unknown as Record<string, boolean>).isThemeVar
+            ) {
+              templateExpressions.push(getCSSVar(evaluatedValue.toString(), true));
             } else {
               templateExpressions.push(evaluatedValue as Primitive);
             }
@@ -333,6 +342,7 @@ export class CssObjectProcessor extends BaseCssProcessor {
     addStyles(result.base, 'base');
     addStyles(result.variants, 'variants');
     addStyles(result.compoundVariants, 'compoundvariants');
+    this.defaultVariants = result.defaultVariants;
   }
 }
 
@@ -452,6 +462,14 @@ export class CssProcessor extends BaseProcessor {
         t.objectProperty(
           t.identifier('variants'),
           valueToLiteral(this.processor.variants), // , callParams[1] as ExpressionValue),
+        ),
+      );
+    }
+    if (Object.keys(this.processor.defaultVariants).length > 0) {
+      args.properties.push(
+        t.objectProperty(
+          t.identifier('defaultVariants'),
+          valueToLiteral(this.processor.defaultVariants),
         ),
       );
     }
