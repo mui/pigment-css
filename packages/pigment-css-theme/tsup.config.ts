@@ -6,7 +6,7 @@ const baseConfig: Options = {
   tsconfig: './tsconfig.build.json',
 };
 
-const BASE_FILES = ['index.ts'];
+const BASE_FILES = ['index.ts', 'index-node.ts'];
 
 export default defineConfig([
   {

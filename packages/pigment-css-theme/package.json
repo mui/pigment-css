@@ -47,6 +47,14 @@
   ],
   "exports": {
     ".": {
+      "node": {
+        "types": "./build/index.d.ts",
+        "import": {
+          "types": "./build/index.d.mts",
+          "default": "./build/index-node.mjs"
+        },
+        "default": "./build/index-node.js"
+      },
       "types": "./build/index.d.ts",
       "import": {
         "types": "./build/index.d.mts",
