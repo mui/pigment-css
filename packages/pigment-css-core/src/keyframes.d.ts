@@ -1,12 +1,8 @@
-import type { CSSPropertiesMultiValue, Primitive, ThemeArgs } from './base';
+import type { CSSObjectNoCallback, Primitive, ThemeArgs } from './base';
 import { BaseInterface } from './css';
 
 interface KeyframesObject {
-  [key: string]: {
-    [K in keyof CSSPropertiesMultiValue]:
-      | CSSPropertiesMultiValue[K]
-      | Array<CSSPropertiesMultiValue[K]>;
-  };
+  [key: string]: CSSObjectNoCallback;
 }
 
 type KeyframesFn = (themeArgs: ThemeArgs) => string;
@@ -21,6 +17,6 @@ interface KeyframesWithOption {
   <M extends BaseInterface>(metadata: M): KeyframesNoOption;
 }
 
-declare const keyframes: KeyframesNoOption & KeyframesWithOption;
+declare const keyframes: KeyframesWithOption & KeyframesNoOption;
 
 export default keyframes;

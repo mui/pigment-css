@@ -5,7 +5,7 @@ class WrapperString extends String {
 }
 
 /**
- * It just returns what it receives at this point but with a wrapper to identity in Node.js.
+ * It just returns what it receives at this point but with a wrapper to identify in Node.js.
  * It is there to strictly type first argument as per the overridden `Theme`.
  *
  * @example Usage in application

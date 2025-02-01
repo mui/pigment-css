@@ -16,10 +16,6 @@ type PathsToLeaves<T extends object> = {
 
 export type ThemeKey = `$${PathsToLeaves<Theme>}`;
 
-class WrapperString extends String {
-  isThemeVar = true;
-}
-
 /**
  * It just returns what it receives at this point. Actual transformation happens during the build time
  * separately.
@@ -38,6 +34,6 @@ class WrapperString extends String {
  * })
  * ```
  */
-export function t(themeKey: ThemeKey): WrapperString {
-  return new WrapperString(themeKey);
+export function t(themeKey: ThemeKey): ThemeKey {
+  return themeKey;
 }

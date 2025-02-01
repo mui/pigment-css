@@ -64,4 +64,5 @@ export function css({ classes, variants = [], defaultVariants = {} }: ClassInfo)
   cssWithProps.toString = function toString() {
     return baseClasses;
   };
+  return cssWithProps;
 }
