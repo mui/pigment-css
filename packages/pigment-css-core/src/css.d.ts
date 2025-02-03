@@ -2,17 +2,17 @@ import { CSSObjectNoCallback, CSSProperties, Primitive, ThemeArgs } from './base
 
 export type CssFn<Props extends object> = (props: Props) => string | number;
 
-type Variants = {
+export type Variants = {
   [VariantGroup: string]: {
     [VariantName: string]: CSSObjectNoCallback;
   };
 };
 
-type VariantNames<T extends Variants> = {
+export type VariantNames<T extends Variants> = {
   [K in keyof T]?: keyof T[K];
 };
 
-type CompoundVariant<T extends Variants> = VariantNames<T> & {
+export type CompoundVariant<T extends Variants> = VariantNames<T> & {
   css: CSSProperties;
 };
 
@@ -44,7 +44,7 @@ type CSSWithVariants<V extends Variants> = CSSObjectNoCallback & CVAConfig<V>;
 
 type CssValue<V extends Variants> = CSSWithVariants<V> | string;
 
-type CssArg<V extends Variants> = ((themeArgs: ThemeArgs) => CssValue<V>) | CssValue<V>;
+export type CssArg<V extends Variants> = ((themeArgs: ThemeArgs) => CssValue<V>) | CssValue<V>;
 
 type CssReturn = {
   className: string;

@@ -14,7 +14,7 @@ export type ClassInfo = {
   defaultVariants?: Props;
 };
 
-function isVariantMatching(props: Props, variantProps: Props, defaultVariants: Props = {}) {
+export function isVariantMatching(props: Props, variantProps: Props, defaultVariants: Props = {}) {
   // eslint-disable-next-line no-restricted-syntax
   for (const key in variantProps) {
     if (!variantProps.hasOwnProperty(key)) {
