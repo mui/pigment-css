@@ -8,10 +8,8 @@ import {
   styled as _styled6,
   styled as _styled7,
 } from '@pigment-css/react-new/runtime';
+import { TestComponent } from './dummy-component.fixture';
 export const rotateKeyframe = 'rotate';
-function TestComponent() {
-  return <h1>Hello</h1>;
-}
 const _exp4 = /*#__PURE__*/ () => TestComponent;
 const StyledTest = /*#__PURE__*/ _styled(_exp4())({
   classes: 'StyledTest',

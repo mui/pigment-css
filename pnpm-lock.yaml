@@ -630,6 +630,9 @@ importers:
       '@babel/types':
         specifier: ^7.25.8
         version: 7.26.5
+      '@emotion/is-prop-valid':
+        specifier: ^1.3.1
+        version: 1.3.1
       '@pigment-css/core':
         specifier: workspace:*
         version: link:../pigment-css-core

@@ -1,4 +1,5 @@
 import { styled, keyframes, css } from '@pigment-css/react-new';
+import { TestComponent } from './dummy-component.fixture';
 
 const cls1 = css({
   color: 'red',
@@ -12,10 +13,6 @@ export const rotateKeyframe = keyframes({ className: 'rotate' })({
     transform: 'rotate(0deg)',
   },
 });
-
-function TestComponent() {
-  return <h1>Hello</h1>;
-}
 
 const StyledTest = styled(TestComponent, {
   className: 'StyledTest',
