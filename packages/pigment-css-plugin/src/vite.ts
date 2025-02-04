@@ -6,7 +6,7 @@ import { syncResolve } from '@wyw-in-js/shared';
 import { plugin } from './unplugin';
 import { AsyncResolver } from './utils';
 
-export function pigment(config: Parameters<(typeof plugin)['vite']>[0]) {
+export default function pigment(config: Parameters<(typeof plugin)['vite']>[0]) {
   let viteConfig: ResolvedConfig;
 
   function createResolver(ctx: Rollup.TransformPluginContext): AsyncResolver {

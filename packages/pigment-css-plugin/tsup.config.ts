@@ -8,6 +8,7 @@ const baseConfig: Options = {
     ...(config as Options).env,
     RUNTIME_PACKAGE_NAME: zeroPkgJson.name,
   },
+  cjsInterop: false,
 };
 
 const frameworks = ['webpack', 'vite', 'nextjs'];

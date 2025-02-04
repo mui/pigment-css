@@ -2,7 +2,7 @@ import * as path from 'node:path';
 import type { NextConfig } from 'next';
 import { findPagesDir } from 'next/dist/lib/find-pages-dir';
 
-import { pigment as webpackPlugin } from './webpack';
+import webpackPlugin from './webpack';
 
 const NEXTJS_ARTIFACTS = 'nextjs-artifacts';
 
@@ -12,7 +12,7 @@ const extractionFile = path.join(
   'pigment-virtual.css',
 );
 
-export function pigment(
+export default function pigment(
   nextConfig: NextConfig,
   pigmentConfig?: Parameters<typeof webpackPlugin>[0],
 ) {
@@ -47,7 +47,7 @@ export function pigment(
     config.module.rules.unshift({
       enforce: 'pre',
       test: (filename: string) => filename.endsWith('pigment-virtual.css'),
-      use: require.resolve(`../loader`),
+      use: require.resolve('./nextjs-css-loader'),
     });
     config.plugins.push(
       webpackPlugin({

@@ -21,7 +21,7 @@
     "clean": "rimraf build types",
     "watch": "tsup --watch --tsconfig tsconfig.build.json",
     "copy-license": "node ../../scripts/pigment-license.mjs",
-    "build": "tsup --tsconfig tsconfig.build.json && node scripts/generateExports.mjs",
+    "build": "tsup --tsconfig tsconfig.build.json",
     "typescript": "tsc --noEmit -p ."
   },
   "dependencies": {
@@ -29,6 +29,7 @@
     "@babel/preset-typescript": "^7.26.0",
     "@pigment-css/theme": "workspace:*",
     "@pigment-css/utils": "workspace:*",
+    "@rollup/pluginutils": "^5.1.4",
     "@wyw-in-js/shared": "^0.5.5",
     "@wyw-in-js/transform": "^0.5.5",
     "babel-plugin-define-var": "^0.1.0",
@@ -62,11 +63,8 @@
   },
   "files": [
     "build",
-    "exports",
     "nextjs-atifacts",
     "src",
-    "loader.js",
-    "package.json",
     "LICENSE"
   ],
   "engines": {
@@ -75,28 +73,36 @@
   "exports": {
     "./package.json": "./package.json",
     "./vite": {
-      "types": "./exports/vite.d.ts",
+      "types": "./build/vite.d.ts",
       "import": {
-        "types": "./exports/vite.d.mts",
-        "default": "./exports/vite.mjs"
+        "types": "./build/vite.d.mts",
+        "default": "./build/vite.mjs"
       },
-      "default": "./exports/vite.js"
+      "default": "./build/vite.js"
     },
     "./webpack": {
-      "types": "./exports/webpack.d.ts",
+      "types": "./build/webpack.d.ts",
       "import": {
-        "types": "./exports/webpack.d.mts",
-        "default": "./exports/webpack.mjs"
+        "types": "./build/webpack.d.mts",
+        "default": "./build/webpack.mjs"
       },
-      "default": "./exports/webpack.js"
+      "default": "./build/webpack.js"
     },
     "./nextjs": {
-      "types": "./exports/nextjs.d.ts",
+      "types": "./build/nextjs.d.ts",
       "import": {
-        "types": "./exports/nextjs.d.mts",
-        "default": "./exports/nextjs.mjs"
+        "types": "./build/nextjs.d.mts",
+        "default": "./build/nextjs.mjs"
       },
-      "default": "./exports/nextjs.js"
+      "default": "./build/nextjs.js"
+    },
+    "./nextjs-css-loader": {
+      "types": "./build/nextjs-css-loader.d.ts",
+      "import": {
+        "types": "./build/nextjs-css-loader.d.mts",
+        "default": "./build/nextjs-css-loader.mjs"
+      },
+      "default": "./build/nextjs-css-loader.js"
     }
   }
 }
