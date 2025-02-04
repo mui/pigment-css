@@ -5,7 +5,7 @@ import { NativeBuildContext } from 'unplugin';
 import { plugin } from './unplugin';
 import { AsyncResolver } from './utils';
 
-export function pigment(config: Parameters<(typeof plugin)['webpack']>[0]) {
+export default function pigment(config: Parameters<(typeof plugin)['webpack']>[0]) {
   function createResolver(ctx: NativeBuildContext, projectPath: string): AsyncResolver {
     return async (what, importer) => {
       if (ctx.framework !== 'webpack') {

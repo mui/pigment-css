@@ -17,10 +17,14 @@ import {
   TransformCacheCollection,
   transform as wywTransform,
 } from '@wyw-in-js/transform';
+import { createFilter, type FilterPattern } from '@rollup/pluginutils';
 import { logger as wywLogger } from '@wyw-in-js/shared';
+
 import { AsyncResolver, handleUrlReplacement } from './utils';
 
 type BundlerConfig = Omit<PigmentConfig, 'themeArgs'> & {
+  include?: FilterPattern;
+  exclude?: FilterPattern;
   theme?: Theme;
   corePackages?: string[];
   transformSx?: boolean;
@@ -68,15 +72,19 @@ function isZeroRuntimeProcessableFile(fileName: string, transformLibraries: stri
 function getSxBabelUnplugin({
   name,
   finalTransformLibraries,
+  filter,
 }: {
   name: string;
   finalTransformLibraries: string[];
+  filter: ReturnType<typeof createFilter>;
 }) {
   const babelTransformPlugin: UnpluginOptions = {
     name,
     enforce: 'post',
     transformInclude(id) {
-      return isZeroRuntimeProcessableFile(id.split('?', 1)[0], finalTransformLibraries);
+      return (
+        isZeroRuntimeProcessableFile(id.split('?', 1)[0], finalTransformLibraries) && filter(id)
+      );
     },
     async transform(code, id) {
       try {
@@ -135,8 +143,11 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
     sourceMap = false,
     postTransform,
     createResolver,
+    include = [],
+    exclude = [],
     ...rest
   } = options;
+  const filter = createFilter(include, exclude);
   const runtimePackages = Array.from(new Set(DEFAULT_CORE_PACKAGES.concat(corePackages)));
   const cssFileLookup = nextJsOptions ? globalCssFileLookup : new Map<string, string>();
   const baseName = `${process.env.PACKAGE_NAME}/${meta.framework}`;
@@ -220,6 +231,7 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
       getSxBabelUnplugin({
         name: `${baseName}/sx`,
         finalTransformLibraries: runtimePackages,
+        filter,
       }),
     );
   }
@@ -243,7 +255,7 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
       },
     },
     transformInclude(id) {
-      return isZeroRuntimeProcessableFile(id.split('?', 1)[0], runtimePackages);
+      return isZeroRuntimeProcessableFile(id.split('?', 1)[0], runtimePackages) && filter(id);
     },
     async transform(code, url) {
       const [filePath] = url.split('?', 1);
