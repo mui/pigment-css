@@ -5,6 +5,11 @@ import { NativeBuildContext } from 'unplugin';
 import { plugin } from './unplugin';
 import { AsyncResolver } from './utils';
 
+export type PigmentCSSConfig = Exclude<
+  Parameters<(typeof plugin)['webpack']>[0],
+  'createResolver' | 'postTransform'
+>;
+
 export default function pigment(config: Parameters<(typeof plugin)['webpack']>[0]) {
   function createResolver(ctx: NativeBuildContext, projectPath: string): AsyncResolver {
     return async (what, importer) => {
