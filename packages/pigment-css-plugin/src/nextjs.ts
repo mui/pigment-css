@@ -12,6 +12,11 @@ const extractionFile = path.join(
   'pigment-virtual.css',
 );
 
+export type PigmentCSSConfig = Exclude<
+  Parameters<typeof webpackPlugin>[0],
+  'createResolver' | 'postTransform'
+>;
+
 export default function pigment(
   nextConfig: NextConfig,
   pigmentConfig?: Parameters<typeof webpackPlugin>[0],
