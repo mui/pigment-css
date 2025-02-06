@@ -1,12 +1,5 @@
 {
   "extends": "../../tsconfig.json",
-  "include": [
-    "src/**/*.tsx",
-    "src/**/*.js",
-    "src/**/*.ts",
-    "tests/**/*.spec.ts",
-    "tests/**/*.spec.tsx",
-    "src/exports/css.cjs"
-  ],
+  "include": ["src/**/*.tsx", "src/**/*.ts", "tests/**/*.spec.ts", "tests/**/*.spec.tsx"],
   "exclude": ["./tsup.config.ts"]
 }

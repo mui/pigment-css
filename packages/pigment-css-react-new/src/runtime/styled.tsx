@@ -8,6 +8,16 @@ type StyledInfo = ClassInfo & {
   vars?: Record<string, [(...args: unknown[]) => Primitive, boolean]>;
 };
 
+function isHtmlTag(tag: unknown): tag is string {
+  return (
+    typeof tag === 'string' &&
+    // 96 is one less than the char code
+    // for "a" so this is checking that
+    // it's a lowercase character
+    tag.charCodeAt(0) > 96
+  );
+}
+
 function defaultShouldForwardProp(propName: string): boolean {
   // if first character is $
   if (propName.charCodeAt(0) === 36) {
@@ -60,6 +70,15 @@ export function styled<T extends React.ElementType>(tag: T) {
   }
   const shouldForwardPropLocal =
     typeof tag === 'string' ? shouldForwardProp : defaultShouldForwardProp;
+  let shouldUseAs = !shouldForwardPropLocal('as');
+
+  // @ts-expect-error
+  // eslint-disable-next-line no-underscore-dangle
+  if (typeof tag !== 'string' && tag.__styled_by_pigment_css) {
+    // If the tag is a Pigment styled component,
+    // render the styled component and pass the `as` prop down
+    shouldUseAs = false;
+  }
 
   function scopedStyled({
     classes,
@@ -84,28 +103,33 @@ export function styled<T extends React.ElementType>(tag: T) {
       }
     >(function render(props, ref) {
       const newProps: Record<string, unknown> = {};
+      const Component = (shouldUseAs && props.as) || tag;
+      let shouldForwardPropComponent = shouldForwardPropLocal;
+
+      // Reassign `shouldForwardProp` if incoming `as` prop is a React component
+      if (!isHtmlTag(Component)) {
+        shouldForwardPropComponent = defaultShouldForwardProp;
+      }
 
       // eslint-disable-next-line no-restricted-syntax
       for (const key in props) {
-        // if first char is $
-        if (shouldForwardPropLocal(key)) {
+        if (shouldForwardPropComponent(key)) {
           newProps[key] = props[key];
         }
       }
-      newProps.className = variants.length === 0 ? baseClasses : baseClasses;
+      newProps.className = variants.length ? cssFn(props) : baseClasses;
       newProps.style = {
         ...props.style,
         ...getStyle(props, vars),
       };
 
-      const Component = props.as ?? tag;
       return <Component ref={ref} {...newProps} />;
     });
 
     if (displayName) {
       StyledComponent.displayName = displayName;
     } else {
-      StyledComponent.displayName = 'Styled(Pigment)';
+      StyledComponent.displayName = `Styled(${typeof tag === 'string' ? tag : 'Pigment'})`;
     }
 
     // @ts-expect-error No TS check required

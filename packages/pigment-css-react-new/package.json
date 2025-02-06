@@ -46,8 +46,10 @@
     "react": "^17 || ^18 || ^19 || ^19.0.0-rc"
   },
   "devDependencies": {
+    "@testing-library/react": "^16.2.0",
     "@types/react": "^19.0.2",
     "@types/chai": "^4.3.14",
+    "@types/mocha": "^10.0.6",
     "chai": "^4.4.1",
     "prettier": "^3.3.3",
     "react": "^19.0.0"
