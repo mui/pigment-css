@@ -289,7 +289,7 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
             cssText = await handleUrlReplacement(cssText, id, asyncResolve, projectPath);
           }
 
-          // Valid names must start with a underscore or letter.
+          // Valid names must start with an underscore or letter.
           const layerName = `_${slug}`;
 
           // Fix for https://github.com/mui/pigment-css/issues/199

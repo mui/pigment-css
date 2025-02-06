@@ -3,7 +3,7 @@ import cx from 'clsx';
 /**
  * `__wyw_dynamic_import` is a special global var that is set during the evaluation phase by wyw.
  * So during eval phase, it can happen that some code is calling the runtime function.
- * We do not want to throw error in that case as we want the evaluation to happen.
+ * We do not want to throw an error in that case as we want the evaluation to happen.
  */
 export function generateAtomics() {
   if (typeof __wyw_dynamic_import !== 'undefined') {
