@@ -1,5 +1,5 @@
-import { Primitive } from '@pigment-css/core';
-import { ClassInfo, css } from '@pigment-css/core/runtime';
+import type { Primitive } from '@pigment-css/core';
+import { type ClassInfo, css } from '@pigment-css/core/runtime';
 import * as React from 'react';
 import isPropValid from '@emotion/is-prop-valid';
 
@@ -104,6 +104,8 @@ export function styled<T extends React.ElementType>(tag: T) {
     >(function render(props, ref) {
       const newProps: Record<string, unknown> = {};
       const Component = (shouldUseAs && props.as) || tag;
+      const propClass = props.className;
+      const propStyle = props.style;
       let shouldForwardPropComponent = shouldForwardPropLocal;
 
       // Reassign `shouldForwardProp` if incoming `as` prop is a React component
@@ -118,8 +120,11 @@ export function styled<T extends React.ElementType>(tag: T) {
         }
       }
       newProps.className = variants.length ? cssFn(props) : baseClasses;
+      if (propClass) {
+        newProps.className = `${newProps.className} ${propClass}`;
+      }
       newProps.style = {
-        ...props.style,
+        ...propStyle,
         ...getStyle(props, vars),
       };
 

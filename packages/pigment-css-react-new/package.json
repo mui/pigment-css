@@ -61,7 +61,6 @@
   "wyw-in-js": {
     "tags": {
       "styled": "./exports/styled.js",
-      "sx": "./exports/sx.js",
       "keyframes": "@pigment-css/core/exports/keyframes",
       "css": "./exports/css.js"
     }
@@ -100,6 +99,7 @@
       "default": "./exports/*.js"
     },
     "./runtime": {
+      "types": "./build/runtime/index.d.ts",
       "import": "./build/runtime/index.mjs",
       "require": "./build/runtime/index.js",
       "default": "./build/runtime/index.js"
