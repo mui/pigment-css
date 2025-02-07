@@ -26,6 +26,7 @@ type BundlerConfig = Omit<PigmentConfig, 'themeArgs'> & {
   include?: FilterPattern;
   exclude?: FilterPattern;
   theme?: Theme;
+  runtimePackages?: string[];
   corePackages?: string[];
   transformSx?: boolean;
   nextJsOptions?: {
@@ -42,7 +43,14 @@ type BundlerConfig = Omit<PigmentConfig, 'themeArgs'> & {
   postTransform?: (result: Result, fileName: string, cssFilename: string) => Promise<void>;
 };
 
-const DEFAULT_CORE_PACKAGES = ['@pigment-css/core', '@pigment-css/react-new'];
+const DEFAULT_RUNTIME_PACKAGES = [
+  '@pigment-css/core',
+  '@pigment-css/react-new',
+  // this is required for apps in the current workspace
+  'pigment-css-core',
+  'pigment-css-react-new',
+  'pigment-css-react',
+];
 const VIRTUAL_CSS_FILE = `\0pigment-runtime-styles.css`;
 const VIRTUAL_THEME_FILE = `\0pigment-runtime-theme.js`;
 
@@ -134,6 +142,7 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
     outputCss = true,
     theme = {},
     corePackages = [],
+    runtimePackages: optRuntimePackages = [],
     debug = false,
     transformSx = true,
     nextJsOptions,
@@ -148,7 +157,7 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
     ...rest
   } = options;
   const filter = createFilter(include, exclude);
-  const runtimePackages = Array.from(new Set(DEFAULT_CORE_PACKAGES.concat(corePackages)));
+  const runtimePackages = Array.from(new Set(DEFAULT_RUNTIME_PACKAGES.concat(optRuntimePackages)));
   const cssFileLookup = nextJsOptions ? globalCssFileLookup : new Map<string, string>();
   const baseName = `${process.env.PACKAGE_NAME}/${meta.framework}`;
   const cache = new TransformCacheCollection();
@@ -185,7 +194,8 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
           },
           transform(_code, id) {
             if (id.endsWith('styles.css')) {
-              return generateCssFromTheme('vars' in theme ? theme.vars : theme);
+              const res = generateCssFromTheme('vars' in theme ? theme.vars : theme);
+              return res;
             }
             if (id.includes('theme')) {
               return 'export default {}';
@@ -230,7 +240,7 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
     plugins.push(
       getSxBabelUnplugin({
         name: `${baseName}/sx`,
-        finalTransformLibraries: runtimePackages,
+        finalTransformLibraries: corePackages,
         filter,
       }),
     );
@@ -250,12 +260,9 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
       configResolved(resolvedConfig: ResolvedViteConfig) {
         projectPath = resolvedConfig.root;
       },
-      configureServer() {
-        // do stuff related to hot reloads.
-      },
     },
     transformInclude(id) {
-      return isZeroRuntimeProcessableFile(id.split('?', 1)[0], runtimePackages) && filter(id);
+      return isZeroRuntimeProcessableFile(id.split('?', 1)[0], corePackages) && filter(id);
     },
     async transform(code, url) {
       const [filePath] = url.split('?', 1);
@@ -278,120 +285,127 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
         'babel-plugin-define-var',
         ...(rest.babelOptions?.plugins ?? []),
       ].filter(Boolean);
-      const result = await wywTransform(
-        {
-          options: {
-            filename,
-            root: projectPath,
-            // @TODO - Handle RTL processing
-            preprocessor: basePreProcessor,
-            pluginOptions: {
-              ...rest,
-              // @ts-ignore WyW does not identify this property
-              themeArgs: {
-                theme: 'vars' in theme ? theme : themeWithVars,
-              },
-              features: {
-                useWeakRefInEval: false,
-                ...rest.features,
-              },
-              babelOptions: {
-                ...rest.babelOptions,
-                plugins: babelPlugins,
-                presets: !(filename.endsWith('ts') || filename.endsWith('tsx'))
-                  ? Array.from(presets)
-                  : Array.from(presets).concat('@babel/preset-typescript'),
-              },
-              overrideContext(context, file) {
-                if (!context.$RefreshSig$) {
-                  context.$RefreshSig$ = outerNoop;
-                }
-                if (overrideContext) {
-                  return overrideContext(context, file);
-                }
 
-                return context;
-              },
-              tagResolver(source: string, tag: string) {
-                const tagResult = tagResolver?.(source, tag);
-                if (tagResult) {
-                  return tagResult;
-                }
-                return null;
+      try {
+        const result = await wywTransform(
+          {
+            options: {
+              filename,
+              root: projectPath,
+              // @TODO - Handle RTL processing
+              preprocessor: basePreProcessor,
+              pluginOptions: {
+                ...rest,
+                // @ts-ignore WyW does not identify this property
+                themeArgs: {
+                  theme: themeWithVars,
+                },
+                features: {
+                  useWeakRefInEval: false,
+                  ...rest.features,
+                },
+                babelOptions: {
+                  ...rest.babelOptions,
+                  plugins: babelPlugins,
+                  presets:
+                    filename.endsWith('ts') || filename.endsWith('tsx')
+                      ? Array.from(presets).concat('@babel/preset-typescript')
+                      : Array.from(presets),
+                },
+                overrideContext(context, file) {
+                  if (!context.$RefreshSig$) {
+                    context.$RefreshSig$ = outerNoop;
+                  }
+                  if (overrideContext) {
+                    return overrideContext(context, file);
+                  }
+
+                  return context;
+                },
+                tagResolver(source: string, tag: string) {
+                  const tagResult = tagResolver?.(source, tag);
+                  if (tagResult) {
+                    return tagResult;
+                  }
+                  return null;
+                },
               },
             },
+            cache,
+            eventEmitter: emitter,
           },
-          cache,
-          eventEmitter: emitter,
-        },
-        code,
-        asyncResolver,
-      );
+          code,
+          asyncResolver,
+        );
 
-      if (typeof result.cssText !== 'string') {
-        return null;
-      }
+        if (typeof result.cssText !== 'string') {
+          return null;
+        }
 
-      if (!outputCss) {
+        if (!outputCss) {
+          return {
+            code: result.code,
+            map: result.sourceMap,
+          };
+        }
+
+        if (nextJsOptions && result.cssText.includes('url(')) {
+          result.cssText = await handleUrlReplacement(
+            result.cssText,
+            filename,
+            asyncResolver,
+            projectPath,
+          );
+        }
+
+        if (sourceMap && result.cssSourceMapText) {
+          const map = Buffer.from(result.cssSourceMapText).toString('base64');
+          result.cssText += `/*# sourceMappingURL=data:application/json;base64,${map}*/`;
+        }
+
+        if (nextJsOptions) {
+          const data = `${nextJsOptions.placeholderCssFile}?${btoa(
+            encodeURI(
+              encodeURIComponent(
+                JSON.stringify({
+                  filename: filename.split(path.sep).pop(),
+                  source: result.cssText,
+                }),
+              ),
+            ),
+          )}`;
+          return {
+            // CSS import should be the last so that nested components produce correct CSS order injection.
+            code: `${result.code}\nimport ${JSON.stringify(data)};`,
+            map: result.sourceMap,
+          };
+        }
+        const cssFilename = path
+          .normalize(`${filename.replace(/\.[jt]sx?$/, '')}.virtual.pigment.css`)
+          .replace(/\\/g, path.posix.sep);
+
+        const cssRelativePath = path
+          .relative(projectPath, cssFilename)
+          .replace(/\\/g, path.posix.sep);
+        // Starting with null character so that it calls the resolver method (resolveId in line:430)
+        // Otherwise, webpack tries to resolve the path directly
+        const cssId = `\0${cssRelativePath}`;
+
+        cssFileLookup.set(cssId, result.cssText);
+        result.code += `\nimport ${JSON.stringify(cssId)};`;
+
+        if (postTransform) {
+          await postTransform.call(this, result, filename, cssId);
+        }
+
         return {
           code: result.code,
           map: result.sourceMap,
         };
+      } catch (ex) {
+        console.error(ex);
+        throw ex;
       }
-
-      if (nextJsOptions && result.cssText.includes('url(')) {
-        result.cssText = await handleUrlReplacement(
-          result.cssText,
-          filename,
-          asyncResolver,
-          projectPath,
-        );
-      }
-
-      if (sourceMap && result.cssSourceMapText) {
-        const map = Buffer.from(result.cssSourceMapText).toString('base64');
-        result.cssText += `/*# sourceMappingURL=data:application/json;base64,${map}*/`;
-      }
-
-      if (nextJsOptions) {
-        const data = `${nextJsOptions.placeholderCssFile}?${btoa(
-          encodeURI(
-            encodeURIComponent(
-              JSON.stringify({
-                filename: filename.split(path.sep).pop(),
-                source: result.cssText,
-              }),
-            ),
-          ),
-        )}`;
-        return {
-          // CSS import should be the last so that nested components produce correct CSS order injection.
-          code: `${result.code}\nimport ${JSON.stringify(data)};`,
-          map: result.sourceMap,
-        };
-      }
-      const cssFilename = path
-        .normalize(`${filename.replace(/\.[jt]sx?$/, '')}.virtual.pigment.css`)
-        .replace(/\\/g, path.posix.sep);
-
-      const cssRelativePath = path
-        .relative(projectPath, cssFilename)
-        .replace(/\\/g, path.posix.sep);
-      // Starting with null character so that it calls the resolver method (resolveId in line:430)
-      // Otherwise, webpack tries to resolve the path directly
-      const cssId = `\0${cssRelativePath}`;
-
-      cssFileLookup.set(cssId, result.cssText);
-      result.code += `\nimport ${JSON.stringify(cssId)};`;
-
-      if (postTransform) {
-        await postTransform.call(this, result, filename, cssId);
-      }
-
-      return {
-        code: result.code,
-        map: result.sourceMap,
-      };
     },
   };
 
