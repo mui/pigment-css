@@ -46,7 +46,7 @@ export interface CreateStyledComponent<
 > {
   <Props extends {} = {}>(
     arg: TemplateStringsArray,
-    ...templateArgs: (Primitive | ((props: Props) => Primitive))[]
+    ...templateArgs: (StyledComponent<any> | Primitive | ((props: Props) => Primitive))[]
   ): StyledComponent<Substitute<OuterProps, Props>> & (Component extends string ? {} : Component);
 
   <V extends {}>(

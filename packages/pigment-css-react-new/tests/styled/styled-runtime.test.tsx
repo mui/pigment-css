@@ -149,7 +149,7 @@ describe('styled - runtime', () => {
       });
 
       const { getByTestId } = render(<StyledParent as="div" data-testid="component" />);
-      expect(getByTestId('component').className).to.equal('child');
+      expect(getByTestId('component').className).to.equal('child parent');
     });
 
     it('use component forward prop if provided `as` is a component', () => {
