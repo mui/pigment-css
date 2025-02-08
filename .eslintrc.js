@@ -57,12 +57,6 @@ module.exports = {
     // Airbnb use warn https://github.com/airbnb/javascript/blob/63098cbb6c05376dbefc9a91351f5727540c1ce1/packages/eslint-config-airbnb-base/rules/style.js#L97
     // but eslint recommands error
     'func-names': 'error',
-    'no-restricted-imports': [
-      'error',
-      {
-        patterns: ['@mui/*/*/*'],
-      },
-    ],
     'no-continue': 'off',
     'no-constant-condition': 'error',
     // Use the proptype inheritance chain

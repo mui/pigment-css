@@ -37,7 +37,8 @@
       "@pigment-css/core": ["./packages/pigment-css-core/src"],
       "@pigment-css/core/*": ["./packages/pigment-css-core/src/*"],
       "@pigment-css/react-new": ["./packages/pigment-css-react-new/src"],
-      "@pigment-css/react-new/*": ["./packages/pigment-css-react-new/src/*"]
+      "@pigment-css/react-new/*": ["./packages/pigment-css-react-new/src/*"],
+      "docs/*": ["./docs/src/*"]
     },
     // Otherwise we get react-native typings which conflict with dom.lib.
     "types": ["node", "react", "mocha"]
