@@ -123,6 +123,10 @@
   "engines": {
     "pnpm": "9.7.1"
   },
+  "resolutions": {
+    "@types/react": "19.0.8",
+    "@types/react-dom": "19.0.3"
+  },
   "nyc": {
     "include": [
       "packages/mui*/src/**/*.{js,ts,tsx}"
