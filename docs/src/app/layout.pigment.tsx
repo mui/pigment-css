@@ -15,5 +15,4 @@ export const bodyCls = css`
   min-width: 320px;
   line-height: 1.5;
   font-synthesis: none;
-  -webkit-font-smoothing: antialiased;
 `;

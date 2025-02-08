@@ -2,8 +2,8 @@ import { t } from '@pigment-css/theme';
 import { styled } from '@pigment-css/react-new';
 import { ScrollArea } from '@base-ui-components/react/scroll-area';
 
-import { applyText } from '../utils/theme';
 import Link from 'next/link';
+import { applyText } from '../utils/theme';
 
 export const Root = styled.nav(({ theme }) => ({
   $sideNavItemHeight: '2rem',
@@ -27,13 +27,12 @@ export const Root = styled.nav(({ theme }) => ({
 
 export const ViewPort = styled(ScrollArea.Viewport)`
   max-height: 100vh;
-  padding-top: 0.75rem;
-  padding-bottom: 3rem;
-  padding-left: 1.5rem;
-  padding-right: calc(
-    var(--sideNavScrollbarGapLeft) + var(--sideNavScrollbarWidth) / 2 +
-      var(--sideNavScrollbarThumbWidth) / 2
-  );
+  padding: 0.75rem
+    calc(
+      var(--sideNavScrollbarGapLeft) + var(--sideNavScrollbarWidth) / 2 +
+        var(--sideNavScrollbarThumbWidth) / 2
+    )
+    3rem 1.5rem;
 
   /* Scroll containers are focusable */
   outline: 0;
@@ -45,6 +44,7 @@ export const ViewPort = styled(ScrollArea.Viewport)`
     position: absolute;
     outline: 2px solid ${t('$color.blue')};
     outline-offset: -2px;
+
     /* Don't inset the outline on the right */
     right: -2px;
   }
@@ -57,7 +57,6 @@ export const ScrollBar = styled(ScrollArea.Scrollbar)`
 
   /* Click target width */
   width: var(--sideNavScrollbarWidth);
-
   opacity: 0;
   transition: opacity 200ms 500ms;
 
@@ -79,6 +78,7 @@ export const ScrollBarThumb = styled(ScrollArea.Thumb)`
     content: '';
     display: block;
     height: 100%;
+
     /* Visible thumb width */
     width: var(--sideNavScrollbarThumbWidth);
     border-radius: ${t('$radius.sm')};

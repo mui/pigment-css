@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "clean": "rm -rf .next export",
     "dev": "next dev",
     "build": "next build",
     "start": "pnpm dlx serve export",
