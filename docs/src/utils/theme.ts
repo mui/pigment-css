@@ -1,9 +1,14 @@
 import type { Theme } from '@pigment-css/theme';
 
 export function applyText(theme: Theme, value: keyof Theme['text']) {
-  return theme.$$utils.apply.call(theme, 'text', value);
+  const val = theme.text[value];
+  return {
+    fontSize: val.default,
+    lineHeight: val.lineHeight,
+    letterSpacing: val.letterSpacing,
+  };
 }
 
 export function spacing(theme: Theme, space: number | string) {
-  return theme.$$utils.spacing.call(theme, space);
+  return `calc(${theme.spacing} * ${space})`;
 }
