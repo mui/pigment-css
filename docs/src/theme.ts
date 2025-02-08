@@ -91,8 +91,8 @@ const THEME = {
   },
   breakpoint: {
     maxLayoutWidth: '89rem',
-    showQuickNav: '84rem',
-    showSideNav: '64rem',
+    showQuickNav: BREAKPOINTS.quickNav,
+    showSideNav: BREAKPOINTS.lg,
   },
   ease: {
     out: {
@@ -113,22 +113,6 @@ const THEME = {
     '4xl': '2rem',
   },
   $$breakpoints: BREAKPOINT_UTILS,
-  $$utils: {
-    apply(key: string, value: unknown) {
-      const ctx = this as unknown as Theme;
-      // @ts-expect-error Not typing explicitly to avoid circular typing
-      const val = ctx[key][value] as Theme['text']['md'];
-      return {
-        fontSize: val.default,
-        lineHeight: val.lineHeight,
-        letterSpacing: val.letterSpacing,
-      };
-    },
-    spacing(number: string | number) {
-      const ctx = this as unknown as Theme;
-      return `calc(${ctx.spacing} * ${number})`;
-    },
-  },
 };
 
 export type Theme = typeof THEME;

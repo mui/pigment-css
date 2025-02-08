@@ -32,6 +32,7 @@ const nextConfig: NextConfig = {
   experimental: {
     esmExternals: true,
     workerThreads: false,
+    useLightningcss: true,
   },
 };
 
