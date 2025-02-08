@@ -1,20 +1,20 @@
 import * as path from 'node:path';
 
-import { NativeBuildContext } from 'unplugin';
+import type { NativeBuildContext } from 'unplugin';
 
 import { plugin } from './unplugin';
-import { AsyncResolver } from './utils';
+import type { AsyncResolver, ExcludePluginOptions } from './utils';
 
 export type PigmentCSSConfig = Exclude<
   Parameters<(typeof plugin)['webpack']>[0],
-  'createResolver' | 'postTransform'
+  ExcludePluginOptions
 >;
 
 export default function pigment(config: Parameters<(typeof plugin)['webpack']>[0]) {
   function createResolver(ctx: NativeBuildContext, projectPath: string): AsyncResolver {
     return async (what, importer) => {
       if (ctx.framework !== 'webpack') {
-        throw new Error('Non-webpack bundlers not supported');
+        throw new Error(`${process.env.PACKAGE_NAME}: Non-webpack bundlers are not supported`);
       }
 
       const context = path.isAbsolute(importer)

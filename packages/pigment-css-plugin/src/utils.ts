@@ -6,6 +6,8 @@ export type AsyncResolver = (
   stack: string[],
 ) => Promise<string | null>;
 
+export type ExcludePluginOptions = 'createResolver' | 'postTransform' | 'nextJsOptions';
+
 /**
  * There might be a better way to do this in future, but due to the async
  * nature of the resolver, this is the best way currently to replace url()
