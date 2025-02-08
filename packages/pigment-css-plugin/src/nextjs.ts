@@ -13,6 +13,15 @@ const extractionFile = path.join(
   'pigment-virtual.css',
 );
 
+type WebpackError = {
+  module?: {
+    matchResource: string;
+  };
+  details?: string;
+  message?: string;
+  file?: string;
+};
+
 export type PigmentCSSConfig = Omit<Parameters<typeof webpackPlugin>[0], ExcludePluginOptions>;
 
 export default function pigment(
@@ -47,9 +56,8 @@ export default function pigment(
       hasAppDir = !!(findPagesDirResult && findPagesDirResult.appDir);
     }
 
-    config.module.rules.unshift({
-      enforce: 'pre',
-      test: (filename: string) => filename.endsWith('pigment-virtual.css'),
+    config.module.rules.push({
+      test: /pigment-virtual\.css$/,
       use: require.resolve('./nextjs-css-loader'),
     });
     config.plugins.push(
@@ -100,7 +108,12 @@ export default function pigment(
     );
 
     config.ignoreWarnings = config.ignoreWarnings ?? [];
-    config.ignoreWarnings.push((warning: string) => warning.includes('pigment-virtual'));
+    config.ignoreWarnings.push((error: WebpackError) => {
+      if (error.module?.matchResource && /pigment-virtual\.css$/) {
+        return true;
+      }
+      return /(autoprefixer)/gm.test(error.message as string);
+    });
 
     if (typeof nextConfig.webpack === 'function') {
       return nextConfig.webpack(config, context);
