@@ -6,10 +6,7 @@ import { syncResolve } from '@wyw-in-js/shared';
 import { plugin } from './unplugin';
 import type { AsyncResolver, ExcludePluginOptions } from './utils';
 
-export type PigmentCSSConfig = Exclude<
-  Parameters<(typeof plugin)['vite']>[0],
-  ExcludePluginOptions
->;
+export type PigmentCSSConfig = Omit<Parameters<(typeof plugin)['vite']>[0], ExcludePluginOptions>;
 
 export default function pigment(config: Parameters<(typeof plugin)['vite']>[0]) {
   let viteConfig: ResolvedConfig;
