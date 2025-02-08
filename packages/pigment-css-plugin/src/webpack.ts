@@ -5,7 +5,7 @@ import type { NativeBuildContext } from 'unplugin';
 import { plugin } from './unplugin';
 import type { AsyncResolver, ExcludePluginOptions } from './utils';
 
-export type PigmentCSSConfig = Exclude<
+export type PigmentCSSConfig = Omit<
   Parameters<(typeof plugin)['webpack']>[0],
   ExcludePluginOptions
 >;
