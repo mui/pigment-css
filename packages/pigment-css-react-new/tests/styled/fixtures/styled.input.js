@@ -1,3 +1,4 @@
+import { t } from '@pigment-css/theme';
 import { styled, keyframes, css } from '@pigment-css/react-new';
 import { TestComponent } from './dummy-component.fixture';
 
@@ -103,6 +104,31 @@ const SliderRail4 = styled.span`
   }
 `;
 
+const ViewPort = styled(SliderRail4)`
+  max-height: 100vh;
+  padding-top: 0.75rem;
+  padding-bottom: 3rem;
+  padding-left: 1.5rem;
+  padding-right: calc(
+    var(--sideNavScrollbarGapLeft) + var(--sideNavScrollbarWidth) / 2 +
+      var(--sideNavScrollbarThumbWidth) / 2
+  );
+
+  /* Scroll containers are focusable */
+  outline: 0;
+
+  .Root:has(&:focus-visible)::before {
+    content: '';
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+    outline: 2px solid ${t('$color.blue')};
+    outline-offset: -2px;
+    /* Don't inset the outline on the right */
+    right: -2px;
+  }
+`;
+
 export function App() {
   return (
     <Component>
@@ -111,3 +137,5 @@ export function App() {
     </Component>
   );
 }
+
+App.displayName = 'App';

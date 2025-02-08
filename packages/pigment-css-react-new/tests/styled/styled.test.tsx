@@ -41,4 +41,39 @@ describe('Pigment CSS - styled', () => {
     expect(output.js).to.equal(fixture.js);
     expect(output.css).to.equal(fixture.css);
   });
+
+  it('should handled pre-transformed tagged template literal', async () => {
+    const { output, fixture } = await runTransformation(
+      path.join(__dirname, 'fixtures/styled-swc-transformed-tagged-string.input.js'),
+      {
+        features: {
+          useLayer: false,
+        },
+        themeArgs: {
+          theme: {
+            transitions: {
+              easing: {
+                easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                easeOut: 'cubic-bezier(0.0, 0, 0.2, 1)',
+                easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
+                sharp: 'cubic-bezier(0.4, 0, 0.6, 1)',
+              },
+              duration: {
+                shortest: 150,
+                shorter: 200,
+                short: 250,
+                standard: 300,
+                complex: 375,
+                enteringScreen: 225,
+                leavingScreen: 195,
+              },
+            },
+          },
+        },
+      },
+    );
+
+    expect(output.js).to.equal(fixture.js);
+    expect(output.css).to.equal(fixture.css);
+  });
 });

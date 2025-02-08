@@ -7,6 +7,7 @@ import {
   styled as _styled5,
   styled as _styled6,
   styled as _styled7,
+  styled as _styled8,
 } from '@pigment-css/react-new/runtime';
 import { TestComponent } from './dummy-component.fixture';
 export const rotateKeyframe = 'rotate';
@@ -60,6 +61,10 @@ const SliderRail2 = /*#__PURE__*/ _styled6('span')({
 const SliderRail4 = /*#__PURE__*/ _styled7('span')({
   classes: 'sxcjuwu',
 });
+const _exp14 = /*#__PURE__*/ () => SliderRail4;
+const ViewPort = /*#__PURE__*/ _styled8(_exp14())({
+  classes: 'v1x90zfp',
+});
 export function App() {
   return (
     <Component>
@@ -68,3 +73,4 @@ export function App() {
     </Component>
   );
 }
+App.displayName = 'App';
