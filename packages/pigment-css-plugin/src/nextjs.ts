@@ -3,6 +3,7 @@ import type { NextConfig } from 'next';
 import { findPagesDir } from 'next/dist/lib/find-pages-dir';
 
 import webpackPlugin from './webpack';
+import type { ExcludePluginOptions } from './utils';
 
 const NEXTJS_ARTIFACTS = 'nextjs-artifacts';
 
@@ -12,10 +13,7 @@ const extractionFile = path.join(
   'pigment-virtual.css',
 );
 
-export type PigmentCSSConfig = Exclude<
-  Parameters<typeof webpackPlugin>[0],
-  'createResolver' | 'postTransform'
->;
+export type PigmentCSSConfig = Exclude<Parameters<typeof webpackPlugin>[0], ExcludePluginOptions>;
 
 export default function pigment(
   nextConfig: NextConfig,
@@ -101,13 +99,12 @@ export default function pigment(
       }),
     );
 
+    config.ignoreWarnings = config.ignoreWarnings ?? [];
+    config.ignoreWarnings.push((warning: string) => warning.includes('pigment-virtual'));
+
     if (typeof nextConfig.webpack === 'function') {
       return nextConfig.webpack(config, context);
     }
-    config.ignoreWarnings = config.ignoreWarnings ?? [];
-    config.ignoreWarnings.push({
-      module: /(pigment-virtual\.css)|(core\/styles\.css)|(react\/styles\.css)/,
-    });
     return config;
   };
   return {

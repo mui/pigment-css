@@ -23,11 +23,31 @@ import { logger as wywLogger } from '@wyw-in-js/shared';
 import { AsyncResolver, handleUrlReplacement } from './utils';
 
 type BundlerConfig = Omit<PigmentConfig, 'themeArgs'> & {
+  /**
+   * Extra filter to only allow files that satisfy this pattern
+   */
   include?: FilterPattern;
+  /**
+   * Extra filter to not transform files that satisfy this pattern.
+   */
   exclude?: FilterPattern;
+  /**
+   * The Theme object that'll be passed to the callback in the css or styled calls.
+   */
   theme?: Theme;
+  /**
+   * A list of package names that support the runtime implementation of Pigment CSS. This already includes
+   * `@pigment-css/core`, `@pigment-css/react` and `@pigment-css/react-new`.
+   */
   runtimePackages?: string[];
-  corePackages?: string[];
+  /**
+   * Extra package names that should always be transformed regardless of the `include` and `exclude` patterns.
+   */
+  transformPackages?: string[];
+  /**
+   * If you want to support `sx` prop in your application, set this to true.
+   * @default false
+   */
   transformSx?: boolean;
   nextJsOptions?: {
     dev: boolean;
@@ -37,6 +57,9 @@ type BundlerConfig = Omit<PigmentConfig, 'themeArgs'> & {
   };
   outputCss?: boolean;
   debug?: IFileReporterOptions | false;
+  /**
+   * Enable sourceMap for the generated css.
+   */
   sourceMap?: boolean;
   asyncResolve?: AsyncResolver;
   createResolver?: (ctx: any, projectPath: string, config?: any) => AsyncResolver;
@@ -141,7 +164,7 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
   const {
     outputCss = true,
     theme = {},
-    corePackages = [],
+    transformPackages = [],
     runtimePackages: optRuntimePackages = [],
     debug = false,
     transformSx = true,
@@ -240,7 +263,7 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
     plugins.push(
       getSxBabelUnplugin({
         name: `${baseName}/sx`,
-        finalTransformLibraries: corePackages,
+        finalTransformLibraries: transformPackages,
         filter,
       }),
     );
@@ -262,7 +285,7 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
       },
     },
     transformInclude(id) {
-      return isZeroRuntimeProcessableFile(id.split('?', 1)[0], corePackages) && filter(id);
+      return isZeroRuntimeProcessableFile(id.split('?', 1)[0], transformPackages) && filter(id);
     },
     async transform(code, url) {
       const [filePath] = url.split('?', 1);
