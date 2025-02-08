@@ -88,6 +88,7 @@ export const headerButton = css`
       background-color: ${t('$color.gray.100')};
     }
   }
+
   @media not (hover: hover) {
     &:active {
       background-color: ${t('$color.gray.100')};

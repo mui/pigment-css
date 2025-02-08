@@ -6,11 +6,9 @@ export const backdrop = css`
   position: fixed;
   inset: 0;
   height: 100dvh;
-
   transition-duration: 600ms;
   transition-property: -webkit-backdrop-filter, backdrop-filter, opacity;
   transition-timing-function: ${t('$ease.out.fast')};
-  -webkit-backdrop-filter: blur(1.5px);
   backdrop-filter: blur(1.5px);
   background-image: linear-gradient(to bottom, transparent 2rem, rgb(0 0 0 / 5%) 50%);
 
@@ -20,8 +18,7 @@ export const backdrop = css`
 
   &[data-starting-style],
   &[data-ending-style] {
-    -webkit-backdrop-filter: blur(0px);
-    backdrop-filter: blur(0px);
+    backdrop-filter: blur(0);
     opacity: 0;
   }
 
@@ -96,6 +93,7 @@ export const viewport = css(({ theme }) => ({
 
 export const viewportInner = css`
   position: relative;
+
   /* Prevent children's margin collapse */
   display: flex;
   flex-direction: column;
@@ -174,7 +172,6 @@ export const navClose = css`
   background-color: ${t('$color.gray.200')};
 
   /* Blur the dividers behind */
-  -webkit-backdrop-filter: blur(1rem);
   backdrop-filter: blur(1rem);
 
   &:focus-visible {
@@ -228,6 +225,7 @@ export const navLink = css`
   display: flex;
   gap: 0.675rem;
   align-items: center;
+
   /* @TODO - Fix the css processor so that you can use local css variables through t() */
   height: var(--mobileNavItemHeight);
   padding-inline: var(--mobileNavItemPaddingX);
@@ -244,7 +242,10 @@ export const navLink = css`
   }
 
   @supports (-webkit-tap-highlight-color: black) {
+    ---var: 1;
+
     /* Applying background-color on :active shows it when touching items while scrolling */
+
     /* This activates only on real link taps */
     -webkit-tap-highlight-color: ${t('$color.gray.300')};
   }

@@ -30,7 +30,6 @@ export default function pigment(
 ) {
   const { babelOptions = {}, asyncResolve, ...other } = pigmentConfig ?? {};
   if (process.env.TURBOPACK === '1') {
-    // eslint-disable-next-line no-console
     console.warn(
       `\x1B[33m${process.env.PACKAGE_NAME}: Turbo mode is not supported yet. Please disable it by removing the "--turbo" flag from your "next dev" command to use Pigment CSS.\x1B[39m`,
     );

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import type { Metadata, Viewport } from 'next/types';
-import { Main, Root } from './layout.pigment';
 import { Header } from 'docs/src/components/Header';
 import * as SideNav from 'docs/src/components/SideNav';
 import { nav } from 'docs/src/nav';
+import { Main, Root } from './layout.pigment';
 
 export default function Layout({ children }: React.PropsWithChildren) {
   return (

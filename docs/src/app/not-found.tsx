@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import { Root, Content, Heading, linkStyle, Caption } from './(public)/page.pigment';
 import { Link } from 'docs/src/components/Link';
+import { Root, Content, Heading, linkStyle, Caption } from './(public)/page.pigment';
 import Layout from './(public)/layout';
 
 export default function Notfound() {

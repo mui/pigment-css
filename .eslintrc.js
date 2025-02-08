@@ -197,6 +197,7 @@ module.exports = {
 
     'react/jsx-no-useless-fragment': ['error', { allowExpressions: true }],
     'lines-around-directive': 'off',
+    'react/prop-types': 'off',
   },
   overrides: [
     {
@@ -277,7 +278,7 @@ module.exports = {
     },
     // Next.js entry points pages
     {
-      files: ['docs/pages/**/*.js'],
+      files: ['docs/apps/**/*{.tsx,.ts,.js}'],
       rules: {
         'react/prop-types': 'off',
       },
