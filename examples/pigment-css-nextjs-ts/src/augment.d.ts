@@ -1,5 +1,4 @@
-import type {} from '@pigment-css/react/theme';
-import type { ExtendTheme } from '@pigment-css/react';
+import type { ExtendTheme } from '@pigment-css/react/theme';
 
 declare module '@pigment-css/react/theme' {
   export interface ThemeArgs {
