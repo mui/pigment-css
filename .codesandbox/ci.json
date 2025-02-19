@@ -3,8 +3,10 @@
   "installCommand": "install:codesandbox",
   "node": "18",
   "packages": [
+    "packages/pigment-css-core",
     "packages/pigment-css-nextjs-plugin",
     "packages/pigment-css-react",
+    "packages/pigment-css-react-new",
     "packages/pigment-css-theme",
     "packages/pigment-css-unplugin",
     "packages/pigment-css-utils",

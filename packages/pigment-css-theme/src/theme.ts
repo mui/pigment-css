@@ -10,7 +10,11 @@ type PathsToLeaves<T extends object> = {
   [K in keyof T]: K extends string | number
     ? T[K] extends object
       ? Join<K, PathsToLeaves<T[K]>>
-      : `${K}`
+      : K extends `$${string}`
+        ? never
+        : K extends `_${string}`
+          ? never
+          : `${K}`
     : never;
 }[keyof T];
 

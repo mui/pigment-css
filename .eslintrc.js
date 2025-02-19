@@ -83,6 +83,8 @@ module.exports = {
     ],
     'no-use-before-define': 'off',
 
+    'react/react-in-jsx-scope': 'off',
+
     // disabled type-aware linting due to performance considerations
     '@typescript-eslint/dot-notation': 'off',
     'dot-notation': 'error',
