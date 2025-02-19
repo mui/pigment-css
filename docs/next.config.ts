@@ -1,54 +1,47 @@
-import * as url from 'url';
-import * as path from 'path';
 import type { NextConfig } from 'next';
-// @ts-ignore
-// eslint-disable-next-line no-restricted-imports
+import nextMdx from '@next/mdx';
+import withPigment, { type PigmentCSSConfig } from '@pigment-css/plugin/nextjs';
+import remarkGfm from 'remark-gfm';
+import remarkTypography from 'remark-typography';
+import rehypeExtractToc from '@stefanprobst/rehype-extract-toc';
+// @ts-expect-error This file doesn't have TS definitions.
 import withDocsInfra from '@mui/monorepo/docs/nextConfigDocsInfra.js';
-import { withPigment, extendTheme } from '@pigment-css/nextjs-plugin';
 
-import { theme as baseTheme } from './src/theme';
+import theme from './src/theme';
 import rootPackage from '../package.json';
 
-const currentDirectory = url.fileURLToPath(new URL('.', import.meta.url));
-const DATA_DIR = path.join(currentDirectory, 'data');
+const withMdx = nextMdx({
+  options: {
+    remarkPlugins: [remarkGfm, remarkTypography],
+    rehypePlugins: [rehypeExtractToc],
+  },
+});
+
+const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfig: NextConfig = {
   trailingSlash: false,
+  pageExtensions: ['mdx', 'tsx'],
   env: {
-    DATA_DIR,
-    CURRENT_VERSION: rootPackage.version,
+    LIB_VERSION: rootPackage.version,
+    APP_NAME: 'Pigment CSS',
+    GITHUB: 'https://github.com/mui/pigment-css',
+    NPM: 'https://www.npmjs.com/package/@pigment-css/core',
   },
-  distDir: 'export',
-  output: process.env.NODE_ENV === 'production' ? 'export' : undefined,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  devIndicators: {
-    buildActivity: true,
-    buildActivityPosition: 'bottom-right',
-    appIsrStatus: false,
-  },
+  ...(isProd && { distDir: 'export', output: 'export' }),
   experimental: {
     esmExternals: true,
     workerThreads: false,
-    turbo: undefined,
+    useLightningcss: true,
   },
 };
 
-const theme = extendTheme({
-  colorSchemes: {
-    light: baseTheme,
-  },
-});
-
-export default withPigment(withDocsInfra(nextConfig), {
+const pigmentConfig: PigmentCSSConfig = {
   theme,
-  displayName: true,
-  sourceMap: process.env.NODE_ENV !== 'production',
-  babelOptions: {
-    plugins: [
-      '@babel/plugin-proposal-explicit-resource-management',
-      '@babel/plugin-transform-unicode-property-regex',
-    ],
-  },
-});
+  transformSx: false,
+  displayName: !isProd,
+  sourceMap: !isProd,
+  include: /\.pigment\.tsx?$/,
+};
+
+export default withPigment(withMdx(withDocsInfra(nextConfig)), pigmentConfig);

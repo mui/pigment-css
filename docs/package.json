@@ -1,43 +1,39 @@
 {
   "name": "docs",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
+    "clean": "rm -rf .next export",
     "dev": "next dev",
-    "build": "cross-env NODE_ENV=production next build",
-    "preview": "serve ./export",
-    "lint": "next lint",
-    "typescript": "tsc --noEmit -p ."
+    "build": "next build",
+    "start": "pnpm dlx serve export",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@base_ui/react": "^1.0.0-alpha.3",
-    "@mdx-js/mdx": "^3.1.0",
-    "@pigment-css/react": "workspace:*",
-    "@stefanprobst/rehype-extract-toc": "^2.2.0",
+    "@base-ui-components/react": "^1.0.0-alpha.6",
+    "@pigment-css/theme": "workspace:*",
+    "@pigment-css/react-new": "workspace:*",
     "clsx": "^2.1.1",
-    "next": "15.0.2",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "rehype-pretty-code": "0.14.0",
-    "rehype-slug": "^6.0.0",
-    "remark-frontmatter": "^5.0.0",
-    "remark-gfm": "^4.0.0",
-    "remark-mdx-frontmatter": "^5.0.0",
-    "shiki": "^1.22.2",
-    "to-vfile": "^8.0.0",
-    "vfile-matter": "^5.0.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "next": "15.1.6",
+    "scroll-into-view-if-needed": "^3.1.0"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-explicit-resource-management": "^7.25.9",
-    "@babel/plugin-transform-unicode-property-regex": "^7.25.9",
-    "@mui/monorepo": "github:mui/material-ui#ae455647016fe5dee968b017aa191e176bc113dd",
-    "@pigment-css/nextjs-plugin": "workspace:*",
+    "@mdx-js/loader": "^3.1.0",
+    "@next/mdx": "^15.1.6",
+    "@pigment-css/plugin": "workspace:*",
+    "@stefanprobst/rehype-extract-toc": "^2.2.1",
+    "@mui/monorepo": "github:mui/material-ui#v6.4.2",
+    "remark-gfm": "^4.0.0",
+    "remark-typography": "^0.6.21",
+    "typescript": "^5",
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint-config-next": "15.0.2",
-    "serve": "14.2.4",
-    "tailwindcss": "^3.4.14"
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.6",
+    "@eslint/eslintrc": "^3"
   },
   "nx": {
     "targets": {

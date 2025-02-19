@@ -123,6 +123,7 @@ describe('processStyle', () => {
             serializables: {},
           },
         ],
+        defaultVariants: {},
         variants: [
           {
             className: 'class-size-small',

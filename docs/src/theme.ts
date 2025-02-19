@@ -1,70 +1,119 @@
-export const theme = {
-  gray: {
-    surface: {
-      1: 'hsl(0 0% 99%)',
-      2: 'hsl(0 0% 97.5%)',
-    },
-    container: {
-      1: 'hsl(0 0% 96.5%)',
-      2: 'hsl(0 0% 95%)',
-      3: 'hsl(0 0% 92%)',
-    },
-    outline: {
-      1: 'hsl(0 0% 93%)',
-      2: 'hsl(0 0% 88%)',
-    },
-    text: {
-      1: 'hsl(0 0% 45.75%)',
-      2: 'hsl(0 0% 15%)',
-    },
+const BREAKPOINTS = {
+  xs: '32rem',
+  sm: '40rem',
+  md: '48rem',
+  lg: '64rem',
+  xl: '80rem',
+  '2xl': '96rem',
+  quickNav: '84rem',
+} as const;
+
+const BREAKPOINT_UTILS = {
+  gt(key: keyof typeof BREAKPOINTS) {
+    return `@media (min-width: ${BREAKPOINTS[key]})`;
   },
-  grayA: {
-    surface: {
-      2: 'hsl(0 0% 97% / 86%)',
-    },
+  lt(key: keyof typeof BREAKPOINTS) {
+    return `@media (max-width: ${BREAKPOINTS[key]})`;
   },
-  code: {
-    1: '#cc4e00',
-    2: '#7d5e54',
-    3: '#cb1d63',
-    4: '#8145b5',
-    5: '#9e6c00',
-    6: '#00749e',
+  between(from: keyof typeof BREAKPOINTS, to: keyof typeof BREAKPOINTS) {
+    return `@media (min-width: ${BREAKPOINTS[from]}) and (max-width: ${BREAKPOINTS[to]})`;
   },
-  space: {
-    1: '4px',
-    2: '8px',
-    3: '12px',
-    4: '16px',
-    5: '20px',
-    6: '24px',
-    7: '32px',
-    8: '40px',
-    9: '48px',
-  },
-  fs: {
-    1: '12px',
-    2: '13px',
-    3: '14px',
-    4: '16px',
-    5: '18px',
-    6: '20px',
-    7: '26px',
-    8: '36px',
-    9: '58px',
-  },
-  fw: {
-    1: '400',
-    2: '500',
-  },
-  br: {
-    circle: '50%',
-    pill: '9999px',
-  },
-  ff: {
-    sans: "graphik, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'",
-    code: "Söhne mono, ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace",
+  gte(key: keyof typeof BREAKPOINTS) {
+    return `@media (width >= ${BREAKPOINTS[key]})`;
   },
 };
 
-export type Theme = typeof theme;
+const BASE_SPACING = '0.25rem' as const;
+
+const THEME = {
+  spacing: BASE_SPACING,
+  color: {
+    white: 'white',
+    black: 'black',
+    gray: {
+      0: 'var(--color-gray-600)',
+      50: 'oklch(98% 0.25% 264)',
+      75: 'oklch(97% 0.325% 264)',
+      100: 'oklch(12% 9.5% 264 / 5%)',
+      200: 'oklch(12% 9% 264 / 7%)',
+      300: 'oklch(12% 8.5% 264 / 17%)',
+      400: 'oklch(12% 8% 264 / 38%)',
+      500: 'oklch(12% 7.5% 264 / 50%)',
+      600: 'oklch(12% 7% 264 / 67%)',
+      700: 'oklch(12% 6% 264 / 77%)',
+      800: 'oklch(12% 5% 264 / 85%)',
+      900: 'oklch(12% 5% 264 / 90%)',
+      950: 'oklch(12% 5% 264 / 95%)',
+    },
+    content: 'white',
+    background: 'var(--color-gray-50)',
+    foreground: 'var(--color-gray-900)',
+    popup: 'white',
+    gridline: 'oklch(91.6% 1% 264)',
+    selection: 'oklch(80% 50% 264 / 25%)',
+    highlight: 'var(--color-blue)',
+    line: {
+      highlight: 'oklch(80% 50% 264 / 10%)',
+      highlightStrong: 'oklch(80% 50% 264 / 25%)',
+    },
+    inlineHighlight: 'oklch(80% 50% 264 / 15%)',
+    navy: 'oklch(31% 25% 264)',
+    blue: 'oklch(45% 50% 264)',
+    green: 'oklch(46% 30% 150)',
+    purple: 'oklch(40% 45% 360)',
+    violet: 'oklch(40% 60% 300)',
+    red: 'oklch(50% 55% 31)',
+  },
+  text: {
+    base: {
+      default: '1rem',
+      lineHeight: '1.5rem',
+      letterSpacing: '0em',
+    },
+    lg: {
+      default: '1.125rem',
+      lineHeight: '1.75rem',
+      letterSpacing: '-0.0025em',
+    },
+    xl: {
+      default: '1.3125rem',
+      lineHeight: '1.625rem',
+      letterSpacing: '-0.005em',
+    },
+    md: {
+      default: '0.9375rem',
+      lineHeight: '1.375rem',
+      letterSpacing: '0em',
+    },
+  },
+  header: {
+    height: '3rem',
+  },
+  breakpoint: {
+    maxLayoutWidth: '89rem',
+    showQuickNav: BREAKPOINTS.quickNav,
+    showSideNav: BREAKPOINTS.lg,
+  },
+  ease: {
+    out: {
+      fast: 'cubic-bezier(0.45, 1.005, 0, 1.005)',
+    },
+    in: {
+      slow: 'cubic-bezier(0.375, 0.015, 0.545, 0.455)',
+    },
+  },
+  radius: {
+    xs: '.125rem',
+    sm: '.25rem',
+    md: '.375rem',
+    lg: '.5rem',
+    xl: '.75rem',
+    '2xl': '1rem',
+    '3xl': '1.5rem',
+    '4xl': '2rem',
+  },
+  $$breakpoints: BREAKPOINT_UTILS,
+};
+
+export type Theme = typeof THEME;
+export default THEME;

@@ -13,7 +13,7 @@ type ExtendedStyleObj = {
 };
 type BaseStyleObject = ExtendedStyleObj & Record<string, string | object>;
 
-function isUnitLess(cssKey: string) {
+export function isUnitLess(cssKey: string) {
   return unitlessKeys[cssKey] === 1;
 }
 
@@ -56,13 +56,14 @@ export type ProcessStyleObjectsReturn = {
   base: StyleObjectReturn[];
   variants: StyleObjectReturn[];
   compoundVariants: StyleObjectReturn[];
+  defaultVariants: Record<string, unknown>;
 };
 
 function splitAndJoin(str: string): string {
   return str.split('.').join('-');
 }
 
-function getCSSVar(key: string, wrapInVar = false): string {
+export function getCSSVar(key: string, wrapInVar = false): string {
   let result: string;
   if (key.startsWith('$$')) {
     result = `---${cssesc(splitAndJoin(key.substring(2)))}`;
@@ -77,7 +78,7 @@ function getCSSVar(key: string, wrapInVar = false): string {
   return result;
 }
 
-function transformProbableCssVar(value: string): string {
+export function transformProbableCssVar(value: string): string {
   const variableRegex = /(\$\$?\w[\d+\w+.]{0,})/g;
   return value.replaceAll(variableRegex, (sub) => {
     return getCSSVar(sub, true);
@@ -139,6 +140,7 @@ function getCss(
     base: [],
     variants: [],
     compoundVariants: [],
+    defaultVariants: {},
   };
   if (typeof style === 'string') {
     result.base.push({
@@ -149,13 +151,13 @@ function getCss(
     });
     return result;
   }
-  const { variants, compoundVariants } = style;
+  const { variants, compoundVariants, defaultVariants } = style;
   delete style.variants;
   delete style.compoundVariants;
   delete style.defaultVariants;
 
   const { result: baseObj, variables } = processStyle(style, { getVariableName });
-  const cssText = serializeStyles([baseObj as any]).styles;
+  const { styles: cssText } = serializeStyles([baseObj as any]);
   result.base.push({
     className: getClassName(),
     cssText,
@@ -220,6 +222,9 @@ function getCss(
       }
     });
   }
+  if (defaultVariants && Object.keys(defaultVariants).length > 0) {
+    result.defaultVariants = defaultVariants;
+  }
   return result;
 }
 
@@ -234,6 +239,7 @@ export function processStyleObjects(
     base: [],
     variants: [],
     compoundVariants: [],
+    defaultVariants: {},
   };
 
   styles.reduce((acc, style, index) => {
@@ -250,6 +256,10 @@ export function processStyleObjects(
     acc.base.push(...res.base);
     acc.variants.push(...res.variants);
     acc.compoundVariants.push(...res.compoundVariants);
+    acc.defaultVariants = {
+      ...acc.defaultVariants,
+      ...res.defaultVariants,
+    };
     return acc;
   }, result);
   return result;

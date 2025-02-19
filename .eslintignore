@@ -9,7 +9,12 @@
 /packages/pigment-css-react/exports/
 /packages/pigment-css-react/theme/
 /packages/pigment-css-react/tests/**/fixtures
+/packages/pigment-css-core/exports/
+/packages/pigment-css-core/tests/**/fixtures
+/packages/pigment-css-react-new/exports/
+/packages/pigment-css-react-new/tests/**/fixtures
 /packages/pigment-css-nextjs-plugin/loader.js
+/packages/pigment-css-plugin/exports/
 # Ignore fixtures
 /packages-internal/scripts/typescript-to-proptypes/test/*/*
 /test/bundling/fixtures/**/*.fixture.js
@@ -33,3 +38,4 @@ pnpm-lock.yaml
 # If we want to format these files we'd need to do it in crowdin
 docs/**/*-pt.md
 docs/**/*-zh.md
+/tmpapps

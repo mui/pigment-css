@@ -1,0 +1,56 @@
+{
+  "name": "@pigment-css/nextjs-plugin",
+  "version": "0.0.30",
+  "main": "build/index.js",
+  "module": "build/index.mjs",
+  "types": "build/index.d.ts",
+  "author": "MUI Team",
+  "description": "Next.js integration for Pigment CSS.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mui/pigment-css.git",
+    "directory": "packages/pigment-css-nextjs-plugin"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mui/pigment-css/issues"
+  },
+  "homepage": "https://github.com/mui/pigment-css/tree/master/README.md",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/mui-org"
+  },
+  "scripts": {
+    "clean": "rimraf build types",
+    "watch": "tsup --watch --tsconfig tsconfig.build.json",
+    "copy-license": "node ../../scripts/pigment-license.mjs",
+    "build": "tsup --tsconfig tsconfig.build.json",
+    "typescript": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@pigment-css/unplugin": "workspace:^"
+  },
+  "devDependencies": {
+    "next": "^15.0.1"
+  },
+  "peerDependencies": {
+    "next": "^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "build",
+    "loader.js",
+    "next-font.js",
+    "next-image.js",
+    "third-party-styled.js",
+    "pigment-virtual.css",
+    "package.json",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
