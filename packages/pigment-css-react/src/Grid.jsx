@@ -300,6 +300,7 @@ process.env.NODE_ENV !== 'production' &&
      */
     size: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
       PropTypes.arrayOf(PropTypes.number),
+      PropTypes.oneOf(['grow', 'auto']),
       PropTypes.number,
       PropTypes.object,
     ]),
