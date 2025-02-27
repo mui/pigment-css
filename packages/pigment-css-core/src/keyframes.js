@@ -6,5 +6,5 @@ import { generateErrorMessage } from './utils';
  * We do not want to throw error in that case as we want the evaluation to happen.
  */
 export default function keyframes() {
-  console.error(generateErrorMessage('keyframes'));
+  throw new Error(generateErrorMessage('keyframes'));
 }
