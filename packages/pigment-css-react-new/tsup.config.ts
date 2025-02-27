@@ -18,12 +18,12 @@ export default defineConfig([
   {
     ...baseConfig,
     entry: ['./src/runtime/index.ts'],
-    outDir: 'build/runtime',
+    outDir: 'runtime',
   },
   {
     ...baseConfig,
     entry: processors.map((file) => `./src/processors/${file}.ts`),
-    outDir: 'build/processors',
+    outDir: 'processors',
     cjsInterop: true,
   },
 ]);

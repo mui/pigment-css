@@ -2,4 +2,4 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 
-exports.default = require('../build/processors/css').StyledCssProcessor;
+exports.default = require('../processors/css').StyledCssProcessor;

@@ -69,40 +69,57 @@
     "src",
     "build",
     "exports",
+    "processors",
+    "runtime",
     "package.json",
     "styles.css",
     "LICENSE"
   ],
   "exports": {
     ".": {
-      "types": "./build/index.d.ts",
+      "require": {
+        "types": "./build/index.d.ts",
+        "default": "./build/index.js"
+      },
       "import": {
         "types": "./build/index.d.mts",
         "default": "./build/index.mjs"
-      },
-      "require": "./build/index.js",
-      "default": "./build/index.js"
+      }
     },
     "./package.json": "./package.json",
     "./styles.css": "./styles.css",
     "./processors/css": {
-      "import": "./build/processors/css.mjs",
-      "require": "./build/processors/css.js",
-      "default": "./build/processors/css.js"
+      "require": {
+        "types": "./processors/css.d.ts",
+        "default": "./processors/css.js"
+      },
+      "import": {
+        "types": "./processors/css.d.mts",
+        "default": "./processors/css.mjs"
+      }
     },
     "./processors/styled": {
-      "import": "./build/processors/styled.mjs",
-      "require": "./build/processors/styled.js",
-      "default": "./build/processors/styled.js"
+      "require": {
+        "types": "./processors/styled.d.ts",
+        "default": "./processors/styled.js"
+      },
+      "import": {
+        "types": "./processors/styled.d.mts",
+        "default": "./processors/styled.mjs"
+      }
     },
     "./exports/*": {
       "default": "./exports/*.js"
     },
     "./runtime": {
-      "types": "./build/runtime/index.d.ts",
-      "import": "./build/runtime/index.mjs",
-      "require": "./build/runtime/index.js",
-      "default": "./build/runtime/index.js"
+      "require": {
+        "types": "./runtime/index.d.ts",
+        "default": "./runtime/index.js"
+      },
+      "import": {
+        "types": "./runtime/index.d.mts",
+        "default": "./runtime/index.mjs"
+      }
     }
   },
   "nx": {
