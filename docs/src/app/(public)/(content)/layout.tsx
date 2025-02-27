@@ -3,6 +3,8 @@ import type { Metadata, Viewport } from 'next/types';
 import { Header } from 'docs/src/components/Header';
 import * as SideNav from 'docs/src/components/SideNav';
 import { nav } from 'docs/src/nav';
+import * as QuickNav from 'docs/src/components/QuickNav';
+
 import { Main, Root } from './layout.pigment';
 
 export default function Layout({ children }: React.PropsWithChildren) {
@@ -23,7 +25,9 @@ export default function Layout({ children }: React.PropsWithChildren) {
           </SideNav.Section>
         ))}
       </SideNav.Root>
-      <Main>{children}</Main>
+      <Main>
+        <QuickNav.Container>{children}</QuickNav.Container>
+      </Main>
     </Root>
   );
 }

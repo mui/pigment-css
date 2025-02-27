@@ -70,6 +70,11 @@ const THEME = {
       lineHeight: '1.5rem',
       letterSpacing: '0em',
     },
+    md: {
+      default: '0.9375rem',
+      lineHeight: '1.375rem',
+      letterSpacing: '0em',
+    },
     lg: {
       default: '1.125rem',
       lineHeight: '1.75rem',
@@ -80,10 +85,10 @@ const THEME = {
       lineHeight: '1.625rem',
       letterSpacing: '-0.005em',
     },
-    md: {
-      default: '0.9375rem',
-      lineHeight: '1.375rem',
-      letterSpacing: '0em',
+    '3xl': {
+      default: '1.875rem',
+      lineHeight: '1.2re,',
+      letterSpacing: '-0.015em',
     },
   },
   header: {
@@ -111,6 +116,12 @@ const THEME = {
     '2xl': '1rem',
     '3xl': '1.5rem',
     '4xl': '2rem',
+  },
+  font: {
+    weight: {
+      bold: 700,
+      medium: 500,
+    },
   },
   $$breakpoints: BREAKPOINT_UTILS,
 };

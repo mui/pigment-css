@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Link } from 'docs/src/components/Link';
 import { ArrowRightIcon } from 'docs/src/icons/ArrowRightIcon';
 import { Root, Content, Heading, linkStyle, Caption } from './page.pigment';
+import { nav } from 'docs/src/nav';
 
 const description = 'A build-time CSS-in-JS styling engine';
 
@@ -14,7 +15,7 @@ export default function HomePage() {
         <Image src="/static/logo.svg" width={30} height={30} alt={`${process.env.APP_NAME} logo`} />
         <Heading>{process.env.APP_NAME}</Heading>
         <Caption>{description}</Caption>
-        <Link className={`${linkStyle}`} href="/overview/quick-start">
+        <Link className={`${linkStyle}`} href={nav[0].links[0].href}>
           Documentation <ArrowRightIcon />
         </Link>
       </Content>
