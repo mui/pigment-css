@@ -93,7 +93,7 @@ export const Section = styled.div`
 export const Heading = styled.div`
   display: inline-flex;
   padding-block: var(--sideNavItemPaddingY);
-  font-weight: 500;
+  font-weight: 600;
 `;
 
 export const NavItem = styled.li`

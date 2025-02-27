@@ -13,5 +13,5 @@ export default function Layout({ children }: React.PropsWithChildren) {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://base-ui.com'),
+  metadataBase: new URL('https://pigment-css.com'),
 };

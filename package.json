@@ -15,6 +15,7 @@
     "release:publish": "pnpm publish --recursive --tag latest",
     "release:publish:dry-run": "pnpm publish --recursive --tag latest --registry=\"http://localhost:4873/\"",
     "release:tag": "node scripts/releaseTag.mjs",
+    "docs:dev": "nx run docs:dev",
     "docs:build": "nx run docs:build",
     "extract-error-codes": "cross-env MUI_EXTRACT_ERROR_CODES=true lerna run --concurrency 8 build:modern",
     "install:codesandbox": "pnpm install --no-frozen-lockfile",

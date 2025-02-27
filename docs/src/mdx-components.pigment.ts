@@ -1,0 +1,72 @@
+import { t } from '@pigment-css/theme';
+import { styled } from '@pigment-css/react-new';
+
+import { applyText, spacing } from './utils/theme';
+
+export const Heading = styled('h1')(({ theme }) => ({
+  textWrap: 'balance',
+  variants: {
+    lvl: {
+      one: {
+        marginBottom: spacing(theme, 4),
+        fontWeight: '$font.weight.bold',
+        ...applyText(theme, '3xl'),
+      },
+      two: {
+        marginTop: spacing(theme, 10),
+        marginBottom: spacing(theme, 4),
+        ...applyText(theme, 'xl'),
+        scrollMarginTop: spacing(theme, 6),
+        fontWeight: t('$font.weight.medium'),
+        '& + .inner-separator': {
+          borderTop: `1px solid ${t('$color.gray.200')}`,
+          marginBottom: spacing(theme, 5),
+        },
+      },
+      three: {
+        marginTop: spacing(theme, 8),
+        marginBottom: spacing(theme, 1.5),
+        scrollMarginTop: spacing(theme, 6),
+        ...applyText(theme, 'lg'),
+        fontWeight: t('$font.weight.medium'),
+      },
+      other: {
+        three: {
+          marginTop: spacing(theme, 8),
+          marginBottom: spacing(theme, 1.5),
+          scrollMarginTop: spacing(theme, 6),
+          ...applyText(theme, 'lg'),
+        },
+      },
+    },
+  },
+  defaultVariants: {
+    lvl: 'one',
+  },
+}));
+
+export const Paragraph = styled.p(
+  ({ theme }) => `
+  margin-bottom: ${spacing(theme, 4)};
+`,
+);
+
+export const Li = styled.li(({ theme }) => ({
+  marginBottom: spacing(theme, 0.5),
+}));
+
+export const Ul = styled.ul(({ theme }) => ({
+  marginBottom: spacing(theme, 4),
+  marginInlineStart: spacing(theme, 4.5),
+  listStyleType: 'disc',
+}));
+
+export const Ol = styled.ul(({ theme }) => ({
+  marginBottom: spacing(theme, 4),
+  marginInlineStart: spacing(theme, 7),
+  listStyleType: 'decimal',
+}));
+
+export const Strong = styled.strong({
+  fontWeight: '$font.weight.medium',
+});

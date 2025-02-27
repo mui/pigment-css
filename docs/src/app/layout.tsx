@@ -1,25 +1,21 @@
-import * as React from 'react';
-import { Metadata, Viewport } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
-
 import '@pigment-css/react-new/styles.css';
 import './globals.css';
+
+import * as React from 'react';
+import { Metadata, Viewport } from 'next';
+import { Inter } from 'next/font/google';
+
 import { bodyCls, htmlCls } from './layout.pigment';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const inter = Inter({
+  variable: '--font-inter',
   subsets: ['latin'],
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
-
-export default function Layout({ children }: React.PropsWithChildren) {
+export default async function Layout({ children }: React.PropsWithChildren) {
   return (
-    <html lang="en" className={`${htmlCls}`}>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${bodyCls}`}>{children}</body>
+    <html lang="en" className={htmlCls().className}>
+      <body className={`${inter.variable} ${bodyCls}`}>{children}</body>
     </html>
   );
 }

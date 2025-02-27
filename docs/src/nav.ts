@@ -4,15 +4,11 @@ export const nav = [
     links: [
       {
         label: 'Quick start',
-        href: '/overview/quick-start',
+        href: '/getting-started/quick-start',
       },
       {
-        label: 'Accessibility',
-        href: '/overview/accessibility',
-      },
-      {
-        label: 'About',
-        href: '/overview/about',
+        label: 'Installation',
+        href: '/getting-started/installation',
       },
     ],
   },
