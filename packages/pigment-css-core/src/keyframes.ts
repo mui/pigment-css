@@ -1,3 +1,4 @@
+import { generateErrorMessage } from './utils';
 import type { CSSObjectNoCallback, Primitive, ThemeArgs } from './base';
 import { BaseInterface } from './css';
 
@@ -17,6 +18,8 @@ interface KeyframesWithOption {
   <M extends BaseInterface>(metadata: M): KeyframesNoOption;
 }
 
-declare const keyframes: KeyframesWithOption & KeyframesNoOption;
+const keyframes: KeyframesWithOption & KeyframesNoOption = () => {
+  throw new Error(generateErrorMessage('keyframes'));
+};
 
 export default keyframes;

@@ -1,3 +1,5 @@
+import { generateErrorMessage } from './utils';
+
 import { CSSObjectNoCallback, CSSProperties, Primitive, ThemeArgs } from './base';
 
 export type CssFn<Props extends object> = (props: Props) => string | number;
@@ -66,5 +68,8 @@ interface CssWithOption {
   <M extends BaseInterface>(metadata: M): CssNoOption;
 }
 
-declare const css: CssNoOption & CssWithOption;
+const css: CssNoOption & CssWithOption = () => {
+  throw new Error(generateErrorMessage('css'));
+};
+
 export default css;
