@@ -63,7 +63,7 @@
   },
   "files": [
     "build",
-    "nextjs-atifacts",
+    "nextjs-artifacts",
     "src",
     "LICENSE"
   ],
@@ -73,36 +73,44 @@
   "exports": {
     "./package.json": "./package.json",
     "./vite": {
-      "types": "./build/vite.d.ts",
+      "require": {
+        "types": "./build/vite.d.ts",
+        "default": "./build/vite.js"
+      },
       "import": {
         "types": "./build/vite.d.mts",
         "default": "./build/vite.mjs"
-      },
-      "default": "./build/vite.js"
+      }
     },
     "./webpack": {
-      "types": "./build/webpack.d.ts",
+      "require": {
+        "types": "./build/webpack.d.ts",
+        "default": "./build/webpack.js"
+      },
       "import": {
         "types": "./build/webpack.d.mts",
         "default": "./build/webpack.mjs"
-      },
-      "default": "./build/webpack.js"
+      }
     },
     "./nextjs": {
-      "types": "./build/nextjs.d.ts",
+      "require": {
+        "types": "./build/nextjs.d.ts",
+        "default": "./build/nextjs.js"
+      },
       "import": {
         "types": "./build/nextjs.d.mts",
         "default": "./build/nextjs.mjs"
-      },
-      "default": "./build/nextjs.js"
+      }
     },
     "./nextjs-css-loader": {
-      "types": "./build/nextjs-css-loader.d.ts",
+      "require": {
+        "types": "./build/nextjs-css-loader.d.ts",
+        "default": "./build/nextjs-css-loader.js"
+      },
       "import": {
         "types": "./build/nextjs-css-loader.d.mts",
         "default": "./build/nextjs-css-loader.mjs"
-      },
-      "default": "./build/nextjs-css-loader.js"
+      }
     }
   }
 }
