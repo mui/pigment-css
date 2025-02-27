@@ -16,4 +16,5 @@ const frameworks = ['webpack', 'vite', 'nextjs'];
 export default defineConfig({
   ...baseConfig,
   entry: frameworks.map((fw) => `./src/${fw}.ts`).concat('./src/nextjs-css-loader.js'),
+  cjsInterop: false,
 });
