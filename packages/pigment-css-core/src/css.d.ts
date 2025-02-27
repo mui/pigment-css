@@ -51,7 +51,7 @@ type CssReturn = {
   style?: CSSProperties;
 };
 
-type CssReturnFn<Props extends {}> = (props: Props) => CssReturn;
+type CssReturnFn<Props extends {}> = (props?: Props) => CssReturn;
 
 interface CssNoOption {
   (
