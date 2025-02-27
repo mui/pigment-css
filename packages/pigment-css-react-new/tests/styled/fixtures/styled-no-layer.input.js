@@ -14,6 +14,7 @@ function TestComponent() {
 }
 
 const StyledTest = styled(TestComponent)({
+  // gets converted to css variable -> ---id: 0px
   $$id: 0,
   display: 'block',
   position: 'absolute',

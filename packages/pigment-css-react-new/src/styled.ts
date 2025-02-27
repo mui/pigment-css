@@ -1,5 +1,12 @@
 import type * as React from 'react';
-import { Variants, BaseInterface, CssArg, VariantNames, Primitive } from '@pigment-css/core';
+import {
+  Variants,
+  BaseInterface,
+  CssArg,
+  VariantNames,
+  Primitive,
+  generateErrorMessage,
+} from '@pigment-css/core';
 
 export type NoInfer<T> = [T][T extends any ? 0 : never];
 type FastOmit<T extends object, U extends string | number | symbol> = {
@@ -8,7 +15,7 @@ type FastOmit<T extends object, U extends string | number | symbol> = {
 
 export type Substitute<A extends object, B extends object> = FastOmit<A, keyof B> & B;
 
-interface RequiredProps {
+export interface RequiredProps {
   className?: string;
   style?: React.CSSProperties;
 }
@@ -72,4 +79,7 @@ export type CreateStyledIndex = {
   >;
 };
 
-export declare const styled: CreateStyled & CreateStyledIndex;
+// @ts-expect-error The implementation is is different than the user API
+export const styled: CreateStyled & CreateStyledIndex = () => {
+  throw new Error(generateErrorMessage('styled'));
+};
