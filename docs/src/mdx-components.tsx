@@ -43,7 +43,7 @@ export const mdxComponents: MDXComponents = {
 
     return <figcaption {...props} />;
   },
-  code: (props) => <Styled.Code {...props} />,
+  // code: (props) => <Styled.Code {...props} />,
   // Don't pass the tabindex prop from shiki, most browsers
   // now handle scroll containers focus out of the box
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

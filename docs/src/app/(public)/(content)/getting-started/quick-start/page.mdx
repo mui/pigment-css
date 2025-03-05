@@ -5,18 +5,244 @@
 
 ## Installation
 
-There are two parts to the installation of Pigment CSS -
+There are two parts to the installation and usage of Pigment CSS in an application. First one is the runtime package that is going to be part of an app's source code. And second one is the bundler package that will be part of the app's bundler config.
 
-### Install the runtime library
-
-If you are using Pigment CSS with React, you can directly install the package with React integration -
+### Runtime package
 
 ```bash title="Terminal"
 npm i @pigment-css/react-new
 ```
 
-```jsx title="Test"
-import os from 'os';
+or when not using React
 
-console.log(os);
+```bash title="Terminal"
+npm i @pigment-css/core
 ```
+
+### Bundler package
+
+```bash title="Terminal"
+npm i --save-dev @pigment-css/plugins
+```
+
+After the packages are installed, proceed to configure the app as below.
+
+## Setting up a Next.js app
+
+Open the `next.config.ts` or `next.config.mjs` file and add the following code to setup a basic Pigment CSS integration -
+
+```ts
+import withPigment from '@pigment-css/plugin/nextjs';
+
+// App's Next.js config
+const nextConfig = {};
+
+export default withPigment(nextConfig);
+```
+
+Note: Pigment CSS with Next.js does not support Turbopack. We'll add the support once Turbopack is stable and has added some of the missing APIs that is present in Webpack right now and is needed by Pigment CSS.
+
+## Setting up a Vite based app
+
+Open the `vite.config.ts` file and add the `pigment` plugin -
+
+```ts
+import { defineConfig } from 'vite';
+import pigment from '@pigment-css/plugin/vite';
+
+export default defineConfig({
+  plugins: [react(), pigment()],
+});
+```
+
+## Usage
+
+### Non React usage
+
+```jsx
+import { css } from '@pigment-css/react';
+
+const visuallyHidden = css({
+  border: 0,
+  clip: 'rect(0 0 0 0)',
+  height: '1px',
+  margin: -1,
+  overflow: 'hidden',
+  padding: 0,
+  position: 'absolute',
+  whiteSpace: 'nowrap',
+  width: '1px',
+});
+
+// alternatively
+const visuallyHidden2 = css`
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden';
+  padding: 0;
+  position: absolute;
+  whiteSpace: nowrap;
+  width: 1px;
+`;
+
+function App() {
+  return <div {...visuallyHidden()}>I am invisible</div>;
+}
+```
+
+Which API signature to use is totally on the requirements. Somethings are easier with the tagged-template literal signature like copy-pasting css from other source (Figma for example) but it requires editor integration. For example, [vscode-styled-components](https://marketplace.visualstudio.com/items?itemName=styled-components.vscode-styled-components) extension needs to be installed to get completions and syntax highlighting in VSCode.
+
+The css object API is more flexible as well as typesafe. Generic components with inbuilt variants can be authored with the CSS object API.
+
+### React components
+
+There's a `styled` export from the package that can be used to author React components directly using the same signature as `css`.
+
+```tsx
+import { styled } from '@pigment-css/react';
+
+const Heading = styled('div')({
+  fontSize: '4rem',
+  fontWeight: 'bold',
+  padding: '10px 0px',
+});
+
+// alternatively
+const Heading2 = styled('div')`
+  font-size: 4rem;
+  font-weight: bold;
+  padding: 10px 0px;
+`;
+
+function App() {
+  return <Heading>Hello</Heading>;
+}
+```
+
+## Variants API
+
+Pigment CSS supports the class variance authority style API for both it `css` and `styled` functions. For example, a button component that accepts two props, `size` and `variant` can be authored and used like -
+
+```tsx
+const Button = styled('button')({
+  // base button styles
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  color: 'black',
+  backgroundColor: 'white',
+  // Variant styles
+  variants: {
+    size: {
+      small: {
+        padding: '2px 4px',
+      },
+      medium: {
+        padding: '5px 10px',
+      },
+      large: {
+        padding: '10px 12px',
+      },
+    },
+    variant: {
+      primary: {
+        backgroundColor: 'blue',
+      },
+      secondary: {
+        backgroundColor: 'green',
+      },
+      error: {
+        backgroundColor: 'red',
+      },
+    },
+  },
+  defaultVariants: {
+    size: 'medium',
+    variant: 'primary',
+  },
+});
+
+// Usage
+
+function App() {
+  return (
+    <>
+      {/* Default values of size `medium` and variant `primary` will be used */}
+      <Button>Default</Button>
+      <Button size="small">Small</Button>
+      <Button size="large">Large</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="error">Error</Button>
+      <Button size="small" variant="error">
+        Small Error
+      </Button>
+    </>
+  );
+}
+```
+
+The same parameter is supported by the `css` API. Here's the usage -
+
+```tsx
+const buttonCss = css({
+  // base button styles
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  color: 'black',
+  backgroundColor: 'white',
+  // Variant styles
+  variants: {
+    size: {
+      small: {
+        padding: '2px 4px',
+      },
+      medium: {
+        padding: '5px 10px',
+      },
+      large: {
+        padding: '10px 12px',
+      },
+    },
+    variant: {
+      primary: {
+        backgroundColor: 'blue',
+      },
+      secondary: {
+        backgroundColor: 'green',
+      },
+      error: {
+        backgroundColor: 'red',
+      },
+    },
+  },
+  defaultVariants: {
+    size: 'medium',
+    variant: 'primary',
+  },
+});
+
+// Usage
+
+function App() {
+  return (
+    <>
+      {/* Default values of size `medium` and variant `primary` will be used */}
+      <button {...buttonCss()}>Default</button>
+      <button {...buttonCss({ size: 'small' })}>Small</button>
+      <button {...buttonCss({ size: 'large' })}>Large</button>
+      <button {...buttonCss({ variant: 'secondary' })}>Secondary</button>
+      <button {...buttonCss({ variant: 'error' })}>Error</button>
+      <button {...buttonCss({ variant: 'error', size: 'small' })}>Small Error</button>
+    </>
+  );
+}
+```
+
+The runtime call to `buttonCss()` only determines which classes to apply based on the values passed.
+
+## Theming and CSS Variables
+
+To be added
