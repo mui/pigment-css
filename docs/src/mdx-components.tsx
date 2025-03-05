@@ -1,6 +1,7 @@
 import * as React from 'react';
 import type { MDXComponents } from 'mdx/types';
 
+import * as CodeBlock from './components/CodeBlock';
 import * as Styled from './mdx-components.pigment';
 import { Link } from './components/Link';
 import { getChildrenText } from './utils/getChildrenText';
@@ -28,6 +29,37 @@ export const mdxComponents: MDXComponents = {
   ul: (props) => <Styled.Ul {...props} />,
   ol: (props) => <Styled.Ol {...props} />,
   strong: (props) => <Styled.Strong {...props} />,
+  figure: (props) => {
+    if ('data-rehype-pretty-code-figure' in props) {
+      return <Styled.CodeBlock.Root {...props} />;
+    }
+
+    return <figure {...props} />;
+  },
+  figcaption: (props) => {
+    if ('data-rehype-pretty-code-title' in props) {
+      return <CodeBlock.Panel {...props} />;
+    }
+
+    return <figcaption {...props} />;
+  },
+  code: (props) => <Styled.Code {...props} />,
+  // Don't pass the tabindex prop from shiki, most browsers
+  // now handle scroll containers focus out of the box
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  pre: ({ tabIndex: _tabIndex, ...props }) => <CodeBlock.Pre {...props} />,
+  Subtitle: (props) => <Styled.Subtitle {...props} />,
+  Meta: (props: React.ComponentProps<'meta'>) => {
+    if (props.name === 'description' && String(props.content).length > 170) {
+      throw new Error('Meta description shouldn’t be longer than 170 chars');
+    }
+    return <meta {...props} />;
+  },
+};
+
+export const inlineMdxComponents: MDXComponents = {
+  ...mdxComponents,
+  p: (props) => <p {...props} />,
 };
 
 export function useMDXComponents(comp: MDXComponents): MDXComponents {

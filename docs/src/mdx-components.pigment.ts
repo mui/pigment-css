@@ -1,6 +1,9 @@
 import { t } from '@pigment-css/theme';
 import { styled } from '@pigment-css/react-new';
 
+import * as CodeBlockBase from './components/CodeBlock.pigment';
+import { Code as CodeBase } from './components/Code.pigment';
+import { Subtitle as SubtitleBase } from './components/Subtitle.pigment';
 import { applyText, spacing } from './utils/theme';
 
 export const Heading = styled('h1')(({ theme }) => ({
@@ -70,3 +73,20 @@ export const Ol = styled.ul(({ theme }) => ({
 export const Strong = styled.strong({
   fontWeight: '$font.weight.medium',
 });
+
+export const Subtitle = styled(SubtitleBase)(({ theme }) => ({
+  marginTop: spacing(theme, -2),
+  marginBottom: spacing(theme, 5),
+}));
+
+export const CodeBlock = {
+  Root: styled(CodeBlockBase.Root)(({ theme }) => ({
+    marginTop: spacing(theme, 5),
+    marginBottom: spacing(theme, 6),
+  })),
+};
+
+export const Code = styled(CodeBase)(({ theme }) => ({
+  color: '$color.blue',
+  margin: `0 ${spacing(theme, '0.1em')}`,
+}));

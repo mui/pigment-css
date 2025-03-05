@@ -1,5 +1,6 @@
 import '@pigment-css/react-new/styles.css';
 import './globals.css';
+import './syntax.css';
 
 import * as React from 'react';
 import { Metadata, Viewport } from 'next';
@@ -14,7 +15,7 @@ const inter = Inter({
 
 export default async function Layout({ children }: React.PropsWithChildren) {
   return (
-    <html lang="en" className={htmlCls().className}>
+    <html lang="en" className={`${htmlCls} dark-mode`}>
       <body className={`${inter.variable} ${bodyCls}`}>{children}</body>
     </html>
   );

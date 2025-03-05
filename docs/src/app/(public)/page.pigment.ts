@@ -1,6 +1,6 @@
 import { t } from '@pigment-css/theme';
 import { css, styled } from '@pigment-css/react-new';
-import { spacing } from 'docs/src/utils/theme';
+import { spacing } from 'docs/utils/theme';
 
 export const Root = styled('div')({
   display: 'flex',

@@ -11,6 +11,7 @@ declare global {
       APP_NAME: string;
       GITHUB: string;
       NPM: string;
+      WEBSITE: string;
     }
   }
 }
