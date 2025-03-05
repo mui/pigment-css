@@ -2,6 +2,7 @@
   "name": "docs",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "clean": "rm -rf .next export",
     "dev": "next dev",
@@ -15,13 +16,14 @@
     "@pigment-css/react-new": "workspace:*",
     "@pigment-css/theme": "workspace:*",
     "@stefanprobst/rehype-extract-toc": "^2.2.1",
+    "clipboard-copy": "4.0.1",
     "clsx": "^2.1.1",
     "next": "15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "remark-gfm": "^4.0.0",
-    "remark-typography": "^0.6.21",
-    "scroll-into-view-if-needed": "^3.1.0"
+    "rehype-highlight": "^7.0.2",
+    "scroll-into-view-if-needed": "^3.1.0",
+    "shiki": "^3.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -35,6 +37,11 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "@mdx-js/loader": "3.1.0",
+    "hast-util-to-string": "^3.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-typography": "^0.6.21",
+    "unified": "^11.0.5",
+    "unist-util-visit-parents": "^6.0.1",
     "typescript": "^5"
   },
   "nx": {

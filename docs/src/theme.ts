@@ -70,6 +70,16 @@ const THEME = {
       lineHeight: '1.5rem',
       letterSpacing: '0em',
     },
+    xs: {
+      default: '0.8125rem',
+      lineHeight: '1.25rem',
+      letterSpacing: '0.001em',
+    },
+    sm: {
+      default: '0.875rem',
+      lineHeight: '1.25rem',
+      letterSpacing: '0em',
+    },
     md: {
       default: '0.9375rem',
       lineHeight: '1.375rem',

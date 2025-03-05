@@ -1,7 +1,7 @@
 import { t } from '@pigment-css/theme';
 import { css, styled } from '@pigment-css/react-new';
 
-import { applyText, spacing } from 'docs/src/utils/theme';
+import { applyText, spacing } from 'docs/utils/theme';
 
 export const Root = styled.div(({ theme }) => ({
   ...applyText(theme, 'md'),

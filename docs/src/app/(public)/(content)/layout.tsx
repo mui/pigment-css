@@ -1,9 +1,9 @@
 import * as React from 'react';
 import type { Metadata, Viewport } from 'next/types';
-import { Header } from 'docs/src/components/Header';
-import * as SideNav from 'docs/src/components/SideNav';
-import { nav } from 'docs/src/nav';
-import * as QuickNav from 'docs/src/components/QuickNav';
+import { Header } from 'docs/components/Header';
+import * as SideNav from 'docs/components/SideNav';
+import { nav } from 'docs/nav';
+import * as QuickNav from 'docs/components/QuickNav';
 
 import { Main, Root } from './layout.pigment';
 

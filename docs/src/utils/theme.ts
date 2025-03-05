@@ -10,5 +10,8 @@ export function applyText(theme: Theme, value: keyof Theme['text']) {
 }
 
 export function spacing(theme: Theme, space: number | string) {
+  if (typeof space === 'string') {
+    return space;
+  }
   return `calc(${theme.spacing} * ${space})`;
 }
