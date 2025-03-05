@@ -336,17 +336,18 @@ const highlighter = createHighlighter({
 
 export async function readMarkdown(baseDir: string, filePath: string) {
   const mdxFilePath = path.join(process.env.CONTENT_DIR as string, baseDir, `${filePath}.mdx`);
-  const file = await fs.open(mdxFilePath);
+  let file: fs.FileHandle | null = null;
   let mdxSource: string;
 
   try {
+    file = await fs.open(mdxFilePath);
     mdxSource = await file.readFile({
       encoding: 'utf-8',
     });
   } catch (ex) {
     return null;
   } finally {
-    await file.close();
+    await file?.close();
   }
   const prettyCodeOptions = {
     getHighlighter: async () => await highlighter,
