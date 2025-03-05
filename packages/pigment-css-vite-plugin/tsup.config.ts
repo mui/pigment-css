@@ -9,6 +9,7 @@ const baseConfig: Options = {
   tsconfig: './tsconfig.build.json',
   external,
   env: {
+    ...(config as Options).env,
     RUNTIME_PACKAGE_NAME: zeroPkgJson.name,
   },
 };

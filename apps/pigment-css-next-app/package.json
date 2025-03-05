@@ -15,13 +15,13 @@
     "local-ui-lib": "workspace:^",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.1.3"
+    "next": "15.1.6"
   },
   "devDependencies": {
     "@pigment-css/nextjs-plugin": "workspace:^",
-    "@types/node": "^18.19.63",
-    "@types/react": "^19.0.2",
-    "@types/react-dom": "^19.0.2",
+    "@types/node": "^20",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
     "eslint": "^8.57.0",
     "typescript": "^5.4.4"
   },
