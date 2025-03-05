@@ -29,9 +29,9 @@ After the packages are installed, proceed to configure the app as below.
 
 ## Setting up a Next.js app
 
-Open the `next.config.ts` or `next.config.mjs` file and add the following code to setup a basic Pigment CSS integration -
+Open the configuration file and add the following code to setup a basic Pigment CSS integration -
 
-```ts
+```ts title="next.config.ts"
 import withPigment from '@pigment-css/plugin/nextjs';
 
 // App's Next.js config
@@ -46,7 +46,7 @@ Note: Pigment CSS with Next.js does not support Turbopack. We'll add the suppor
 
 Open the `vite.config.ts` file and add the `pigment` plugin -
 
-```ts
+```ts title="vite.config.ts"
 import { defineConfig } from 'vite';
 import pigment from '@pigment-css/plugin/vite';
 
@@ -142,9 +142,6 @@ const Button = styled('button')({
       medium: {
         padding: '5px 10px',
       },
-      large: {
-        padding: '10px 12px',
-      },
     },
     variant: {
       primary: {
@@ -152,9 +149,6 @@ const Button = styled('button')({
       },
       secondary: {
         backgroundColor: 'green',
-      },
-      error: {
-        backgroundColor: 'red',
       },
     },
   },
@@ -172,11 +166,9 @@ function App() {
       {/* Default values of size `medium` and variant `primary` will be used */}
       <Button>Default</Button>
       <Button size="small">Small</Button>
-      <Button size="large">Large</Button>
       <Button variant="secondary">Secondary</Button>
-      <Button variant="error">Error</Button>
-      <Button size="small" variant="error">
-        Small Error
+      <Button size="small" variant="secondary">
+        Small Secondary
       </Button>
     </>
   );
@@ -202,9 +194,6 @@ const buttonCss = css({
       medium: {
         padding: '5px 10px',
       },
-      large: {
-        padding: '10px 12px',
-      },
     },
     variant: {
       primary: {
@@ -212,9 +201,6 @@ const buttonCss = css({
       },
       secondary: {
         backgroundColor: 'green',
-      },
-      error: {
-        backgroundColor: 'red',
       },
     },
   },
@@ -232,16 +218,14 @@ function App() {
       {/* Default values of size `medium` and variant `primary` will be used */}
       <button {...buttonCss()}>Default</button>
       <button {...buttonCss({ size: 'small' })}>Small</button>
-      <button {...buttonCss({ size: 'large' })}>Large</button>
       <button {...buttonCss({ variant: 'secondary' })}>Secondary</button>
-      <button {...buttonCss({ variant: 'error' })}>Error</button>
-      <button {...buttonCss({ variant: 'error', size: 'small' })}>Small Error</button>
+      <button {...buttonCss({ variant: 'secondary', size: 'small' })}>Small Secondary</button>
     </>
   );
 }
 ```
 
-The runtime call to `buttonCss()` only determines which classes to apply based on the values passed.
+The runtime call to `buttonCss()` determines which classes to apply based on the values passed.
 
 ## Theming and CSS Variables
 

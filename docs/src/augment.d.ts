@@ -12,6 +12,7 @@ declare global {
       GITHUB: string;
       NPM: string;
       WEBSITE: string;
+      CONTENT_DIR: string;
     }
   }
 }
