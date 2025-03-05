@@ -1,7 +1,6 @@
 'use client';
 import * as React from 'react';
 import copy from 'clipboard-copy';
-import { css } from '@pigment-css/react-new';
 
 import { CheckIcon } from 'docs/icons/CheckIcon';
 import { CopyIcon } from 'docs/icons/CopyIcon';
@@ -32,9 +31,7 @@ export function Panel({ className, children, ...props }: React.ComponentPropsWit
     <CodeBlock.Panel className={className} {...props}>
       <CodeBlock.PanelTitle id={titleId}>{children}</CodeBlock.PanelTitle>
       <GhostButton
-        className={`${css`
-          margin-left: auto;
-        `}`}
+        className={CodeBlock.ghostButtonStyle().className}
         aria-label="Copy code"
         onClick={async () => {
           const code = document.getElementById(codeId)?.textContent;

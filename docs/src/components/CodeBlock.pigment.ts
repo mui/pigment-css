@@ -89,3 +89,7 @@ export const Pre = styled.pre(
 export const preContainer = css`
   outline: 0;
 `;
+
+export const ghostButtonStyle = css`
+  margin-left: auto;
+`;

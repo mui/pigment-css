@@ -133,6 +133,18 @@ const THEME = {
       medium: 500,
     },
   },
+  syntax: {
+    default: '$color.foreground',
+    comment: '$color.gray',
+    constant: '$color.blue',
+    entity: '$color.violet',
+    parameter: '$color.navy',
+    tag: '$color.green',
+    keyword: '$color.red',
+    string: '$color.navy',
+    variable: '$color.red',
+    invalid: '$color.red',
+  },
   $$breakpoints: BREAKPOINT_UTILS,
 };
 
