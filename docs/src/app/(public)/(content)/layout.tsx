@@ -2,7 +2,7 @@ import * as React from 'react';
 import type { Metadata, Viewport } from 'next/types';
 import { Header } from 'docs/components/Header';
 import * as SideNav from 'docs/components/SideNav';
-import { nav } from 'docs/nav';
+import { filteredNav } from 'docs/nav';
 import * as QuickNav from 'docs/components/QuickNav';
 
 import { Main, Root } from './layout.pigment';
@@ -12,7 +12,7 @@ export default function Layout({ children }: React.PropsWithChildren) {
     <Root>
       <Header />
       <SideNav.Root>
-        {nav.map((section) => (
+        {filteredNav.map((section) => (
           <SideNav.Section key={section.label}>
             <SideNav.Heading>{section.label}</SideNav.Heading>
             <SideNav.List>

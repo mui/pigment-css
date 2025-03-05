@@ -2,6 +2,9 @@ import * as React from 'react';
 import NextLink from 'next/link';
 import Image from 'next/image';
 
+import { NpmIcon } from 'docs/icons/NpmIcon';
+import { GitHubIcon } from 'docs/icons/GitHubIcon';
+import { nav } from 'docs/nav';
 import {
   headerButton,
   headerLink,
@@ -15,16 +18,13 @@ import {
   Root,
 } from './Header.pigment';
 import * as MobileNav from './MobileNav';
-import { NpmIcon } from '../icons/NpmIcon';
-import { GitHubIcon } from '../icons/GitHubIcon';
-import { nav } from '../nav';
 
 export function Header() {
   return (
     <Root>
       <Inner>
         <NextLink href="/" className={`${logoLink}`}>
-          <Image alt={process.env.APP_NAME} src="/static/logo.svg" width={30} height={30} />
+          <Image alt={process.env.APP_NAME} src="/static/logo.svg" width={17} height={28} />
         </NextLink>
 
         <HeaderLinkContainer>
