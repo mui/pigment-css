@@ -8,7 +8,7 @@ import {
 } from '@pigment-css/utils';
 import type { PigmentConfig } from '@pigment-css/utils';
 import type { Theme } from '@pigment-css/theme';
-import { createUnplugin, type UnpluginOptions } from 'unplugin';
+import { createUnplugin, NativeBuildContext, type UnpluginOptions } from 'unplugin';
 import {
   createFileReporter,
   getFileIdx,
@@ -46,7 +46,7 @@ type BundlerConfig = Omit<PigmentConfig, 'themeArgs'> & {
   transformPackages?: string[];
   /**
    * If you want to support `sx` prop in your application, set this to true.
-   * @default false
+   * @default true
    */
   transformSx?: boolean;
   nextJsOptions?: {
@@ -294,7 +294,7 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
       log('Transform', getFileIdx(filename));
       const pluginResolver = (
         createResolver as Exclude<BundlerConfig['createResolver'], undefined>
-      )(this, projectPath);
+      )(this.getNativeBuildContext?.() as NativeBuildContext, projectPath);
       const asyncResolver: AsyncResolver = async (what, importer, stack) => {
         const result = await asyncResolveOpt?.(what, importer, stack);
         if (result) {

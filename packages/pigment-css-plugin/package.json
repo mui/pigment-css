@@ -33,7 +33,7 @@
     "@wyw-in-js/shared": "^0.5.5",
     "@wyw-in-js/transform": "^0.5.5",
     "babel-plugin-define-var": "^0.1.0",
-    "unplugin": "2.1.2"
+    "unplugin": "2.2.0"
   },
   "devDependencies": {
     "@types/babel__core": "^7.20.5",

@@ -243,6 +243,9 @@ export function processStyleObjects(
   };
 
   styles.reduce((acc, style, index) => {
+    if (!style) {
+      return acc;
+    }
     const res = getCss(style, {
       ...options,
       getClassName: (opts?: ClassNameOptions) => {

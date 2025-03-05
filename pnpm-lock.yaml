@@ -519,8 +519,8 @@ importers:
         specifier: ^0.1.0
         version: 0.1.0
       unplugin:
-        specifier: 2.1.2
-        version: 2.1.2
+        specifier: 2.2.0
+        version: 2.2.0
     devDependencies:
       '@types/babel__core':
         specifier: ^7.20.5
@@ -9005,8 +9005,8 @@ packages:
       webpack-sources:
         optional: true
 
-  unplugin@2.1.2:
-    resolution: {integrity: sha512-Q3LU0e4zxKfRko1wMV2HmP8lB9KWislY7hxXpxd+lGx0PRInE4vhMBVEZwpdVYHvtqzhSrzuIfErsob6bQfCzw==}
+  unplugin@2.2.0:
+    resolution: {integrity: sha512-m1ekpSwuOT5hxkJeZGRxO7gXbXT3gF26NjQ7GdVHoLoF8/nopLcd/QfPigpCy7i51oFHiRJg/CyHhj4vs2+KGw==}
     engines: {node: '>=18.12.0'}
 
   upath@2.0.1:
@@ -19621,7 +19621,7 @@ snapshots:
     optionalDependencies:
       webpack-sources: 3.2.3
 
-  unplugin@2.1.2:
+  unplugin@2.2.0:
     dependencies:
       acorn: 8.14.0
       webpack-virtual-modules: 0.6.2
