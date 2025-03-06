@@ -14,6 +14,7 @@ import rehyeAutolinkHeading from 'rehype-autolink-headings';
 import { rehypeSubtitle } from './rehype/rehypeSubtitle';
 import { rehypeInlineCode } from './rehype/rehypeInlineCode';
 import { rehypeQuickNav } from './rehype/rehypeQuickNav';
+import { rehypeGithubAlert } from './rehype/rehypeGithubAlert';
 
 const theme: Theme = {
   name: 'pigment-css',
@@ -341,7 +342,7 @@ globalThis.highlighter ??= createHighlighter({
 export async function renderMdx(mdxSource: string) {
   const prettyCodeOptions = {
     // @ts-expect-error Set highlighter on globalThis
-    getHighlighter: async () => await globalThis.highlighter,
+    getHighlighter: async () => globalThis.highlighter,
     grid: false,
     theme: 'pigment-css',
     defaultLang: 'tsx',
@@ -366,6 +367,7 @@ export async function renderMdx(mdxSource: string) {
       rehypeQuickNav,
       rehypeSubtitle,
       rehypeInlineCode,
+      rehypeGithubAlert,
     ],
   });
   return MDXContent;

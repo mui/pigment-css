@@ -18,8 +18,6 @@ export const rehypeSubtitle: Pluggable = () => {
         return;
       }
 
-      console.log(node);
-
       const index = parent.children.indexOf(node);
       parent.children.splice(index, 1, ...node.children);
     });

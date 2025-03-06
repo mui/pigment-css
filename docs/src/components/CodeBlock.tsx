@@ -39,7 +39,7 @@ export function Panel({ className, children, ...props }: React.ComponentPropsWit
       window.clearTimeout(copyTimeout);
       setCopyTimeout(newTimeout);
     }
-  }, []);
+  }, [codeId, copyTimeout]);
 
   return (
     <CodeBlock.Panel className={className} {...props}>

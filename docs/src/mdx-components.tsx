@@ -10,7 +10,7 @@ import { Changelog } from './components/Changelog';
 import { LinkIcon } from './icons/LinkIcon';
 
 interface MDXComponents {
-   
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: React.FC<any> | MDXComponents;
 }
 
@@ -54,18 +54,23 @@ export const mdxComponents: MDXComponents = {
   code: (props) => <Styled.Code {...props} />,
   // Don't pass the tabindex prop from shiki, most browsers
   // now handle scroll containers focus out of the box
-   
-  pre: ({ tabIndex: _tabIndex, ...props }) => <CodeBlock.Pre {...props} />,
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  pre: ({ tabIndex, ...props }) => <CodeBlock.Pre {...props} />,
   Subtitle: (props) => <Styled.Subtitle {...props} />,
   Meta: (props: React.ComponentProps<'meta'>) => {
     if (props.name === 'description' && String(props.content).length > 170) {
-      throw new Error('Meta description shouldn’t be longer than 170 chars');
+      throw new Error("Meta description shouldn't be longer than 170 chars");
     }
     return <meta {...props} />;
   },
   Changelog,
   LinkIcon: () => <LinkIcon width={16} />,
   QuickNav,
+  Alert: (props) => {
+    console.log(props);
+    return null;
+  },
 };
 
 export const inlineMdxComponents: MDXComponents = {
