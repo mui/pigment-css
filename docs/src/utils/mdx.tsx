@@ -13,6 +13,7 @@ import rehyeAutolinkHeading from 'rehype-autolink-headings';
 
 import { rehypeSubtitle } from './rehype/rehypeSubtitle';
 import { rehypeInlineCode } from './rehype/rehypeInlineCode';
+import { rehypeQuickNav } from './rehype/rehypeQuickNav';
 
 const theme: Theme = {
   name: 'pigment-css',
@@ -361,8 +362,8 @@ export async function renderMdx(mdxSource: string) {
           },
         },
       ],
-      // rehypeAutoLinkContent,
       rehypeExtractToc,
+      rehypeQuickNav,
       rehypeSubtitle,
       rehypeInlineCode,
     ],

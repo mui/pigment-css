@@ -1,14 +1,6 @@
 import { visitParents } from 'unist-util-visit-parents';
-import type { evaluate } from '@mdx-js/mdx';
+import { Pluggable } from './rehypeSubtitle';
 
-export type Pluggable = Exclude<
-  Parameters<typeof evaluate>[1]['rehypePlugins'],
-  undefined | null
->[number];
-
-/**
- * Unwrap potential paragraphs inside `<Subtitle>`
- */
 export const rehypeAutoLinkContent: Pluggable = () => {
   return (tree) => {
     visitParents(tree, (node) => {

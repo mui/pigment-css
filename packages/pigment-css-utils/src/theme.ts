@@ -2,8 +2,6 @@ import { serializeStyles } from '@emotion/serialize';
 import setWith from 'lodash/setWith';
 import { getCSSVar } from './utils/processStyle';
 
-import { getCSSVar } from './utils/processStyle';
-
 interface Theme extends Record<string, unknown> {}
 
 const PIGMENT_LAYERS = ['globals', 'utils', 'base', 'variants', 'compoundvariants', 'sx'];

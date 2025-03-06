@@ -1,4 +1,4 @@
-import { mdxComponents } from 'docs/mdx-components';
+import { useMDXComponents } from 'docs/mdx-components';
 import { readMarkdown } from 'docs/utils/mdx';
 import { notFound } from 'next/navigation';
 
@@ -7,5 +7,6 @@ export default async function ContentPage({ basePath, slug }: { basePath: string
   if (!MdxContent) {
     return notFound();
   }
-  return <MdxContent components={mdxComponents} />;
+  const components = useMDXComponents();
+  return <MdxContent components={components} />;
 }

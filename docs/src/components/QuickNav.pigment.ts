@@ -14,7 +14,7 @@ export const Root = styled.nav(({ theme }) => ({
   $quickNavItemLineHeight: t('$text.md.lineHeight'),
   $quickNavItemPaddingY: 'calc($quickNavItemHeight / 2 - $quickNavItemLineHeight / 2)',
   /* The variable is used in JS positioning logic */
-  $top: -1,
+  $top: '-1px',
   $marginTop: '5.75rem' /* Match hero code block top */,
   ...applyText(theme, 'md'),
   zIndex: 1,

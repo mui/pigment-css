@@ -1,12 +1,18 @@
 import * as React from 'react';
-import type { MDXComponents } from 'mdx/types';
+import type { MDXComponents as BaseMdxComponents } from 'mdx/types';
 
 import * as CodeBlock from './components/CodeBlock';
 import * as Styled from './mdx-components.pigment';
+import * as QuickNav from './components/QuickNav';
 import { Link } from './components/Link';
 import { getChildrenText } from './utils/getChildrenText';
 import { Changelog } from './components/Changelog';
 import { LinkIcon } from './icons/LinkIcon';
+
+interface MDXComponents {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: React.FC<any> | MDXComponents;
+}
 
 export const mdxComponents: MDXComponents = {
   a: (props) => <Link {...props} />,
@@ -58,10 +64,8 @@ export const mdxComponents: MDXComponents = {
     return <meta {...props} />;
   },
   Changelog,
-  LinkIcon: (props) => {
-    console.log(props);
-    return <LinkIcon width={16} />;
-  },
+  LinkIcon: () => <LinkIcon width={16} />,
+  QuickNav,
 };
 
 export const inlineMdxComponents: MDXComponents = {
@@ -69,9 +73,9 @@ export const inlineMdxComponents: MDXComponents = {
   p: (props) => <p {...props} />,
 };
 
-export function useMDXComponents(comp: MDXComponents): MDXComponents {
+export function useMDXComponents(comp: MDXComponents = {}) {
   return {
     ...comp,
     ...mdxComponents,
-  };
+  } as BaseMdxComponents;
 }
