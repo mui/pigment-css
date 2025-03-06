@@ -249,7 +249,7 @@ export class CssObjectProcessor extends BaseCssProcessor {
 
   getDependencies(): ExpressionValue[] {
     const [, ...params] = this.callParam;
-    return params.flat().filter((param) => 'kind' in param);
+    return params.flat().filter((param) => 'kind' in param && param.kind !== ValueType.CONST);
   }
 
   isMaybeTransformedTemplateLiteral(values: ValueCache): boolean {
@@ -278,13 +278,15 @@ export class CssObjectProcessor extends BaseCssProcessor {
     const { themeArgs, pigmentFeatures: { useLayer = true } = {} } = this
       .options as TransformedInternalConfig;
 
-    const evaluatedValues = (callParams as (LazyValue | FunctionValue)[]).map((param) =>
-      values.get(param.ex.name),
+    const evaluatedValues = (callParams as ExpressionValue[]).map((param) =>
+      param.kind === ValueType.CONST ? param.value : values.get(param.ex.name),
     );
     let stylesList: (object | Function)[];
     // let metadata: any;
     // check for css(metadata, [styles]) or css(metadata, style) call
     const locations: (SourceLocation | null | undefined)[] = [];
+    // Remove this condition as this supports an older API that has since been
+    // removed from TS support.
     if (
       evaluatedValues.length === 2 &&
       evaluatedValues[0] &&
