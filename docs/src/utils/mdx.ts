@@ -8,6 +8,8 @@ import remarkGfm from 'remark-gfm';
 import remarkTypography from 'remark-typography';
 import rehypePrettyCode, { type Theme } from 'rehype-pretty-code';
 import rehypeExtractToc from '@stefanprobst/rehype-extract-toc';
+import rehypeSlug from 'rehype-slug';
+import rehyeAutolinkHeading from 'rehype-autolink-headings';
 
 import { rehypeSubtitle } from './rehype/rehypeSubtitle';
 import { rehypeInlineCode } from './rehype/rehypeInlineCode';
@@ -346,6 +348,8 @@ export async function renderMdx(mdxSource: string) {
     remarkPlugins: [remarkGfm, remarkTypography],
     rehypePlugins: [
       [rehypePrettyCode, prettyCodeOptions],
+      rehypeSlug,
+      rehyeAutolinkHeading,
       rehypeExtractToc,
       rehypeSubtitle,
       rehypeInlineCode,

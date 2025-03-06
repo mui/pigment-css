@@ -8,7 +8,14 @@ export async function Changelog() {
     encoding: 'utf-8',
   });
   await file.close();
-  content = content.replaceAll(/<!-(.*?)->/gm, '').replaceAll('<--', '');
+  content = content
+    // Remove the first line as it doesn't make sense on the page
+    .replace('# [Versions](https://mui.com/versions/)', '')
+    .trim()
+    // Manually remove markdown comments and other fragments that MDX
+    // doesn't support.
+    .replaceAll(/<!-(.*?)->/gm, '')
+    .replaceAll('<--', '');
   const MdxContent = await renderMdx(content);
   return <MdxContent components={mdxComponents} />;
 }

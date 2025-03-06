@@ -12,7 +12,7 @@ export const mdxComponents: MDXComponents = {
   h1: (props) => (
     <React.Fragment>
       <Styled.Heading {...props} />
-      <title>{getChildrenText(props.children)}</title>
+      <title>{`${getChildrenText(props.children)} · ${process.env.APP_NAME}`}</title>
     </React.Fragment>
   ),
   h2: (props) => (
