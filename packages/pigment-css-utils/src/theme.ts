@@ -1,5 +1,6 @@
 import { serializeStyles } from '@emotion/serialize';
 import setWith from 'lodash/setWith';
+import { getCSSVar } from './utils/processStyle';
 
 interface Theme extends Record<string, unknown> {}
 
@@ -53,7 +54,8 @@ function generateVars(theme: Theme, prefix = '') {
         if (typeof paths[0] === 'string' && paths[0].startsWith('$$')) {
           return;
         }
-        cssVars[`--${paths.join('-')}`] = (value as string).toString();
+        const val = (value as string).toString();
+        cssVars[`--${paths.join('-')}`] = val[0] === '$' ? getCSSVar(val, true) : val;
       }
     },
     prefix ? [prefix] : undefined,
