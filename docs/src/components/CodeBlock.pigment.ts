@@ -2,7 +2,7 @@ import { t } from '@pigment-css/theme';
 import { css, styled } from '@pigment-css/react-new';
 import { applyText } from 'docs/utils/theme';
 
-export const Root = styled.div({
+export const Root = styled.figure({
   backgroundColor: '$color.content',
   border: `1px solid ${t('$color.gray.200')}`,
   borderRadius: t('$radius.md'),

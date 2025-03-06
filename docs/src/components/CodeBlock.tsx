@@ -6,9 +6,9 @@ import { CheckIcon } from 'docs/icons/CheckIcon';
 import { CopyIcon } from 'docs/icons/CopyIcon';
 
 import * as CodeBlock from './CodeBlock.pigment';
-import * as ScrollArea from './ScrollArea';
-import { GhostButton } from './GhostButton.pigment';
 import { preContainer } from './CodeBlock.pigment';
+import * as ScrollArea from './ScrollArea';
+import { GhostButton } from './GhostButton';
 
 const CodeBlockContext = React.createContext({ codeId: '', titleId: '' });
 
@@ -27,25 +27,27 @@ export function Panel({ className, children, ...props }: React.ComponentPropsWit
   const { codeId, titleId } = React.useContext(CodeBlockContext);
   const [copyTimeout, setCopyTimeout] = React.useState<number>(0);
 
+  const handleCopy = React.useCallback(async () => {
+    const code = document.getElementById(codeId)?.textContent;
+
+    if (code) {
+      await copy(code);
+      const newTimeout = window.setTimeout(() => {
+        window.clearTimeout(newTimeout);
+        setCopyTimeout(0);
+      }, 2000);
+      window.clearTimeout(copyTimeout);
+      setCopyTimeout(newTimeout);
+    }
+  }, []);
+
   return (
     <CodeBlock.Panel className={className} {...props}>
       <CodeBlock.PanelTitle id={titleId}>{children}</CodeBlock.PanelTitle>
       <GhostButton
         className={CodeBlock.ghostButtonStyle().className}
         aria-label="Copy code"
-        onClick={async () => {
-          const code = document.getElementById(codeId)?.textContent;
-
-          if (code) {
-            await copy(code);
-            const newTimeout = window.setTimeout(() => {
-              window.clearTimeout(newTimeout);
-              setCopyTimeout(0);
-            }, 2000);
-            window.clearTimeout(copyTimeout);
-            setCopyTimeout(newTimeout);
-          }
-        }}
+        onClick={handleCopy}
       >
         Copy
         <CodeBlock.CopyLabel>{copyTimeout ? <CheckIcon /> : <CopyIcon />}</CodeBlock.CopyLabel>

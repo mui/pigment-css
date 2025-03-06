@@ -14,6 +14,10 @@ export const linkStyle = css`
     border-radius: var(--radius-sm);
   }
 
+  &[data-autolink] {
+    display: inline;
+  }
+
   @media (hover: hover) {
     &:hover {
       text-decoration-color: ${t('$color.blue')};

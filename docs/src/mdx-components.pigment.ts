@@ -1,13 +1,28 @@
 import { t } from '@pigment-css/theme';
 import { styled } from '@pigment-css/react-new';
 
-import * as CodeBlockBase from './components/CodeBlock.pigment';
+import * as CodeBlockBase from './components/CodeBlock';
 import { Code as CodeBase } from './components/Code.pigment';
 import { Subtitle as SubtitleBase } from './components/Subtitle.pigment';
 import { applyText, spacing } from './utils/theme';
+import { linkStyle } from './components/Link.pigment';
 
 export const Heading = styled('h1')(({ theme }) => ({
+  position: 'relative',
   textWrap: 'balance',
+  [`.${linkStyle}`]: {
+    position: 'absolute',
+    visibility: 'hidden',
+    left: -25,
+    top: '50%',
+    transform: 'translateY(-50%)',
+    color: '$color.foreground',
+  },
+  '&:hover': {
+    [`.${linkStyle}`]: {
+      visibility: 'visible',
+    },
+  },
   variants: {
     lvl: {
       one: {

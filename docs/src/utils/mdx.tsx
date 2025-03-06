@@ -15,7 +15,7 @@ import { rehypeSubtitle } from './rehype/rehypeSubtitle';
 import { rehypeInlineCode } from './rehype/rehypeInlineCode';
 
 const theme: Theme = {
-  name: 'base-ui',
+  name: 'pigment-css',
   bg: 'var(--color-content)',
   fg: 'var(--syntax-default)',
   settings: [
@@ -331,16 +331,18 @@ const theme: Theme = {
   ],
 };
 
-const highlighter = createHighlighter({
+// @ts-expect-error Set highlighter on globalThis
+globalThis.highlighter ??= createHighlighter({
   themes: [theme],
   langs: ['tsx', 'jsx', 'css'],
 });
 
 export async function renderMdx(mdxSource: string) {
   const prettyCodeOptions = {
-    getHighlighter: async () => await highlighter,
+    // @ts-expect-error Set highlighter on globalThis
+    getHighlighter: async () => await globalThis.highlighter,
     grid: false,
-    theme: 'base-ui',
+    theme: 'pigment-css',
     defaultLang: 'tsx',
   };
   const { default: MDXContent } = await evaluate(mdxSource, {
@@ -349,7 +351,17 @@ export async function renderMdx(mdxSource: string) {
     rehypePlugins: [
       [rehypePrettyCode, prettyCodeOptions],
       rehypeSlug,
-      rehyeAutolinkHeading,
+      [
+        rehyeAutolinkHeading,
+        {
+          properties: {
+            'data-autolink': '',
+            tabindex: -1,
+            'aria-hidden': 'true',
+          },
+        },
+      ],
+      // rehypeAutoLinkContent,
       rehypeExtractToc,
       rehypeSubtitle,
       rehypeInlineCode,

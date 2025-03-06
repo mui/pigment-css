@@ -6,6 +6,7 @@ import * as Styled from './mdx-components.pigment';
 import { Link } from './components/Link';
 import { getChildrenText } from './utils/getChildrenText';
 import { Changelog } from './components/Changelog';
+import { LinkIcon } from './icons/LinkIcon';
 
 export const mdxComponents: MDXComponents = {
   a: (props) => <Link {...props} />,
@@ -57,6 +58,10 @@ export const mdxComponents: MDXComponents = {
     return <meta {...props} />;
   },
   Changelog,
+  LinkIcon: (props) => {
+    console.log(props);
+    return <LinkIcon width={16} />;
+  },
 };
 
 export const inlineMdxComponents: MDXComponents = {

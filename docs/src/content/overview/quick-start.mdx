@@ -59,7 +59,7 @@ export default defineConfig({
 
 ### Non React usage
 
-```jsx
+```ts title="App.ts"
 import { css } from '@pigment-css/react';
 
 const visuallyHidden = css({
@@ -87,9 +87,8 @@ const visuallyHidden2 = css`
   width: 1px;
 `;
 
-function App() {
-  return <div {...visuallyHidden()}>I am invisible</div>;
-}
+const element = document.getElemenyById('app');
+element.className = visuallyHidden().className;
 ```
 
 Which API signature to use is totally on the requirements. Somethings are easier with the tagged-template literal signature like copy-pasting css from other source (Figma for example) but it requires editor integration. For example, [vscode-styled-components](https://marketplace.visualstudio.com/items?itemName=styled-components.vscode-styled-components) extension needs to be installed to get completions and syntax highlighting in VSCode.
