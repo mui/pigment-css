@@ -3,8 +3,8 @@ import Image from 'next/image';
 
 import { Link } from 'docs/components/Link';
 import { ArrowRightIcon } from 'docs/icons/ArrowRightIcon';
-import { Root, Content, Heading, linkStyle, Caption } from './page.pigment';
 import { nav } from 'docs/nav';
+import { Root, Content, Heading, linkStyle, Caption } from './page.pigment';
 
 const description = 'A build-time CSS-in-JS styling engine';
 

@@ -29,7 +29,7 @@ export const rehypeInlineCode: Pluggable = () => {
       delete node.properties.style;
 
       // Tweak how `undefined`, `null`, and `""` are highlighted
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       node.children?.forEach((part: any) => {
         const text = part.children[0]?.value;
         if (text === 'undefined' || text === 'null' || text === '""' || text === "''") {
@@ -40,10 +40,10 @@ export const rehypeInlineCode: Pluggable = () => {
       // Tweak `<tag>` highlights to paint the bracket with the tag highlight color
       if (toString(node).match(/^<.+>$/)) {
         const keyNode = node.children?.find(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+           
           (part: any) => part.properties.style !== 'color:var(--syntax-default)',
         );
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+         
         node.children?.forEach((part: any) => {
           part.properties.style = keyNode.properties.style;
         });
