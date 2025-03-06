@@ -66,11 +66,11 @@
     }
   },
   "files": [
-    "src",
     "build",
     "exports",
     "processors",
     "runtime",
+    "src",
     "package.json",
     "styles.css",
     "LICENSE"
