@@ -334,21 +334,7 @@ const highlighter = createHighlighter({
   langs: ['tsx', 'jsx', 'css'],
 });
 
-export async function readMarkdown(baseDir: string, filePath: string) {
-  const mdxFilePath = path.join(process.env.CONTENT_DIR as string, baseDir, `${filePath}.mdx`);
-  let file: fs.FileHandle | null = null;
-  let mdxSource: string;
-
-  try {
-    file = await fs.open(mdxFilePath);
-    mdxSource = await file.readFile({
-      encoding: 'utf-8',
-    });
-  } catch (ex) {
-    return null;
-  } finally {
-    await file?.close();
-  }
+export async function renderMdx(mdxSource: string) {
   const prettyCodeOptions = {
     getHighlighter: async () => await highlighter,
     grid: false,
@@ -366,4 +352,23 @@ export async function readMarkdown(baseDir: string, filePath: string) {
     ],
   });
   return MDXContent;
+}
+
+export async function readMarkdown(baseDir: string, filePath: string) {
+  const mdxFilePath = path.join(process.env.CONTENT_DIR as string, baseDir, `${filePath}.mdx`);
+  let file: fs.FileHandle | null = null;
+  let mdxSource: string;
+
+  try {
+    file = await fs.open(mdxFilePath);
+    mdxSource = await file.readFile({
+      encoding: 'utf-8',
+    });
+  } catch (ex) {
+    return null;
+  } finally {
+    await file?.close();
+  }
+
+  return renderMdx(mdxSource);
 }

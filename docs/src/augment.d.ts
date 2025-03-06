@@ -13,6 +13,7 @@ declare global {
       NPM: string;
       WEBSITE: string;
       CONTENT_DIR: string;
+      CHANGELOG_FILE: string;
     }
   }
 }

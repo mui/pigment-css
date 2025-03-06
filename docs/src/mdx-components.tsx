@@ -5,6 +5,7 @@ import * as CodeBlock from './components/CodeBlock';
 import * as Styled from './mdx-components.pigment';
 import { Link } from './components/Link';
 import { getChildrenText } from './utils/getChildrenText';
+import { Changelog } from './components/Changelog';
 
 export const mdxComponents: MDXComponents = {
   a: (props) => <Link {...props} />,
@@ -55,6 +56,7 @@ export const mdxComponents: MDXComponents = {
     }
     return <meta {...props} />;
   },
+  Changelog,
 };
 
 export const inlineMdxComponents: MDXComponents = {

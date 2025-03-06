@@ -20,6 +20,7 @@ const nextConfig: NextConfig = {
     NPM: 'https://www.npmjs.com/package/@pigment-css/core',
     WEBSITE: 'https://pigment-css.com',
     CONTENT_DIR,
+    CHANGELOG_FILE: path.join(__dirname, '../CHANGELOG.md'),
   },
   ...(isProd && { distDir: 'export', output: 'export' }),
   experimental: {
