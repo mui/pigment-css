@@ -15,10 +15,6 @@ const nextConfig: NextConfig = {
   trailingSlash: false,
   env: {
     LIB_VERSION: rootPackage.version,
-    APP_NAME: 'Pigment CSS',
-    GITHUB: 'https://github.com/mui/pigment-css',
-    NPM: 'https://www.npmjs.com/package/@pigment-css/core',
-    WEBSITE: 'https://pigment-css.com',
     CONTENT_DIR,
     CHANGELOG_FILE: path.join(__dirname, '../CHANGELOG.md'),
   },

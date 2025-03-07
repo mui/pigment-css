@@ -15,7 +15,7 @@ const inter = Inter({
 
 export default async function Layout({ children }: React.PropsWithChildren) {
   return (
-    <html lang="en" className={`${htmlCls} dark-mode`}>
+    <html lang="en" className={`${htmlCls}`} data-theme="system">
       <body className={`${inter.variable} ${bodyCls}`}>{children}</body>
     </html>
   );

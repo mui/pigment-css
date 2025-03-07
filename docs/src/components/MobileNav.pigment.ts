@@ -105,7 +105,7 @@ export const overscroll = css(
   inset: 0;
   background-image: linear-gradient(to bottom, transparent 30%, ${t('$color.popup')} 50%);
 
-  ${theme.$$breakpoints.lt('sm')} {
+  ${theme.breakpoints.lt('sm')} {
     display: none;
   }
 `,
@@ -132,7 +132,7 @@ export const navPanel = css(
     background-image: linear-gradient(to bottom, ${theme.color.popup} calc(100% - 2rem), transparent);
 
     /* Make the panel narrower on wider screens and lose the overscroll gradient hocus pocus for a bottom margin */
-    ${theme.$$breakpoints.gte('sm')} {
+    ${theme.breakpoints.gte('sm')} {
       margin-block: 5rem;
       margin-inline: auto;
       width: calc(100% - 6rem);

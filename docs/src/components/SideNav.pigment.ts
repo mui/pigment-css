@@ -20,7 +20,7 @@ export const Root = styled.nav(({ theme }) => ({
   top: 0,
   display: 'none',
 
-  [theme.$$breakpoints.gt('lg')]: {
+  [theme.breakpoints.gt('lg')]: {
     display: 'block',
   },
 }));

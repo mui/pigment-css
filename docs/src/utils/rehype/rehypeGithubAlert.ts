@@ -3,7 +3,7 @@ import { visitParents } from 'unist-util-visit-parents';
 
 import { Pluggable } from './rehypeSubtitle';
 
-const ALERT_TYPES = ['important', 'tip', 'note'];
+const ALERT_TYPES = ['important', 'tip', 'note', 'info'];
 
 export const rehypeGithubAlert: Pluggable = () => {
   return (tree) => {

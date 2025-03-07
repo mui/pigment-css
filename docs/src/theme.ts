@@ -46,12 +46,12 @@ const THEME = {
       950: 'oklch(12% 5% 264 / 95%)',
     },
     content: 'white',
-    background: 'var(--color-gray-50)',
-    foreground: 'var(--color-gray-900)',
+    background: '$color.gray.50',
+    foreground: '$color.gray.900',
     popup: 'white',
     gridline: 'oklch(91.6% 1% 264)',
     selection: 'oklch(80% 50% 264 / 25%)',
-    highlight: 'var(--color-blue)',
+    highlight: '$color.blue',
     line: {
       highlight: 'oklch(80% 50% 264 / 10%)',
       highlightStrong: 'oklch(80% 50% 264 / 25%)',
@@ -63,6 +63,7 @@ const THEME = {
     purple: 'oklch(40% 45% 360)',
     violet: 'oklch(40% 60% 300)',
     red: 'oklch(50% 55% 31)',
+    yellow: 'oklch(0.67 0.16 93.62)',
   },
   text: {
     base: {
@@ -145,7 +146,7 @@ const THEME = {
     variable: '$color.red',
     invalid: '$color.red',
   },
-  $$breakpoints: BREAKPOINT_UTILS,
+  breakpoints: BREAKPOINT_UTILS,
 };
 
 export type Theme = typeof THEME;

@@ -8,6 +8,7 @@ import { Link } from './components/Link';
 import { getChildrenText } from './utils/getChildrenText';
 import { Changelog } from './components/Changelog';
 import { LinkIcon } from './icons/LinkIcon';
+import { Alert } from './components/Alert';
 
 interface MDXComponents {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,10 +68,7 @@ export const mdxComponents: MDXComponents = {
   Changelog,
   LinkIcon: () => <LinkIcon width={16} />,
   QuickNav,
-  Alert: (props) => {
-    console.log(props);
-    return null;
-  },
+  Alert,
 };
 
 export const inlineMdxComponents: MDXComponents = {

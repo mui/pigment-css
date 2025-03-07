@@ -27,7 +27,7 @@ export const Inner = styled.div(
   background-color: ${theme.color.gray['50']};
   z-index: 1;
 
-  ${theme.$$breakpoints.gt('lg')} {
+  ${theme.breakpoints.gt('lg')} {
     position: static;
     box-shadow: none;
     background-color: transparent;
@@ -100,7 +100,7 @@ export const HeaderLinkContainer = styled.div(
   ({ theme }) => `
   display: flex;
   gap: ${spacing(theme, 6)};
-  ${theme.$$breakpoints.lt('lg')} {
+  ${theme.breakpoints.lt('lg')} {
     display: none;
   }
 `,
@@ -109,7 +109,7 @@ export const HeaderLinkContainer = styled.div(
 export const MobileNavContainer = styled.div(
   ({ theme }) => `
   display: flex;
-  ${theme.$$breakpoints.gte('lg')} {
+  ${theme.breakpoints.gte('lg')} {
     display: none;
   }
 `,

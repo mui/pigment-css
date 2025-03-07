@@ -25,7 +25,7 @@ export const Root = styled.nav(({ theme }) => ({
   float: 'right',
   contain: 'layout',
   display: 'none',
-  [theme.$$breakpoints.gt('quickNav')]: {
+  [theme.breakpoints.gt('quickNav')]: {
     display: 'block',
   },
 }));

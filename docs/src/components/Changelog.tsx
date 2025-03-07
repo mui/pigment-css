@@ -1,6 +1,13 @@
 import * as fs from 'node:fs/promises';
-import { mdxComponents } from 'docs/mdx-components';
+import { useMDXComponents } from 'docs/mdx-components';
 import { renderMdx } from 'docs/utils/mdx';
+
+const HEADER_MDX = `# Releases
+
+<Subtitle>Changelogs for each Pigment CSS release.</Subtitle>
+<Meta name="description" content="Changelogs for each Pigment CSS release." />
+
+`;
 
 export async function Changelog() {
   const file = await fs.open(process.env.CHANGELOG_FILE);
@@ -16,6 +23,7 @@ export async function Changelog() {
     // doesn't support.
     .replaceAll(/<!-(.*?)->/gm, '')
     .replaceAll('<--', '');
-  const MdxContent = await renderMdx(content);
-  return <MdxContent components={mdxComponents} />;
+  const components = useMDXComponents();
+  const MdxContent = await renderMdx(`${HEADER_MDX}${content}`);
+  return <MdxContent components={components} />;
 }

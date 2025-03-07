@@ -6,7 +6,7 @@ export const Root = styled.div(({ theme }) => ({
   zIndex: 0,
   position: 'relative',
   paddingInline: '$rootLayoutPaddingX',
-  [theme.$$breakpoints.gt('lg')]: {
+  [theme.breakpoints.gt('lg')]: {
     $rootLayoutPaddingX: '3rem',
 
     '&::before, &::after': {
@@ -35,7 +35,7 @@ export const Container = styled.div(({ theme }) => ({
   marginInline: 'auto',
   minHeight: '100dvh',
   maxWidth: `calc(${theme.breakpoint.maxLayoutWidth} - $rootLayoutPaddingX * 2)`,
-  [theme.$$breakpoints.gt('lg')]: {
+  [theme.breakpoints.gt('lg')]: {
     paddingBlock: theme.header.height,
 
     '&::before, &::after': {
