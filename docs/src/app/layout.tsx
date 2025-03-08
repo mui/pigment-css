@@ -15,7 +15,20 @@ const inter = Inter({
 
 export default async function Layout({ children }: React.PropsWithChildren) {
   return (
-    <html lang="en" className={`${htmlCls}`} data-theme="system">
+    // suppressHydrationWarning is needed because we immediately modify the html on client
+    // before React hydration happens
+    <html lang="en" className={`${htmlCls}`} data-theme="system" suppressHydrationWarning>
+      <head>
+        <script
+          id="theme-selector"
+          dangerouslySetInnerHTML={{
+            __html: `const mode = window.localStorage.getItem('mode');
+if (mode === 'system' || mode === 'dark') {
+  document.documentElement.dataset.theme = mode;
+}`,
+          }}
+        />
+      </head>
       <body className={`${inter.variable} ${bodyCls}`}>{children}</body>
     </html>
   );

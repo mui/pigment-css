@@ -18,6 +18,7 @@ import {
   Root,
 } from './Header.pigment';
 import * as MobileNav from './MobileNav';
+import { ThemeSelector } from './ThemeSelector';
 
 export function Header() {
   return (
@@ -28,6 +29,7 @@ export function Header() {
         </NextLink>
 
         <HeaderLinkContainer>
+          <ThemeSelector />
           <a className={`${headerLink}`} href={process.env.NPM} rel="noopener">
             <NpmIcon />
             {process.env.LIB_VERSION}
