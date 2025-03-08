@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { visitParents } from 'unist-util-visit-parents';
 
 import { Pluggable } from './rehypeSubtitle';

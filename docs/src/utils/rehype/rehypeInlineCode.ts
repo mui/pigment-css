@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { toString } from 'hast-util-to-string';
 import { visitParents } from 'unist-util-visit-parents';
 

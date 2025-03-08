@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 export function InfoIcon(props: React.ComponentProps<'svg'>) {
   return (
     <svg
