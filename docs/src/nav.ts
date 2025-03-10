@@ -1,5 +1,6 @@
 type NavItem = {
   label: string;
+  dirname: string;
   links: { label: string; href: string; draft?: boolean }[];
   draft?: boolean;
 };
@@ -7,6 +8,7 @@ type NavItem = {
 export const nav: NavItem[] = [
   {
     label: 'Overview',
+    dirname: 'overview',
     links: [
       {
         label: 'Quick start',
@@ -20,10 +22,16 @@ export const nav: NavItem[] = [
         label: 'Releases',
         href: '/overview/releases',
       },
+
+      {
+        label: 'About',
+        href: '/overview/about',
+      },
     ],
   },
   {
     label: 'Features',
+    dirname: 'features',
     links: [
       {
         label: 'Styles',
@@ -37,6 +45,7 @@ export const nav: NavItem[] = [
   },
   {
     label: 'Guides',
+    dirname: 'guides',
     links: [
       {
         label: 'How it works',
@@ -63,6 +72,7 @@ export const nav: NavItem[] = [
   },
   {
     label: 'Packages',
+    dirname: 'packages',
     links: [
       {
         label: 'Core',
@@ -93,10 +103,11 @@ export const filteredNav: NavItem[] = nav
     links: section.links.filter((link) => !isProd || !link.draft),
   }));
 
-export function getSlugs(baseRoute: string) {
+export function getSlugs() {
   return filteredNav.flatMap((section) =>
-    section.links
-      .filter((link) => link.href.startsWith(baseRoute))
-      .map((link) => link.href.replace(baseRoute, '')),
+    section.links.map((link) => ({
+      slug: link.href.split('/').pop() as string,
+      contentDir: section.dirname,
+    })),
   );
 }

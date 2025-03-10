@@ -1,6 +1,8 @@
+import * as React from 'react';
+import type { Metadata } from 'next/types';
 import { styled } from '@pigment-css/react-new';
 
-export const Root = styled.div(({ theme }) => ({
+const Root = styled.div(({ theme }) => ({
   $rootLayoutPaddingX: '0rem',
   isolation: 'isolate',
   zIndex: 0,
@@ -28,7 +30,7 @@ export const Root = styled.div(({ theme }) => ({
   },
 }));
 
-export const Container = styled.div(({ theme }) => ({
+const Container = styled.div(({ theme }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -57,9 +59,23 @@ export const Container = styled.div(({ theme }) => ({
   },
 }));
 
-export const Content = styled.div({
+const Content = styled.div({
   display: 'flex',
   flexGrow: 1,
   flexDirection: 'column',
   backgroundColor: '$color.content',
 });
+
+export default function Layout({ children }: React.PropsWithChildren) {
+  return (
+    <Root>
+      <Container>
+        <Content>{children}</Content>
+      </Container>
+    </Root>
+  );
+}
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://pigment-css.com'),
+};

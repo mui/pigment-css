@@ -1,12 +1,25 @@
+import '@pigment-css/react-new/styles.css';
+import './globals.css';
+import './syntax.css';
+
+import * as React from 'react';
+import { Metadata, Viewport } from 'next';
+import { Inter } from 'next/font/google';
+
 import { t } from '@pigment-css/theme';
 import { css } from '@pigment-css/react-new';
 
-export const htmlCls = css`
+const inter = Inter({
+  variable: '--font-inter',
+  subsets: ['latin'],
+});
+
+const htmlCls = css`
   word-break: break-word;
   overflow-y: scroll;
 `;
 
-export const bodyCls = css`
+const bodyCls = css`
   font-family: system-ui;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -16,3 +29,84 @@ export const bodyCls = css`
   line-height: 1.5;
   font-synthesis: none;
 `;
+
+export default async function Layout({ children }: React.PropsWithChildren) {
+  return (
+    // suppressHydrationWarning is needed because we immediately modify the html on client
+    // to update the theme before React hydration happens.
+    <html lang="en" className={`${htmlCls}`} data-theme="system" suppressHydrationWarning>
+      <head>
+        <script
+          id="theme-selector"
+          dangerouslySetInnerHTML={{
+            __html: `const mode = window.localStorage.getItem('mode');
+if (mode) {
+  document.documentElement.dataset.theme = mode;
+}`,
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: process.env.APP_NAME,
+              url: process.env.WEBSITE,
+            }),
+          }}
+        />
+      </head>
+      <body className={`${inter.variable} ${bodyCls}`}>{children}</body>
+    </html>
+  );
+}
+
+export const metadata: Metadata = {
+  title: {
+    template: `%s · ${process.env.APP_NAME}`,
+    default: process.env.APP_NAME as string,
+  },
+  twitter: {
+    site: '@PigmentCSS',
+    card: 'summary_large_image',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    title: {
+      template: `%s · ${process.env.APP_NAME}`,
+      default: process.env.APP_NAME as string,
+    },
+    ttl: 604800,
+  },
+  applicationName: process.env.APP_NAME,
+  icons: {
+    icon: [
+      {
+        url:
+          process.env.NODE_ENV === 'production' ? '/static/favicon.ico' : '/static/favicon-dev.ico',
+        sizes: '32x32',
+      },
+      {
+        url:
+          process.env.NODE_ENV === 'production' ? '/static/favicon.svg' : '/static/favicon-dev.svg',
+        sizes: 'any',
+        type: 'image/svg+xml',
+      },
+    ],
+    shortcut: {
+      url: '/static/apple-touch-icon.png',
+      sizes: '180x180',
+    },
+    apple: {
+      url: '/static/apple-touch-icon.png',
+      sizes: '180x180',
+    },
+  },
+};
+
+export const viewport: Viewport = {
+  initialScale: 1,
+  width: 'device-width',
+};

@@ -12,6 +12,7 @@ const isProd = process.env.NODE_ENV === 'production';
 const CONTENT_DIR = path.join(__dirname, 'src', 'content');
 
 const nextConfig: NextConfig = {
+  pageExtensions: ['tsx', 'pigment.tsx'],
   trailingSlash: false,
   env: {
     LIB_VERSION: rootPackage.version,
