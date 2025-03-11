@@ -16,7 +16,6 @@ export const Viewport = styled(ScrollArea.Viewport)`
 export const Scrollbar = styled(ScrollArea.Scrollbar)`
   display: flex;
   border-radius: 0.375rem;
-
   opacity: 0;
   transition: opacity 150ms 300ms;
 
