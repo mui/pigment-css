@@ -142,7 +142,7 @@ const THEME = {
     parameter: '$color.navy',
     tag: '$color.green',
     keyword: '$color.red',
-    string: '$color.navy',
+    string: '$color.green',
     variable: '$color.red',
     invalid: '$color.red',
   },
@@ -150,4 +150,46 @@ const THEME = {
 };
 
 export type Theme = typeof THEME;
+
+export const THEME_DARK = {
+  color: {
+    white: 'white',
+    black: 'black',
+    gray: {
+      50: 'oklch(17% 0.25% 264)',
+      75: 'oklch(19% 0.5% 264)',
+      100: 'oklch(28% 0.75% 264 / 65%)',
+      200: 'oklch(29% 0.75% 264 / 80%)',
+      300: 'oklch(35% 0.75% 264 / 80%)',
+      400: 'oklch(47% 0.875% 264 / 80%)',
+      500: 'oklch(64% 1% 264 / 80%)',
+      600: 'oklch(82% 1% 264 / 80%)',
+      700: 'oklch(92% 1.125% 264 / 80%)',
+      800: 'oklch(93% 0.875% 264 / 85%)',
+      900: 'oklch(95% 0.5% 264 / 90%)',
+      950: 'oklch(94% 0.375% 264 / 95%)',
+      default: '$color.gray.600',
+    },
+    content: 'black',
+    background: '$color.content',
+    foreground: 'oklch(90% 2% 264)',
+    popup: '$color.gray.50',
+    gridline: 'oklch(24% 1% 264)',
+    selection: 'oklch(50% 50% 264 / 40%)',
+    highlight: 'oklch(45% 40% 264)',
+    line: {
+      highlight: 'oklch(50% 50% 264 / 20%)',
+      highlightStrong: 'oklch(50% 50% 264 / 35%)',
+    },
+    inlineHighlight: 'oklch(50% 50% 264 / 35%)',
+    navy: 'oklch(85% 25% 264)',
+    blue: 'oklch(69% 50% 264)',
+    green: 'oklch(75% 25% 150)',
+    purple: 'oklch(85% 30% 360)',
+    violet: 'oklch(80% 60% 280)',
+    red: 'oklch(80% 55% 31)',
+    yellow: 'oklch(0.88 0.15 83.95)',
+  },
+};
+
 export default THEME;

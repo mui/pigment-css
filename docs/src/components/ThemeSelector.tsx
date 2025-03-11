@@ -20,17 +20,17 @@ const MODE_FLOW: Record<
   light: {
     next: 'dark',
     title: 'Switch to dark mode',
-    icon: SunMediumIcon,
+    icon: MoonIcon,
   },
   dark: {
     next: 'system',
     title: 'Switch to system mode',
-    icon: MoonIcon,
+    icon: MonitorCog,
   },
   system: {
     next: 'light',
     title: 'Switch to light mode',
-    icon: MonitorCog,
+    icon: SunMediumIcon,
   },
 };
 

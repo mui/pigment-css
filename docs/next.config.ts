@@ -4,7 +4,7 @@ import withPigment, { type PigmentCSSConfig } from '@pigment-css/plugin/nextjs';
 // @ts-expect-error This file doesn't have TS definitions.
 import withDocsInfra from '@mui/monorepo/docs/nextConfigDocsInfra.js';
 
-import theme from './src/theme';
+import theme, { THEME_DARK } from './src/theme';
 
 import rootPackage from '../package.json';
 
@@ -28,7 +28,19 @@ const nextConfig: NextConfig = {
 };
 
 const pigmentConfig: PigmentCSSConfig = {
-  theme,
+  theme: {
+    colorSchemes: {
+      light: theme,
+      dark: THEME_DARK,
+    },
+    defaultScheme: 'light',
+    getSelector(mode) {
+      if (mode === 'light') {
+        return ':root, [data-theme="light"]';
+      }
+      return `[data-theme="${mode}"]`;
+    },
+  },
   transformSx: false,
   displayName: !isProd,
   sourceMap: !isProd,
