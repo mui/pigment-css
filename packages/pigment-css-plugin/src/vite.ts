@@ -8,7 +8,7 @@ import type { AsyncResolver, ExcludePluginOptions } from './utils';
 
 export type PigmentCSSConfig = Omit<Parameters<(typeof plugin)['vite']>[0], ExcludePluginOptions>;
 
-export default function pigment(config: Parameters<(typeof plugin)['vite']>[0]) {
+export default function pigment(config?: Parameters<(typeof plugin)['vite']>[0]) {
   let viteConfig: ResolvedConfig;
 
   function createResolver(ctx: Rollup.TransformPluginContext): AsyncResolver {
@@ -47,7 +47,7 @@ export default function pigment(config: Parameters<(typeof plugin)['vite']>[0]) 
   let devServer: ViteDevServer;
 
   const vitePlugin = plugin.vite({
-    ...config,
+    ...(config ?? {}),
     createResolver,
     async postTransform(this: Rollup.TransformPluginContext, result, fileName, cssFilename) {
       const { dependencies = [] } = result;
