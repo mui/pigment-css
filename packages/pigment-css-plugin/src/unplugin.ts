@@ -187,6 +187,8 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
   const { emitter, onDone } = createFileReporter(debug);
   let projectPath = nextJsOptions?.projectPath ?? process.cwd();
 
+  const themeCss = generateCssFromTheme('vars' in theme ? theme.vars : theme);
+
   const themePlugin: UnpluginOptions = {
     name: `${baseName}/theme`,
     enforce: 'pre',
@@ -217,8 +219,7 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
           },
           transform(_code, id) {
             if (id.endsWith('styles.css')) {
-              const res = generateCssFromTheme('vars' in theme ? theme.vars : theme);
-              return res;
+              return themeCss;
             }
             if (id.includes('theme')) {
               return 'export default {}';
@@ -242,7 +243,7 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
           load(id) {
             if (id === VIRTUAL_CSS_FILE) {
               // @TODO
-              return generateCssFromTheme(theme);
+              return themeCss;
             }
             if (id === VIRTUAL_THEME_FILE) {
               // @TODO
