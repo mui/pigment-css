@@ -38,6 +38,7 @@ export default async function Layout({ children }: React.PropsWithChildren) {
       <head>
         <script
           id="theme-selector"
+          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
             __html: `const mode = window.localStorage.getItem('mode');
 if (mode) {
@@ -47,6 +48,7 @@ if (mode) {
         />
         <script
           type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',

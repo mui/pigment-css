@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { AlertRoot, AlertTitle } from './Alert.pigment';
 import { InfoIcon } from 'docs/icons/InfoIcon';
 import { LightBulbIcon } from 'docs/icons/LightBulbIcon';
+import { AlertRoot, AlertTitle } from './Alert.pigment';
 
 type AlertProps = {
   type: 'important' | 'info' | 'tip' | 'note';

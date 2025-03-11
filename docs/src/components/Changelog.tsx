@@ -4,17 +4,15 @@ import { renderMdx } from 'docs/utils/mdx';
 
 const HEADER_MDX = `# Releases
 
-<Subtitle>Changelogs for each Pigment CSS release.</Subtitle>
-<Meta name="description" content="Changelogs for each Pigment CSS release." />
+<Subtitle>Changelogs for each Pigment&nbsp;CSS release.</Subtitle>
+<Meta name="description" content="Changelogs for each Pigment&nbsp;CSS release." />
 
 `;
 
 export async function Changelog() {
-  const file = await fs.open(process.env.CHANGELOG_FILE);
-  let content = await file.readFile({
+  let content = await fs.readFile(process.env.CHANGELOG_FILE, {
     encoding: 'utf-8',
   });
-  await file.close();
   content = content
     // Remove the first line as it doesn't make sense on the page
     .replace('# [Versions](https://mui.com/versions/)', '')
