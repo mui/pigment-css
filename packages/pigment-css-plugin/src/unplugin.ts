@@ -7,7 +7,7 @@ import {
   preprocessor as basePreProcessor,
   transformPigmentConfig,
 } from '@pigment-css/utils';
-import type { PigmentConfig } from '@pigment-css/utils';
+import type { PigmentConfig, ThemeOptions } from '@pigment-css/utils';
 import type { Theme } from '@pigment-css/theme';
 import { createUnplugin, NativeBuildContext, type UnpluginOptions } from 'unplugin';
 import {
@@ -33,9 +33,9 @@ type BundlerConfig = Omit<PigmentConfig, 'themeArgs'> & {
    */
   exclude?: FilterPattern;
   /**
-   * The Theme object that'll be passed to the callback in the css or styled calls.
+   * The Theme object that'll be passed to the callback in the `css` or `styled` calls.
    */
-  theme?: Theme;
+  theme?: Theme | ThemeOptions<Theme>;
   /**
    * A list of package names that support the runtime implementation of Pigment CSS. This already includes
    * `@pigment-css/core`, `@pigment-css/react` and `@pigment-css/react-new`.

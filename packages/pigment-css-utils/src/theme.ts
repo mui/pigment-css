@@ -64,13 +64,61 @@ function generateVars(theme: Theme, prefix = '') {
 }
 
 export function generateCssFromTheme(theme?: unknown, prefix = '') {
-  const cssVars = theme ? generateVars(theme as Theme, prefix) : {};
+  let themeObj: ThemeOptions<{}, 'light'> | undefined;
+  const themePrefix =
+    typeof theme === 'object' && theme && 'prefix' in theme && theme.prefix
+      ? (theme.prefix as string)
+      : prefix;
+
+  if (typeof theme === 'object' && theme && 'colorSchemes' in theme) {
+    themeObj = theme as ThemeOptions<{}, 'light'>;
+  } else if (theme) {
+    themeObj = { colorSchemes: { light: theme }, defaultScheme: 'light' };
+  }
+
+  const cssVars = themeObj
+    ? generateVars(themeObj.colorSchemes[themeObj.defaultScheme], themePrefix)
+    : {};
+  const defaultSelector = themeObj?.getSelector?.(themeObj.defaultScheme) ?? ':root';
+  cssVars.colorScheme = 'light';
+  if (themeObj?.defaultScheme) {
+    cssVars.colorScheme = themeObj.defaultScheme;
+  }
+  const cssObj = { [defaultSelector]: cssVars };
+  Object.keys(themeObj?.colorSchemes ?? {})
+    .filter((key) => key !== themeObj?.defaultScheme)
+    .forEach((key) => {
+      const tokens = generateVars(themeObj?.colorSchemes[key as 'light'] ?? {}, themePrefix);
+      if (key === 'dark' || key === 'light') {
+        tokens.colorScheme = key;
+      }
+      const selector =
+        themeObj?.getSelector?.(key as 'light' | 'system') ?? `[data-theme="${key}"]`;
+      cssObj[selector] = tokens;
+    });
+  if (themeObj?.getSelector) {
+    cssObj[themeObj.getSelector('system')] = {
+      colorScheme: themeObj.defaultScheme,
+    };
+  }
   const rootStyle = {
-    ':root': cssVars,
+    '@layer pigment.utils': {
+      ...cssObj,
+      ...(themeObj?.getSelector
+        ? {
+            [`@media (prefers-color-scheme: ${themeObj.defaultScheme === 'light' ? 'dark' : 'light'})`]:
+              {
+                [themeObj.getSelector('system')]:
+                  themeObj.defaultScheme === 'light'
+                    ? cssObj[themeObj.getSelector('dark' as unknown as 'light')]
+                    : cssObj[themeObj.getSelector('light')],
+              },
+          }
+        : {}),
+    },
   };
   const gen = serializeStyles([rootStyle]);
-  const css = `@layer ${PIGMENT_LAYERS.map((item) => `pigment.${item}`).join(',')};
-${gen.styles}`;
+  const css = `@layer ${PIGMENT_LAYERS.map((item) => `pigment.${item}`).join(',')};\n${gen.styles}`;
   return css;
 }
 
@@ -78,9 +126,17 @@ export function generateThemeWithCssVars<T extends unknown>(theme?: T, prefix?: 
   if (!theme) {
     return {} as T;
   }
+  let themeObj: object;
+  if (typeof theme === 'object' && theme && 'colorSchemes' in theme) {
+    const themeData = theme as unknown as ThemeOptions<{}, 'light'>;
+    const tokenObj = themeData.colorSchemes[themeData.defaultScheme ?? 'light'];
+    themeObj = tokenObj;
+  } else {
+    themeObj = theme;
+  }
   const result: Record<string, unknown> = {};
   iterateObject(
-    theme,
+    themeObj as Record<string, unknown>,
     (paths, value) => {
       if (isPrimitive(value)) {
         if (typeof value === 'function') {
@@ -96,3 +152,37 @@ export function generateThemeWithCssVars<T extends unknown>(theme?: T, prefix?: 
   );
   return result as T;
 }
+
+type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>;
+};
+
+export type ThemeOptions<
+  T extends object,
+  ColorScheme extends 'light' | 'dark' = 'light' | 'dark',
+> = {
+  /**
+   * The color schemes that the app supports.
+   */
+  colorSchemes: Record<ColorScheme, RecursivePartial<T>>;
+  /**
+   * The default color scheme to use from the `colorSchemes` object.
+   */
+  defaultScheme: ColorScheme;
+  /**
+   * A function that returns a selector for a given mode.
+   * @param mode The mode to get the selector for.
+   * @returns The selector for the given mode. This'll be part of the generated css.
+   * @default `[data-mode="${mode}"]`
+   * @example
+   * ```ts
+   * const theme = createTheme({
+   *   modes: {
+   *     default: { color: 'red' },
+   *   },
+   *   getSelector: (mode) => `[data-mode="${mode}"]`,
+   * });
+   * ```
+   */
+  getSelector?: (mode: ColorScheme | 'system') => string;
+};
