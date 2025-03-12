@@ -5,6 +5,7 @@
   "packages": [
     "packages/pigment-css-core",
     "packages/pigment-css-nextjs-plugin",
+    "packages/pigment-css-plugin",
     "packages/pigment-css-react",
     "packages/pigment-css-react-new",
     "packages/pigment-css-theme",
