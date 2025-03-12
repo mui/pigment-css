@@ -14,6 +14,7 @@
     "jsx": "preserve",
     "paths": {
       "docs/*": ["./docs/src/*"],
+      "~assets/*": ["./docs/public/static/*"],
       "@pigment-css/theme": ["../packages/pigment-css-theme/src"],
       "@pigment-css/core": ["../packages/pigment-css-core/src"],
       "@pigment-css/react-new": ["../packages/pigment-css-react-new/src"]

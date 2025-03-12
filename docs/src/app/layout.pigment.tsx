@@ -9,6 +9,12 @@ import { Inter } from 'next/font/google';
 import { t } from '@pigment-css/theme';
 import { css } from '@pigment-css/react-new';
 
+import favicon from '~assets/favicon.ico';
+import faviconDev from '~assets/favicon-dev.ico';
+import faviconSvg from '~assets/favicon.svg';
+import faviconSvgDev from '~assets/favicon-dev.svg';
+import faviconApple from '~assets/apple-touch-icon.png';
+
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
@@ -86,24 +92,25 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url:
-          process.env.NODE_ENV === 'production' ? '/static/favicon.ico' : '/static/favicon-dev.ico',
+        url: process.env.DEPLOY_ENV === 'production' ? favicon.src : faviconDev.src,
         sizes: '32x32',
+        type: 'image/x-icon',
       },
       {
-        url:
-          process.env.NODE_ENV === 'production' ? '/static/favicon.svg' : '/static/favicon-dev.svg',
+        url: process.env.DEPLOY_ENV === 'production' ? faviconSvg.src : faviconSvgDev.src,
         sizes: 'any',
         type: 'image/svg+xml',
       },
     ],
     shortcut: {
-      url: '/static/apple-touch-icon.png',
+      url: faviconApple.src,
       sizes: '180x180',
+      type: 'image/png',
     },
     apple: {
-      url: '/static/apple-touch-icon.png',
+      url: faviconApple.src,
       sizes: '180x180',
+      type: 'image/png',
     },
   },
 };
