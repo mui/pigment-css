@@ -1,1 +1,74 @@
 # About Pigment CSS
+
+<Subtitle>An open source zero-runtime CSS-in-JS library to style user interfaces.</Subtitle>
+<Meta
+  name="description"
+  content="An open source zero-runtime CSS-in-JS library to style user interfaces."
+/>
+
+Pigment CSS is a zero-runtime CSS-in-JS library that allows you to colocate styles with your components with the added advantage of extracting them into external stylesheets at build time.
+
+## Why choose Pigment CSS?
+
+Thanks to recent advancements in CSS (like CSS variables and `color-mix()`), "traditional" CSS-in-JS solutions that process styles at runtime are no longer required for unlocking features like color transformations and theme variables which are necessary for maintaining a sophisticated design system.
+
+Pigment CSS addresses the needs of the modern React developer by providing a zero-runtime CSS-in-JS styling solution as a successor to tools like Emotion and styled-components.
+
+Compared to its predecessors, Pigment CSS offers improved DX and runtime performance (though at the cost of increased build time) while also being compatible with React Server Components. Pigment CSS is built on top of [WyW-in-JS](https://wyw-in-js.dev/).
+
+## Features
+
+### Zero-runtime
+
+All the colocated styles are extracted into external CSS files at build time. The included runtime is tiny amounting to just 602 bytes for the core package and 1kB for the React package.
+
+### React Server Components
+
+All the `styled` components as well as `css` classes are fully compatible with React Server Components.
+
+### Theming
+
+It provides an out-of-the-box theming solution that allows you to define themes as a collection of CSS custom properties.
+
+### Composable
+
+The generated React components or css classes are composable. This means that you can use them as building blocks to create more complex components while allowing you to override styles of the underlying components.
+
+## Team
+
+Pigment CSS is developed and maintained by [MUI](https://github.com/mui).
+
+### Core developers
+
+- Brijesh Bittu [@brijeshb42](https://x.com/brijeshb42)
+- All [Contributors](https://github.com/mui/pigment-css/graphs/contributors)
+
+## Community
+
+### GitHub
+
+Pigment CSS is an open-source project. If you want to file a bug report or contribute, visit our [GitHub repository](https://github.com/mui/pigment-css).
+
+### Discord
+
+For community support, questions, and tips, join our [Discord](/r/discord).
+
+### X
+
+The best way to stay up-to-date on new releases and announcements is by following [Pigment CSS](https://x.com/PigmentCSS).
+
+### Bluesky
+
+We’re also on [Bluesky](https://bsky.app/profile/pigment-css.com).
+
+## Credits
+
+There are a bunch of projects that made Pigment CSS possible --
+
+### WyW-in-JS
+
+Used internally by Pigment CSS to convert the CSS-in-JS code into external stylesheets.
+
+### Emotion and Stitches
+
+Popular CSS-in-JS libraries that influenced some of the API design of Pigment CSS.
