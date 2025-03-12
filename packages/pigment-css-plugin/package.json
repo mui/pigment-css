@@ -62,10 +62,14 @@
     "access": "public"
   },
   "files": [
-    "build",
+    "nextjs",
     "nextjs-artifacts",
+    "nextjs-css-loader",
     "src",
-    "LICENSE"
+    "vite",
+    "webpack",
+    "LICENSE",
+    "package.json"
   ],
   "engines": {
     "node": ">=14.0.0"
@@ -74,42 +78,56 @@
     "./package.json": "./package.json",
     "./vite": {
       "require": {
-        "types": "./build/vite.d.ts",
-        "default": "./build/vite.js"
+        "types": "./vite/index.d.ts",
+        "default": "./vite/index.js"
       },
       "import": {
-        "types": "./build/vite.d.mts",
-        "default": "./build/vite.mjs"
+        "types": "./vite/index.d.mts",
+        "default": "./vite/index.mjs"
       }
     },
     "./webpack": {
       "require": {
-        "types": "./build/webpack.d.ts",
-        "default": "./build/webpack.js"
+        "types": "./webpack/index.d.ts",
+        "default": "./webpack/index.js"
       },
       "import": {
-        "types": "./build/webpack.d.mts",
-        "default": "./build/webpack.mjs"
+        "types": "./webpack/index.d.mts",
+        "default": "./webpack/index.mjs"
       }
     },
     "./nextjs": {
       "require": {
-        "types": "./build/nextjs.d.ts",
-        "default": "./build/nextjs.js"
+        "types": "./nextjs/index.d.ts",
+        "default": "./nextjs/index.js"
       },
       "import": {
-        "types": "./build/nextjs.d.mts",
-        "default": "./build/nextjs.mjs"
+        "types": "./nextjs/index.d.mts",
+        "default": "./nextjs/index.mjs"
       }
     },
     "./nextjs-css-loader": {
       "require": {
-        "types": "./build/nextjs-css-loader.d.ts",
-        "default": "./build/nextjs-css-loader.js"
+        "types": "./nextjs-css-loader/index.d.ts",
+        "default": "./nextjs-css-loader/index.js"
       },
       "import": {
-        "types": "./build/nextjs-css-loader.d.mts",
-        "default": "./build/nextjs-css-loader.mjs"
+        "types": "./nextjs-css-loader/index.d.mts",
+        "default": "./nextjs-css-loader/index.mjs"
+      }
+    }
+  },
+  "nx": {
+    "targets": {
+      "build": {
+        "cache": true,
+        "outputs": [
+          "{projectRoot}/nextjs",
+          "{projectRoot}/nextjs-css-loader",
+          "{projectRoot}/rspack",
+          "{projectRoot}/vite",
+          "{projectRoot}/webpack"
+        ]
       }
     }
   }

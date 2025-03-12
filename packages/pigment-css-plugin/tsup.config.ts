@@ -11,10 +11,15 @@ const baseConfig: Options = {
   cjsInterop: false,
 };
 
-const frameworks = ['webpack', 'vite', 'nextjs'];
+const frameworks = ['webpack', 'vite', 'nextjs', 'nextjs-css-loader.js'];
 
-export default defineConfig({
+const configs: Options[] = frameworks.map((fw) => ({
   ...baseConfig,
-  entry: frameworks.map((fw) => `./src/${fw}.ts`).concat('./src/nextjs-css-loader.js'),
+  outDir: `./${fw.split('.')[0]}`,
+  entry: {
+    index: `./src/${fw.includes('.') ? fw : `${fw}.ts`}`,
+  },
   cjsInterop: false,
-});
+}));
+
+export default defineConfig(configs);

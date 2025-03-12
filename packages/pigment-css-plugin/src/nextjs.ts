@@ -58,7 +58,7 @@ export default function pigment(
 
     config.module.rules.push({
       test: /pigment-virtual\.css$/,
-      use: require.resolve('./nextjs-css-loader'),
+      use: require.resolve('../nextjs-css-loader'),
     });
     config.plugins.push(
       webpackPlugin({
