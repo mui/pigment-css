@@ -54,10 +54,12 @@ export const nav: NavItem[] = [
       {
         label: 'Migration',
         href: '/guides/migration',
+        draft: true,
       },
       {
         label: 'UI Libraries',
         href: '/guides/ui-libraries',
+        draft: true,
       },
       {
         label: 'Light and Dark modes',
@@ -94,13 +96,13 @@ export const nav: NavItem[] = [
   },
 ];
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProdDeploy = process.env.DEPLOY_ENV === 'production';
 
 export const filteredNav: NavItem[] = nav
-  .filter((section) => !isProd || !section.draft)
+  .filter((section) => !isProdDeploy || !section.draft)
   .map((section) => ({
     ...section,
-    links: section.links.filter((link) => !isProd || !link.draft),
+    links: section.links.filter((link) => !isProdDeploy || !link.draft),
   }));
 
 export function getSlugs() {

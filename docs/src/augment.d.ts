@@ -14,6 +14,7 @@ declare global {
       WEBSITE: string;
       CONTENT_DIR: string;
       CHANGELOG_FILE: string;
+      DEPLOY_ENV: string;
     }
   }
 }
