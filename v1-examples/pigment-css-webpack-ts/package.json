@@ -13,12 +13,12 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@pigment-css/react-new": "workspace:*",
+    "@pigment-css/react-new": "*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@pigment-css/plugin": "workspace:*",
+    "@pigment-css/plugin": "*",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "copy-webpack-plugin": "^13.0.0",
