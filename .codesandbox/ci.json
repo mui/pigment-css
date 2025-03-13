@@ -16,7 +16,9 @@
   "sandboxes": [
     "/examples/pigment-css-nextjs-ts",
     "/examples/pigment-css-remix-ts",
-    "/examples/pigment-css-vite-ts"
+    "/examples/pigment-css-vite-ts",
+    "/v1-examples/pigment-css-v1-nextjs",
+    "/v1-examples/pigment-css-v1-vite"
   ],
   "silent": true
 }
