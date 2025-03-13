@@ -5,6 +5,7 @@ import {
   babelPlugin as sxBabelPlugin,
   generateThemeWithCssVars,
   preprocessor as basePreProcessor,
+  transformPigmentConfig,
 } from '@pigment-css/utils';
 import type { PigmentConfig } from '@pigment-css/utils';
 import type { Theme } from '@pigment-css/theme';
@@ -175,8 +176,10 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
     sourceMap = false,
     postTransform,
     createResolver,
+    wywFeatures,
     include = [],
     exclude = [],
+    features = {},
     ...rest
   } = options;
   const filter = createFilter(include, exclude);
@@ -310,6 +313,47 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
         ...(rest.babelOptions?.plugins ?? []),
       ].filter(Boolean);
 
+      const pluginOptions = transformPigmentConfig({
+        ...rest,
+        // @ts-ignore WyW does not identify this property
+        themeArgs: {
+          theme: themeWithVars,
+        },
+        wywFeatures: {
+          useWeakRefInEval: false,
+          ...wywFeatures,
+        },
+        features: {
+          useLayer: true,
+          ...features,
+        },
+        babelOptions: {
+          ...rest.babelOptions,
+          plugins: babelPlugins,
+          presets:
+            filename.endsWith('ts') || filename.endsWith('tsx')
+              ? Array.from(presets).concat('@babel/preset-typescript')
+              : Array.from(presets),
+        },
+        overrideContext(context, file) {
+          if (!context.$RefreshSig$) {
+            context.$RefreshSig$ = outerNoop;
+          }
+          if (overrideContext) {
+            return overrideContext(context, file);
+          }
+
+          return context;
+        },
+        tagResolver(source: string, tag: string) {
+          const tagResult = tagResolver?.(source, tag);
+          if (tagResult) {
+            return tagResult;
+          }
+          return null;
+        },
+      });
+
       try {
         const result = await wywTransform(
           {
@@ -318,42 +362,7 @@ export const plugin = createUnplugin<BundlerConfig>((options, meta) => {
               root: projectPath,
               // @TODO - Handle RTL processing
               preprocessor: basePreProcessor,
-              pluginOptions: {
-                ...rest,
-                // @ts-ignore WyW does not identify this property
-                themeArgs: {
-                  theme: themeWithVars,
-                },
-                features: {
-                  useWeakRefInEval: false,
-                  ...rest.features,
-                },
-                babelOptions: {
-                  ...rest.babelOptions,
-                  plugins: babelPlugins,
-                  presets:
-                    filename.endsWith('ts') || filename.endsWith('tsx')
-                      ? Array.from(presets).concat('@babel/preset-typescript')
-                      : Array.from(presets),
-                },
-                overrideContext(context, file) {
-                  if (!context.$RefreshSig$) {
-                    context.$RefreshSig$ = outerNoop;
-                  }
-                  if (overrideContext) {
-                    return overrideContext(context, file);
-                  }
-
-                  return context;
-                },
-                tagResolver(source: string, tag: string) {
-                  const tagResult = tagResolver?.(source, tag);
-                  if (tagResult) {
-                    return tagResult;
-                  }
-                  return null;
-                },
-              },
+              pluginOptions,
             },
             cache,
             eventEmitter: emitter,

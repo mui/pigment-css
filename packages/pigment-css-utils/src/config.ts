@@ -1,4 +1,5 @@
 import { Theme } from '@pigment-css/theme';
+import { FeatureFlags } from '@wyw-in-js/shared';
 import { PluginOptions } from '@wyw-in-js/transform';
 
 export type GenerateClassData<M, E> = {
@@ -38,7 +39,7 @@ type PigmentFeatures = {
  * This is the base Pigment Config that'll be used by bundler package with some extra bundler specific options.
  */
 export type PigmentConfig = Omit<Partial<PluginOptions>, 'features'> & {
-  wywFeatures?: PluginOptions['features'];
+  wywFeatures?: Partial<FeatureFlags>;
   features?: PigmentFeatures;
   generateClassName?: <M, E>(data: GenerateClassData<M, E>) => string;
   themeArgs?: {
@@ -86,7 +87,7 @@ export type PigmentConfig = Omit<Partial<PluginOptions>, 'features'> & {
  * @internal
  */
 export type TransformedInternalConfig = Omit<PigmentConfig, 'wywFeatures' | 'features'> & {
-  feautres?: PluginOptions['features'];
+  features?: Partial<FeatureFlags>;
   pigmentFeatures?: PigmentFeatures;
 };
 
@@ -98,6 +99,6 @@ export function transformPigmentConfig(config?: PigmentConfig): TransformedInter
   return {
     ...rest,
     pigmentFeatures: features,
-    feautres: wywFeatures,
+    features: wywFeatures,
   };
 }
