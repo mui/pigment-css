@@ -363,9 +363,6 @@ importers:
       '@pigment-css/react-new':
         specifier: workspace:*
         version: link:../packages/pigment-css-react-new
-      '@pigment-css/theme':
-        specifier: workspace:*
-        version: link:../packages/pigment-css-theme
       '@stefanprobst/rehype-extract-toc':
         specifier: ^2.2.1
         version: 2.2.1

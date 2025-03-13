@@ -6,8 +6,7 @@ import * as React from 'react';
 import { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 
-import { t } from '@pigment-css/theme';
-import { css } from '@pigment-css/react-new';
+import { css, t } from '@pigment-css/react-new';
 
 import favicon from '~assets/favicon.ico';
 import faviconDev from '~assets/favicon-dev.ico';

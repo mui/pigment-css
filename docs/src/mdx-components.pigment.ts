@@ -1,5 +1,4 @@
-import { t } from '@pigment-css/theme';
-import { styled } from '@pigment-css/react-new';
+import { styled, t } from '@pigment-css/react-new';
 
 import * as CodeBlockBase from './components/CodeBlock';
 import { Code as CodeBase } from './components/Code.pigment';
@@ -73,16 +72,23 @@ export const Li = styled.li(({ theme }) => ({
   marginBottom: spacing(theme, 0.5),
 }));
 
-export const Ul = styled.ul(({ theme }) => ({
+export const List = styled.ul(({ theme }) => ({
   marginBottom: spacing(theme, 4),
   marginInlineStart: spacing(theme, 4.5),
   listStyleType: 'disc',
-}));
-
-export const Ol = styled.ul(({ theme }) => ({
-  marginBottom: spacing(theme, 4),
-  marginInlineStart: spacing(theme, 7),
-  listStyleType: 'decimal',
+  variants: {
+    variant: {
+      ordered: {
+        listStyleType: 'decimal',
+      },
+      unordered: {
+        listStyleType: 'disc',
+      },
+    },
+  },
+  defaultVariants: {
+    variant: 'unordered',
+  },
 }));
 
 export const Strong = styled.strong({

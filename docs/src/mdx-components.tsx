@@ -34,8 +34,8 @@ export const mdxComponents: MDXComponents = {
   h6: (props) => <Styled.Heading as="h6" lvl="other" {...props} />,
   p: (props) => <Styled.Paragraph {...props} />,
   li: (props) => <Styled.Li {...props} />,
-  ul: (props) => <Styled.Ul {...props} />,
-  ol: (props) => <Styled.Ol {...props} />,
+  ul: (props) => <Styled.List {...props} />,
+  ol: (props) => <Styled.List as="ol" variant="ordered" {...props} />,
   strong: (props) => <Styled.Strong {...props} />,
   figure: (props) => {
     if ('data-rehype-pretty-code-figure' in props) {

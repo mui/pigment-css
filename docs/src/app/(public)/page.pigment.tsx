@@ -1,7 +1,6 @@
 import { Metadata, Viewport } from 'next';
 import Image from 'next/image';
-import { t } from '@pigment-css/theme';
-import { css, styled } from '@pigment-css/react-new';
+import { css, styled, t } from '@pigment-css/react-new';
 
 import { applyText, spacing } from 'docs/utils/theme';
 import { Link } from 'docs/components/Link';

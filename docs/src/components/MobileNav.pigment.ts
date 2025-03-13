@@ -1,5 +1,4 @@
-import { t } from '@pigment-css/theme';
-import { css } from '@pigment-css/react-new';
+import { css, t } from '@pigment-css/react-new';
 import { applyText } from '../utils/theme';
 
 export const backdrop = css`

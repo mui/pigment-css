@@ -1,7 +1,6 @@
 import * as React from 'react';
 import type { Metadata, Viewport } from 'next/types';
-import { t } from '@pigment-css/theme';
-import { styled } from '@pigment-css/react-new';
+import { styled, t } from '@pigment-css/react-new';
 
 import { Header } from 'docs/components/Header';
 import * as SideNav from 'docs/components/SideNav';

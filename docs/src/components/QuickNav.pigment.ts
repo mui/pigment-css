@@ -1,5 +1,4 @@
-import { t } from '@pigment-css/theme';
-import { styled } from '@pigment-css/react-new';
+import { styled, t } from '@pigment-css/react-new';
 import { applyText } from '../utils/theme';
 
 export const Container = styled.div`

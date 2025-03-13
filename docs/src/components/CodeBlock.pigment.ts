@@ -1,5 +1,4 @@
-import { t } from '@pigment-css/theme';
-import { css, styled } from '@pigment-css/react-new';
+import { css, styled, t } from '@pigment-css/react-new';
 import { applyText } from 'docs/utils/theme';
 
 export const Root = styled.figure({

@@ -1,4 +1,4 @@
-import type { Theme } from '@pigment-css/theme';
+import type { Theme } from '@pigment-css/react-new';
 
 export function applyText(theme: Theme, value: keyof Theme['text']) {
   const val = theme.text[value];

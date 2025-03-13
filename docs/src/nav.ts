@@ -34,8 +34,8 @@ export const nav: NavItem[] = [
     dirname: 'features',
     links: [
       {
-        label: 'Styles',
-        href: '/features/styles',
+        label: 'Styling',
+        href: '/features/styling',
       },
       {
         label: 'Theming',
