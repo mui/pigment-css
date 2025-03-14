@@ -21,7 +21,7 @@ export const rehypeGithubAlert: Pluggable = () => {
         const regex = new RegExp(`^\\[!(?<type>${ALERT_TYPES.join('|')})\\]`, 'gi');
         const match = regex.exec(firstText.value as string);
         if (match) {
-          firstText.value = (firstText.value as string).replace(regex, '').trim();
+          firstText.value = (firstText.value as string).replace(regex, '');
         }
         node.type = 'mdxJsxFlowElement';
         node.name = 'Alert';

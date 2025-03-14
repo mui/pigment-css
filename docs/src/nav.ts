@@ -38,6 +38,10 @@ export const nav: NavItem[] = [
         href: '/features/styling',
       },
       {
+        label: 'Composition',
+        href: '/features/composition',
+      },
+      {
         label: 'Theming',
         href: '/features/theming',
       },

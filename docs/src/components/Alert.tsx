@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { InfoIcon } from 'docs/icons/InfoIcon';
-import { LightBulbIcon } from 'docs/icons/LightBulbIcon';
+import { InfoIcon, LightbulbIcon, TriangleAlertIcon, NotebookTextIcon } from 'lucide-react';
+
 import { AlertRoot, AlertTitle } from './Alert.pigment';
 
 type AlertProps = {
@@ -9,17 +9,19 @@ type AlertProps = {
   children?: React.ReactNode;
 };
 
-const Icon: Partial<Record<AlertProps['type'], React.ReactNode>> = {
-  important: <InfoIcon />,
-  tip: <LightBulbIcon />,
+const IconMap: Partial<Record<AlertProps['type'], typeof InfoIcon>> = {
+  important: TriangleAlertIcon,
+  info: InfoIcon,
+  tip: LightbulbIcon,
+  note: NotebookTextIcon,
 };
 
 export function Alert({ type = 'info', children }: AlertProps) {
-  const icon = Icon[type];
+  const Icon = IconMap[type];
   return (
     <AlertRoot variant={type}>
       <AlertTitle>
-        {icon}
+        {!!Icon && <Icon width={16} height={16} />}
         <strong>{type}</strong>
       </AlertTitle>
       {children}
