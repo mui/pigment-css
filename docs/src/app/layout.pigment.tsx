@@ -1,6 +1,5 @@
 import '@pigment-css/react-new/styles.css';
 import './globals.css';
-import './syntax.css';
 
 import * as React from 'react';
 import { Metadata, Viewport } from 'next';
