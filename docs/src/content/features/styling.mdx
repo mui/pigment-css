@@ -249,6 +249,28 @@ For the above example, the generated css will be -
 }
 ```
 
+### Special considerations
+
+There are a few special considerations when writing styles with the JS object syntax -
+
+1. When writing `content` css property in the JS object syntax, you need to use `content: '""'` instead of `content: ''` because after transformation, `content` won't be part of the generated css because of the way the string gets transformed.
+2. If you want to have multiple values for the same css property, you can do so by using an array for the values like so -
+
+```tsx title="App.js"
+const styles = css({
+  background: ['red', 'var(--color-primary)'],
+});
+```
+
+which will be transformed to -
+
+```css
+.root {
+  background: red;
+  background: var(--color-primary);
+}
+```
+
 ## keyframes
 
 The `keyframes` function is a utility function that can be used to create keyframes for animations. First, you need to create a keyframes object and then use it in the `css` function. The return value of the `keyframes` function is a string which represents the name of the keyframe.
@@ -407,9 +429,7 @@ const VisuallyHidden = styled.div({
 });
 
 function App() {
-  return (
-    <VisuallyHidden as="span">Hello, world!</VisuallyHidden>
-  );
+  return <VisuallyHidden as="span">Hello, world!</VisuallyHidden>;
 }
 ```
 
@@ -441,4 +461,4 @@ Writing CSS with the `styled` API is the same as writing styles with the [`css`]
 > [!NOTE]
 > More APIs like `globalCss`, `sx` prop, etc are to be added in subsequent releases.
 
-Head over the the [Theming](/features/theming) page to learn more about how to apply themes with the above APIs.
+Head over to the [Theming](/features/theming) documentation to learn more about how to apply themes with the above APIs.

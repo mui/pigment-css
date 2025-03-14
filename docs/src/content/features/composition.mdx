@@ -55,7 +55,6 @@ In the above example, the color of the text will be `blue` in both the cases bec
 
 The above example can be extended to imported styles or styled components as well.
 
-
 ```tsx title="Button.jsx"
 import { css } from '@pigment-css/react-new';
 
@@ -92,13 +91,8 @@ const bgBlue = css`
   color: blue;
 `;
 
-
 function App() {
-  return (
-    <Button className={`${bgBlue}`}>
-      Click me
-    </Button>
-  );
+  return <Button className={`${bgBlue}`}>Click me</Button>;
 }
 ```
 
@@ -113,7 +107,7 @@ In the above example, the color of the text will be `blue` because the styles ar
   border-radius: 4px;
   padding: 8px 16px;
   font-size: 14px;
-  transition: background-color .2s;
+  transition: background-color 0.2s;
 }
 
 .button:hover {
@@ -165,7 +159,7 @@ export const Link = styled.a`
 `;
 ```
 
- Here, the color of text in the `Link` component will be `pink`.
+Here, the color of text in the `Link` component will be `pink`.
 
 ```tsx title="Heading.jsx"
 import { styled } from '@pigment-css/react-new';
@@ -302,4 +296,3 @@ Here, the text color of the element where `linkCls` will be applied will be `bla
 
 > [!NOTE]
 > You'll have to add the class selector to the `linkCls`, ie, `.linkCls` instead of just `Link` in the `styled` usage.
-

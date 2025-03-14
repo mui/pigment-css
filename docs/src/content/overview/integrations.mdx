@@ -1,10 +1,7 @@
 # Integrations
 
 <Subtitle>Learn how to configure your bundler to use Pigment CSS.</Subtitle>
-<Meta
-  name="description"
-  content="Learn how to configure your bundler to use Pigment CSS."
-/>
+<Meta name="description" content="Learn how to configure your bundler to use Pigment CSS." />
 
 ## Bundler integrations
 
@@ -22,14 +19,14 @@ All bundler specific configurations follow the same pattern.
 
 1. First import the `default` export from the bundler specific package path and name it as per your bundler conventions -
 
-* Next.js - `@pigment-css/plugin/nextjs`
-* Vite - `@pigment-css/plugin/vite`
-* Webpack - `@pigment-css/plugin/webpack`
+- Next.js - `@pigment-css/plugin/nextjs`
+- Vite - `@pigment-css/plugin/vite`
+- Webpack - `@pigment-css/plugin/webpack`
 
 and then pass in the Pigment CSS configuration options (if any).
 
-2. After this, import the `@pigment-css/react-new/styles.css` file in the main entry point file of the app. Make sure that this file is only imported once in the app otherwise you will end up with duplicate styles in the final bundle.
-This import will be responsible for adding the Pigment CSS layer order as well as injecting the css tokens configured in the [theming](/features/theming) section.
+2. After this, import the `@pigment-css/react-new/styles.css` file in the main entry point file of the app. Make sure that this file is only imported once in the app, otherwise you will end up with duplicate styles in the final bundle.
+   This import will be responsible for adding the Pigment CSS's layer order as well as injecting the css tokens configured in the [theming](/features/theming) section.
 
 ### Next.js
 
@@ -156,6 +153,7 @@ import '@pigment-css/react-new/styles.css';
 ```
 
 > [!TIP]
+>
 > `pigmentConfig` is an optional argument in all the examples above. If not provided, the default configuration will be used.
 
 Once the bundler is configured, head over to the [Styling](/features/styling) section to learn how to author css with Pigment CSS.
