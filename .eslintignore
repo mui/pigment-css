@@ -39,3 +39,4 @@ pnpm-lock.yaml
 docs/**/*-pt.md
 docs/**/*-zh.md
 /tmpapps
+/v1-examples
