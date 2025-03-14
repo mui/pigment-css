@@ -1,10 +1,11 @@
 import * as React from 'react';
 import NextLink from 'next/link';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 
 import { NpmIcon } from 'docs/icons/NpmIcon';
 import { GitHubIcon } from 'docs/icons/GitHubIcon';
-import { nav } from 'docs/nav';
+import { filteredNav } from 'docs/nav';
 import {
   headerButton,
   headerLink,
@@ -18,7 +19,9 @@ import {
   Root,
 } from './Header.pigment';
 import * as MobileNav from './MobileNav';
-import { ThemeSelector } from './ThemeSelector';
+import { navItem, navLink } from './MobileNav.pigment';
+
+const ThemeSelector = dynamic(() => import('./ThemeSelector'));
 
 export function Header() {
   return (
@@ -52,7 +55,7 @@ export function Header() {
             <MobileNav.Portal>
               <MobileNav.Backdrop />
               <MobileNav.Popup>
-                {nav.map((section) => (
+                {filteredNav.map((section) => (
                   <MobileNav.Section key={section.label}>
                     <MobileNav.Heading>{section.label}</MobileNav.Heading>
                     <MobileNav.List>
@@ -79,6 +82,17 @@ export function Header() {
                       <GitHubIcon className="mt-[-2px]" />
                       GitHub
                     </MobileNav.Item>
+                  </MobileNav.List>
+                </MobileNav.Section>
+
+                <MobileNav.Section>
+                  <MobileNav.Heading>Site settings</MobileNav.Heading>
+                  <MobileNav.List>
+                    <li className={`${navItem}`}>
+                      <span className={`${navLink}`}>
+                        <ThemeSelector showLabel />
+                      </span>
+                    </li>
                   </MobileNav.List>
                 </MobileNav.Section>
               </MobileNav.Popup>

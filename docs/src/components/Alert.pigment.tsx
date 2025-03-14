@@ -14,6 +14,7 @@ export const AlertRoot = styled.blockquote(({ theme }) => ({
   color: '$alertColor',
   '& p': {
     marginBottom: spacing(theme, 1),
+    whiteSpace: 'normal',
   },
   variants: {
     variant: {

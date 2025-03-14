@@ -48,12 +48,10 @@ export const Heading = styled('h1')(({ theme }) => ({
         fontWeight: t('$font.weight.medium'),
       },
       other: {
-        three: {
-          marginTop: spacing(theme, 8),
-          marginBottom: spacing(theme, 1.5),
-          scrollMarginTop: spacing(theme, 6),
-          ...applyText(theme, 'lg'),
-        },
+        marginTop: spacing(theme, 8),
+        marginBottom: spacing(theme, 1.5),
+        scrollMarginTop: spacing(theme, 6),
+        ...applyText(theme, 'lg'),
       },
     },
   },
@@ -65,11 +63,13 @@ export const Heading = styled('h1')(({ theme }) => ({
 export const Paragraph = styled.p(
   ({ theme }) => `
   margin-bottom: ${spacing(theme, 4)};
+  white-space: pre-line;
 `,
 );
 
 export const Li = styled.li(({ theme }) => ({
   marginBottom: spacing(theme, 0.5),
+  whiteSpace: 'pre-line',
 }));
 
 export const List = styled.ul(({ theme }) => ({

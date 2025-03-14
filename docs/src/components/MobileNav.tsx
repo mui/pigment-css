@@ -168,7 +168,7 @@ export function Heading({ children, className, ...props }: React.ComponentProps<
 }
 
 export function List({ className, ...props }: React.ComponentProps<'ul'>) {
-  return <ul className={clsx('MobileNavList', className)} {...props} />;
+  return <ul className={className} {...props} />;
 }
 
 interface ItemProps extends React.ComponentPropsWithoutRef<'li'> {
