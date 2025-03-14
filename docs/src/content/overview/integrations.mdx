@@ -29,6 +29,7 @@ All bundler specific configurations follow the same pattern.
 and then pass in the Pigment CSS configuration options (if any).
 
 2. After this, import the `@pigment-css/react-new/styles.css` file in the main entry point file of the app. Make sure that this file is only imported once in the app otherwise you will end up with duplicate styles in the final bundle.
+This import will be responsible for adding the Pigment CSS layer order as well as injecting the css tokens configured in the [theming](/features/theming) section.
 
 ### Next.js
 
