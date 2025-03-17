@@ -9,6 +9,7 @@ type MenuProps<T> = {
   onChange?: (value: T) => void;
   openOnHover?: boolean;
   label?: string;
+  renderItem?: (item: { label: string; value: T }) => React.ReactNode;
 };
 
 function ArrowSvg(props: React.ComponentProps<'svg'>) {
@@ -37,6 +38,7 @@ export function SelectMenu<T>({
   onChange,
   openOnHover = false,
   label,
+  renderItem,
 }: MenuProps<T>) {
   return (
     <Menu.Root openOnHover={openOnHover}>
@@ -56,7 +58,7 @@ export function SelectMenu<T>({
                   key={opt.value as string | number}
                   value={opt.value as string}
                 >
-                  <span>{opt.label}</span>
+                  {renderItem ? renderItem(opt) : <span>{opt.label}</span>}
                   <Menu.RadioItemIndicator>
                     <CheckIcon size={12} strokeWidth={3} />
                   </Menu.RadioItemIndicator>

@@ -1,9 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import { MonitorCog, SunMediumIcon, MoonIcon } from 'lucide-react';
+import { SunMediumIcon, MoonIcon, SunMoonIcon } from 'lucide-react';
 
 import { SelectMenu } from './SelectMenu';
+import { ThemeItem } from './ThemeSelector.pigment';
 
 type Mode = 'light' | 'dark' | 'system' | null;
 
@@ -16,6 +17,10 @@ const MODE_FLOW: Record<
     icon: typeof SunMediumIcon;
   }
 > = {
+  system: {
+    label: 'Auto',
+    icon: SunMoonIcon,
+  },
   light: {
     label: 'Light mode',
     icon: SunMediumIcon,
@@ -23,10 +28,6 @@ const MODE_FLOW: Record<
   dark: {
     label: 'Dark mode',
     icon: MoonIcon,
-  },
-  system: {
-    label: 'System mode',
-    icon: MonitorCog,
   },
 };
 
@@ -60,8 +61,17 @@ export default function ThemeSelector({ showLabel = false }: { showLabel?: boole
       value={mode}
       onChange={handleModeChange}
       openOnHover
+      renderItem={(opt) => {
+        const IconComponent = MODE_FLOW[opt.value ?? 'system'].icon;
+        return (
+          <ThemeItem>
+            <IconComponent size={16} />
+            <span>{opt.label}</span>
+          </ThemeItem>
+        );
+      }}
     >
-      {mode ? <Icon size={16} color="var(--color-foreground)" /> : null}
+      {mode ? <Icon size={16} /> : null}
       {showLabel && <span>Select Theme</span>}
     </SelectMenu>
   );
