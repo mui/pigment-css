@@ -92,7 +92,10 @@ function isZeroRuntimeProcessableFile(fileName: string, transformLibraries: stri
   if (!fileName) {
     return false;
   }
-  if (fileName.includes('packages/pigment-css')) {
+  if (
+    fileName.includes('packages/pigment-css'.split('/').join(path.sep)) ||
+    DEFAULT_RUNTIME_PACKAGES.some((lib) => fileName.includes(lib.split('/').join(path.sep)))
+  ) {
     return false;
   }
   const isNodeModule = fileName.includes('node_modules');
