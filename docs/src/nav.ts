@@ -38,12 +38,16 @@ export const nav: NavItem[] = [
         href: '/features/styling',
       },
       {
-        label: 'Composition',
-        href: '/features/composition',
-      },
-      {
         label: 'Theming',
         href: '/features/theming',
+      },
+      {
+        label: 'Variants',
+        href: '/features/variants',
+      },
+      {
+        label: 'Composition',
+        href: '/features/composition',
       },
     ],
   },
@@ -81,15 +85,19 @@ export const nav: NavItem[] = [
     dirname: 'packages',
     links: [
       {
-        label: 'Core',
-        href: '/packages/core',
-      },
-      {
-        label: 'React',
+        label: 'react',
         href: '/packages/react',
       },
       {
-        label: 'Theme',
+        label: 'core',
+        href: '/packages/core',
+      },
+      {
+        label: 'plugin',
+        href: '/packages/plugin',
+      },
+      {
+        label: 'theme',
         href: '/packages/theme',
       },
       {

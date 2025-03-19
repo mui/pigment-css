@@ -11,7 +11,7 @@ export default function Notfound() {
           <Heading>Not found</Heading>
           <Caption>
             This page couldn&apos;t be found. Please return to the docs or create a corresponding
-            issue on GitHub..
+            issue on <Link href={process.env.GITHUB}>GitHub</Link>.
           </Caption>
           <Link className={`${linkStyle}`} href="/">
             Back to home

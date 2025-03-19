@@ -130,7 +130,7 @@
   },
   "nyc": {
     "include": [
-      "packages/mui*/src/**/*.{js,ts,tsx}"
+      "packages/pigment*/src/**/*.{js,ts,tsx}"
     ],
     "exclude": [
       "**/*.test.{js,ts,tsx}",

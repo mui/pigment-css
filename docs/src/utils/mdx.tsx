@@ -336,7 +336,7 @@ const theme: Theme = {
 // @ts-expect-error Set highlighter on globalThis
 globalThis.highlighter ??= createHighlighter({
   themes: [theme],
-  langs: ['tsx', 'jsx', 'css'],
+  langs: ['tsx', 'jsx', 'css', 'bash'],
 });
 
 export async function renderMdx(mdxSource: string) {
