@@ -12,6 +12,7 @@ import {
   HeaderLinkContainer,
   Inner,
   logoLink,
+  logoStyle,
   MobileNavContainer,
   NavIcon,
   NpmPackage,
@@ -28,7 +29,14 @@ export function Header() {
     <Root>
       <Inner>
         <NextLink href="/" className={`${logoLink}`}>
-          <Image alt={process.env.APP_NAME} src="/static/logo.svg" width={17} height={28} />
+          <Image
+            className={`${logoStyle}`}
+            alt={process.env.APP_NAME}
+            src="/static/logo.svg"
+            width={17}
+            height={28}
+            loading="eager"
+          />
         </NextLink>
 
         <HeaderLinkContainer>

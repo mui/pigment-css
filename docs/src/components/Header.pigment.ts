@@ -56,6 +56,11 @@ export const logoLink = css(
 `,
 );
 
+export const logoStyle = css`
+  width: 17px;
+  height: 28px;
+`;
+
 export const headerLink = css`
   display: flex;
   align-items: center;

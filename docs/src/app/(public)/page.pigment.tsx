@@ -46,6 +46,8 @@ export const linkStyle = css(
 );
 
 const logoStyle = css(({ theme }) => ({
+  width: 17,
+  height: 28,
   marginBottom: spacing(theme, 8),
   marginLeft: 1,
 }));
@@ -59,9 +61,10 @@ export default function HomePage() {
         <Image
           className={`${logoStyle}`}
           src="/static/logo.svg"
-          width={18}
-          height={30}
+          width={17}
+          height={28}
           alt={`${process.env.APP_NAME} logo`}
+          loading="eager"
         />
         <Heading>{process.env.APP_NAME}</Heading>
         <Caption>{description}</Caption>
