@@ -42,7 +42,7 @@ export function SelectMenu<T>({
 }: MenuProps<T>) {
   return (
     <Menu.Root openOnHover={openOnHover}>
-      <Menu.Trigger aria-label={label}>
+      <Menu.Trigger aria-label={label} type="button">
         {children} <ChevronDownIcon className={`${triggerIcon}`} size={12} />
       </Menu.Trigger>
       <Menu.Portal>

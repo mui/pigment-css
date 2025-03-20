@@ -81,28 +81,12 @@ export const nav: NavItem[] = [
     ],
   },
   {
-    label: 'Packages',
+    label: 'Package',
     dirname: 'packages',
     links: [
       {
-        label: 'react',
-        href: '/packages/react',
-      },
-      {
-        label: 'core',
-        href: '/packages/core',
-      },
-      {
         label: 'plugin',
         href: '/packages/plugin',
-      },
-      {
-        label: 'theme',
-        href: '/packages/theme',
-      },
-      {
-        label: 'Utils',
-        href: '/packages/utils',
       },
     ],
   },
