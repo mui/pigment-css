@@ -463,14 +463,14 @@ importers:
         specifier: workspace:*
         version: link:../pigment-css-utils
       '@wyw-in-js/processor-utils':
-        specifier: ^0.5.5
-        version: 0.5.5
+        specifier: ^0.6.0
+        version: 0.6.0
       '@wyw-in-js/shared':
-        specifier: ^0.5.5
-        version: 0.5.5
+        specifier: ^0.6.0
+        version: 0.6.0
       '@wyw-in-js/transform':
-        specifier: ^0.5.5
-        version: 0.5.5(typescript@5.6.3)
+        specifier: ^0.6.0
+        version: 0.6.0(typescript@5.6.3)
       csstype:
         specifier: ^3.1.3
         version: 3.1.3
@@ -540,14 +540,14 @@ importers:
         specifier: ^6.1.6
         version: 6.1.6(@types/react@18.3.12)(react@18.3.1)
       '@wyw-in-js/processor-utils':
-        specifier: ^0.5.5
-        version: 0.5.5
+        specifier: ^0.6.0
+        version: 0.6.0
       '@wyw-in-js/shared':
-        specifier: ^0.5.5
-        version: 0.5.5
+        specifier: ^0.6.0
+        version: 0.6.0
       '@wyw-in-js/transform':
-        specifier: ^0.5.5
-        version: 0.5.5(typescript@5.6.3)
+        specifier: ^0.6.0
+        version: 0.6.0(typescript@5.6.3)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -640,11 +640,11 @@ importers:
         specifier: workspace:^
         version: link:../pigment-css-react
       '@wyw-in-js/shared':
-        specifier: ^0.5.5
-        version: 0.5.5
+        specifier: ^0.6.0
+        version: 0.6.0
       '@wyw-in-js/transform':
-        specifier: ^0.5.5
-        version: 0.5.5(typescript@5.6.3)
+        specifier: ^0.6.0
+        version: 0.6.0(typescript@5.6.3)
       babel-plugin-define-var:
         specifier: ^0.1.0
         version: 0.1.0
@@ -686,14 +686,14 @@ importers:
         specifier: workspace:*
         version: link:../pigment-css-theme
       '@wyw-in-js/processor-utils':
-        specifier: ^0.5.5
-        version: 0.5.5
+        specifier: ^0.6.0
+        version: 0.6.0
       '@wyw-in-js/shared':
-        specifier: ^0.5.5
-        version: 0.5.5
+        specifier: ^0.6.0
+        version: 0.6.0
       '@wyw-in-js/transform':
-        specifier: ^0.5.5
-        version: 0.5.5(typescript@5.6.3)
+        specifier: ^0.6.0
+        version: 0.6.0(typescript@5.6.3)
       cssesc:
         specifier: ^3.0.0
         version: 3.0.0
@@ -726,11 +726,11 @@ importers:
         specifier: workspace:^
         version: link:../pigment-css-react
       '@wyw-in-js/shared':
-        specifier: ^0.5.5
-        version: 0.5.5
+        specifier: ^0.6.0
+        version: 0.6.0
       '@wyw-in-js/transform':
-        specifier: ^0.5.5
-        version: 0.5.5(typescript@5.6.3)
+        specifier: ^0.6.0
+        version: 0.6.0(typescript@5.6.3)
       babel-plugin-define-var:
         specifier: ^0.1.0
         version: 0.1.0
@@ -3316,16 +3316,16 @@ packages:
   '@webassemblyjs/wast-printer@1.12.1':
     resolution: {integrity: sha512-+X4WAlOisVWQMikjbcvY2e0rwPsKQ9F688lksZhBcPycBBuii3O7m8FACbDMWDojpAqvjIncrG8J0XHKyQfVeA==}
 
-  '@wyw-in-js/processor-utils@0.5.5':
-    resolution: {integrity: sha512-L3IcAfoowhM0fw9Cnv2CNzfjWNLKpYl2CFqam6NvwpiXNR1kXz/GpO0AOiKvCs5h4Ps5kWxE2e8knXLpk8q/2g==}
+  '@wyw-in-js/processor-utils@0.6.0':
+    resolution: {integrity: sha512-5YAZMUmF+S2HaqheKfew6ybbYBMnF10PjIgI7ieyuFxCohyqJNF4xdo6oHftv2z5Z4vCQ0OZHtDOQyDImBYwmg==}
     engines: {node: '>=16.0.0'}
 
-  '@wyw-in-js/shared@0.5.5':
-    resolution: {integrity: sha512-Wnvp3RGfynHk81lrp/0fA+Yv5yuIr2Ej13N3lawQeqbK4KlMag3P9npyIljGrEiwK2Bv4byHuXsJFgLI0Fo8bw==}
+  '@wyw-in-js/shared@0.6.0':
+    resolution: {integrity: sha512-BozBos29AuMWOvjjKf+bYYN+Vku0Nar6+y5oxrJXIZzUEKiWTVnIxO256vi8cUBGfo/DH44o+qZTkkdSN2pPXw==}
     engines: {node: '>=16.0.0'}
 
-  '@wyw-in-js/transform@0.5.5':
-    resolution: {integrity: sha512-XMZjhS8poHpxfPg41rkc6eh3Mr2BZAFM7OzYN4jPZUicpJKv7uQAU2dLEqnyDcDllo04LbZIryb2fXwpr+pqPw==}
+  '@wyw-in-js/transform@0.6.0':
+    resolution: {integrity: sha512-/Rxw8e3KcmSjnqWs/6flmpcNTa4jLw8NViIyNwqem498AfSWXrPnYf3RyjWed9zDVL72q7Xjei6TcRqMupl3Eg==}
     engines: {node: '>=16.0.0'}
 
   '@xtuc/ieee754@1.2.0':
@@ -12100,14 +12100,14 @@ snapshots:
       '@webassemblyjs/ast': 1.12.1
       '@xtuc/long': 4.2.2
 
-  '@wyw-in-js/processor-utils@0.5.5':
+  '@wyw-in-js/processor-utils@0.6.0':
     dependencies:
-      '@babel/generator': 7.26.2
-      '@wyw-in-js/shared': 0.5.5
+      '@babel/generator': 7.26.3
+      '@wyw-in-js/shared': 0.6.0
     transitivePeerDependencies:
       - supports-color
 
-  '@wyw-in-js/shared@0.5.5':
+  '@wyw-in-js/shared@0.6.0':
     dependencies:
       debug: 4.3.7(supports-color@8.1.1)
       find-up: 5.0.0
@@ -12115,17 +12115,17 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@wyw-in-js/transform@0.5.5(typescript@5.6.3)':
+  '@wyw-in-js/transform@0.6.0(typescript@5.6.3)':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/generator': 7.26.2
+      '@babel/generator': 7.26.3
       '@babel/helper-module-imports': 7.25.9
       '@babel/plugin-transform-modules-commonjs': 7.25.9(@babel/core@7.26.0)
       '@babel/template': 7.25.9
-      '@babel/traverse': 7.25.9
+      '@babel/traverse': 7.26.4
       '@babel/types': 7.26.5
-      '@wyw-in-js/processor-utils': 0.5.5
-      '@wyw-in-js/shared': 0.5.5
+      '@wyw-in-js/processor-utils': 0.6.0
+      '@wyw-in-js/shared': 0.6.0
       babel-merge: 3.0.0(@babel/core@7.26.0)
       cosmiconfig: 8.3.6(typescript@5.6.3)
       happy-dom: 15.11.2
@@ -18577,7 +18577,7 @@ snapshots:
 
   ts-invariant@0.10.3:
     dependencies:
-      tslib: 2.6.2
+      tslib: 2.8.1
 
   tsconfig-paths@3.15.0:
     dependencies:
