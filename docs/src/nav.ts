@@ -116,12 +116,3 @@ export const filteredNav: NavItem[] = nav
     ...section,
     links: section.links.filter((link) => !isProdDeploy || !link.draft),
   }));
-
-export function getSlugs() {
-  return filteredNav.flatMap((section) =>
-    section.links.map((link) => ({
-      slug: link.href.split('/').pop() as string,
-      contentDir: section.dirname,
-    })),
-  );
-}

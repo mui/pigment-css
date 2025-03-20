@@ -1,5 +1,7 @@
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import ContentPage from 'docs/components/ContentPage';
-import { getSlugs } from 'docs/nav';
+import { filteredNav } from 'docs/nav';
 
 export default async function GettingStarted({
   params,
@@ -11,5 +13,15 @@ export default async function GettingStarted({
 }
 
 export function generateStaticParams() {
-  return getSlugs();
+  const items = filteredNav
+    .flatMap((section) =>
+      section.links.map((link) => ({
+        slug: link.href.split('/').pop() as string,
+        contentDir: section.dirname,
+      })),
+    )
+    .filter(({ contentDir, slug }) =>
+      fs.existsSync(path.join(process.env.CONTENT_DIR, contentDir, `${slug}.mdx`)),
+    );
+  return items;
 }
