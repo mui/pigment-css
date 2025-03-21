@@ -3,7 +3,7 @@
 <Subtitle>How Pigment CSS handles css precedence and composition.</Subtitle>
 <Meta name="description" content="How Pigment CSS handles CSS precedence and composition." />
 
-Styles authored with Pigment CSS will be scoped to the component and won't affect globals styles or styles of any other styled components.
+Styles authored with Pigment CSS will be scoped to the component and won't affect globals styles or styles of any other styled components. This is mainly done by using uniquely generated class names that are hard to override through global styles since you don't know the class names beforehand.
 
 In a way, it is similar to CSS Modules except, the styles are written in JS and colocated with the components.
 

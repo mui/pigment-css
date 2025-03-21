@@ -45,10 +45,6 @@ export const nav: NavItem[] = [
         label: 'Variants',
         href: '/features/variants',
       },
-      {
-        label: 'Composition',
-        href: '/features/composition',
-      },
     ],
   },
   {
@@ -58,6 +54,10 @@ export const nav: NavItem[] = [
       {
         label: 'How it works',
         href: '/guides/how-it-works',
+      },
+      {
+        label: 'Composition',
+        href: '/guides/composition',
       },
       {
         label: 'Migration',
