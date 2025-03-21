@@ -1,0 +1,248 @@
+# Variants
+
+<Subtitle>Learn how to create variants for your components using Pigment CSS.</Subtitle>
+<Meta
+  name="description"
+  content="Learn how to create variants for your components using Pigment CSS."
+/>
+
+## Variants
+
+Inspired by Stitches, Pigment CSS has first class support for variants. You can create variants for your components by using the `variants` key in the JS object syntax.
+
+> [!IMPORTANT]
+> The `variants` feature is available only when authoring styles in the JS object syntax.
+
+Lets look at an example to understand how to create variants for a component.
+
+```tsx title="App.js"
+const StyledHeading = styled('h1')({
+  fontFamily: 'var(--font-family-sans)',
+  variants: {
+    level: {
+      one: {
+        fontSize: '2rem',
+      },
+      two: {
+        fontSize: '1.5rem',
+      },
+      three: {
+        fontSize: '1rem',
+      },
+    },
+  },
+});
+
+const TAGS {
+  one: 'h1',
+  two: 'h2',
+  three: 'h3',
+};
+
+function Heading({
+  level,
+  children,
+}: {
+  level: 'one' | 'two' | 'three';
+  children: React.ReactNode;
+}) {
+  const Tag = TAGS[level];
+  return <StyledHeading as={Tag} level={level}>{children}</StyledHeading>;
+}
+```
+
+The above example will generate the following css -
+
+```css
+@layer pigment.base {
+  .heading {
+    font-family: var(--font-family-sans);
+  }
+}
+
+@layer pigment.variants {
+  .heading-level-one {
+    font-size: 2rem;
+  }
+
+  .heading-level-two {
+    font-size: 1.5rem;
+  }
+
+  .heading-level-three {
+    font-size: 1rem;
+  }
+}
+```
+
+and will conditionally apply the appropriate css classes based on the `level` prop at runtime, ie, when `level` is `three`, the rendered `h3` element will have its class set as `heading heading-level-three`.
+
+> [!NOTE]
+> Both the base styles and the variant styles are wrapped in a `@layer pigment.base` and `@layer pigment.variants` respectively. Learn more about the layer's precedence in the [composition](/guides/composition#layers) page.
+
+The same logic applies when using `css()` function, except in that case, you pass the variant values as an object like so -
+
+```tsx title="App.js"
+import { css } from '@pigment-css/react-new';
+
+const styles = css({
+  fontFamily: 'var(--font-family-sans)',
+  variants: {
+    level: {
+      one: {
+        fontSize: '2rem',
+      },
+      two: {
+        fontSize: '1.5rem',
+      },
+      three: {
+        fontSize: '1rem',
+      },
+    },
+  },
+});
+const baseClass = styles().className; // heading
+const headingThreeClass = styles({ level: 'three' }).className; // heading heading-level-three
+```
+
+## Compound Variants
+
+You can combine multiple variants together to apply styles when multiple variants' values match a certain condition by using the `compoundVariants` key in the JS object syntax.
+
+```tsx title="App.js"
+const StyledHeading = styled('h1')({
+  fontFamily: 'var(--font-family-sans)',
+  variants: {
+    level: {
+      one: {
+        fontSize: '2rem',
+      },
+      two: {
+        fontSize: '1.5rem',
+      },
+      three: {
+        fontSize: '1rem',
+      },
+    },
+    color: {
+      error: {
+        color: 'red',
+      },
+      success: {
+        color: 'green',
+      },
+    },
+  },
+  compoundVariants: [
+    {
+      level: 'three',
+      color: 'error',
+      css: {
+        fontSize: '1.5rem',
+      },
+    },
+  ],
+});
+```
+
+The above example will generate the following css -
+
+```css
+@layer pigment.base {
+  .heading {
+    font-family: var(--font-family-sans);
+  }
+}
+
+@layer pigment.variants {
+  .heading-level-one {
+    font-size: 2rem;
+  }
+
+  .heading-level-two {
+    font-size: 1.5rem;
+  }
+
+  .heading-level-three {
+    font-size: 1rem;
+  }
+
+  .heading-color-error {
+    color: red;
+  }
+
+  .heading-color-success {
+    color: green;
+  }
+}
+
+@layer pigment.compoundvariants {
+  .heading-cv-1 {
+    font-size: 1.5rem;
+  }
+}
+```
+
+Based on what props you pass to the component, the appropriate css classes will be applied.
+
+```tsx title="App.js"
+// classes: heading heading-level-three heading-color-success
+<Heading level="three" color="success">
+  Hello World
+</Heading>
+
+// classes: heading heading-level-three heading-color-error heading-cv-1
+<Heading level="three" color="error">
+  Hello World
+</Heading>
+```
+
+## Default Variants
+
+You can set the default variants for a component by using the `defaultVariants` key in the JS object syntax.
+
+```tsx title="App.js"
+const StyledHeading = styled('h1')({
+  fontFamily: 'var(--font-family-sans)',
+  variants: {
+    level: {
+      one: {
+        fontSize: '2rem',
+      },
+      two: {
+        fontSize: '1.5rem',
+      },
+      three: {
+        fontSize: '1rem',
+      },
+    },
+    color: {
+      default: {
+        color: 'blue',
+      },
+      error: {
+        color: 'red',
+      },
+      success: {
+        color: 'green',
+      },
+    },
+  },
+  defaultVariants: {
+    level: 'three',
+    color: 'default',
+  },
+});
+```
+
+For the above example, when rendering the `Heading` component without any props, the default variants will be applied.
+
+```tsx title="App.js"
+// classes: heading heading-level-three heading-color-default
+<Heading>Title</Heading>
+
+// or
+
+// classes: heading heading-level-two heading-color-default
+<Heading level="two">Title</Heading>
+```
