@@ -389,5 +389,14 @@ export async function readMarkdown(baseDir: string, filePath: string) {
     await file?.close();
   }
 
-  return renderMdx(mdxSource);
+  const MdxContent = await renderMdx(mdxSource);
+  const githubFilePath = mdxFilePath.replace(
+    process.env.CONTENT_DIR.split(path.delimiter).join('/'),
+    `${process.env.GITHUB}/edit/master/docs/src/content`,
+  );
+
+  return {
+    MdxContent,
+    githubFilePath,
+  };
 }

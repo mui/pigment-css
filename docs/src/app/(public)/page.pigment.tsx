@@ -42,6 +42,10 @@ export const linkStyle = css(
   padding: ${spacing(theme, 1)};
   gap: ${spacing(theme, 1)};
   margin: ${spacing(theme, -1)};
+
+  [dir="rtl"] & .arrow-icon {
+    transform: rotate(180deg);
+  }
 `,
 );
 
@@ -69,7 +73,7 @@ export default function HomePage() {
         <Heading>{process.env.APP_NAME}</Heading>
         <Caption>{description}</Caption>
         <Link className={`${linkStyle}`} href={nav[0].links[0].href}>
-          Documentation <ArrowRightIcon />
+          Documentation <ArrowRightIcon className="arrow-icon" />
         </Link>
       </Content>
     </Root>

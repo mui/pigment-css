@@ -30,6 +30,9 @@ export const Root = styled.nav(({ theme }) => ({
   [theme.breakpoints.lt('quickNav')]: {
     float: 'none',
   },
+  '[dir="rtl"] &': {
+    float: 'left',
+  },
 }));
 
 export const Inner = styled.div`
@@ -39,6 +42,11 @@ export const Inner = styled.div`
   padding-top: 0.75rem;
   padding-bottom: 2.5rem;
   width: calc(${'$sidebarWidth'} - ${'$quickNavMarginX'} * 2);
+
+  [dir='rtl'] & {
+    left: auto;
+    right: ${'$quickNavMarginX'};
+  }
 `;
 
 export const Title = styled.header`
@@ -53,7 +61,7 @@ export const List = styled.ul`
   align-items: start;
 
   & & {
-    padding-left: 0.75rem;
+    padding-inline-start: 0.75rem;
   }
 `;
 

@@ -41,11 +41,15 @@ export const Heading = styled('h1')(({ theme }) => ({
         },
       },
       three: {
+        ...applyText(theme, 'lg'),
         marginTop: spacing(theme, 8),
         marginBottom: spacing(theme, 1.5),
         scrollMarginTop: spacing(theme, 6),
-        ...applyText(theme, 'lg'),
         fontWeight: t('$font.weight.medium'),
+        textDecoration: 'underline',
+        textUnderlineOffset: '0.3rem',
+        textDecorationThickness: '1px',
+        textDecorationColor: t('$color.line.highlight'),
       },
       other: {
         marginTop: spacing(theme, 8),
