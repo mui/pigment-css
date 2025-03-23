@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@types/babel__core": "^7.20.5",
-    "next": "^15.1.4",
+    "next": "^15.2.3",
     "vite": "^6.0.7",
     "webpack": "^5.97.1"
   },
