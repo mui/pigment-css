@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { notFound } from 'next/navigation';
 
 import { useMDXComponents } from 'docs/mdx-components';
@@ -12,13 +13,13 @@ export default async function ContentPage({ basePath, slug }: { basePath: string
   }
   const { MdxContent, githubFilePath } = result;
   return (
-    <div>
+    <React.Fragment>
       <MdxContent components={components} />
       <div style={{ display: 'flex', justifyContent: 'flex-end', fontSize: '0.8rem' }}>
         <Link href={githubFilePath} target="_blank" rel="noopener noreferrer">
           Edit on GitHub
         </Link>
       </div>
-    </div>
+    </React.Fragment>
   );
 }

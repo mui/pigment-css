@@ -9,7 +9,11 @@ export default async function GettingStarted({
   params: Promise<{ slug: string; contentDir: string }>;
 }) {
   const { contentDir, slug } = await params;
-  return <ContentPage basePath={contentDir} slug={slug} />;
+  return (
+    <div id="main-content">
+      <ContentPage basePath={contentDir} slug={slug} />
+    </div>
+  );
 }
 
 export function generateStaticParams() {
