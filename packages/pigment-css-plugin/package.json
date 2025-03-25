@@ -1,0 +1,134 @@
+{
+  "name": "@pigment-css/plugin",
+  "version": "0.0.30",
+  "author": "MUI Team",
+  "description": "Bundler plugins for Pigment CSS.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mui/pigment-css.git",
+    "directory": "packages/pigment-css-plugin"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mui/pigment-css/issues"
+  },
+  "homepage": "https://github.com/mui/pigment-css/tree/master/README.md",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/mui-org"
+  },
+  "scripts": {
+    "clean": "rimraf build types",
+    "watch": "tsup --watch --tsconfig tsconfig.build.json",
+    "copy-license": "node ../../scripts/pigment-license.mjs",
+    "build": "tsup --tsconfig tsconfig.build.json",
+    "typescript": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-typescript": "^7.26.0",
+    "@pigment-css/theme": "workspace:*",
+    "@pigment-css/utils": "workspace:*",
+    "@rollup/pluginutils": "^5.1.4",
+    "@wyw-in-js/shared": "^0.5.5",
+    "@wyw-in-js/transform": "^0.5.5",
+    "babel-plugin-define-var": "^0.1.0",
+    "unplugin": "2.2.0"
+  },
+  "devDependencies": {
+    "@types/babel__core": "^7.20.5",
+    "next": "^15.2.3",
+    "vite": "^6.0.7",
+    "webpack": "^5.97.1"
+  },
+  "peerDependencies": {
+    "next": "*",
+    "vite": "*",
+    "webpack": "^5"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    },
+    "vite": {
+      "optional": true
+    },
+    "webpack": {
+      "optional": true
+    }
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "nextjs",
+    "nextjs-artifacts",
+    "nextjs-css-loader",
+    "src",
+    "vite",
+    "webpack",
+    "LICENSE",
+    "package.json"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    "./vite": {
+      "require": {
+        "types": "./vite/index.d.ts",
+        "default": "./vite/index.js"
+      },
+      "import": {
+        "types": "./vite/index.d.mts",
+        "default": "./vite/index.mjs"
+      }
+    },
+    "./webpack": {
+      "require": {
+        "types": "./webpack/index.d.ts",
+        "default": "./webpack/index.js"
+      },
+      "import": {
+        "types": "./webpack/index.d.mts",
+        "default": "./webpack/index.mjs"
+      }
+    },
+    "./nextjs": {
+      "require": {
+        "types": "./nextjs/index.d.ts",
+        "default": "./nextjs/index.js"
+      },
+      "import": {
+        "types": "./nextjs/index.d.mts",
+        "default": "./nextjs/index.mjs"
+      }
+    },
+    "./nextjs-css-loader": {
+      "require": {
+        "types": "./nextjs-css-loader/index.d.ts",
+        "default": "./nextjs-css-loader/index.js"
+      },
+      "import": {
+        "types": "./nextjs-css-loader/index.d.mts",
+        "default": "./nextjs-css-loader/index.mjs"
+      }
+    }
+  },
+  "nx": {
+    "targets": {
+      "build": {
+        "cache": true,
+        "outputs": [
+          "{projectRoot}/nextjs",
+          "{projectRoot}/nextjs-css-loader",
+          "{projectRoot}/rspack",
+          "{projectRoot}/vite",
+          "{projectRoot}/webpack"
+        ]
+      }
+    }
+  }
+}

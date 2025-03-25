@@ -1,0 +1,27 @@
+import { Metadata } from 'next';
+import { Link } from 'docs/components/Link';
+import { Root, Content, Heading, linkStyle, Caption } from './(public)/page.pigment';
+import Layout from './(public)/layout.pigment';
+
+export default function Notfound() {
+  return (
+    <Layout>
+      <Root>
+        <Content>
+          <Heading>Not found</Heading>
+          <Caption>
+            This page couldn&apos;t be found. Please return to the docs or create a corresponding
+            issue on <Link href={process.env.GITHUB}>GitHub</Link>.
+          </Caption>
+          <Link className={`${linkStyle}`} href="/">
+            Back to home
+          </Link>
+        </Content>
+      </Root>
+    </Layout>
+  );
+}
+
+export const metadata: Metadata = {
+  title: 'Page not found',
+};

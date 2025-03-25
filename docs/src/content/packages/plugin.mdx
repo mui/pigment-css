@@ -1,0 +1,145 @@
+# @pigment-css/plugin
+
+<Subtitle>Package responsible for integrating Pigment CSS with your bundler.</Subtitle>
+
+This is the package responsible for integrating Pigment CSS with your bundler. It hooks into the bundler's build process and transpiles your source code and replaces the `css`, `styled` or other Pigment CSS functions with a runtime equivalent while also extracting the CSS written in the source code to external stylesheets.
+
+## Options
+
+Make sure that you've already configured your bundler to use Pigment CSS. Read the [integrations](/overview/integrations) overview first to configure your bundler.
+
+To customize the plugin behaviour, you can pass in following options in the `pigmentConfig` object configured during the integration.
+
+### include
+
+Type: `String | RegExp | Array[...String|RegExp]`
+
+A valid [picomatch](https://github.com/micromatch/picomatch#globbing-features) pattern, or array of patterns. If `pigmentConfig.include` is omitted or has zero length, filter will return true by default. Otherwise, an ID must match one or more of the picomatch patterns, and must not match any of the `pigmentConfig.exclude` patterns.
+
+This is used to specify the files that should be transformed by the plugin. If a file path does not match the `include` pattern, it won't go through Pigment CSS's tranformation process. This is useful when you are sure that a file in a certain directory or an extension imports the `@pigment-css/react-new` package, ie, you want to use Pigment CSS in an existing project but don't want to transform all the files. By default, all files that go through your bundler's build process are transformed (except anything in the `node_modules` directory).
+
+In the simplest case, you can pass a regex like - `include: /\.tsx?$/` to transform all the Typescript files if its a Typescript project.
+
+### exclude
+
+Type: `String | RegExp | Array[...String|RegExp]`
+
+This is used to specify the files that should not be transformed by the plugin. This is same as the `include` option but it is used to exclude files from being transformed. If you are sure that files in a certain directory or files with a particular extension don't import the `@pigment-css/react-new` package, you can exclude it to improve the build performance.
+
+### displayName
+
+Type: `Boolean`
+
+Default: `false`
+
+Prepends the generated class names with the appropriate variable name (when available) to make the class names more readable. Ideally, this should only be used in development mode. For example, for the example shown below -
+
+```tsx
+const redClass = css({ color: 'red' });
+```
+
+The generated class name will be `redClass_pp5a5eu` when `displayName` is `true`. This makes it easier to identify the origin of the styles.
+
+### sourceMap
+
+Type: `Boolean`
+
+Default: `false`
+
+Enables source maps for the generated CSS so that the generated class names are mapped to the original JS/TS source code. This is useful for debugging purposes, especially during development.
+
+### debug
+
+Type: `false | { dir: string, print: boolean } | undefined`
+
+Default: `false`
+
+Enables debug mode for the plugin. This will log the generated CSS to the console. This is useful for debugging purposes, especially during development.
+Pass an object with the following properties to generate debug logs. This will help us diagnose issues with the plugin when you report them. It only includes the file paths and not the contents of the files. So it won't inlcude any sensitive information.
+
+- `dir`: The directory to save the debug logs.
+- `print`: Whether to print the debug logs to the console.
+
+### asyncResolve
+
+Type: `(what: string, importer: string) => Promise<string | null>`
+
+Default: `null`
+
+A custom async resolver for the plugin. This is useful if the plugin is not able to resolve a module specific to your application. This is also used internally by the plugin to resolve, for example, the `paths` set in the `tsconfig.json` file in a Typescript Next.js project.
+
+`what` is the module that is being resolved and `importer` is the file that is importing `what`, example:
+
+```ts title="src/components/Link.tsx"
+import Link from 'next/link';
+```
+
+In the above case, `what` is `next/link` and `importer` is `src/components/Link.tsx`.
+In most of the cases, you won't need to provide this option as the plugin will be able to resolve the imports by itself using the bundler's resolver. But if you are facing an error like `Cannot find module 'next/link'` or similar, you can provide a custom resolver using this option.
+The return value here should be a valid module path that could just mock the exports of the original module, ie,
+
+```js title="dummy-module.js"
+module.exports = {
+  default: () => null,
+};
+```
+
+```ts title="bundler.config.ts"
+const pigmentConfig: PigmentCSSConfig = {
+  asyncResolve: (what, importer) => {
+    if (what === 'next/link') {
+      return require.resolve('./dummy-module');
+    }
+    return null;
+  },
+};
+```
+
+### features
+
+Type: `PigmentFeatures`
+
+Default: `{}`
+
+Feature flags that user can choose to enable/disable to control the output (JS/CSS). Right now, there is only one flag available inthe `PigmentFeatures` object -
+
+1. `useLayer`: Default is `true`. If set to `false`, the output css will not be wrapped in `@layer pigment.base`. Note that the `layer` functionality is essential if you are using the [Variants API](/overview/variants). But if you are not, you can set it to `false`.
+
+### theme
+
+Type: `Theme | ThemeOptions<Theme>`
+
+Default: `undefined`
+
+The theme object that will be passed to the `css` or `styled` functions. Read the [theming](/features/theming) feature to learn more about how to use themes in Pigment CSS.
+
+### runtimeReplacementPath
+
+Type: `(tag: string, source: string) => string | null`
+
+Default: `undefined`
+
+A function that can be used to customize the runtime replacement path. This can be useful if you want to use a custom runtime implementation.
+
+`tag` is the function that is being called and `source` is the import path of the function. For example, in the below code -
+
+```ts
+import { css } from '@pigment-css/core';
+
+const cls = css({ color: 'red' });
+```
+
+`tag`'s value will be `css` and `source` will be `@pigment-css/core`.
+
+To replace the import with a custom runtime implementation, you can return the new path from the function.
+
+```ts title="bundler.config.ts"
+const pigmentConfig: PigmentCSSConfig = {
+  runtimeReplacementPath: (tag, source) => {
+    if (source === '@pigment-css/core') {
+      return `@my-lib/runtime`;
+    }
+    return null;
+  },
+};
+```

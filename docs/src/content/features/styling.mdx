@@ -1,0 +1,465 @@
+# Styling
+
+<Subtitle>Learn how to style your application using Pigment CSS.</Subtitle>
+<Meta name="description" content="Learn how to style your application using Pigment CSS." />
+
+> [!IMPORTANT]
+> Pigment CSS is currently in alpha stage and the APIs are subject to change. Each change will be recorded in the [releases](/overview/releases) page.
+> Please report any issues you face on our [GitHub](https://github.com/mui/pigment-css).
+
+After you have [configured your bundler](/overview/integrations), you can start styling your application using Pigment CSS.
+
+## css
+
+This is the most basic API in Pigment CSS that allows you to style your application using CSS in a framework agnostic way.
+
+You can use either the tagged-template syntax of the JS object syntax to style your application. You can also mix and match the two as per the needs.
+
+### Tagged-template syntax
+
+```tsx title="App.js"
+import { css } from '@pigment-css/react-new';
+
+const visuallyHidden = css`
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden';
+  padding: 0;
+  position: absolute;
+  whiteSpace: nowrap;
+  width: 1px;
+`;
+
+document.getElemenyById('hidden').className = visuallyHidden().className;
+// or
+document.getElemenyById('app').className = `${visuallyHidden}`;
+```
+
+### JS object syntax
+
+```tsx title="App.js"
+import { css } from '@pigment-css/react-new';
+
+const visuallyHidden = css({
+  border: 0,
+  clip: 'rect(0 0 0 0)',
+  height: '1px',
+  margin: -1,
+  overflow: 'hidden',
+  padding: 0,
+  position: 'absolute',
+  whiteSpace: 'nowrap',
+  width: '1px',
+});
+
+document.getElemenyById('app').className = visuallyHidden().className;
+// or
+document.getElemenyById('app').className = `${visuallyHidden}`;
+```
+
+The return value of the `css` function is another function that returns an object with a `className` property. This `className` can be applied to any HTML element.
+
+When writing styles, both the syntaxes are equivalent. There is no performance difference between the two because after code transformation, both will be converted to the same runtime code.
+
+### Generated class name
+
+The value of `className` above is determined by two factors:
+
+- The relative path of the file from the root of the project.
+- The order of the function call within the same file, ie, if there are two `css()` calls in the same file and you swap the calls, the value of `className`s will change.
+
+If any of the two change, the value of `className` will change even if the styles are the same. This makes sure that the class name is unique but consistent across different builds of the application.
+
+If you want the css to be wrapped in a static class name, you can pass the `className` option to the `css` function like so -
+
+```tsx title="App.js"
+import { css } from '@pigment-css/react-new';
+
+const visuallyHidden = css({
+  className: 'visually-hidden',
+})`
+  color: red;
+`;
+
+// or
+
+const visuallyHidden = css({
+  className: 'visually-hidden',
+})({
+  color: 'red',
+});
+```
+
+With this API, the value of `className` will be `visually-hidden` instead of being a generated string. This may not be required for most use cases but can be useful when authoring a UI library with Pigment CSS.
+
+> [!NOTE]
+> The value of `className` is used at build time. If provided, it has to be a static string and cannot even be a locally declared string variable.
+
+### Writing CSS
+
+Complex selectors, media queries, etc are all supported when writing the CSS -
+
+```tsx title="App.js (Tagged-template)"
+import { css } from '@pigment-css/react-new';
+
+const baseBgColor = '#f5f5f5';
+const hoverBgColor = '#e0e0e0';
+
+const styles = css`
+  /* Base styles */
+  padding: 1rem;
+  background-color: ${baseBgColor};
+  border-radius: 4px;
+
+  /* Nested selectors */
+  &:hover {
+    background-color: ${hoverBgColor};
+  }
+
+  & > * {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Pseudo-classes and elements */
+  &::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, #ff0000, #00ff00);
+  }
+
+  /* Complex selectors */
+  &[data-active='true'] {
+    border: 2px solid blue;
+  }
+
+  .title & {
+    font-weight: bold;
+  }
+
+  /* Media queries */
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+
+    & > * {
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #333;
+    color: white;
+
+    &:hover {
+      background-color: #444;
+    }
+  }
+`;
+```
+
+```tsx title="App.js (JS object)"
+import { css } from '@pigment-css/react-new';
+
+const baseBgColor = '#f5f5f5';
+const hoverBgColor = '#e0e0e0';
+
+const styles = css({
+  padding: '1rem',
+  backgroundColor: baseBgColor,
+  borderRadius: '4px',
+
+  // Nested selectors
+  '&:hover': {
+    backgroundColor: hoverBgColor,
+  },
+
+  '& > *': {
+    marginBottom: '0.5rem',
+  },
+
+  // Pseudo-classes and elements
+  '&::before': {
+    content: '""',
+    display: 'block',
+    width: '100%',
+    height: '2px',
+    background: 'linear-gradient(to right, #ff0000, #00ff00)',
+  },
+
+  // Complex selectors
+  '&[data-active="true"]': {
+    border: '2px solid blue',
+  },
+
+  '.title &': {
+    fontWeight: 'bold',
+  },
+
+  // Media queries
+  '@media (max-width: 768px)': {
+    padding: '0.5rem',
+
+    '& > *': {
+      marginBottom: '0.25rem',
+    },
+  },
+
+  '@media (prefers-color-scheme: dark)': {
+    backgroundColor: '#333',
+    color: 'white',
+
+    '&:hover': {
+      backgroundColor: '#444',
+    },
+  },
+});
+```
+
+You can interpolate any locally declared or imported variables in the styles.
+
+One extra feature that is available in the JS object syntax is the ability to declare css variables using a shorthand syntax where any key in the object prefixed with `$` will be converted to a css variable which can then be referenced in other css properties using the same token like so -
+
+```tsx title="App.js"
+import { styled } from '@pigment-css/react-new';
+
+export const Root = styled.nav(({ theme }) => ({
+  $quickNavMarginX: '2rem',
+  $quickNavItemHeight: '2rem',
+  $quickNavItemPaddingY: 'calc($quickNavItemHeight / 2 - $quickNavItemLineHeight / 2)',
+  $top: '-1px',
+  $marginTop: '5.75rem',
+  top: '$top',
+  marginTop: '$marginTop',
+}));
+```
+
+For the above example, the generated css will be -
+
+```css
+.root {
+  --quickNavMarginX: 2rem;
+  --quickNavItemHeight: 2rem;
+  --quickNavItemPaddingY: calc(var(--quickNavItemHeight) / 2 - var(--quickNavItemLineHeight) / 2);
+  --top: -1px;
+  --marginTop: 5.75rem;
+  top: var(--top);
+  margin-top: var(--marginTop);
+}
+```
+
+### Special considerations
+
+There are a few special considerations when writing styles with the JS object syntax -
+
+1. When writing `content` css property in the JS object syntax, you need to use `content: '""'` instead of `content: ''` because after transformation, `content` won't be part of the generated css because of the way the string gets transformed.
+2. If you want to have multiple values for the same css property, you can do so by using an array for the values like so -
+
+```tsx title="App.js"
+const styles = css({
+  background: ['red', 'var(--color-primary)'],
+});
+```
+
+which will be transformed to -
+
+```css
+.root {
+  background: red;
+  background: var(--color-primary);
+}
+```
+
+## keyframes
+
+The `keyframes` function is a utility function that can be used to create keyframes for animations. First, you need to create a keyframes object and then use it in the `css` function. The return value of the `keyframes` function is a string which represents the name of the keyframe.
+
+```tsx title="App.js"
+import { keyframes, css } from '@pigment-css/react-new';
+
+const gradientAnimation = keyframes({
+  '0%': {
+    backgroundPosition: '0% 50%',
+  },
+  '50%': {
+    backgroundPosition: '100% 50%',
+  },
+  '100%': {
+    backgroundPosition: '0% 50%',
+  },
+});
+
+const bgClass = css`
+  @media (prefers-reduced-motion: no-preference) {
+    animation: ${gradientAnimation} 15s ease infinite;
+  }
+`;
+// or
+const bgClass = css({
+  '@media (prefers-reduced-motion: no-preference)': {
+    animation: `${gradientAnimation} 15s ease infinite`,
+  },
+});
+```
+
+`keyframes` also supports the tagged-template syntax.
+
+Similar to `css`, if you want to name the keyframe to some specific value, you can pass the `className` option to the `keyframes` function like so -
+
+```tsx title="App.js"
+import { keyframes } from '@pigment-css/react-new';
+
+const gradientAnimation = keyframes({
+  className: 'gradient-animation',
+})`
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+`;
+```
+
+The value of `gradientAnimation` will be `gradient-animation` instead of a generated string.
+
+## styled
+
+`styled` API is a function that allows you to directly create a React component with the styles pre-applied to it without having to apply the classes manually. Except for the API signature, it is in all ways similar to the `css` function in terms of how you write the css.
+
+### Tagged-template syntax
+
+```tsx title="App.jsx"
+import { styled } from '@pigment-css/react-new';
+
+const VisuallyHidden = styled.div`
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden';
+  padding: 0;
+  position: absolute;
+  whiteSpace: nowrap;
+  width: 1px;
+`;
+
+function App() {
+  return (
+    <VisuallyHidden>
+      <p>Hello, world!</p>
+    </VisuallyHidden>
+  );
+}
+```
+
+### JS object syntax
+
+```tsx title="App.jsx"
+import { styled } from '@pigment-css/react-new';
+
+const VisuallyHidden = styled.div({
+  border: 0,
+  clip: 'rect(0 0 0 0)',
+  height: '1px',
+  margin: -1,
+  overflow: 'hidden',
+  padding: 0,
+  position: 'absolute',
+  whiteSpace: 'nowrap',
+  width: '1px',
+});
+
+function App() {
+  return (
+    <VisuallyHidden>
+      <p>Hello, world!</p>
+    </VisuallyHidden>
+  );
+}
+```
+
+Besides the `.` syntax to specify the element type, you can also pass the element type as the first argument to the `styled` function. It can be a string representing the html element or a React component or another styled component.
+
+```tsx title="App.jsx"
+import { styled } from '@pigment-css/react-new';
+
+const VisuallyHidden = styled('div')`
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden';
+  padding: 0;
+  position: absolute;
+  whiteSpace: nowrap;
+  width: 1px;
+`;
+
+function App() {
+  return (
+    <VisuallyHidden>
+      <p>Hello, world!</p>
+    </VisuallyHidden>
+  );
+}
+```
+
+### `as` prop
+
+You can also pass the `as` prop to the `styled` function to change the element type of the component.
+
+```tsx title="App.jsx"
+import { styled } from '@pigment-css/react-new';
+
+const VisuallyHidden = styled.div({
+  border: 0,
+  clip: 'rect(0 0 0 0)',
+  height: '1px',
+  margin: -1,
+  overflow: 'hidden',
+  padding: 0,
+  position: 'absolute',
+  whiteSpace: 'nowrap',
+  width: '1px',
+});
+
+function App() {
+  return <VisuallyHidden as="span">Hello, world!</VisuallyHidden>;
+}
+```
+
+When using it in Typescript, it'll automatically infer the rest of the props from the `as` prop.
+
+### Generated class name
+
+The generated class name is the same as the one generated by the `css` function. You can pass a second argument to the `styled` function to change the generated class name to something static.
+
+```tsx title="App.jsx"
+import { styled } from '@pigment-css/react-new';
+
+const VisuallyHidden = styled('div', {
+  className: 'visually-hidden',
+})`
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden';
+  padding: 0;
+`;
+```
+
+### Writing CSS
+
+Writing CSS with the `styled` API is the same as writing styles with the [`css`](#writing-css) function.
+
+> [!NOTE]
+> More APIs like `globalCss`, `sx` prop, etc are to be added in subsequent releases.
+
+Head over to the [Theming](/features/theming) documentation to learn more about how to apply themes with the above APIs.

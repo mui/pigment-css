@@ -1,0 +1,161 @@
+# Integrations
+
+<Subtitle>Learn how to configure your bundler to use Pigment CSS.</Subtitle>
+<Meta name="description" content="Learn how to configure your bundler to use Pigment CSS." />
+
+## Bundler integrations
+
+Pigment CSS currently provides official integrations for [Next.js](https://nextjs.org), [Vite](https://vite.dev), and [Webpack](https://webpack.js.org/). More integrations will be added based on the community interest. If you are interested in a specific bundler, please let us know by checking or opening an issue on [GitHub](https://github.com/mui/pigment-css/issues?q=sort%3Aupdated-desc+is%3Aopen+label%3A%22feature%3A+new+bundler%22).
+
+{/* If you are interested in contributing an integration, please check out the [contributing guide](https://github.com/mui/pigment-css/blob/master/CONTRIBUTING.md). */}
+
+To configure each of the bundlers, make sure to install the bundler package and then proceed to the specific section below.
+
+```bash title="Terminal"
+npm i --save-dev @pigment-css/plugin
+```
+
+All bundler specific configurations follow the same pattern.
+
+1. First import the `default` export from the bundler specific package path and name it as per your bundler conventions -
+
+- Next.js - `@pigment-css/plugin/nextjs`
+- Vite - `@pigment-css/plugin/vite`
+- Webpack - `@pigment-css/plugin/webpack`
+
+and then pass in the Pigment CSS configuration options (if any).
+
+2. After this, import the `@pigment-css/react-new/styles.css` file in the main entry point file of the app. Make sure that this file is only imported once in the app, otherwise you will end up with duplicate styles in the final bundle.
+   This import will be responsible for adding the Pigment CSS's layer order as well as injecting the css tokens configured in the [theming](/features/theming) section.
+
+### Next.js
+
+```ts title="next.config.mjs"
+import withPigment from '@pigment-css/plugin/nextjs';
+
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
+  // Your configuration options here
+};
+
+/**
+ * @type {import('@pigment-css/plugin/nextjs').PigmentCSSConfig}
+ */
+const pigmentConfig = {
+  // Pigment CSS configuration options here
+};
+
+export default withPigment(nextConfig, pigmentConfig);
+```
+
+When writing the Next.js config in TS -
+
+```ts title="next.config.ts"
+import type { NextConfig } from 'next';
+import withPigment, { type PigmentCSSConfig } from '@pigment-css/plugin/nextjs';
+
+const nextConfig: NextConfig = {
+  // Your configuration options here
+};
+
+const pigmentConfig: PigmentCSSConfig = {
+  // Pigment CSS configuration options here
+};
+
+export default withPigment(nextConfig, pigmentConfig);
+```
+
+#### App Router
+
+In the top-level `layout.tsx` file, add an import to the `@pigment-css/react-new/styles.css` file at the top.
+
+```tsx title="layout.tsx"
+import '@pigment-css/react-new/styles.css';
+
+// ... rest of the code
+```
+
+#### Pages Router
+
+In your `_app.tsx` file, add an import to the `@pigment-css/react-new/styles.css` file at the top.
+
+```tsx title="_app.tsx"
+import '@pigment-css/react-new/styles.css';
+
+// ... rest of the code
+```
+
+One more point to note in the Pages Router is that the `_document.tsx` cannot have imports to css files in it. So you can't use `styled` or other Pigment CSS functions in it since [behind the scenes](/guides/how-it-works), it adds an import to a css file.
+
+> [!IMPORTANT]
+> Pigment CSS does not support Turbopack (yet). We are following the development closely and the support will be added once it's stable.
+
+### Vite
+
+```ts title="vite.config.ts"
+import { defineConfig } from 'vite';
+// ... rest of the imports
+import pigment from '@pigment-css/plugin/vite';
+
+const pigmentConfig: PigmentCSSConfig = {
+  // Pigment CSS configuration options here
+};
+
+export default defaultConfig({
+  plugins: [
+    // ... other plugins
+    pigment(pigmentConfig),
+  ],
+});
+```
+
+In the entry point file of the app, add an import to the `@pigment-css/react-new/styles.css` file at the top.
+
+```tsx title="main.tsx"
+import '@pigment-css/react-new/styles.css';
+
+// ... rest of the code
+```
+
+### Webpack
+
+```ts title="webpack.config.mjs"
+import PigmentCSSPlugin from '@pigment-css/plugin/webpack';
+
+const webpackConfig = {
+  // Your configuration options here
+};
+
+/**
+ * @type {import('@pigment-css/plugin/webpack').PigmentCSSConfig}
+ */
+const pigmentConfig: PigmentCSSConfig = {
+  // Pigment CSS configuration options here
+};
+
+export default {
+  // ... rest of the webpack config
+  plugins: [
+    // ... rest of the plugins
+    PigmentCSSPlugin(pigmentConfig),
+  ],
+};
+```
+
+In the entry point file of the app, add an import to the `@pigment-css/react-new/styles.css` file at the top.
+
+```tsx title="main.tsx"
+import '@pigment-css/react-new/styles.css';
+
+// ... rest of the code
+```
+
+> [!TIP]
+>
+> `pigmentConfig` is an optional argument in all the examples above. If not provided, the default configuration will be used.
+
+Head over to the [plugin](/packages/plugin) documentation to learn about the individual options available in the Pigment CSS configuration.
+
+Once the bundler is configured, go to the [Styling](/features/styling) section to learn how to author css with Pigment CSS.

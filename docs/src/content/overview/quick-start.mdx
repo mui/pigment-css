@@ -1,0 +1,68 @@
+# Quick Start
+
+<Subtitle>A quick quide to getting started with Pigment CSS.</Subtitle>
+<Meta name="description" content="A quick quide to getting started with Pigment CSS." />
+
+## Getting Started
+
+Use the following commands to quickly start a new project with Pigment CSS already configured -
+
+### Next.js
+
+#### App Router
+
+```bash title="Terminal"
+curl https://codeload.github.com/mui/pigment-css/tar.gz/master \
+| tar -xz --strip=2 pigment-css-master/v1-examples/pigment-css-nextjs-ts
+cd pigment-css-nextjs-ts
+npm run dev
+```
+
+#### Pages Router
+
+```bash title="Terminal"
+curl https://codeload.github.com/mui/pigment-css/tar.gz/master \
+| tar -xz --strip=2 pigment-css-master/v1-examples/pigment-css-nextjs-pages-router-ts
+cd pigment-css-nextjs-pages-router-ts
+npm run dev
+```
+
+### Vite
+
+```bash title="Terminal"
+curl https://codeload.github.com/mui/pigment-css/tar.gz/master \
+| tar -xz --strip=2  pigment-css-master/v1-examples/pigment-css-vite-ts
+cd pigment-css-vite-ts
+npm run dev
+```
+
+### Webpack
+
+```bash title="Terminal"
+curl https://codeload.github.com/mui/pigment-css/tar.gz/master \
+| tar -xz --strip=2  pigment-css-master/v1-examples/pigment-css-webpack-ts
+cd pigment-css-webpack-ts
+npm run dev
+```
+
+## Manual Setup
+
+There are two parts to the installation and usage of Pigment CSS in an application -
+
+First one is the runtime package that is going to be used in the application source code.
+
+### Runtime package
+
+```bash title="Terminal"
+npm i --save @pigment-css/react-new
+```
+
+Second one is the bundler package that will be part of the application's bundler config.
+
+### Bundler package
+
+```bash title="Terminal"
+npm i --save-dev @pigment-css/plugin
+```
+
+After the packages are installed, proceed to the bundler [integration](/overview/integrations).

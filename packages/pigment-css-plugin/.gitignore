@@ -1,0 +1,8 @@
+/LICENSE
+/build
+/dist
+/node_modules
+/nextjs-css-loader
+/webpack
+/vite
+/nextjs

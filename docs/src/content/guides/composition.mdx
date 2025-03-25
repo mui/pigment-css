@@ -1,0 +1,298 @@
+# Composition and Precedence
+
+<Subtitle>How Pigment CSS handles css precedence and composition.</Subtitle>
+<Meta name="description" content="How Pigment CSS handles CSS precedence and composition." />
+
+Styles authored with Pigment CSS will be scoped to the component and won't affect globals styles or styles of any other styled components. This is mainly done by using uniquely generated class names that are hard to override through global styles since you don't know the class names beforehand.
+
+In a way, it is similar to CSS Modules except, the styles are written in JS and colocated with the components.
+
+## Precedence
+
+The order of writing the styles determine which styles take precedence (similar to CSS) and not which class name is the last one being applied.
+
+```tsx title="App.jsx"
+import { css } from '@pigment-css/react-new';
+
+const bgRed = css`
+  color: red;
+`;
+
+const bgBlue = css`
+  color: blue;
+`;
+
+// Case 1
+function App() {
+  return (
+    <div className={`${bgRed} ${bgBlue}`}>
+      <p>Hello, world!</p>
+    </div>
+  );
+}
+
+// or Case 2
+function App() {
+  return (
+    <div className={`${bgBlue} ${bgRed}`}>
+      <p>Hello, world!</p>
+    </div>
+  );
+}
+```
+
+In the above example, the color of the text will be `blue` in both the cases because the final generated css will have the styles in the same order -
+
+```css title="Generated CSS"
+.bg-red {
+  color: red;
+}
+
+.bg-blue {
+  color: blue;
+}
+```
+
+The above example can be extended to imported styles or styled components as well.
+
+```tsx title="Button.jsx"
+import { css } from '@pigment-css/react-new';
+
+export const Button = styled.button`
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #0070f3;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #0051cc;
+  }
+
+  &:active {
+    background-color: #003da6;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+`;
+```
+
+```tsx title="App.jsx"
+import { css } from '@pigment-css/react-new';
+import { Button } from './Button';
+
+const bgBlue = css`
+  color: blue;
+`;
+
+function App() {
+  return <Button className={`${bgBlue}`}>Click me</Button>;
+}
+```
+
+In the above example, the color of the text will be `blue` because the styles are generated in the reverse order of the imports.
+
+```css title="Generated CSS"
+.button {
+  color: #fff;
+  cursor: pointer;
+  background-color: #0070f3;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background-color: #0051cc;
+}
+
+.button:active {
+  background-color: #003da6;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  background-color: #ccc;
+}
+
+.bg-blue {
+  color: blue;
+}
+```
+
+### Layers
+
+All the generated styles, either through `css`, `keyframes` or `styled` calls, are all added to a layer named `pigment.base`.
+
+So any css authored outside of Pigment CSS (css or css-modules or Tailwind) will have a higher precedence than the Pigment CSS styles.
+
+So if you are applying reset styles through global css, you may need to wrap some of those styles in a layer named `pigment.globals`. Here are all the Pigment CSS layers in the order of precedence -
+
+- `pigment.globals` - User defined global styles.
+- `pigment.utils` - All the theme tokens are added to this layer.
+- `pigment.base` - Base styles.
+- `pigment.variants` - Variant styles (refer to the [variants](/features/variants) section for more details).
+- `pigment.compoundvariants` - Compound variant styles (refer to the [variants](/features/variants) section for more details).
+
+## Composition
+
+You can compose values of `css()` or `styled()` calls to override the base styles.
+
+### With styled calls
+
+```tsx title="Link.jsx"
+import { styled } from '@pigment-css/react-new';
+
+export const Link = styled.a`
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  color: pink;
+`;
+```
+
+Here, the color of text in the `Link` component will be `pink`.
+
+```tsx title="Heading.jsx"
+import { styled } from '@pigment-css/react-new';
+import { Link } from './Link';
+
+export const Heading = styled.h1`
+  font-weight: 600;
+  font-size: 24px;
+
+  ${Link} {
+    color: black;
+  }
+`;
+```
+
+```tsx title="App.jsx"
+import { Heading } from './Heading';
+
+function App() {
+  return (
+    <Heading>
+      This is a <Link>heading</Link>
+    </Heading>
+  );
+}
+```
+
+Here, the color of text in the `Link` component will be `black` because the `Link` component's color is overridden by the `Heading` component's styles.
+
+```css title="Generated CSS"
+.link {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  color: pink;
+}
+
+.heading {
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.heading .link {
+  color: black;
+}
+```
+
+Existing styled components created using Pigment CSS can be composed via the `styled` function by passing the component as a parameter to the `styled` function.
+
+```tsx title="Button.jsx"
+import { styled } from '@pigment-css/react-new';
+
+const Button = styled.button`
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #0070f3;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #0051cc;
+  }
+
+  &:active {
+    background-color: #003da6;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+`;
+
+const HeroButton = styled(Button)`
+  background-color: #ff4081;
+  font-size: 16px;
+  padding: 12px 24px;
+
+  &:hover {
+    background-color: #ff4081;
+  }
+
+  &:active {
+    background-color: #ff4081;
+  }
+`;
+```
+
+### With css calls
+
+```tsx title="link.js"
+import { css } from '@pigment-css/react-new';
+
+export const linkCls = css`
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  color: pink;
+`;
+```
+
+Here, the text color of the element where `linkCls` will be applied will be `pink`.
+
+```tsx title="Heading.jsx"
+import { styled } from '@pigment-css/react-new';
+import { linkCls } from './link';
+
+export const Heading = styled.h1`
+  font-weight: 600;
+  font-size: 24px;
+
+  .${linkCls} {
+    color: black;
+  }
+`;
+```
+
+```tsx title="App.jsx"
+import { Heading } from './Heading';
+
+function App() {
+  return (
+    <Heading>
+      This is a <span className={`${linkCls}`}>heading</span>
+    </Heading>
+  );
+}
+```
+
+Here, the text color of the element where `linkCls` will be applied will be `black` because the `Heading` component's style override the color of the `linkCls` styles.
+
+> [!NOTE]
+> You'll have to add the class selector to the `linkCls`, ie, `.linkCls` instead of just `Link` in the `styled` usage.

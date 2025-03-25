@@ -1,0 +1,259 @@
+# Theming
+
+<Subtitle>Learn how to apply themes to your application using Pigment CSS.</Subtitle>
+<Meta
+  name="description"
+  content="Learn how to apply themes to your application using Pigment CSS."
+/>
+
+Theming in Pigment CSS revolves around managing CSS tokens in your code and using them to style your application.
+
+## Theme Object
+
+In Pigment CSS, a theme is a JavaScript object that contains a collection of CSS tokens and values. These tokens can represent anything from colors and spacing units to typography scales and breakpoints. The theme object serves as a central source of design tokens that you can consistently use throughout your application's styles. Here's how to create a theme object:
+
+```ts title="src/theme.ts"
+// Example theme object
+const theme = {
+  colors: {
+    primary: '#6366f1',
+    secondary: '#ec4899',
+    background: '#ffffff',
+    text: '#1f2937',
+  },
+  space: {
+    sm: '0.5rem',
+    md: '1rem',
+    lg: '1.5rem',
+  },
+  fontSizes: {
+    body: '1rem',
+    heading: '1.5rem',
+    display: '2rem',
+  },
+};
+```
+
+To use this theme, pass the `theme` object in the `pigmentConfig` object:
+
+```ts title="bundler.config.ts"
+import { PigmentCSSConfig } from '@pigment-css/plugin/<bundler>';
+import { theme } from './src/theme';
+
+const pigmentConfig: PigmentCSSConfig = {
+  theme: theme,
+};
+```
+
+## Accessing Theme in CSS
+
+The `theme` object is automatically provided to the `styled`, `css`, and `keyframes` function callbacks as a key in the first argument, making it easy to reference your design tokens:
+
+### JS Object Syntax
+
+```tsx title="src/components/Button.tsx"
+import { styled, css } from '@pigment-css/react';
+
+// Using theme in styled component
+const Button = styled('button')(({ theme }) => ({
+  backgroundColor: theme.colors.primary,
+  padding: `${theme.space.sm} ${theme.space.md}`,
+  fontSize: theme.fontSizes.body,
+
+  '&:hover': {
+    backgroundColor: theme.colors.secondary,
+  },
+}));
+
+// Using theme in css function
+const dynamicStyles = css(({ theme }) => ({
+  color: theme.colors.text,
+  marginBottom: theme.space.lg,
+}));
+```
+
+```css title="Generated css"
+.button {
+  background-color: var(--colors-primary);
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--fontSizes-body);
+}
+
+.button:hover {
+  background-color: var(--colors-secondary);
+}
+
+.dynamic-styles {
+  color: var(--colors-text);
+  margin-bottom: var(--space-lg);
+}
+```
+
+### Tagged-template syntax
+
+While this isn't technically a tagged template literal, it provides a way to use theme values within a string template:
+
+```tsx title="src/components/Button.tsx"
+import { styled } from '@pigment-css/react-new';
+
+const Button = styled('button')(({ theme }) => `
+  background-color: ${theme.colors.primary};
+  padding: ${theme.space.sm} ${theme.space.md};
+  font-size: ${theme.fontSizes.body};
+
+  &:hover {
+    background-color: ${theme.colors.secondary};
+  }
+`;
+```
+
+The generated css would be the same as the one in the [JS Object Syntax](#js-object-syntax) section.
+
+### The `t()` function
+
+The `t()` function is a utility that you can import from `@pigment-css/react-new`. It provides a convenient way to access theme values without writing callback functions. You can use it with both JS object syntax and string template syntax:
+
+```tsx title="src/components/Button.tsx"
+import { t } from '@pigment-css/react-new';
+
+const Button = styled('button')`
+  background-color: ${t('$colors.primary')};
+  padding: ${t('$space.sm')} ${t('$space.md')};
+  font-size: ${t('$fontSizes.body')};
+
+  &:hover {
+    background-color: ${t('$colors.secondary')};
+  }
+`;
+```
+
+Or with JS object syntax:
+
+```tsx title="src/components/Button.tsx"
+import { t } from '@pigment-css/react-new';
+
+const Button = styled('button')({
+  backgroundColor: t('$colors.primary'),
+  padding: `${t('$space.sm')} ${t('$space.md')}`,
+  fontSize: t('$fontSizes.body'),
+
+  '&:hover': {
+    backgroundColor: t('$colors.secondary'),
+  },
+});
+```
+
+When TypeScript is configured (as explained below), you'll get autocomplete suggestions and type checking when using the `t()` function.
+
+## Type Safety
+
+Pigment CSS is built with TypeScript in mind and provides full type safety for your theme object. To enable autocomplete suggestions and type checking, you can augment the `Theme` interface from `@pigment-css/react-new` with your own theme type:
+
+```tsx title="theme.ts"
+const theme = {
+  // theme items as defined above
+};
+
+export type Theme = typeof theme;
+```
+
+```tsx title="augment.d.ts"
+import { styled } from '@pigment-css/react';
+import type { Theme as MyTheme } from './theme';
+
+declare module '@pigment-css/react-new' {
+  interface Theme extends MyTheme {}
+}
+```
+
+Remember to include `augment.d.ts` in the `include` array of your `tsconfig.json` file.
+
+## How it works
+
+When you pass a `theme` object in your `pigmentConfig`, Pigment CSS does two things:
+
+1. Replaces all the primitive values in the `theme` object (no matter the nesting level) with the a css variable string. This variable is a string generated from the paths in the object to access the value. This new theme object is what you actually get in the callback arguments of the `styled`, `css`, and `keyframes` functions.
+2. Generates a css string with all the css variables generated in step 1 with the values being the ones in the `theme` object. This css is added to the `:root` selector by default and then injected into the app through the `@pigment-css/react-new/styles.css` import added into the app entry point as instructed in the [integrations](/overview/integrations) guide.
+
+For the `theme` declared [above](#theme-object), Pigment CSS will generate the following css:
+
+```css title="@pigment-css/react-new/styles.css"
+:root {
+  --colors-primary: #6366f1;
+  --colors-secondary: #ec4899;
+  --colors-background: #ffffff;
+  --colors-text: #1f2937;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --fontSizes-body: 1rem;
+  --fontSizes-heading: 1.5rem;
+  --fontSizes-display: 2rem;
+}
+```
+
+and the corresponding theme object that is available in the callback argument is:
+
+```tsx title="Generated theme"
+const theme = {
+  colors: {
+    primary: 'var(--colors-primary)',
+    secondary: 'var(--colors-secondary)',
+    background: 'var(--colors-background)',
+    text: 'var(--colors-text)',
+  },
+  space: {
+    sm: 'var(--space-sm)',
+    md: 'var(--space-md)',
+    lg: 'var(--space-lg)',
+  },
+  fontSizes: {
+    body: 'var(--fontSizes-body)',
+    heading: 'var(--fontSizes-heading)',
+    display: 'var(--fontSizes-display)',
+  },
+};
+```
+
+As an example, you can see the theme tokens of Pigment CSS docs by opening the devtools and then selecting the `html` element. The actual `theme` object is declared [here](https://github.com/mui/pigment-css/blob/master/docs/src/theme.ts#L28).
+
+## Utilities
+
+Besides being a collection of css tokens, the `theme` object can also contain extra utilities that you can use to facilitate css generation. For example, you can add a breakpoint utility to the `theme` like this:
+
+```tsx title="src/theme.ts"
+const BREAKPOINTS = {
+  xs: '32rem',
+  sm: '40rem',
+} as const;
+
+const theme = {
+  // ... theme tokens
+  breakpoints: {
+    gt(key: keyof typeof BREAKPOINTS) {
+      return `(min-width: ${BREAKPOINTS[key]})`;
+    },
+    lt(key: keyof typeof BREAKPOINTS) {
+      return `(max-width: ${BREAKPOINTS[key]})`;
+    },
+    between(from: keyof typeof BREAKPOINTS, to: keyof typeof BREAKPOINTS) {
+      return `(min-width: ${BREAKPOINTS[from]}) and (max-width: ${BREAKPOINTS[to]})`;
+    },
+  },
+};
+```
+
+Now you can use the `breakpoints` utility in your css like this:
+
+```tsx title="src/components/Button.tsx"
+const Button = styled('button')(({ theme }) => ({
+  [theme.breakpoints.gt('sm')]: {
+    padding: `${theme.space.sm} ${theme.space.md}`,
+  },
+}));
+```
+
+All of the above methods will only be available during the build process. They are not part of the final bundle in any way.
+
+> [!TIP]
+> Pigment CSS is not opinionated about the structure of the `theme` object or the utilities you add to it. You can add whatever you want to it. Libraries built on top of Pigment CSS might add their own utilities or recommend a certain structure on the `theme` object.
