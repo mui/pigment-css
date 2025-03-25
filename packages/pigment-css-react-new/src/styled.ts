@@ -79,6 +79,9 @@ export type CreateStyledIndex = {
   >;
 };
 
+/**
+ * Documentation: https://pigment-css.com/features/styling#styled
+ */
 // @ts-expect-error The implementation is is different than the user API
 export const styled: CreateStyled & CreateStyledIndex = () => {
   throw new Error(generateErrorMessage('styled'));

@@ -19,8 +19,17 @@ export type CompoundVariant<T extends Variants> = VariantNames<T> & {
 };
 
 type CVAConfig<V extends Variants> = {
+  /**
+   * Documentation: https://pigment-css.com/features/styling#variants
+   */
   variants?: V;
+  /**
+   * Documentation: https://pigment-css.com/features/styling#compound-variants
+   */
   compoundVariants?: CompoundVariant<V>[];
+  /**
+   * Documentation: https://pigment-css.com/features/styling#default-variants
+   */
   defaultVariants?: VariantNames<V>;
 };
 
@@ -68,6 +77,9 @@ interface CssWithOption {
   <M extends BaseInterface>(metadata: M): CssNoOption;
 }
 
+/**
+ * Documentation: https://pigment-css.com/features/styling#css
+ */
 const css: CssNoOption & CssWithOption = () => {
   throw new Error(generateErrorMessage('css'));
 };
