@@ -4,7 +4,7 @@
     // aligning with Node18 recommendation: https://www.npmjs.com/package/@tsconfig/node18
     "target": "es2022",
     "lib": ["es2020", "dom", "ES2021.String"],
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "moduleResolution": "bundler",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -21,6 +21,8 @@
       "@pigment-css/react/utils": ["./packages/pigment-css-react/src/utils"],
       "@pigment-css/react/internal": ["./packages/pigment-css-react/src/internal"],
       "@pigment-css/react/*": ["./packages/pigment-css-react/src/*"],
+      "@pigment-css/plugin": ["./packages/pigment-css-plugin/src"],
+      "@pigment-css/plugin/*": ["./packages/pigment-css-plugin/src/*"],
       "@pigment-css/unplugin": ["./packages/pigment-css-unplugin/src"],
       "@pigment-css/vite-plugin": ["./packages/pigment-css-vite-plugin/src"],
       "@pigment-css/vite-plugin/*": ["./packages/pigment-css-vite-plugin/src/*"],
@@ -31,7 +33,12 @@
       "@pigment-css/theme": ["./packages/pigment-css-theme/src"],
       "@pigment-css/theme/*": ["./packages/pigment-css-theme/src/*"],
       "@pigment-css/utils": ["./packages/pigment-css-utils/src"],
-      "@pigment-css/utils/*": ["./packages/pigment-css-utils/src/*"]
+      "@pigment-css/utils/*": ["./packages/pigment-css-utils/src/*"],
+      "@pigment-css/core": ["./packages/pigment-css-core/src"],
+      "@pigment-css/core/*": ["./packages/pigment-css-core/src/*"],
+      "@pigment-css/react-new": ["./packages/pigment-css-react-new/src"],
+      "@pigment-css/react-new/*": ["./packages/pigment-css-react-new/src/*"],
+      "docs/*": ["./docs/src/*"]
     },
     // Otherwise we get react-native typings which conflict with dom.lib.
     "types": ["node", "react", "mocha"]

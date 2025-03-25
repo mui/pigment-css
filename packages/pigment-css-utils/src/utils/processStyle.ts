@@ -13,7 +13,7 @@ type ExtendedStyleObj = {
 };
 type BaseStyleObject = ExtendedStyleObj & Record<string, string | object>;
 
-function isUnitLess(cssKey: string) {
+export function isUnitLess(cssKey: string) {
   return unitlessKeys[cssKey] === 1;
 }
 
@@ -78,7 +78,7 @@ export function getCSSVar(key: string, wrapInVar = false): string {
   return result;
 }
 
-function transformProbableCssVar(value: string): string {
+export function transformProbableCssVar(value: string): string {
   const variableRegex = /(\$\$?\w[\d+\w+.]{0,})/g;
   return value.replaceAll(variableRegex, (sub) => {
     return getCSSVar(sub, true);
@@ -157,7 +157,7 @@ function getCss(
   delete style.defaultVariants;
 
   const { result: baseObj, variables } = processStyle(style, { getVariableName });
-  const cssText = serializeStyles([baseObj as any]).styles;
+  const { styles: cssText } = serializeStyles([baseObj as any]);
   result.base.push({
     className: getClassName(),
     cssText,
@@ -243,6 +243,9 @@ export function processStyleObjects(
   };
 
   styles.reduce((acc, style, index) => {
+    if (!style) {
+      return acc;
+    }
     const res = getCss(style, {
       ...options,
       getClassName: (opts?: ClassNameOptions) => {

@@ -1,26 +1,23 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
     "plugins": [
       {
         "name": "next"
       }
     ],
+    "skipLibCheck": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
     "paths": {
-      "@/*": ["./src/*"],
-      "@data/*": ["./data/*"]
+      "docs/*": ["./docs/src/*"],
+      "~assets/*": ["./docs/public/static/*"],
+      "@pigment-css/theme": ["../packages/pigment-css-theme/src"],
+      "@pigment-css/core": ["../packages/pigment-css-core/src"],
+      "@pigment-css/react-new": ["../packages/pigment-css-react-new/src"]
     }
   },
   "include": [
@@ -28,8 +25,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "next-env.d.ts",
-    "globals.d.ts",
-    "export/types/**/*.ts"
+    "export/types/**/*.ts",
+    "src"
   ],
   "exclude": ["node_modules"]
 }

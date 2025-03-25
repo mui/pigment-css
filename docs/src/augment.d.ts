@@ -1,16 +1,20 @@
-import type { SxProp } from '@pigment-css/react';
-import { Theme } from './theme';
+import type { Theme as UserTheme } from './theme';
 
-declare module '@pigment-css/react/theme' {
-  export interface ThemeArgs {
-    theme: Theme & {
-      vars: Theme;
-    };
-  }
+declare module '@pigment-css/react-new' {
+  export interface Theme extends UserTheme {}
 }
 
-declare module 'react' {
-  interface Attributes {
-    sx?: SxProp | undefined;
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      LIB_VERSION: string;
+      APP_NAME: string;
+      GITHUB: string;
+      NPM: string;
+      WEBSITE: string;
+      CONTENT_DIR: string;
+      CHANGELOG_FILE: string;
+      DEPLOY_ENV: string;
+    }
   }
 }

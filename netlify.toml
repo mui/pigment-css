@@ -11,6 +11,5 @@
   NODE_VERSION = "18"
   PNPM_FLAGS = "--shamefully-hoist"
 
-# TODO uncomment once we have a docs website.
-# [[plugins]]
-#  package = "./packages/netlify-plugin-cache-docs"
+[[plugins]]
+  package = "./node_modules/@mui/monorepo/packages/netlify-plugin-cache-docs"
