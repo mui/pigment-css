@@ -160,12 +160,12 @@ jobs:
       #       then
       #         exit 1
       #       fi
-      # - run:
-      #     name: Coverage
-      #     command: |
-      #       curl -Os https://uploader.codecov.io/latest/linux/codecov
-      #       chmod +x codecov
-      #       ./codecov -t ${CODECOV_TOKEN} -Z -F "$REACT_VERSION-jsdom"
+      - run:
+          name: Coverage
+          command: |
+            curl -Os https://uploader.codecov.io/latest/linux/codecov
+            chmod +x codecov
+            ./codecov -t ${CODECOV_TOKEN} -Z -F "$REACT_VERSION-jsdom"
   test_lint:
     <<: *default-job
     steps:
