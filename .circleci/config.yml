@@ -105,7 +105,8 @@ commands:
             pnpm --version
       - run:
           name: Install js dependencies
-          command: pnpm install
+          # For non-default React versions, we need to do a "dirty" installation
+          command: pnpm install --no-frozen-lockfile
       - when:
           condition: << parameters.browsers >>
           steps:

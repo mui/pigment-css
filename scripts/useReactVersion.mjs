@@ -75,6 +75,7 @@ async function main(version) {
         packageVersion = tagMapping.replace(`${version}: `, '');
       }
 
+      packageJson.resolutions ??= {};
       packageJson.resolutions[reactPackageName] = packageVersion;
     }),
   );
