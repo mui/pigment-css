@@ -1,6 +1,5 @@
 {
   "name": "@pigment-css/monorepo",
-  "version": "0.0.30",
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
