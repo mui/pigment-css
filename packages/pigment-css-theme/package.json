@@ -1,11 +1,11 @@
 {
   "name": "@pigment-css/theme",
   "version": "0.0.30",
+  "author": "MUI Team",
+  "description": "Theme related JS and TS utilities to be shared across other Pigment CSS libraries.",
   "main": "build/index.js",
   "module": "build/index.mjs",
   "types": "build/index.d.ts",
-  "author": "MUI Team",
-  "description": "Theme related JS and TS utilities to be shared across other Pigment CSS libraries.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mui/pigment-css.git",

@@ -1,11 +1,11 @@
 {
   "name": "@pigment-css/utils",
   "version": "0.0.28",
+  "author": "MUI Team",
+  "description": "Utilities to be used internally across different Pigment CSS packages.",
   "main": "build/index.js",
   "module": "build/index.mjs",
   "types": "build/index.d.ts",
-  "author": "MUI Team",
-  "description": "Utilities to be used internally across different Pigment CSS packages.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mui/pigment-css.git",

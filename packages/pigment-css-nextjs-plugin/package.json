@@ -1,11 +1,11 @@
 {
   "name": "@pigment-css/nextjs-plugin",
   "version": "0.0.30",
+  "author": "MUI Team",
+  "description": "Next.js integration for Pigment CSS.",
   "main": "build/index.js",
   "module": "build/index.mjs",
   "types": "build/index.d.ts",
-  "author": "MUI Team",
-  "description": "Next.js integration for Pigment CSS.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mui/pigment-css.git",

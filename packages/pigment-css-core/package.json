@@ -1,11 +1,11 @@
 {
   "name": "@pigment-css/core",
   "version": "0.0.27",
+  "author": "MUI Team",
+  "description": "A zero-runtime CSS-in-JS library.",
   "main": "build/index.js",
   "module": "build/index.mjs",
   "types": "build/index.d.ts",
-  "author": "MUI Team",
-  "description": "A zero-runtime CSS-in-JS library.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mui/pigment-css.git",
