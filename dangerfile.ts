@@ -154,7 +154,7 @@ async function reportBundleSize() {
   const detailedComparisonQuery = `circleCIBuildNumber=${circleCIBuildNumber}&baseRef=${danger.github.pr.base.ref}&baseCommit=${comparison.previous}&prNumber=${danger.github.pr.number}`;
   const detailedComparisonToolpadUrl = `https://tools-public.mui.com/prod/pages/h71gdad?${detailedComparisonQuery}`;
   const detailedComparisonRoute = `/size-comparison?${detailedComparisonQuery}`;
-  const detailedComparisonUrl = `https://mui-dashboard.netlify.app${detailedComparisonRoute}`;
+  const detailedComparisonUrl = `https://frontend-public.mui.com${detailedComparisonRoute}`;
 
   const { all: allResults, main: mainResults } = sieveResults(Object.entries(comparison.bundles));
   const anyResultsChanges = allResults.filter(createComparisonFilter(1, 1));
