@@ -341,24 +341,14 @@ workflows:
           <<: *default-context
       - test_unit:
           <<: *default-context
-          requires:
-            - checkout
       - test_lint:
           <<: *default-context
-          requires:
-            - checkout
       - test_static:
           <<: *default-context
-          requires:
-            - checkout
       - test_types:
           <<: *default-context
-          requires:
-            - checkout
       # - test_browser:
       #     <<: *default-context
-      #     requires:
-      #       - checkout
   profile:
     when:
       equal: [profile, << pipeline.parameters.workflow >>]
