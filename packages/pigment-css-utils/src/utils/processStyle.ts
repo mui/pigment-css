@@ -78,7 +78,7 @@ export function getCSSVar(key: string, wrapInVar = false): string {
   return result;
 }
 
-function transformProbableCssVar(value: string): string {
+export function transformProbableCssVar(value: string): string {
   const variableRegex = /(\$\$?\w[\d+\w+.]{0,})/g;
   return value.replaceAll(variableRegex, (sub) => {
     return getCSSVar(sub, true);
@@ -157,7 +157,7 @@ function getCss(
   delete style.defaultVariants;
 
   const { result: baseObj, variables } = processStyle(style, { getVariableName });
-  const cssText = serializeStyles([baseObj as any]).styles;
+  const { styles: cssText } = serializeStyles([baseObj as any]);
   result.base.push({
     className: getClassName(),
     cssText,

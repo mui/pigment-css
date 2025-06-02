@@ -11,6 +11,8 @@
 /packages/pigment-css-react/tests/**/fixtures
 /packages/pigment-css-core/exports/
 /packages/pigment-css-core/tests/**/fixtures
+/packages/pigment-css-react-new/exports/
+/packages/pigment-css-react-new/tests/**/fixtures
 /packages/pigment-css-nextjs-plugin/loader.js
 # Ignore fixtures
 /packages-internal/scripts/typescript-to-proptypes/test/*/*
