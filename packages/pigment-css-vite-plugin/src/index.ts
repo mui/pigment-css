@@ -66,10 +66,10 @@ export function pigment(options: PigmentOptions) {
       name: 'pigment-css-theme-injection-plugin',
       enforce: 'pre',
       resolveId(source) {
-        if (finalTransformLibraries.some((lib) => source.includes(`${lib.replace(/\\/g, '/')}/styles.css`))) {
+        if (allLibs.some((lib) => source.includes(`${lib}/styles.css`))) {
           return VIRTUAL_CSS_FILE;
         }
-        if (finalTransformLibraries.some((lib) => source.includes(`${lib.replace(/\\/g, '/')}/theme`))) {
+        if (allLibs.some((lib) => source.includes(`${lib}/theme`))) {
           return VIRTUAL_THEME_FILE;
         }
         return null;
