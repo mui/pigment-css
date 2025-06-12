@@ -122,6 +122,7 @@
     "unist-util-visit": "^2.0.3",
     "yargs": "^17.7.2"
   },
+  "resolutions": {},
   "packageManager": "pnpm@9.7.1",
   "engines": {
     "pnpm": "9.7.1"
