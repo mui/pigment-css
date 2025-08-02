@@ -60,13 +60,14 @@
   ],
   "exports": {
     ".": {
-      "types": "./build/index.d.ts",
+      "require": {
+        "types": "./build/index.d.ts",
+        "default": "./build/index.js"
+      },
       "import": {
         "types": "./build/index.d.mts",
         "default": "./build/index.mjs"
-      },
-      "require": "./build/index.js",
-      "default": "./build/index.js"
+      }
     },
     "./package.json": "./package.json"
   },
