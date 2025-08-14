@@ -25,6 +25,8 @@ export type ThemeKey = `$${PathsToLeaves<Theme>}`;
  * separately.
  * It is there to strictly type first argument as per the overridden `Theme`.
  *
+ * Documentation: https://pigment-css.com/features/theming#the-t-function
+ *
  * @example Usage in application
  *
  * ```js
