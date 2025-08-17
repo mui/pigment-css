@@ -9,6 +9,11 @@ import {
 } from '@pigment-css/react/utils';
 import { transformAsync } from '@babel/core';
 import baseWywPluginPlugin, { type VitePluginOptions } from './vite-plugin';
+import {
+  VIRTUAL_CSS_FILE,
+  VIRTUAL_THEME_FILE,
+  resolvePigmentPath,
+} from './utils/resolvePigmentPath';
 
 export interface PigmentOptions extends Omit<VitePluginOptions, 'themeArgs'> {
   /**
@@ -24,9 +29,6 @@ type PigmentMeta = {
     };
   };
 };
-
-const VIRTUAL_CSS_FILE = `\0zero-runtime-styles.css`;
-const VIRTUAL_THEME_FILE = `\0zero-runtime-theme.js`;
 
 const extensions = ['.js', '.jsx', '.mjs', '.cjs', '.ts', '.tsx', '.mts', '.cts'];
 
@@ -66,13 +68,8 @@ export function pigment(options: PigmentOptions) {
       name: 'pigment-css-theme-injection-plugin',
       enforce: 'pre',
       resolveId(source) {
-        if (finalTransformLibraries.some((lib) => source.includes(`${lib}/styles.css`))) {
-          return VIRTUAL_CSS_FILE;
-        }
-        if (finalTransformLibraries.some((lib) => source.includes(`${lib}/theme`))) {
-          return VIRTUAL_THEME_FILE;
-        }
-        return null;
+        // Vite/Rollup internally normalizes all path separators to forward slashes (/) before passing source to resolveId, regardless of the OS.
+        return resolvePigmentPath(source, allLibs);
       },
       load(id) {
         if (id === VIRTUAL_CSS_FILE) {
