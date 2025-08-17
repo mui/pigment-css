@@ -1,15 +1,15 @@
 {
-  "name": "@pigment-css/core",
+  "name": "@pigment-css/react-new",
   "version": "0.0.27",
-  "author": "MUI Team",
-  "description": "A zero-runtime CSS-in-JS library.",
   "main": "build/index.js",
   "module": "build/index.mjs",
   "types": "build/index.d.ts",
+  "author": "MUI Team",
+  "description": "A zero-runtime CSS-in-JS library to be used with React.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mui/pigment-css.git",
-    "directory": "packages/pigment-css-core"
+    "directory": "packages/pigment-css-react-new"
   },
   "license": "MIT",
   "bugs": {
@@ -25,13 +25,16 @@
     "watch": "tsup --watch --clean false",
     "copy-license": "node ../../scripts/pigment-license.mjs",
     "build": "tsup",
-    "test": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=text mocha 'packages/pigment-css-core/**/*.test.{js,ts,tsx}'",
-    "test:update": "cd ../../ && cross-env NODE_ENV=test UPDATE_FIXTURES=true mocha 'packages/pigment-css-core/**/*.test.{js,ts,tsx}'",
-    "test:ci": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=lcov --report-dir=./coverage/pigment-css-core mocha 'packages/pigment-css-core/**/*.test.{js,ts,tsx}'",
+    "test": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=text mocha 'packages/pigment-css-react-new/**/*.test.{js,ts,tsx}'",
+    "test:update": "cd ../../ && cross-env NODE_ENV=test UPDATE_FIXTURES=true mocha 'packages/pigment-css-react-new/**/*.test.{js,ts,tsx}'",
+    "test:ci": "cd ../../ && cross-env NODE_ENV=test BABEL_ENV=coverage nyc --reporter=lcov --report-dir=./coverage/pigment-css-react-new mocha 'packages/pigment-css-react-new/**/*.test.{js,ts,tsx}'",
     "typescript": "tsc --noEmit -p ."
   },
   "dependencies": {
+    "@babel/plugin-syntax-jsx": "^7.25.9",
     "@babel/types": "^7.25.8",
+    "@emotion/is-prop-valid": "^1.3.1",
+    "@pigment-css/core": "workspace:*",
     "@pigment-css/utils": "workspace:*",
     "@pigment-css/theme": "workspace:^",
     "@wyw-in-js/processor-utils": "^0.6.0",
@@ -39,10 +42,17 @@
     "@wyw-in-js/transform": "^0.6.0",
     "csstype": "^3.1.3"
   },
+  "peerDependencies": {
+    "react": "^17 || ^18 || ^19 || ^19.0.0-rc"
+  },
   "devDependencies": {
+    "@testing-library/react": "^16.2.0",
+    "@types/react": "^19.0.2",
     "@types/chai": "^4.3.14",
+    "@types/mocha": "^10.0.6",
     "chai": "^4.4.1",
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "react": "^19.0.0"
   },
   "sideEffects": false,
   "publishConfig": {
@@ -50,7 +60,8 @@
   },
   "wyw-in-js": {
     "tags": {
-      "keyframes": "./exports/keyframes.js",
+      "styled": "./exports/styled.js",
+      "keyframes": "@pigment-css/core/exports/keyframes",
       "css": "./exports/css.js"
     }
   },
@@ -87,18 +98,17 @@
         "default": "./processors/css.mjs"
       }
     },
-    "./processors/keyframes": {
+    "./processors/styled": {
       "require": {
-        "types": "./processors/keyframes.d.ts",
-        "default": "./processors/keyframes.js"
+        "types": "./processors/styled.d.ts",
+        "default": "./processors/styled.js"
       },
       "import": {
-        "types": "./processors/keyframes.d.mts",
-        "default": "./processors/keyframes.mjs"
+        "types": "./processors/styled.d.mts",
+        "default": "./processors/styled.mjs"
       }
     },
     "./exports/*": {
-      "require": "./exports/*.js",
       "default": "./exports/*.js"
     },
     "./runtime": {
@@ -135,9 +145,6 @@
       "build": {
         "outputs": [
           "{projectRoot}/build"
-        ],
-        "dependsOn": [
-          "^build"
         ]
       }
     }

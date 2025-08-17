@@ -4,7 +4,7 @@
     // aligning with Node18 recommendation: https://www.npmjs.com/package/@tsconfig/node18
     "target": "es2022",
     "lib": ["es2020", "dom", "ES2021.String"],
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "moduleResolution": "bundler",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -31,7 +31,11 @@
       "@pigment-css/theme": ["./packages/pigment-css-theme/src"],
       "@pigment-css/theme/*": ["./packages/pigment-css-theme/src/*"],
       "@pigment-css/utils": ["./packages/pigment-css-utils/src"],
-      "@pigment-css/utils/*": ["./packages/pigment-css-utils/src/*"]
+      "@pigment-css/utils/*": ["./packages/pigment-css-utils/src/*"],
+      "@pigment-css/core": ["./packages/pigment-css-core/src"],
+      "@pigment-css/core/*": ["./packages/pigment-css-core/src/*"],
+      "@pigment-css/react-new": ["./packages/pigment-css-react-new/src"],
+      "@pigment-css/react-new/*": ["./packages/pigment-css-react-new/src/*"]
     },
     // Otherwise we get react-native typings which conflict with dom.lib.
     "types": ["node", "react", "mocha"]
