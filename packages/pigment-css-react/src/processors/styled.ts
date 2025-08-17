@@ -359,7 +359,7 @@ export class StyledProcessor extends BaseProcessor {
       'theme',
     );
     // all the variant definitions are collected here so that we can
-    // apply variant styles after base styles for more specific targetting.
+    // apply variant styles after base styles for more specific targeting.
     let variantsAccumulator: VariantData[] = [];
     (this.styleArgs as ExpressionValue[]).forEach((styleArg) => {
       this.processStyle(values, styleArg, variantsAccumulator, themeImportIdentifier.name);
