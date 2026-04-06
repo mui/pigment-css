@@ -3,11 +3,11 @@
   "version": "6.3.0",
   "private": true,
   "description": "Custom eslint rules for Material UI.",
+  "license": "MIT",
   "main": "src/index.js",
   "devDependencies": {
     "@types/eslint": "^8.56.7",
     "@typescript-eslint/experimental-utils": "^5.62.0",
     "@typescript-eslint/parser": "^7.5.0"
-  },
-  "license": "MIT"
+  }
 }
