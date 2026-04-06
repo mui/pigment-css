@@ -5,6 +5,7 @@ import {
   css as _css4,
   css as _css5,
   css as _css6,
+  css as _css7,
 } from '@pigment-css/core/runtime';
 export const cls1 = /*#__PURE__*/ _css({
   classes: 'cx3ztpe',
@@ -112,4 +113,7 @@ export const cls6 = /*#__PURE__*/ _css6({
       },
     },
   ],
+});
+export const cls7 = /*#__PURE__*/ _css7({
+  classes: 'c10qevxu c10qevxu-1',
 });

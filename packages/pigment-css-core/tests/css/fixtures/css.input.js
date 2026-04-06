@@ -165,3 +165,10 @@ export const cls6 = css(({ theme }) => ({
     },
   ],
 }));
+
+export const cls7 = css(
+  {
+    color: '$palette.main',
+  },
+  `display: black`,
+);
