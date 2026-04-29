@@ -21,7 +21,7 @@ A big thanks to the 4 contributors who made this release possible.
 
 - Bump Vite to v6 (#355) @bogdanyluk
 
-### Core
+### Internal
 
 - [docs] Fix Vale error (a538810) @oliviertassinari
 
@@ -45,7 +45,7 @@ A big thanks to the 3 contributors who made this release possible.
 
 - Implement @pigment-css/theme package (#341) @brijeshb42
 
-### Core
+### Internal
 
 - [docs]: fix quickstart command (#351) @yash49
 - [examples] Fix vite example & add dark mode support (#340) @mnajdova
@@ -64,7 +64,7 @@ A big thanks to the 3 contributors who made this release possible.
 
 - [react] Mark prop-types as direct dependency (#330) @brijeshb42
 
-### Core
+### Internal
 
 - [core] Add OpenSSF badge (#325) @oliviertassinari
 - [core] Fix test_types_next job (#271) @Janpot
@@ -89,7 +89,7 @@ A big thanks to the 2 contributors who made this release possible.
 - Fix path resolution (#310) @brijeshb42
 - Bump wyw versions (#320) @brijeshb42
 
-### Core
+### Internal
 
 - [core] Fix webpack capitalization (#311) @oliviertassinari
 - [core] Fix Stack Overflow mention (dea4b14) @oliviertassinari
@@ -118,7 +118,7 @@ A big thanks to the 3 contributors who made this release possible.
 - [docs] Remove next tag from installation instructions (#292) @tschaub
 - [docs] Setup a new next.js application for documentation (#299) @brijeshb42
 
-### Core
+### Internal
 
 - [core] Bump package versions (#294) @brijeshb42
 - [core] Fix Tidelift reference (#306) @oliviertassinari
@@ -140,7 +140,7 @@ A big thanks to the 5 contributors who made this release possible.
 
 - Fix scoping issue with sx dynamic value transform (#286) @brijeshb42
 
-### Core
+### Internal
 
 - [code-infra] Remove releaseChangelog.mjs duplication (#273) @oliviertassinari
 - [core] Upgrade @mui/monorepo (#274) @oliviertassinari
@@ -197,7 +197,7 @@ A big thanks to the 5 contributors who made this release possible. This PR mainl
 - [nextjs] Fix react import check bug introduced in #228 (#236) @brijeshb42
 - [nextjs] Move the import startsWith next check at end (#228) @brijeshb42
 
-### Core
+### Internal
 
 - [core] Fix 301 link to Next.js and git diff @oliviertassinari
 - [core] Fix package.json repository rule @oliviertassinari
@@ -225,7 +225,7 @@ A big thanks to the 3 contributors who made this release possible.
 - Fix bug related to path separator on Windows (#218) @brijeshb42
 - Fix styled-engine new internals (#220) @romgrk
 
-### Core
+### Internal
 
 - [core] Pin GitHub action dependency (#221) @oliviertassinari
 - [core] Fix CI with fake docs (#222) @oliviertassinari
@@ -287,7 +287,7 @@ A big thanks to the 3 contributors who made this release possible.
 
 - [docs] Clarify security policy @oliviertassinari
 
-### Core
+### Internal
 
 - [core] Temporarily fallback to v5 of Material UI (#198) @brijeshb42
 - [core] Fix event naming convention @oliviertassinari
@@ -331,7 +331,7 @@ A big thanks to the 3 contributors who made this release possible.
 
 - [plugin] Allow runtime libraries to have their own theme and styles css path (#165) @brijeshb42
 
-### Core
+### Internal
 
 - [core] Simpler pnpm dedupe error message to act on @oliviertassinari
 - [examples] Rename next.config.js to next.config.mjs (#157) @brijeshb42
@@ -384,7 +384,7 @@ A big thanks to the 5 contributors who made this release possible. Here are some
 
 - Fix misuse variable to transform libraries (#153) @siriwatknp
 
-### Core
+### Internal
 
 - [code-infra] Propagate pnpm engine in package.json (#126) @Janpot
 - [core] Update package manager to 9.4.0 (#156) @siriwatknp
@@ -444,7 +444,7 @@ A big thanks to the 6 contributors who made this release possible. Here are some
 - Improve wording (#70) @aarongarciah
 - Fix roadmap link (#60) @oliviertassinari
 
-### Core
+### Internal
 
 - Remove confusing comment @oliviertassinari
 - Cleanup (#63) @brijeshb42
@@ -471,7 +471,7 @@ A big thanks to the 2 contributors who made this release possible. Here are some
 - Replace lowercase with lowerFirst (#54) @siriwatknp
 - Reorder the css generation order for styled calls (#56) @brijeshb42
 
-### Core
+### Internal
 
 - Set root version to 0.0.10 (#44) @siriwatknp
 
@@ -509,7 +509,7 @@ A big thanks to the 2 contributors who made this release possible.
 - [fix] Use wildcard for exports instead of individual paths (#28) @brijeshb42
 - [fix] Add `private-runtime` directory in the package.json (#33) @mnajdova
 
-### Core
+### Internal
 
 - Enable release:changelog in CI (#30) @mnajdova
 
@@ -534,7 +534,7 @@ Starting with this release, all packages are going to be released under the `lat
 - Update creating a new issue link (#20) @ZeeshanTamboli
 - Fix wrong header hash in the README.md (#26) @mnajdova
 
-### Core
+### Internal
 
 - Create Circle CI config (#4) @mnajdova
 - Enable the CI (#12) @mnajdova
@@ -584,7 +584,7 @@ This release was mostly about 🐛 bug fixes and 📚 documentation improvements
 - [pigment-css] Fix README typo (#41808) @aarongarciah
 - [pigment-css] Fix output on dynamic styles example (#41805) @aarongarciah
 
-### Core
+### Internal
 
 - [core] Remove unused files (#41818) @mnajdova
 
@@ -619,7 +619,7 @@ A big thanks to the 4 contributors who made this release possible.
 - [pigment-css] Add small edits on the README (#41646) @danilo-leal
 - [pigment-css] Edit the example app's README files (#41639) @danilo-leal
 
-### Core
+### Internal
 
 - [pigment-css][examples] Add example project with Remix (#41700) @brijeshb42
 
@@ -643,7 +643,7 @@ A big thanks to the 4 contributors who made this release possible. Here are some
 
 - [pigment-css] Update the RTL section on the readme (#41576) @danilo-leal
 
-### Core
+### Internal
 
 - [pigment-css][demo] Remove app specific pnpm workspace (#41393) @brijeshb42
 
@@ -697,7 +697,7 @@ A big thanks to the 4 contributors who made this release possible. Here are some
 - [pigment-css] Tweak the examples and edit READMEs (#41408) @danilo-leal
 - [pigment-css] Adjust the bit about CSS vars on the README (#41463) @danilo-leal
 
-### Core
+### Internal
 
 - [pigment-css] Make all Pigment CSS packages public (#41404) @brijeshb42
 - [pigment-css] Rename directories to match package names (#41453) @brijeshb42
