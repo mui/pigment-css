@@ -12,7 +12,7 @@ export const TouchRippleRoot = /*#__PURE__*/ _styled('span', {
 
 // This `styled()` function invokes keyframes. `styled-components` only supports keyframes
 // in string templates. Do not convert these styles in JS object as it will break.
-const _exp6 = /*#__PURE__*/ () => Ripple;
+const _exp6 = () => Ripple;
 export const TouchRippleRipple = /*#__PURE__*/ _styled2(_exp6(), {
   name: 'MuiTouchRipple',
   slot: 'Ripple',

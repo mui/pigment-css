@@ -65,6 +65,9 @@ export async function runTransformation(absolutePath: string, options?: Transfor
       babelrc: false,
       plugins: ['@babel/plugin-syntax-jsx'],
     },
+    features: {
+      happyDOM: false,
+    },
     tagResolver(source: string, tag: string) {
       if (tag === 'default' && source.endsWith('/styled')) {
         return require.resolve(`../exports/styled`);

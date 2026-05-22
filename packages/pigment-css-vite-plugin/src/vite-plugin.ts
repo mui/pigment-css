@@ -238,8 +238,8 @@ export default function wywVitePlugin({
 
                   return context;
                 },
-                tagResolver(source: string, tag: string) {
-                  const tagResult = tagResolver?.(source, tag);
+                tagResolver(source: string, tag: string, meta) {
+                  const tagResult = tagResolver?.(source, tag, meta);
                   if (tagResult) {
                     return tagResult;
                   }

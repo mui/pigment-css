@@ -86,7 +86,7 @@ export type PigmentConfig = Omit<Partial<PluginOptions>, 'features'> & {
  * @internal
  */
 export type TransformedInternalConfig = Omit<PigmentConfig, 'wywFeatures' | 'features'> & {
-  feautres?: PluginOptions['features'];
+  features?: PluginOptions['features'];
   pigmentFeatures?: PigmentFeatures;
 };
 
@@ -98,6 +98,6 @@ export function transformPigmentConfig(config?: PigmentConfig): TransformedInter
   return {
     ...rest,
     pigmentFeatures: features,
-    feautres: wywFeatures,
+    features: wywFeatures,
   };
 }

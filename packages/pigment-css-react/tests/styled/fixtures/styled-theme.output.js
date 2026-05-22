@@ -31,7 +31,7 @@ process.env.NODE_ENV !== 'production'
     })
   : void 0;
 process.env.NODE_ENV !== 'production' ? (App.muiName = 'App') : void 0;
-const _exp7 = /*#__PURE__*/ () => InputBaseInput;
+const _exp7 = () => InputBaseInput;
 const OutlinedInputInput = /*#__PURE__*/ _styled4(_exp7(), {
   name: 'MuiOutlinedInput',
   slot: 'Input',

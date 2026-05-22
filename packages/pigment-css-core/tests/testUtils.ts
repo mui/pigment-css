@@ -56,6 +56,9 @@ export async function runTransformation(absolutePath: string, options?: Transfor
       configFile: false,
       babelrc: false,
     },
+    wywFeatures: {
+      happyDOM: false,
+    },
     tagResolver(source: string, tag: string) {
       if (source !== '@pigment-css/core') {
         return null;
