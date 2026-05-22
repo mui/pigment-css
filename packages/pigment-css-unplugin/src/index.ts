@@ -237,8 +237,8 @@ export const plugin = createUnplugin<PigmentOptions, true>((options) => {
               }
               return context;
             },
-            tagResolver(source: string, tag: string, meta: TagResolverMeta) {
-              const tagResult = tagResolver?.(source, tag, meta);
+            tagResolver(source: string, tag: string, tagMeta: TagResolverMeta) {
+              const tagResult = tagResolver?.(source, tag, tagMeta);
               if (tagResult) {
                 return tagResult;
               }

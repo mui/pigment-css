@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styled } from '@pigment-css/react';
-import packageJson from '../../../package.json';
+import packageJson from '../../../packages/pigment-css-core/package.json';
 import { IconLinkButton } from './IconLinkButton';
 import { IconButton } from './IconButton';
 import { DocsVersionSelector } from './DocsVersionSelector';

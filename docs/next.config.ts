@@ -7,7 +7,7 @@ import withDocsInfra from '@mui/monorepo/docs/nextConfigDocsInfra.js';
 import { withPigment, extendTheme } from '@pigment-css/nextjs-plugin';
 
 import { theme as baseTheme } from './src/theme';
-import rootPackage from '../package.json';
+import rootPackage from '../packages/pigment-css-core/package.json';
 
 const currentDirectory = url.fileURLToPath(new URL('.', import.meta.url));
 const DATA_DIR = path.join(currentDirectory, 'data');
@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
   trailingSlash: false,
   env: {
     DATA_DIR,
-    CURRENT_VERSION: rootPackage.version,
+    CURRENT_VERSION: (rootPackage as unknown as { version: string }).version,
   },
   distDir: 'export',
   output: process.env.NODE_ENV === 'production' ? 'export' : undefined,
