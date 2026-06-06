@@ -778,17 +778,12 @@ The value provided to `sx` prop can be one of the following:
 To use `sx` prop on HTML element, you need to augment the `HTMLAttributes` interface. Add the following code to a file that is included in your tsconfig.json:
 
 ```ts
-type Theme = {
-  // your theme type
-};
+import { SxProp } from '@pigment-css/react';
 
 declare global {
   namespace React {
     interface HTMLAttributes<T> {
-      sx?:
-        | React.CSSProperties
-        | ((theme: Theme) => React.CSSProperties)
-        | ReadonlyArray<React.CSSProperties | ((theme: Theme) => React.CSSProperties)>;
+      sx?: SxProp;
     }
   }
 }
