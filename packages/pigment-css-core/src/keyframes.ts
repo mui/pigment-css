@@ -18,6 +18,9 @@ interface KeyframesWithOption {
   <M extends BaseInterface>(metadata: M): KeyframesNoOption;
 }
 
+/**
+ * Documentation: https://pigment-css.com/features/styling#keyframes
+ */
 const keyframes: KeyframesWithOption & KeyframesNoOption = () => {
   throw new Error(generateErrorMessage('keyframes'));
 };

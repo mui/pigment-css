@@ -10,7 +10,7 @@
  * CssProcessor.
  */
 
-import { SourceLocation } from '@babel/types';
+import { SourceLocation, TemplateElement } from '@babel/types';
 import {
   type TransformedInternalConfig,
   type StyleObjectReturn,
@@ -21,7 +21,7 @@ import {
   serializeStyles,
   valueToLiteral,
   evaluateClassNameArg,
-  getCSSVar,
+  transformProbableCssVar,
 } from '@pigment-css/utils';
 import {
   CallParam,
@@ -119,6 +119,99 @@ export type CssTailProcessorParams = BaseCssProcessorConstructorParams extends [
   ? T
   : never;
 
+function handleTemplateElementOrSimilar(
+  templateParams: (TemplateElement | ExpressionValue)[],
+  values: ValueCache,
+  processor: BaseCssProcessor,
+) {
+  const { themeArgs = {}, pigmentFeatures: { useLayer = true } = {} } =
+    processor.options as TransformedInternalConfig;
+  // @ts-ignore @TODO - Fix this. No idea how to initialize a Tagged String array.
+  const templateStrs: string[] = [];
+  // @ts-ignore @TODO - Fix this. No idea how to initialize a Tagged String array.
+  templateStrs.raw = [];
+  const templateExpressions: Primitive[] = [];
+  let paramsToIterate = templateParams;
+  const [firstArg, ...restArgs] = templateParams;
+  if ('kind' in firstArg && firstArg.kind === ValueType.LAZY) {
+    const value = values.get(firstArg.ex.name) as string[];
+    templateStrs.push(...value);
+    // @ts-ignore @TODO - Fix this. No idea how to initialize a Tagged String array.
+    templateStrs.raw.push(...value);
+    paramsToIterate = restArgs;
+  }
+  paramsToIterate.forEach((param) => {
+    if ('kind' in param) {
+      switch (param.kind) {
+        case ValueType.FUNCTION: {
+          const value = values.get(param.ex.name) as TemplateCallback;
+          templateExpressions.push(value(themeArgs));
+          break;
+        }
+        case ValueType.CONST: {
+          if (typeof param.value === 'string') {
+            templateExpressions.push(transformProbableCssVar(param.value));
+          } else {
+            templateExpressions.push(param.value);
+          }
+          break;
+        }
+        case ValueType.LAZY: {
+          const evaluatedValue = values.get(param.ex.name);
+          if (typeof evaluatedValue === 'function') {
+            templateExpressions.push(evaluatedValue(themeArgs));
+          } else if (typeof evaluatedValue === 'string') {
+            templateExpressions.push(transformProbableCssVar(evaluatedValue));
+          } else {
+            templateExpressions.push(evaluatedValue as Primitive);
+          }
+          break;
+        }
+        default:
+          break;
+      }
+    } else if ('type' in param && param.type === 'TemplateElement') {
+      templateStrs.push(param.value.cooked as string);
+      // @ts-ignore
+      templateStrs.raw.push(param.value.raw);
+    }
+  });
+  const { styles } = serializeStyles(
+    templateExpressions.length > 0 ? [templateStrs, ...templateExpressions] : [templateStrs],
+  );
+
+  const cssText = useLayer
+    ? `@layer pigment.base{${processor.wrapStyle(styles, '')}}`
+    : processor.wrapStyle(styles, '');
+  const className = processor.getClassName();
+  const rules: Rules = {
+    [`.${className}`]: {
+      className,
+      cssText,
+      displayName: processor.displayName,
+      start: processor.location?.start ?? null,
+    },
+  };
+  const location = processor.location;
+  const sourceMapReplacements: Replacements = [
+    {
+      length: cssText.length,
+      original: {
+        start: {
+          column: location?.start.column ?? 0,
+          line: location?.start.line ?? 0,
+        },
+        end: {
+          column: location?.end.column ?? 0,
+          line: location?.end.line ?? 0,
+        },
+      },
+    },
+  ];
+  processor.classNames.push(className);
+  processor.artifacts.push(['css', [rules, sourceMapReplacements]]);
+}
+
 /**
  * Only deals with css`` or css(metadata)`` calls.
  */
@@ -138,84 +231,8 @@ export class CssTaggedTemplateProcessor extends BaseCssProcessor {
   }
 
   build(values: ValueCache): void {
-    const { themeArgs, pigmentFeatures: { useLayer = true } = {} } = this
-      .options as TransformedInternalConfig;
     const [, templateParams] = this.templateParam;
-    // @ts-ignore @TODO - Fix this. No idea how to initialize a Tagged String array.
-    const templateStrs: string[] = [];
-    // @ts-ignore @TODO - Fix this. No idea how to initialize a Tagged String array.
-    templateStrs.raw = [];
-    const templateExpressions: Primitive[] = [];
-    templateParams.forEach((param) => {
-      if ('kind' in param) {
-        switch (param.kind) {
-          case ValueType.FUNCTION: {
-            const value = values.get(param.ex.name) as TemplateCallback;
-            templateExpressions.push(value(themeArgs));
-            break;
-          }
-          case ValueType.CONST: {
-            templateExpressions.push(param.value);
-            break;
-          }
-          case ValueType.LAZY: {
-            const evaluatedValue = values.get(param.ex.name);
-            if (typeof evaluatedValue === 'function') {
-              templateExpressions.push(evaluatedValue(themeArgs));
-            } else if (
-              typeof evaluatedValue === 'object' &&
-              evaluatedValue &&
-              (evaluatedValue as unknown as Record<string, boolean>).isThemeVar
-            ) {
-              templateExpressions.push(getCSSVar(evaluatedValue.toString(), true));
-            } else {
-              templateExpressions.push(evaluatedValue as Primitive);
-            }
-            break;
-          }
-          default:
-            break;
-        }
-      } else if ('type' in param && param.type === 'TemplateElement') {
-        templateStrs.push(param.value.cooked as string);
-        // @ts-ignore
-        templateStrs.raw.push(param.value.raw);
-      }
-    });
-    const { styles } = serializeStyles(
-      templateExpressions.length > 0 ? [templateStrs, ...templateExpressions] : [templateStrs],
-    );
-
-    const cssText = useLayer
-      ? `@layer pigment.base{${this.wrapStyle(styles, '')}}`
-      : this.wrapStyle(styles, '');
-    const className = this.getClassName();
-    const rules: Rules = {
-      [`.${className}`]: {
-        className,
-        cssText,
-        displayName: this.displayName,
-        start: this.location?.start ?? null,
-      },
-    };
-    const location = this.location;
-    const sourceMapReplacements: Replacements = [
-      {
-        length: cssText.length,
-        original: {
-          start: {
-            column: location?.start.column ?? 0,
-            line: location?.start.line ?? 0,
-          },
-          end: {
-            column: location?.end.column ?? 0,
-            line: location?.end.line ?? 0,
-          },
-        },
-      },
-    ];
-    this.classNames.push(className);
-    this.artifacts.push(['css', [rules, sourceMapReplacements]]);
+    handleTemplateElementOrSimilar(templateParams, values, this);
   }
 }
 
@@ -232,21 +249,44 @@ export class CssObjectProcessor extends BaseCssProcessor {
 
   getDependencies(): ExpressionValue[] {
     const [, ...params] = this.callParam;
-    return params.flat().filter((param) => 'kind' in param);
+    return params.flat().filter((param) => 'kind' in param && param.kind !== ValueType.CONST);
+  }
+
+  isMaybeTransformedTemplateLiteral(values: ValueCache): boolean {
+    const [, firstArg, ...restArgs] = this.callParam;
+    if (!('kind' in firstArg) || firstArg.kind === ValueType.CONST) {
+      return false;
+    }
+    const firstArgVal = values.get(firstArg.ex.name);
+    if (Array.isArray(firstArgVal) && restArgs.length === firstArgVal.length - 1) {
+      return true;
+    }
+    return false;
+  }
+
+  private buildForTransformedTemplateTag(values: ValueCache) {
+    const [, ...templateParams] = this.callParam;
+    handleTemplateElementOrSimilar(templateParams, values, this);
   }
 
   build(values: ValueCache): void {
+    if (this.isMaybeTransformedTemplateLiteral(values)) {
+      this.buildForTransformedTemplateTag(values);
+      return;
+    }
     const [, ...callParams] = this.callParam;
     const { themeArgs, pigmentFeatures: { useLayer = true } = {} } = this
       .options as TransformedInternalConfig;
 
-    const evaluatedValues = (callParams as (LazyValue | FunctionValue)[]).map((param) =>
-      values.get(param.ex.name),
+    const evaluatedValues = (callParams as ExpressionValue[]).map((param) =>
+      param.kind === ValueType.CONST ? param.value : values.get(param.ex.name),
     );
     let stylesList: (object | Function)[];
     // let metadata: any;
     // check for css(metadata, [styles]) or css(metadata, style) call
     const locations: (SourceLocation | null | undefined)[] = [];
+    // Remove this condition as this supports an older API that has since been
+    // removed from TS support.
     if (
       evaluatedValues.length === 2 &&
       evaluatedValues[0] &&
