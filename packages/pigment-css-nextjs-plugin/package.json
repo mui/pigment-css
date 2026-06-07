@@ -2,7 +2,7 @@
   "name": "@pigment-css/nextjs-plugin",
   "version": "0.0.31",
   "author": "MUI Team",
-  "description": "Next.js integration for Pigment CSS.",
+  "description": "Next.js integration for Pigment CSS.",
   "license": "MIT",
   "main": "build/index.js",
   "module": "build/index.mjs",
@@ -28,7 +28,11 @@
     "typescript": "tsc --noEmit -p ."
   },
   "dependencies": {
-    "@pigment-css/unplugin": "workspace:^"
+    "@babel/preset-react": "^7.25.9",
+    "@babel/preset-typescript": "^7.26.0",
+    "@pigment-css/unplugin": "workspace:^",
+    "@wyw-in-js/shared": "^1.1.0",
+    "@wyw-in-js/transform": "^1.1.0"
   },
   "devDependencies": {
     "next": "^15.1.3",
