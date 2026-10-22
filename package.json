@@ -2,7 +2,6 @@
   "name": "@pigment-css/monorepo",
   "private": true,
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "proptypes": "echo \"tsx ./scripts/generateProptypes.ts\"",
     "deduplicate": "pnpm dedupe",
     "build": "lerna run --no-private build",
